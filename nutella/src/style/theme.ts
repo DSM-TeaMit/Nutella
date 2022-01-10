@@ -1,4 +1,46 @@
-const colors = {
+export interface Font {
+  h1: string;
+  h2: string;
+  h3: string;
+  subtitle1: string;
+  subtitle2: string;
+  body1: string;
+  body2: string;
+  body3: string;
+  description: string;
+}
+
+export interface Color {
+  primary: {
+    default: string;
+    hover: string;
+    click: string;
+  };
+  red: {
+    default: string;
+    hover: string;
+    click: string;
+  };
+  green: {
+    default: string;
+  };
+  grayscale: {
+    white: string;
+    lightGray1: string;
+    lightGray2: string;
+    gray1: string;
+    gray2: string;
+    darkGray: string;
+    black: string;
+  };
+}
+
+export interface Theme {
+  colors: Color;
+  fonts: Font;
+}
+
+const colors: Color = {
   primary: {
     default: "#0094FF",
     hover: "#66BFFF",
@@ -23,7 +65,7 @@ const colors = {
   },
 };
 
-const fonts = {
+const fonts: Font = {
   h1: `bold 2.25rem 'Noto Sans KR', 'sans-serif'`,
   h2: `bold 1.75rem 'Noto Sans KR', 'sans-serif'`,
   h3: `bold 1.5rem 'Noto Sans KR', 'sans-serif'`,
@@ -35,7 +77,7 @@ const fonts = {
   description: `400 0.75rem 'Noto Sans KR', 'sans-serif'`,
 };
 
-const theme = {
+const theme: Theme = {
   colors,
   fonts,
 };
