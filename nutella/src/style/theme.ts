@@ -33,6 +33,7 @@ export interface Color {
     darkGray: string;
     black: string;
   };
+  background: string;
 }
 
 export interface Theme {
@@ -63,6 +64,7 @@ const colors: Color = {
     darkGray: "#494E52",
     black: "#1C1E20",
   },
+  background: "#F9FCFE",
 };
 
 const fonts: Font = {
