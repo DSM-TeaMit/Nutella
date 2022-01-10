@@ -41,7 +41,7 @@ export interface Theme {
   fonts: Font;
 }
 
-const colors: Color = {
+export const colors: Color = {
   primary: {
     default: "#0094FF",
     hover: "#66BFFF",
@@ -67,7 +67,7 @@ const colors: Color = {
   background: "#F9FCFE",
 };
 
-const fonts: Font = {
+export const fonts: Font = {
   h1: `bold 2.25rem 'Noto Sans KR', 'sans-serif'`,
   h2: `bold 1.75rem 'Noto Sans KR', 'sans-serif'`,
   h3: `bold 1.5rem 'Noto Sans KR', 'sans-serif'`,
