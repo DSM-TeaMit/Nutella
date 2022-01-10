@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import { colors, fonts } from "./theme";
 
 export const reset = css`
   html,
@@ -105,6 +106,8 @@ export const reset = css`
   }
   body {
     line-height: 1;
+    font: ${fonts.body3};
+    color: ${colors.grayscale.black};
   }
   ol,
   ul {
@@ -127,5 +130,6 @@ export const reset = css`
   }
   html {
     font-size: 16px;
+    background-color: ${colors.background};
   }
 `;
