@@ -1,5 +1,12 @@
+import { ThemeProvider } from "@emotion/react";
+import theme from "./style/theme";
+
 function App() {
-  return <div>hello world!</div>;
+  return (
+    <ThemeProvider theme={theme}>
+      <div>hello world!</div>
+    </ThemeProvider>
+  );
 }
 
 export default App;
