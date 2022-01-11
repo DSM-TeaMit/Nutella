@@ -1,8 +1,13 @@
 import { FC } from "react";
-import { InputStyle } from "./styles";
+import * as S from "./styles";
 
 const Input: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
-  return <InputStyle {...props} />;
+  return (
+    <div>
+      <S.InputStyle {...props} />
+      <S.Line />
+    </div>
+  );
 };
 
 export default Input;

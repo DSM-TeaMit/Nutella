@@ -8,8 +8,14 @@ export const InputStyle = styled.input`
   color: ${({ theme }) => theme.colors.grayscale.black};
   padding: 0;
   margin-bottom: 4px;
-
+  width: 100%;
   &::placeholder {
     color: ${({ theme }) => theme.colors.grayscale.gray1};
   }
+`;
+
+export const Line = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
 `;
