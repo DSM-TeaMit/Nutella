@@ -1,15 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import State from "../../interface/State";
 
+type Value = string | number;
+
 interface InputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
+  value: Value;
 }
 
-type Dispatch = [InputProps, State<string>];
+type Dispatch = [InputProps, State<Value>];
 
-const useInput = (initValue?: string, debug?: boolean): Dispatch => {
-  const [value, setValue] = useState<string>(initValue || "");
+const useInput = (initValue?: Value, debug?: boolean): Dispatch => {
+  const [value, setValue] = useState<Value>(initValue || "");
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
