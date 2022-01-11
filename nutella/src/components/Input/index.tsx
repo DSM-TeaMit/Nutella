@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { Button } from "./styles";
+import { InputStyle } from "./styles";
 
 const Input: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
-  return <Button {...props} />;
+  return <InputStyle {...props} />;
 };
 
 export default Input;
