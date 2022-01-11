@@ -1,6 +1,6 @@
 import { Global, ThemeProvider } from "@emotion/react";
 import { reset } from "./style/globalStyle";
-import theme from "./style/theme";
+import theme from "./utils/theme/theme";
 
 function App() {
   return (
