@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { colors, fonts } from "./theme";
+import { colors, fonts } from "../utils/theme/theme";
 
 export const reset = css`
   html,
