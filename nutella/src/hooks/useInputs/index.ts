@@ -13,10 +13,14 @@ interface InputProps {
   value: Value;
 }
 
+type DispatchInputProps<T> = {
+  [key in keyof T]: InputProps;
+};
+
 const useInputs = <T extends NameTypes>(
   initValue: T,
   debug?: boolean
-): [InputProps[], State<T>] => {
+): [DispatchInputProps<T>, State<T>] => {
   const [value, setValue] = useState<T>(initValue);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,10 +34,15 @@ const useInputs = <T extends NameTypes>(
     }
   }, [debug, value]);
 
+  const inputProps = Object.keys(value).map((key) => {
+    return { onChange: onChange, name: key, value: value[key] };
+  });
+
   return [
-    Object.keys(value).map((key) => {
-      return { onChange: onChange, name: key, value: value[key] };
-    }),
+    Object.keys(value).reduce(
+      (acc, curr, index) => ((acc[curr as keyof T] = inputProps[index]), acc),
+      {} as DispatchInputProps<T>
+    ),
     [value, setValue],
   ];
 };
