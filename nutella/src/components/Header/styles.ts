@@ -15,12 +15,6 @@ export const ContentContainer = styled.div`
   align-items: center;
 `;
 
-export const LogoButton = styled.button`
-  border: 0;
-  cursor: pointer;
-  background-color: transparent;
-`;
-
 export const Logo = styled.img`
   height: 20px;
 `;

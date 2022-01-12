@@ -1,13 +1,14 @@
 import * as S from "./styles";
 import LogoImg from "../../assets/logo/Logo.svg";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <S.Container>
       <S.ContentContainer>
-        <S.LogoButton>
+        <Link to="/">
           <S.Logo alt="logo" src={LogoImg} />
-        </S.LogoButton>
+        </Link>
       </S.ContentContainer>
     </S.Container>
   );
