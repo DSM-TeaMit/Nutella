@@ -4,7 +4,9 @@ import { Routes, Route } from "react-router-dom";
 const MainRouter: FC = (): JSX.Element => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Routes></Routes>
+      <Routes>
+        <Route path="/" element={<div>hello world</div>} />
+      </Routes>
     </Suspense>
   );
 };
