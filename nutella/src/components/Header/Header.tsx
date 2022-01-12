@@ -15,6 +15,12 @@ const Header = () => {
             <SearchInput />
           </S.SearchInputContainer>
         </S.FlexContainer>
+        <S.ProfileContainer>
+          <S.UserName>2105 김진근</S.UserName>
+          <S.UserImageContainer>
+            <S.UserImage src="" alt="" />
+          </S.UserImageContainer>
+        </S.ProfileContainer>
       </S.ContentContainer>
     </S.Container>
   );
