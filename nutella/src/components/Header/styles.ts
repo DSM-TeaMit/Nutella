@@ -52,3 +52,10 @@ export const UserImage = styled.img`
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.grayscale.gray1};
 `;
+
+export const Arrow = styled.button`
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+`;

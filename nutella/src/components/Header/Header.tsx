@@ -1,5 +1,6 @@
 import * as S from "./styles";
 import LogoImg from "../../assets/logo/Logo.svg";
+import ArrowImg from "../../assets/icons/arrow.svg";
 import { Link } from "react-router-dom";
 import SearchInput from "./SearchInput";
 
@@ -19,6 +20,9 @@ const Header = () => {
           <S.UserName>2105 김진근</S.UserName>
           <S.UserImageContainer>
             <S.UserImage src="" alt="" />
+            <S.Arrow>
+              <img src={ArrowImg} alt="profile arrow" />
+            </S.Arrow>
           </S.UserImageContainer>
         </S.ProfileContainer>
       </S.ContentContainer>
