@@ -26,6 +26,7 @@ const Header = () => {
           </S.UserImageContainer>
         </S.ProfileContainer>
       </S.ContentContainer>
+      <S.Line />
     </S.Container>
   );
 };
