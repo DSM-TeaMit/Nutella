@@ -23,7 +23,7 @@ export const NoDecoLink = styled.a`
   display: flex;
   align-items: center;
   column-gap: 4px;
-
+  
   &:hover {
     text-decoration: underline;
   }
@@ -31,4 +31,11 @@ export const NoDecoLink = styled.a`
 
 export const Github = styled.img`
   margin-right: 4px;
+`;
+
+export const CopyRight = styled.div`
+  text-align: right;
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.black};
+  grid-column: 3 / 5;
 `;

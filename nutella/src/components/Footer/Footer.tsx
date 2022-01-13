@@ -27,6 +27,7 @@ const Footer = () => {
             <img alt="arrow" src={Arrow} />
           </S.NoDecoLink>
         </span>
+        <S.CopyRight>2021 Team Teamit | Copyright ⓒ Teamit Corp. All Rights Reserved.</S.CopyRight>
       </S.ContentContainer>
     </S.Container>
   );
