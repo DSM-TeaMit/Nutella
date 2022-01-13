@@ -132,4 +132,7 @@ export const reset = css`
     font-size: 16px;
     background-color: ${colors.background};
   }
+  * {
+    box-sizing: border-box;
+  }
 `;
