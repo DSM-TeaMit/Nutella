@@ -23,7 +23,7 @@ export const NoDecoLink = styled.a`
   display: flex;
   align-items: center;
   column-gap: 4px;
-  
+
   &:hover {
     text-decoration: underline;
   }
@@ -38,4 +38,8 @@ export const CopyRight = styled.div`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.black};
   grid-column: 3 / 5;
+`;
+
+export const Flex = styled.div`
+  display: flex;
 `;
