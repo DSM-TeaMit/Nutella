@@ -1,4 +1,5 @@
 import * as S from "./styles";
+import Arrow from "../../assets/icons/rightArrow.svg";
 
 const Footer = () => {
   return (
@@ -11,6 +12,7 @@ const Footer = () => {
             rel="noreferrer"
           >
             Github
+            <img alt="arrow" src={Arrow} />
           </S.NoDecoLink>
         </span>
         <span>
@@ -20,6 +22,7 @@ const Footer = () => {
             rel="noreferrer"
           >
             이용약관
+            <img alt="arrow" src={Arrow} />
           </S.NoDecoLink>
         </span>
       </S.ContentContainer>

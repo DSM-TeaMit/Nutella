@@ -21,6 +21,9 @@ export const NoDecoLink = styled.a`
   color: ${({ theme }) => theme.colors.grayscale.black};
   text-decoration: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
 
   &:hover {
     text-decoration: underline;
