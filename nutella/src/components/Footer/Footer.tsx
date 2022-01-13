@@ -1,5 +1,6 @@
 import * as S from "./styles";
 import Arrow from "../../assets/icons/rightArrow.svg";
+import GithubIcon from "../../assets/icons/github.svg";
 
 const Footer = () => {
   return (
@@ -11,6 +12,7 @@ const Footer = () => {
             target="_blank"
             rel="noreferrer"
           >
+            <S.Github alt="github" src={GithubIcon} />
             Github
             <img alt="arrow" src={Arrow} />
           </S.NoDecoLink>

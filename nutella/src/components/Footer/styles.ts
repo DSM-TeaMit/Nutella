@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
 
 export const Container = styled.footer`
   width: 100%;
@@ -28,4 +27,8 @@ export const NoDecoLink = styled.a`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+export const Github = styled.img`
+  margin-right: 4px;
 `;
