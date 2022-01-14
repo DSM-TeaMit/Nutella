@@ -4,6 +4,9 @@ export const Container = styled.header`
   height: 60px;
   width: 100%;
   padding: 0px 320px;
+  position: fixed;
+  top: 0;
+  left: 0;
 `;
 
 export const ContentContainer = styled.div`
@@ -56,4 +59,13 @@ export const Arrow = styled.button`
   background-color: transparent;
   padding: 0;
   cursor: pointer;
+`;
+
+export const Line = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
+  position: absolute;
+  top: 100%;
+  left: 0;
 `;
