@@ -7,6 +7,8 @@ export const Container = styled.header`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
+  background-color: ${({ theme }) => theme.colors.grayscale.white};
 `;
 
 export const ContentContainer = styled.div`
