@@ -6,6 +6,7 @@ import Personal from "../../assets/icons/personal.svg";
 import Document from "../../assets/icons/document.svg";
 import DocumentEdit from "../../assets/icons/document_edit.svg";
 import Setting from "../../assets/icons/setting.svg";
+import Profile from "./Contents/Profile";
 
 const navs: NavigationType[] = [
   {
@@ -39,7 +40,7 @@ const MyPage = () => {
         </S.SideBarContainer>
         <S.ContentContainer>
           <Routes>
-            <Route path="/" element={<div>this is profile</div>} />
+            <Route path="/" element={<Profile />} />
             <Route path="/project" element={<div>this is project</div>} />
             <Route path="/report" element={<div>this is report</div>} />
             <Route path="/setting" element={<div>this is setting</div>} />
