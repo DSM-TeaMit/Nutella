@@ -10,6 +10,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 20px;
+  position: sticky;
+  top: 120px;
 `;
 
 export const Line = styled.div`
