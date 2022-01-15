@@ -15,7 +15,7 @@ const SideBar = () => {
   const navs: NavigationType[] = [
     {
       text: "프로필",
-      to: "",
+      to: "*",
       icon: Personal,
     },
     {
