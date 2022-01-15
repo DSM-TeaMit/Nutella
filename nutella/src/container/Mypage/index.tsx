@@ -1,6 +1,6 @@
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import MyPage from "../../components/MyPage/MyPage";
+import MyPage from "../../components/Mypage/Mypage";
 
 const MyPageContainer = () => {
   return (
