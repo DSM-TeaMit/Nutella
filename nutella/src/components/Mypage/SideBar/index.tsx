@@ -11,30 +11,30 @@ interface NavigationType {
   icon: string;
 }
 
-const SideBar = () => {
-  const navs: NavigationType[] = [
-    {
-      text: "프로필",
-      to: "",
-      icon: Personal,
-    },
-    {
-      text: "프로젝트",
-      to: "project",
-      icon: Document,
-    },
-    {
-      text: "보고서",
-      to: "report",
-      icon: DocumentEdit,
-    },
-    {
-      text: "계정 설정",
-      to: "setting",
-      icon: Setting,
-    },
-  ];
+const navs: NavigationType[] = [
+  {
+    text: "프로필",
+    to: "",
+    icon: Personal,
+  },
+  {
+    text: "프로젝트",
+    to: "project",
+    icon: Document,
+  },
+  {
+    text: "보고서",
+    to: "report",
+    icon: DocumentEdit,
+  },
+  {
+    text: "계정 설정",
+    to: "setting",
+    icon: Setting,
+  },
+];
 
+const SideBar = () => {
   return (
     <S.Container>
       {navs.map(({ to, text, icon }) => (
