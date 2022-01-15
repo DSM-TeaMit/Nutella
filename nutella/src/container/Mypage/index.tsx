@@ -2,7 +2,7 @@ import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import MyPage from "../../components/Mypage/Mypage";
 
-const MyPageContainer = () => {
+const MypageContainer = () => {
   return (
     <>
       <Header />
@@ -12,4 +12,4 @@ const MyPageContainer = () => {
   );
 };
 
-export default MyPageContainer;
+export default MypageContainer;
