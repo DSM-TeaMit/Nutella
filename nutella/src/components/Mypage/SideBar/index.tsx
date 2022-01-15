@@ -37,12 +37,14 @@ const navs: NavigationType[] = [
 const SideBar = () => {
   return (
     <S.Container>
-      {navs.map(({ to, text, icon }) => (
-        <Navigation end to={to}>
-          <img alt="profile" src={icon} />
-          <div>{text}</div>
-        </Navigation>
-      ))}
+      <S.NavContainer>
+        {navs.map(({ to, text, icon }) => (
+          <Navigation end to={to}>
+            <img alt="profile" src={icon} />
+            <div>{text}</div>
+          </Navigation>
+        ))}
+      </S.NavContainer>
     </S.Container>
   );
 };
