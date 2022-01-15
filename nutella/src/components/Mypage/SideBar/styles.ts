@@ -7,6 +7,15 @@ export const Container = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.grayscale.lightGray1};
   padding: 20px 16px;
   min-height: 664px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+`;
+
+export const Line = styled.div`
+  height: 1px;
+  width: 100%;
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
 `;
 
 export const NavContainer = styled.div`

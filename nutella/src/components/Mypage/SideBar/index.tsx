@@ -10,6 +10,14 @@ interface PropsType {
 const SideBar: FC<PropsType> = ({ navs }) => {
   return (
     <S.Container>
+      <S.InfoContainer>
+        <S.ProfileImage alt="" src="" />
+        <S.TextContainer>
+          <S.Name>2105 김진근</S.Name>
+          <S.Email>201403kjg@dsm.hs.kr</S.Email>
+        </S.TextContainer>
+      </S.InfoContainer>
+      <S.Line />
       <S.NavContainer>
         {navs.map(({ to, text, icon }) => (
           <Navigation end to={to}>
