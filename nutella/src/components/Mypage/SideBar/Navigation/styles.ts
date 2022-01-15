@@ -10,7 +10,10 @@ export const Container = styled(NavLink)<ContainerProps>`
   border: 0;
   border-radius: 10px;
   outline: none;
-  color: ${({ theme }) => theme.colors.grayscale.gray1};
+  color: ${({ theme, active }) =>
+    active ? theme.colors.grayscale.white : theme.colors.grayscale.gray1};
+  background-color: ${({ theme, active }) =>
+    active ? theme.colors.primary.default : theme.colors.grayscale.white};
   font: ${({ theme }) => theme.fonts.body2};
   text-decoration: none;
   padding: 12px 16px;
@@ -18,6 +21,7 @@ export const Container = styled(NavLink)<ContainerProps>`
   column-gap: 12px;
 
   img {
-    filter: ${({ theme }) => theme.filters.grayscale.gray1};
+    filter: ${({ theme, active }) =>
+      active ? theme.filters.grayscale.white : theme.filters.grayscale.gray1};
   }
 `;
