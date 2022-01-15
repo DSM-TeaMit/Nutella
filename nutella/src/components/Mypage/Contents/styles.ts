@@ -1,5 +1,12 @@
 import styled from "@emotion/styled";
 
+export const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 48px;
+`;
+
 export const ProfileContainer = styled.div`
   width: 100%;
   display: flex;
