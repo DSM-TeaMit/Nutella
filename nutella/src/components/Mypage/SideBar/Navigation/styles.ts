@@ -20,6 +20,10 @@ export const Container = styled(NavLink)<ContainerProps>`
   display: flex;
   column-gap: 12px;
 
+  &:hover {
+    background-color: ${({ theme, active }) => !active && theme.colors.grayscale.lightGray1};
+  }
+
   img {
     filter: ${({ theme, active }) =>
       active ? theme.filters.grayscale.white : theme.filters.grayscale.gray1};
