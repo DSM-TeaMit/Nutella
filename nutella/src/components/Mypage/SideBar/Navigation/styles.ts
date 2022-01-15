@@ -9,4 +9,11 @@ export const Container = styled(NavLink)`
   color: ${({ theme }) => theme.colors.grayscale.gray1};
   font: ${({ theme }) => theme.fonts.body2};
   text-decoration: none;
+  padding: 12px 16px;
+  display: flex;
+  column-gap: 12px;
+
+  img {
+    filter: ${({ theme }) => theme.filters.grayscale.gray1};
+  }
 `;
