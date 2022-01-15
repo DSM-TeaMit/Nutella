@@ -1,7 +1,11 @@
 import styled from "@emotion/styled";
 import { NavLink } from "react-router-dom";
 
-export const Container = styled(NavLink)`
+interface ContainerProps {
+  active: boolean;
+}
+
+export const Container = styled(NavLink)<ContainerProps>`
   width: 100%;
   border: 0;
   border-radius: 10px;
