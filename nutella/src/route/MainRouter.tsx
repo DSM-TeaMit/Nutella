@@ -7,7 +7,7 @@ const MainRouter: FC = (): JSX.Element => {
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/" element={<div>hello world</div>} />
-        <Route path="/mypage" element={<MypageContainer />} />
+        <Route path="/mypage/*" element={<MypageContainer />} />
       </Routes>
     </Suspense>
   );
