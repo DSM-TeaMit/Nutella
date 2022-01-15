@@ -39,3 +39,25 @@ export const ProfileDescription = styled.div`
   color: ${({ theme }) => theme.colors.grayscale.gray2};
   font: ${({ theme }) => theme.fonts.body3};
 `;
+
+export const Github = styled.a`
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
+  font: ${({ theme }) => theme.fonts.body3};
+  cursor: pointer;
+  display: flex;
+  column-gap: 8px;
+  align-items: center;
+
+  img {
+    filter: ${({ theme }) => theme.filters.grayscale.gray2};
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.grayscale.black};
+
+    img {
+      filter: ${({ theme }) => theme.filters.grayscale.black};
+    }
+  }
+`;
