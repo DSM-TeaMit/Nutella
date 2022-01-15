@@ -7,6 +7,18 @@ export const ProfileContainer = styled.div`
   align-items: center;
 `;
 
+export const ProfileContainerOuter = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 28px;
+`;
+
+export const Line = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
+`;
+
 export const ProfileImage = styled.img`
   width: 120px;
   height: 120px;
