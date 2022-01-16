@@ -30,6 +30,17 @@ export const Container = styled.div`
   em {
     font-style: italic;
   }
+  ol {
+    list-style-type: decimal;
+  }
+  ul {
+    list-style-type: circle;
+  }
+  li {
+    ol {
+      margin-left: 2rem;
+    }
+  }
 `;
 
 export const BlockquoteInner = styled.div`

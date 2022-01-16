@@ -11,7 +11,7 @@ const MarkdownRender = () => {
               return <S.BlockquoteInner>{children}</S.BlockquoteInner>;
             },
           }}
-        >{`# h1,\n> world\n>\n>> wowow!`}</ReactMarkdown>
+        >{`1. First item\n2. Second item\n3. Third item\n\t1. Indented item\n\t2. Indented item\n\t\t1. wow\n4. Fourth item`}</ReactMarkdown>
       </S.Container>
     </>
   );
