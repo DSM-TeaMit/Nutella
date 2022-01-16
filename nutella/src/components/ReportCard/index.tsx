@@ -2,7 +2,7 @@ import * as S from "./styles";
 
 const ReportCard = () => {
   return (
-    <S.Container>
+    <S.Container to="">
       <S.Image alt="project image" src="" />
       <S.InfoContainer>
         <S.TitleContaienr>

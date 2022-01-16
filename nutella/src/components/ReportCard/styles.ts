@@ -1,11 +1,18 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
-export const Container = styled.div`
+export const Container = styled(Link)`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
   display: flex;
   border-radius: 10px;
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.grayscale.black};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
+  }
 `;
 
 export const Image = styled.img`
