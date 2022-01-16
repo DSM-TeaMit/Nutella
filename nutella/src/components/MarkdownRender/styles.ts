@@ -31,3 +31,23 @@ export const Container = styled.div`
     font-style: italic;
   }
 `;
+
+export const BlockquoteInner = styled.div`
+  background-color: ${({ theme }) => theme.colors.background};
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
+  padding: 16px 36px;
+  position: relative;
+  margin: 12px 0px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 100%;
+    background-color: ${({ theme }) => theme.colors.primary.default};
+    top: 0px;
+    left: 0px;
+  }
+`;
