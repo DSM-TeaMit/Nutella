@@ -43,6 +43,7 @@ export const Container = styled.div`
     list-style-type: square;
   }
   li {
+    margin-left: 1.2rem;
     ol,
     ul {
       margin-left: 1rem;
