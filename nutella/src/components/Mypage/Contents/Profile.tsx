@@ -30,7 +30,10 @@ const Profile = () => {
           <S.Line />
         </S.ProfileContainerOuter>
         <div>
-          <MarkdownRender />
+          <S.Description>Github 에서 가져온 README</S.Description>
+          <S.ReadMe>
+            <MarkdownRender>{`### I want to be a Front-end developer 🙂\ni'm learning about:\n- JavaScript\n- TypeScript`}</MarkdownRender>
+          </S.ReadMe>
         </div>
       </S.Container>
     </ContentInner>
