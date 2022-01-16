@@ -34,11 +34,18 @@ export const Container = styled.div`
     list-style-type: decimal;
   }
   ul {
+    list-style-type: disc;
+  }
+  ul ul {
     list-style-type: circle;
   }
+  ul ul ul {
+    list-style-type: square;
+  }
   li {
-    ol {
-      margin-left: 2rem;
+    ol,
+    ul {
+      margin-left: 1rem;
     }
   }
 `;
