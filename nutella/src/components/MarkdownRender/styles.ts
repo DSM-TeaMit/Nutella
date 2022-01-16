@@ -65,24 +65,23 @@ export const Container = styled.div`
   a {
     color: ${({ theme }) => theme.colors.primary.default};
   }
-`;
+  blockquote {
+    background-color: ${({ theme }) => theme.colors.background};
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    padding: 16px 36px;
+    position: relative;
+    margin: 12px 0px;
 
-export const BlockquoteInner = styled.div`
-  background-color: ${({ theme }) => theme.colors.background};
-  border-radius: 10px;
-  overflow: hidden;
-  width: 100%;
-  padding: 16px 36px;
-  position: relative;
-  margin: 12px 0px;
-
-  &::before {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 100%;
-    background-color: ${({ theme }) => theme.colors.primary.default};
-    top: 0px;
-    left: 0px;
+    &::before {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 100%;
+      background-color: ${({ theme }) => theme.colors.primary.default};
+      top: 0px;
+      left: 0px;
+    }
   }
 `;
