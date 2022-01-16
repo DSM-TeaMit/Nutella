@@ -1,5 +1,3 @@
-import { Global, Theme, ThemeContext } from "@emotion/react";
-import { useContext } from "react";
 import ReactMarkdown from "react-markdown";
 import * as S from "./styles";
 

@@ -2,6 +2,7 @@ import { ContentInner } from "../styles";
 import * as S from "./styles";
 import GithubIcon from "../../../assets/icons/github_black.svg";
 import ArrowIcon from "../../../assets/icons/arrow_black.svg";
+import MarkdownRender from "../../MarkdownRender";
 
 const Profile = () => {
   return (
@@ -28,6 +29,9 @@ const Profile = () => {
           </S.ProfileContainer>
           <S.Line />
         </S.ProfileContainerOuter>
+        <div>
+          <MarkdownRender />
+        </div>
       </S.Container>
     </ContentInner>
   );
