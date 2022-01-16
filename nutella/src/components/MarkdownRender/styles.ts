@@ -58,6 +58,13 @@ export const Container = styled.div`
     border-radius: 10px;
     margin: 12px 0px;
   }
+  hr {
+    border-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
+    border-style: solid;
+  }
+  a {
+    color: ${({ theme }) => theme.colors.primary.default};
+  }
 `;
 
 export const BlockquoteInner = styled.div`
