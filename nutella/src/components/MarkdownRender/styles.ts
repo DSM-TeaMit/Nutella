@@ -48,11 +48,21 @@ export const Container = styled.div`
       margin-left: 1rem;
     }
   }
+  code {
+    font: ${({ theme }) => theme.fonts.body3};
+    font-family: monospace;
+  }
+  pre {
+    padding: 16px 36px;
+    background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
+    border-radius: 10px;
+    margin: 12px 0px;
+  }
 `;
 
 export const BlockquoteInner = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
-  border-radius: 5px;
+  border-radius: 10px;
   overflow: hidden;
   width: 100%;
   padding: 16px 36px;

@@ -3,18 +3,13 @@ import * as S from "./styles";
 
 const MarkdownRender = () => {
   const value = `test
-  
-  - 1
-  - 2
-  - 3
-    - 3-1
-    - 3-2
-        - 3-2-1
-        - 3-2-2
-            - 3-2-2-1
-            - 3-2-2-2
-            - 3-2-2-2-1
-  - 4`;
+  this is code:\n
+  \`hello world!\`\n
+  and this is code block:
+  \`\`\`
+  wow
+  \`\`\`
+  `;
 
   return (
     <>
