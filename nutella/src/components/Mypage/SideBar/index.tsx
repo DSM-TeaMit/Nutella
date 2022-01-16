@@ -19,8 +19,8 @@ const SideBar: FC<PropsType> = ({ navs }) => {
       </S.InfoContainer>
       <S.Line />
       <S.NavContainer>
-        {navs.map(({ to, text, icon }) => (
-          <Navigation end to={to}>
+        {navs.map(({ to, text, icon }, index) => (
+          <Navigation end to={to} key={index}>
             <img alt="profile" src={icon} />
             <div>{text}</div>
           </Navigation>
