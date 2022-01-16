@@ -5,6 +5,7 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
   display: flex;
+  border-radius: 10px;
 `;
 
 export const Image = styled.img`
@@ -12,6 +13,7 @@ export const Image = styled.img`
   width: 180px;
   object-fit: cover;
   object-position: center;
+  background-color: ${({ theme }) => theme.colors.grayscale.gray1};
 `;
 
 export const InfoContainer = styled.div`
@@ -19,6 +21,7 @@ export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 16px;
+  flex: 1;
 `;
 
 export const TitleContaienr = styled.div`
@@ -30,6 +33,9 @@ export const TitleContaienr = styled.div`
 export const Title = styled.div`
   font: ${({ theme }) => theme.fonts.subtitle2};
   color: ${({ theme }) => theme.colors.grayscale.black};
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex: 1;
 `;
 
 export const Description = styled.div`
