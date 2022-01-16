@@ -4,12 +4,11 @@ import ReactMarkdown from "react-markdown";
 import * as S from "./styles";
 
 const MarkdownRender = () => {
-  const themeContext = useContext(ThemeContext) as Theme;
-
   return (
     <>
-      <Global styles={S.MarkdownStyle(themeContext)} />
-      <ReactMarkdown>{`# h1,\n**world**`}</ReactMarkdown>
+      <S.Container>
+        <ReactMarkdown>{`# h1,\n> world`}</ReactMarkdown>
+      </S.Container>
     </>
   );
 };
