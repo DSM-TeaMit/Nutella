@@ -4,6 +4,7 @@ import GithubIcon from "../../../assets/icons/github_black.svg";
 import ArrowIcon from "../../../assets/icons/arrow_black.svg";
 import MarkdownRender from "../../MarkdownRender";
 import ReportCard from "../../ReportCard";
+import ProjectCard from "../../ProjectCard";
 
 const Profile = () => {
   return (
@@ -45,6 +46,18 @@ const Profile = () => {
             <ReportCard />
             <ReportCard />
             <ReportCard />
+          </S.Grid>
+        </div>
+        <div>
+          <S.ContentTitle>
+            <S.H3>프로젝트&nbsp;</S.H3>
+            <S.BlueH3>12</S.BlueH3>
+          </S.ContentTitle>
+          <S.Grid>
+            <ProjectCard />
+            <ProjectCard />
+            <ProjectCard />
+            <ProjectCard />
           </S.Grid>
         </div>
       </S.Container>
