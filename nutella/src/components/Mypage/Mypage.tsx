@@ -8,6 +8,7 @@ import DocumentEdit from "../../assets/icons/document_edit.svg";
 import Setting from "../../assets/icons/setting.svg";
 import Profile from "./Contents/Profile";
 import Project from "./Contents/Project";
+import Report from "./Contents/Report";
 
 const navs: NavigationType[] = [
   {
@@ -43,7 +44,7 @@ const MyPage = () => {
           <Routes>
             <Route path="/" element={<Profile />} />
             <Route path="/project" element={<Project />} />
-            <Route path="/report" element={<div>this is report</div>} />
+            <Route path="/report" element={<Report />} />
             <Route path="/setting" element={<div>this is setting</div>} />
           </Routes>
         </S.ContentContainer>
