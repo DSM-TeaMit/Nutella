@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 export const Container = styled.div`
   width: 100%;
   padding: 12px 0px;
+  overflow: hidden;
 `;
 
 export const HeaderContainer = styled.button`
