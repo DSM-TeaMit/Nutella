@@ -96,3 +96,13 @@ export const UserAdditional = styled.div`
   font: ${({ theme }) => theme.fonts.description};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
 `;
+
+export const Type = styled.span`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.primary.default};
+`;
+
+export const TypeAdditional = styled.span`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
+`;

@@ -29,6 +29,10 @@ const ProjectCard = () => {
             </S.UserImageContainer>
             <S.UserAdditional>+3</S.UserAdditional>
           </S.UserContainer>
+          <div>
+            <S.Type>웹 · 보안&nbsp;</S.Type>
+            <S.TypeAdditional>+3</S.TypeAdditional>
+          </div>
         </S.BottonContainer>
       </S.InfoContainer>
     </S.Container>
