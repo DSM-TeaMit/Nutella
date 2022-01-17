@@ -9,6 +9,7 @@ export const Container = styled(Link)`
   border-radius: 10px;
   text-decoration: none;
   color: ${({ theme }) => theme.colors.grayscale.black};
+  min-width: 0;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
@@ -29,23 +30,28 @@ export const InfoContainer = styled.div`
   flex-direction: column;
   row-gap: 16px;
   flex: 1;
+  min-width: 0;
 `;
 
 export const TitleContaienr = styled.div`
+  flex: 1;
   display: flex;
-  column-gap: 4px;
   align-items: center;
+  column-gap: 4px;
+  min-width: 0;
 `;
 
-export const Title = styled.div`
+export const Title = styled.span`
   font: ${({ theme }) => theme.fonts.subtitle2};
   color: ${({ theme }) => theme.colors.grayscale.black};
   text-overflow: ellipsis;
   overflow: hidden;
-  flex: 1;
+  white-space: nowrap;
 `;
 
-export const Description = styled.div`
+export const Description = styled.span`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
+  white-space: nowrap;
+  flex-shrink: 0;
 `;
