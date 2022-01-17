@@ -6,9 +6,9 @@ const Report = () => {
   return (
     <ContentInner>
       <S.Container>
-        <ReportAccordion />
-        <ReportAccordion />
-        <ReportAccordion />
+        <ReportAccordion title="승인 대기중인" count={12} />
+        <ReportAccordion title="승인 거절된" count={12} />
+        <ReportAccordion title="승인 된" count={12} />
       </S.Container>
     </ContentInner>
   );
