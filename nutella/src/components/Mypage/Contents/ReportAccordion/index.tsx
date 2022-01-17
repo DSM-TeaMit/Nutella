@@ -28,7 +28,13 @@ const ReportAccordion = () => {
             <S.Title>승인 대기중인 보고서&nbsp;</S.Title>
             <S.Count>12</S.Count>
           </div>
-          <img alt="arrow" src={Arrow} />
+          <img
+            style={{
+              transform: `rotate(${isActive ? 0 : 180}deg)`,
+            }}
+            alt="arrow"
+            src={Arrow}
+          />
         </S.HeaderContainer>
       </div>
       <S.ContentContainer>
