@@ -7,13 +7,17 @@ const ReportAccordion = () => {
   const [isActive, setIsActive] = useState(false);
   const container = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
+  const content = useRef<HTMLDivElement>(null);
 
   const padding = 12;
+  const gap = 16;
 
   useEffect(() => {
-    if (container.current && header.current) {
+    if (container.current && header.current && content.current) {
       if (isActive) {
-        container.current.style.height = "unset";
+        container.current.style.height = `${
+          header.current.offsetHeight + content.current.offsetHeight + gap + padding * 2
+        }px `;
       } else {
         container.current.style.height = `${header.current.offsetHeight + padding * 2}px`;
       }
@@ -37,7 +41,7 @@ const ReportAccordion = () => {
           />
         </S.HeaderContainer>
       </div>
-      <S.ContentContainer>
+      <S.ContentContainer isActive={isActive} ref={content}>
         <ReportCard />
         <ReportCard />
         <ReportCard />
