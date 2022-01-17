@@ -1,4 +1,5 @@
 import * as S from "./styles";
+import Team from "../../assets/icons/team.svg";
 
 const ProjectCard = () => {
   return (
@@ -8,7 +9,7 @@ const ProjectCard = () => {
         <div>
           <S.TitleContaienr>
             <S.Title>Teamit</S.Title>
-            <S.TypeIcon />
+            <S.TypeIcon alt="type icon" src={Team} />
           </S.TitleContaienr>
           <S.Description>
             Teamit은 위원은 정당에 가입하거나 정치에 관여할 수 없다. 헌법헌법헌법헌법헌법
