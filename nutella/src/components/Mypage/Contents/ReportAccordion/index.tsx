@@ -1,9 +1,14 @@
 import * as S from "./styles";
 import Arrow from "../../../../assets/icons/up_arrow.svg";
 import ReportCard from "../../../ReportCard";
-import { useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
-const ReportAccordion = () => {
+interface PropsType {
+  title: string;
+  count: number;
+}
+
+const ReportAccordion: FC<PropsType> = ({ title, count }) => {
   const [isActive, setIsActive] = useState(false);
   const container = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
@@ -29,8 +34,8 @@ const ReportAccordion = () => {
       <div ref={header}>
         <S.HeaderContainer onClick={() => setIsActive(!isActive)}>
           <div>
-            <S.Title>승인 대기중인 보고서&nbsp;</S.Title>
-            <S.Count>12</S.Count>
+            <S.Title>{title} 보고서&nbsp;</S.Title>
+            <S.Count>{count}</S.Count>
           </div>
           <img
             style={{
