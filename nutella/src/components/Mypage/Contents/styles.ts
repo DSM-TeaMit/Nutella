@@ -93,3 +93,24 @@ export const ReadMe = styled.div`
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   border: solid 1px ${({ theme }) => theme.colors.grayscale.lightGray1};
 `;
+
+export const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 20px;
+  row-gap: 20px;
+`;
+
+export const H3 = styled.span`
+  font: ${({ theme }) => theme.fonts.h3};
+  color: ${({ theme }) => theme.colors.grayscale.black};
+`;
+
+export const BlueH3 = styled.span`
+  font: ${({ theme }) => theme.fonts.h3};
+  color: ${({ theme }) => theme.colors.primary.default};
+`;
+
+export const ContentTitle = styled.div`
+  margin-bottom: 16px;
+`;

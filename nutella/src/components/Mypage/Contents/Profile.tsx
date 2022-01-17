@@ -3,6 +3,7 @@ import * as S from "./styles";
 import GithubIcon from "../../../assets/icons/github_black.svg";
 import ArrowIcon from "../../../assets/icons/arrow_black.svg";
 import MarkdownRender from "../../MarkdownRender";
+import ReportCard from "../../ReportCard";
 
 const Profile = () => {
   return (
@@ -34,6 +35,17 @@ const Profile = () => {
           <S.ReadMe>
             <MarkdownRender>{`### I want to be a Front-end developer 🙂\ni'm learning about:\n- JavaScript\n- TypeScript`}</MarkdownRender>
           </S.ReadMe>
+        </div>
+        <div>
+          <S.ContentTitle>
+            <S.H3>승인 대기중인 보고서&nbsp;</S.H3>
+            <S.BlueH3>3</S.BlueH3>
+          </S.ContentTitle>
+          <S.Grid>
+            <ReportCard />
+            <ReportCard />
+            <ReportCard />
+          </S.Grid>
         </div>
       </S.Container>
     </ContentInner>
