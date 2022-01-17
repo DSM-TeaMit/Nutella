@@ -7,8 +7,13 @@ export const Container = styled(Link)`
   display: flex;
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   border: solid 1px ${({ theme }) => theme.colors.grayscale.lightGray1};
+  color: ${({ theme }) => theme.colors.grayscale.black};
   border-radius: 10px;
   text-decoration: none;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
+  }
 `;
 
 export const Image = styled.img`
@@ -17,6 +22,7 @@ export const Image = styled.img`
   border-radius: 10px;
   object-fit: cover;
   object-position: center;
+  background-color: ${({ theme }) => theme.colors.grayscale.gray1};
 `;
 
 export const InfoContainer = styled.div`
@@ -56,4 +62,37 @@ export const Description = styled.div`
   text-overflow: ellipsis;
   color: ${({ theme }) => theme.colors.grayscale.gray2};
   font: ${({ theme }) => theme.fonts.body3};
+`;
+
+export const BottonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const UserContainer = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+`;
+
+export const UserImage = styled.img`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.colors.grayscale.gray1};
+`;
+
+export const UserImageOuter = styled.div`
+  width: 12px;
+  height: 24px;
+`;
+
+export const UserImageContainer = styled.div`
+  display: flex;
+`;
+
+export const UserAdditional = styled.div`
+  font: ${({ theme }) => theme.fonts.description};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
 `;
