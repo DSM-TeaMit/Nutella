@@ -12,6 +12,8 @@ export const HeaderContainer = styled.button`
   border: 0;
   outline: none;
   cursor: pointer;
+  background-color: ${({ theme }) => theme.colors.grayscale.white};
+  width: 100%;
 `;
 
 export const Title = styled.span`
@@ -21,7 +23,7 @@ export const Title = styled.span`
 
 export const Count = styled.span`
   font: ${({ theme }) => theme.fonts.h3};
-  color: ${({ theme }) => theme.colors.grayscale.black};
+  color: ${({ theme }) => theme.colors.primary.default};
 `;
 
 export const ContentContainer = styled.div`

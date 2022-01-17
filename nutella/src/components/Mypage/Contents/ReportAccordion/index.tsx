@@ -7,7 +7,7 @@ const ReportAccordion = () => {
     <S.Container>
       <S.HeaderContainer>
         <div>
-          <S.Title>승인 대기중인 보고서</S.Title>
+          <S.Title>승인 대기중인 보고서&nbsp;</S.Title>
           <S.Count>12</S.Count>
         </div>
         <img alt="arrow" src={Arrow} />
