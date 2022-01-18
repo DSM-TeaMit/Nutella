@@ -2,8 +2,6 @@ import * as S from "./styles";
 import Project from "../Project/Project";
 
 const Search = () => {
-  const max = 12;
-  const count = [max];
   return (
     <S.Container>
       <S.SearchContent>
