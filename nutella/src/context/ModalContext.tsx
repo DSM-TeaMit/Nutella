@@ -16,12 +16,14 @@ export const ModalProvider: FC = ({ children }) => {
   const [modals, setModals] = useState<JSX.Element[]>([]);
 
   const closeCurrentModal = useCallback(() => {
+    if (modals.length <= 0) {
+      return;
+    }
+
     const copyModals = [...modals];
     copyModals.pop();
 
-    if (copyModals.length > 0) {
-      setModals(copyModals);
-    }
+    setModals(copyModals);
   }, [modals]);
 
   const openModal = useCallback(
