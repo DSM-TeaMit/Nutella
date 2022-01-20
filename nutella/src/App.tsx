@@ -1,5 +1,7 @@
 import { Global, ThemeProvider } from "@emotion/react";
+import MessageController from "./components/MessageController";
 import ModalController from "./components/ModalController";
+import MessageProvider from "./components/Providers/MessageProvider";
 import { ModalProvider } from "./context/ModalContext";
 import RootRouter from "./route";
 import { reset } from "./style/globalStyle";
@@ -9,9 +11,12 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <ModalProvider>
-        <Global styles={reset} />
-        <RootRouter />
-        <ModalController />
+        <MessageProvider>
+          <Global styles={reset} />
+          <RootRouter />
+          <ModalController />
+          <MessageController />
+        </MessageProvider>
       </ModalProvider>
     </ThemeProvider>
   );
