@@ -28,6 +28,13 @@ const ModalController = () => {
     }
   }, [modals, onOutsideClick]);
 
+  useEffect(() => {
+    if (modals.length > 0) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [modals]);
   return modals.length > 0 ? (
     ReactDOM.createPortal(
       <S.Background>
