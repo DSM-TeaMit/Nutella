@@ -14,14 +14,14 @@ const MessageController = () => {
   const renderMessages = useMemo(
     () =>
       messages.map((value) => {
-        const { type } = value;
+        const { type, id } = value;
         const componentMap = new Map<string, FC<MessageType>>()
           .set("Positive", PositiveMessage)
           .set("Denial", DenialMessage);
 
         const component = componentMap.get(type)!;
 
-        return React.createElement(component, { ...value, key: value.id });
+        return React.createElement(component, { ...value, key: id });
       }),
     [messages]
   );
