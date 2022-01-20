@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const Container = styled.div`
+const Container = styled.div`
   padding: 16px;
   color: ${({ theme }) => theme.colors.grayscale.white};
   display: flex;
