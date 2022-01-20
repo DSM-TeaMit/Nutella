@@ -20,7 +20,7 @@ const MessageProvider: FC = ({ children }) => {
     [messages]
   );
 
-  const value: MessageContextType = useMemo(
+  const value = useMemo<MessageContextType>(
     () => ({
       messages,
       showMessage,
