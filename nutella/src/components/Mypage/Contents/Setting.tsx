@@ -2,7 +2,6 @@ import { ContentInner } from "../styles";
 import * as S from "./styles";
 import Arrow from "../../../assets/icons/arrow_black.svg";
 import useModalContext from "../../../hooks/useModalContext";
-import TestModal from "../../TestModal";
 
 const Setting = () => {
   const { openModal } = useModalContext();
@@ -14,12 +13,7 @@ const Setting = () => {
           <S.Title>계정 설정</S.Title>
           <S.ContentContainer>
             <S.SettingTitle>Github</S.SettingTitle>
-            <S.Gray
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal(<TestModal />);
-              }}
-            >
+            <S.Gray>
               <span>KJG04</span>
               <img alt="github arrow" src={Arrow} />
             </S.Gray>
