@@ -7,6 +7,10 @@ export const Container = styled.div`
   row-gap: 48px;
 `;
 
+export const SettingContaienr = styled(Container)`
+  row-gap: 28px;
+`;
+
 export const ProfileContainer = styled.div`
   width: 100%;
   display: flex;
@@ -114,3 +118,10 @@ export const BlueH3 = styled.span`
 export const ContentTitle = styled.div`
   margin-bottom: 16px;
 `;
+
+export const Title = styled.div`
+  font: ${({ theme }) => theme.fonts.h3};
+  color: ${({ theme }) => theme.colors.grayscale.black};
+`;
+
+export const 
