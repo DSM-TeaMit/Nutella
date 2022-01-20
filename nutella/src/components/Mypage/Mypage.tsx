@@ -5,10 +5,11 @@ import * as S from "./styles";
 import Personal from "../../assets/icons/personal.svg";
 import Document from "../../assets/icons/document.svg";
 import DocumentEdit from "../../assets/icons/document_edit.svg";
-import Setting from "../../assets/icons/setting.svg";
+import SettingIcon from "../../assets/icons/setting.svg";
 import Profile from "./Contents/Profile";
 import Project from "./Contents/Project";
 import Report from "./Contents/Report";
+import Setting from "./Contents/Setting";
 
 const navs: NavigationType[] = [
   {
@@ -29,7 +30,7 @@ const navs: NavigationType[] = [
   {
     text: "계정 설정",
     to: "setting",
-    icon: Setting,
+    icon: SettingIcon,
   },
 ];
 
@@ -45,7 +46,7 @@ const MyPage = () => {
             <Route path="/" element={<Profile />} />
             <Route path="/project" element={<Project />} />
             <Route path="/report" element={<Report />} />
-            <Route path="/setting" element={<div>this is setting</div>} />
+            <Route path="/setting" element={<Setting />} />
           </Routes>
         </S.ContentContainer>
       </S.Inner>
