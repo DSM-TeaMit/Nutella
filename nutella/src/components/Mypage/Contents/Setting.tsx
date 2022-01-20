@@ -1,7 +1,6 @@
 import { ContentInner } from "../styles";
 import * as S from "./styles";
 import Arrow from "../../../assets/icons/arrow_black.svg";
-import useModalContext from "../../../hooks/useModalContext";
 
 const Setting = () => {
 
