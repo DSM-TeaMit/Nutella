@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 import { MessageContext, MessageContextType, MessageType } from "../../context/MessageContext";
 
 const MessageProvider: FC = ({ children }) => {
@@ -11,7 +11,13 @@ const MessageProvider: FC = ({ children }) => {
     [messages]
   );
 
-  const value: MessageContextType = { messages, showMessage };
+  const value: MessageContextType = useMemo(
+    () => ({
+      messages,
+      showMessage,
+    }),
+    [messages, showMessage]
+  );
 
   return <MessageContext.Provider value={value}>{children}</MessageContext.Provider>;
 };
