@@ -1,6 +1,6 @@
 import { Global, ThemeProvider } from "@emotion/react";
 import ModalController from "./components/ModalController";
-import ModalProvider from "./components/ModalProvider";
+import ModalProvider from "./components/Providers/ModalProvider";
 import RootRouter from "./route";
 import { reset } from "./style/globalStyle";
 import theme from "./utils/theme/theme";
