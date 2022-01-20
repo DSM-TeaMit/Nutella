@@ -1,12 +1,13 @@
 import { FC, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { MypageContainer } from "../container";
+import { SearchContainer, LoginContainer, MypageContainer } from "../container";
 
 const MainRouter: FC = (): JSX.Element => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        <Route path="/" element={<div>hello world</div>} />
+        <Route path="/" element={<LoginContainer />} />
+        <Route path="/search" element={<SearchContainer />} />
         <Route path="/mypage/*" element={<MypageContainer />} />
       </Routes>
     </Suspense>
