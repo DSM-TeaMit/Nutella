@@ -3,6 +3,7 @@ import * as S from "./styles";
 import Arrow from "../../../assets/icons/arrow_black.svg";
 
 const Setting = () => {
+
   return (
     <ContentInner>
       <S.SettingContaienr>

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import State from "../../interface/State";
+import State from "../interface/State";
 
 type Value = string | number;
 
