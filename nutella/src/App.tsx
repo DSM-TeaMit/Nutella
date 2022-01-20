@@ -1,4 +1,5 @@
 import { Global, ThemeProvider } from "@emotion/react";
+import ModalController from "./components/ModalController";
 import { ModalProvider } from "./context/ModalContext";
 import RootRouter from "./route";
 import { reset } from "./style/globalStyle";
@@ -10,6 +11,7 @@ function App() {
       <ModalProvider>
         <Global styles={reset} />
         <RootRouter />
+        <ModalController />
       </ModalProvider>
     </ThemeProvider>
   );
