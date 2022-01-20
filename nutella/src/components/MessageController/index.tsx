@@ -28,7 +28,7 @@ const MessageController = () => {
 
   return ReactDOM.createPortal(
     <S.Container>
-      <S.MessageContainer></S.MessageContainer>
+      <S.MessageContainer>{renderMessages}</S.MessageContainer>
     </S.Container>,
     el
   );
