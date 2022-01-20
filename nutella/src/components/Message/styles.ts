@@ -8,6 +8,7 @@ const Container = styled.div`
   row-gap: 8px;
   width: 500px;
   border-radius: 10px;
+  pointer-events: all;
 `;
 
 export const Title = styled.div`
