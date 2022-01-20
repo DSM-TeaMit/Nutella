@@ -13,7 +13,12 @@ const MessageProvider: FC = ({ children }) => {
     [messages]
   );
 
-  const removeMessage = useCallback((id: number) => {}, []);
+  const removeMessage = useCallback(
+    (id: number) => {
+      setMessages(messages.filter((value) => value.id !== id));
+    },
+    [messages]
+  );
 
   const value: MessageContextType = useMemo(
     () => ({
@@ -21,7 +26,7 @@ const MessageProvider: FC = ({ children }) => {
       showMessage,
       removeMessage,
     }),
-    [messages, showMessage]
+    [messages, removeMessage, showMessage]
   );
 
   return <MessageContext.Provider value={value}>{children}</MessageContext.Provider>;
