@@ -12,18 +12,9 @@ const Project = () => {
             <S.BlueH3>12</S.BlueH3>
           </S.ContentTitle>
           <S.Grid>
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
+            {new Array(12).fill(0).map(() => (
+              <ProjectCard />
+            ))}
           </S.Grid>
         </div>
       </S.Container>

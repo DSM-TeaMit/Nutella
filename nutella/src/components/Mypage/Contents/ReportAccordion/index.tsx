@@ -47,11 +47,9 @@ const ReportAccordion: FC<PropsType> = ({ title, count }) => {
         </S.HeaderContainer>
       </div>
       <S.ContentContainer isActive={isActive} ref={content}>
-        <ReportCard />
-        <ReportCard />
-        <ReportCard />
-        <ReportCard />
-        <ReportCard />
+        {new Array(5).fill(0).map(() => (
+          <ReportCard />
+        ))}
       </S.ContentContainer>
     </S.Container>
   );

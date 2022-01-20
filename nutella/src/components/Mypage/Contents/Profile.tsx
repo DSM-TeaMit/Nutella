@@ -43,9 +43,9 @@ const Profile = () => {
             <S.BlueH3>3</S.BlueH3>
           </S.ContentTitle>
           <S.Grid>
-            <ReportCard />
-            <ReportCard />
-            <ReportCard />
+            {new Array(3).fill(0).map(() => (
+              <ReportCard />
+            ))}
           </S.Grid>
         </div>
         <div>
@@ -54,10 +54,9 @@ const Profile = () => {
             <S.BlueH3>12</S.BlueH3>
           </S.ContentTitle>
           <S.Grid>
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
+            {new Array(4).fill(0).map(() => (
+              <ProjectCard />
+            ))}
           </S.Grid>
         </div>
       </S.Container>
