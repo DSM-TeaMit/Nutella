@@ -9,7 +9,7 @@ export interface MessageType {
 
 export interface MessageContextType {
   messages: MessageType[];
-  showMessage: (message: MessageType) => void;
+  showMessage: (message: Omit<MessageType, "id">) => void;
 }
 
 export const MessageContext = createContext<MessageContextType>({
