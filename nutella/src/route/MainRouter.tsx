@@ -1,6 +1,6 @@
 import { FC, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { SearchContainer, LoginContainer } from "../container";
+import { SearchContainer, LoginContainer, MypageContainer } from "../container";
 
 const MainRouter: FC = (): JSX.Element => {
   return (
@@ -8,6 +8,7 @@ const MainRouter: FC = (): JSX.Element => {
       <Routes>
         <Route path="/" element={<LoginContainer />} />
         <Route path="/search" element={<SearchContainer />} />
+        <Route path="/mypage/*" element={<MypageContainer />} />
       </Routes>
     </Suspense>
   );
