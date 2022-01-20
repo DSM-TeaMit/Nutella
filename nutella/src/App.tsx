@@ -2,7 +2,7 @@ import { Global, ThemeProvider } from "@emotion/react";
 import MessageController from "./components/MessageController";
 import ModalController from "./components/ModalController";
 import MessageProvider from "./components/Providers/MessageProvider";
-import { ModalProvider } from "./context/ModalContext";
+import ModalProvider from "./components/Providers/ModalProvider";
 import RootRouter from "./route";
 import { reset } from "./style/globalStyle";
 import theme from "./utils/theme/theme";
