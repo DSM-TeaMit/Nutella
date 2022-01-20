@@ -1,5 +1,5 @@
 import { FC, useCallback, useMemo, useState } from "react";
-import { ModalContentType, ModalContext } from "../../context/ModalContext";
+import { ModalContextType, ModalContext } from "../../context/ModalContext";
 
 const ModalProvider: FC = ({ children }) => {
   const [modals, setModals] = useState<JSX.Element[]>([]);
@@ -39,7 +39,7 @@ const ModalProvider: FC = ({ children }) => {
     [modals]
   );
 
-  const value = useMemo<ModalContentType>(
+  const value = useMemo<ModalContextType>(
     () => ({ modals, closeCurrentModal, openModal, closeByStep }),
     [closeByStep, closeCurrentModal, modals, openModal]
   );
