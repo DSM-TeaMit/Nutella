@@ -1,6 +1,7 @@
 import { createContext } from "react";
 
 export interface MessageType {
+  id: number;
   title: string;
   content: string;
   type: "Positive" | "Denial";
