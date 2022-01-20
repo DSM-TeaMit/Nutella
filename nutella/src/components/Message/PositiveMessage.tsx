@@ -5,16 +5,28 @@ import * as S from "./styles";
 
 const PositiveMessage: FC<MessageType> = ({ title, content, id }) => {
   const { removeMessage } = useMessageContext();
-  const timeoutRef = useRef<NodeJS.Timeout>(setTimeout(() => removeMessage(id), 3000));
+  const popMessageRef = useRef(() => removeMessage(id));
+
+  const onClick = () => {
+    removeMessage(id);
+  };
+
+  useEffect(() => {
+    popMessageRef.current = () => removeMessage(id);
+  }, [id, removeMessage]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => popMessageRef.current(), 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <S.PositiveContainer
-      onClick={() => {
-        clearTimeout(timeoutRef.current);
-        removeMessage(id);
-      }}
-    >
-      <S.Title>{title}</S.Title>
+    <S.PositiveContainer onClick={onClick}>
+      <S.Title>
+        {title}
+        {id}
+      </S.Title>
       <S.Content>{content}</S.Content>
     </S.PositiveContainer>
   );
