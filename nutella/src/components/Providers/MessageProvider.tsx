@@ -13,10 +13,13 @@ const MessageProvider: FC = ({ children }) => {
     [messages]
   );
 
+  const removeMessage = useCallback((id: number) => {}, []);
+
   const value: MessageContextType = useMemo(
     () => ({
       messages,
       showMessage,
+      removeMessage,
     }),
     [messages, showMessage]
   );
