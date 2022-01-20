@@ -10,6 +10,7 @@ export const Container = styled.div`
   overflow: hidden;
   display: flex;
   justify-content: right;
+  z-index: 2000;
 `;
 
 export const MessageContainer = styled.div`
