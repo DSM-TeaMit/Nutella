@@ -21,7 +21,7 @@ const MessageController = () => {
 
         const component = componentMap.get(type)!;
 
-        return React.createElement(component, value);
+        return React.createElement(component, { ...value, key: value.id });
       }),
     [messages]
   );
