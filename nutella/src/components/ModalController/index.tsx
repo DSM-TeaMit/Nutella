@@ -3,12 +3,19 @@ import ReactDOM from "react-dom";
 import useModalContext from "../../hooks/useModalContext";
 
 const ModalController = () => {
-  const { modals } = useModalContext();
+  const { modals, closeCurrentModal } = useModalContext();
 
   const el = document.getElementById("modal")!;
 
+  const onOutsideClick = () => {
+    closeCurrentModal();
+  };
+
   return modals.length > 0 ? (
-    ReactDOM.createPortal(<S.Background>{modals[modals.length - 1]}</S.Background>, el)
+    ReactDOM.createPortal(
+      <S.Background onClick={onOutsideClick}>{modals[modals.length - 1]}</S.Background>,
+      el
+    )
   ) : (
     <></>
   );
