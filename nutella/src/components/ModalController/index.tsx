@@ -1,16 +1,21 @@
 import * as S from "./styles";
 import ReactDOM from "react-dom";
 import useModalContext from "../../hooks/useModalContext";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const ModalController = () => {
   const { modals, closeCurrentModal } = useModalContext();
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const el = document.getElementById("modal")!;
 
   const onOutsideClick = useCallback(
     (e: MouseEvent) => {
-      closeCurrentModal();
+      if (!modalRef.current) return;
+
+      if (!modalRef.current.contains(e.target as Node)) {
+        closeCurrentModal();
+      }
     },
     [closeCurrentModal]
   );
@@ -26,7 +31,7 @@ const ModalController = () => {
   return modals.length > 0 ? (
     ReactDOM.createPortal(
       <S.Background>
-        <div>{modals[modals.length - 1]}</div>
+        <div ref={modalRef}>{modals[modals.length - 1]}</div>
       </S.Background>,
       el
     )
