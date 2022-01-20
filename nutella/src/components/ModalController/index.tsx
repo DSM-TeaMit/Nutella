@@ -1,13 +1,13 @@
 import * as S from "./styles";
 import ReactDOM from "react-dom";
 import useModalContext from "../../hooks/useModalContext";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 const ModalController = () => {
   const { modals, closeCurrentModal } = useModalContext();
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const el = document.getElementById("modal")!;
+  const el = useMemo(() => document.getElementById("modal")!, []);
 
   const onOutsideClick = useCallback(
     (e: MouseEvent) => {

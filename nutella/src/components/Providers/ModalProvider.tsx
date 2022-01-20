@@ -1,20 +1,7 @@
-import { createContext, FC, useCallback, useMemo, useState } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
+import { ModalContextType, ModalContext } from "../../context/ModalContext";
 
-export interface ModalContentType {
-  modals: JSX.Element[];
-  closeCurrentModal: () => void;
-  closeByStep: (step: number) => void;
-  openModal: (modal: JSX.Element) => void;
-}
-
-export const ModalContext = createContext<ModalContentType>({
-  modals: [],
-  closeCurrentModal: () => {},
-  closeByStep: () => {},
-  openModal: () => {},
-});
-
-export const ModalProvider: FC = ({ children }) => {
+const ModalProvider: FC = ({ children }) => {
   const [modals, setModals] = useState<JSX.Element[]>([]);
 
   const closeCurrentModal = useCallback(() => {
@@ -52,10 +39,12 @@ export const ModalProvider: FC = ({ children }) => {
     [modals]
   );
 
-  const value = useMemo<ModalContentType>(
+  const value = useMemo<ModalContextType>(
     () => ({ modals, closeCurrentModal, openModal, closeByStep }),
     [closeByStep, closeCurrentModal, modals, openModal]
   );
 
   return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
 };
+
+export default ModalProvider;
