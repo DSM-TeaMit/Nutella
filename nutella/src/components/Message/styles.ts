@@ -1,4 +1,25 @@
+import { keyframes } from "@emotion/css";
 import styled from "@emotion/styled";
+
+const SlideIn = keyframes`
+  from{
+    transform: translateX(200%);
+    opacity: 0;
+  }
+  to{
+    transform: translateX(0%);
+    opacity: 1;
+  }
+`;
+
+const FadeIn = keyframes`
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+`;
 
 const Container = styled.div`
   padding: 16px;
@@ -6,9 +27,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 8px;
-  width: 500px;
+  width: 400px;
   border-radius: 10px;
   pointer-events: all;
+  animation: ${SlideIn} 1.5s cubic-bezier(0.075, 0.82, 0.165, 1), ${FadeIn} 1.5s ease;
 `;
 
 export const Title = styled.div`
