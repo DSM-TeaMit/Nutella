@@ -6,7 +6,9 @@ const MessageProvider: FC = ({ children }) => {
 
   const showMessage = useCallback(
     (message: Omit<MessageType, "id">) => {
-      setMessages([...messages, { ...message, id: new Date().getTime() }]);
+      setMessages(
+        [...messages, { ...message, id: new Date().getTime() }].reverse().slice(0, 6).reverse()
+      );
     },
     [messages]
   );
