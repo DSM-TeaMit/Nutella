@@ -1,7 +1,6 @@
 import { ContentInner } from "../styles";
 import * as S from "./styles";
-import { GithubBlack } from "../../../assets/icons";
-import { ArrowBlack } from "../../../assets/icons";
+import { ArrowBlackIcons, GithubBlackIcons } from "../../../assets/icons";
 import MarkdownRender from "../../MarkdownRender";
 import ReportCard from "../../ReportCard";
 import ProjectCard from "../../ProjectCard";
@@ -22,9 +21,9 @@ const Profile = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img alt="github" src={GithubBlack} />
+                  <img alt="github" src={GithubBlackIcons} />
                   KJG04
-                  <img alt="arrow" src={ArrowBlack} />
+                  <img alt="arrow" src={ArrowBlackIcons} />
                 </S.Github>
               </S.ProfileDescriptionContainer>
             </S.ProfileInfoContainer>
