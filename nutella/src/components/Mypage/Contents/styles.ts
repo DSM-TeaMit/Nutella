@@ -119,6 +119,26 @@ export const ContentTitle = styled.div`
   margin-bottom: 16px;
 `;
 
+export const ProjectTitle = styled(ContentTitle)`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+`;
+
+export const AddProject = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+  color: ${({ theme }) => theme.colors.grayscale.gray1};
+  font: ${({ theme }) => theme.fonts.body3};
+  cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.grayscale.black};
+  }
+`;
+
 export const Title = styled.div`
   font: ${({ theme }) => theme.fonts.h3};
   color: ${({ theme }) => theme.colors.grayscale.black};
