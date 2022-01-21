@@ -1,6 +1,6 @@
 import * as S from "./styles";
-import LogoImg from "../../assets/logo/Logo.svg";
-import { Arrow } from "../../assets/icons";
+import { Logo } from "../../assets/logo";
+import { ArrowIcons } from "../../assets/icons";
 import { Link } from "react-router-dom";
 import SearchInput from "./SearchInput";
 
@@ -10,7 +10,7 @@ const Header = () => {
       <S.ContentContainer>
         <S.FlexContainer>
           <Link to="/">
-            <S.Logo alt="logo" src={LogoImg} />
+            <S.Logo alt="logo" src={Logo} />
           </Link>
           <S.SearchInputContainer>
             <SearchInput />
@@ -21,7 +21,7 @@ const Header = () => {
           <S.UserImageContainer>
             <S.UserImage src="" alt="" />
             <S.Arrow>
-              <img src={Arrow} alt="profile arrow" />
+              <img src={ArrowIcons} alt="profile arrow" />
             </S.Arrow>
           </S.UserImageContainer>
         </S.ProfileContainer>
