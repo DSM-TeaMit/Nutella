@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 export const Container = styled.header`
   height: 60px;
   width: 100%;
-  padding: 0px 320px;
   position: fixed;
   top: 0;
   left: 0;
@@ -12,7 +11,8 @@ export const Container = styled.header`
 `;
 
 export const ContentContainer = styled.div`
-  width: 100%;
+  margin: 0 auto;
+  width: 1280px;
   height: 100%;
   display: flex;
   align-items: center;

@@ -12,8 +12,8 @@ const Project = () => {
             <S.BlueH3>12</S.BlueH3>
           </S.ContentTitle>
           <S.Grid>
-            {new Array(12).fill(0).map(() => (
-              <ProjectCard />
+            {new Array(12).fill(0).map((_, index) => (
+              <ProjectCard key={index} />
             ))}
           </S.Grid>
         </div>

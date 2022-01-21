@@ -43,8 +43,8 @@ const Profile = () => {
             <S.BlueH3>3</S.BlueH3>
           </S.ContentTitle>
           <S.Grid>
-            {new Array(3).fill(0).map(() => (
-              <ReportCard />
+            {new Array(3).fill(0).map((_, index) => (
+              <ReportCard key={index} />
             ))}
           </S.Grid>
         </div>
@@ -54,8 +54,8 @@ const Profile = () => {
             <S.BlueH3>12</S.BlueH3>
           </S.ContentTitle>
           <S.Grid>
-            {new Array(4).fill(0).map(() => (
-              <ProjectCard />
+            {new Array(4).fill(0).map((_, index) => (
+              <ProjectCard key={index} />
             ))}
           </S.Grid>
         </div>
