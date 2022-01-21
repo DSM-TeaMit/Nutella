@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import Arrow from "../../../../assets/icons/up_arrow.svg";
+import { UpArrowIcons } from "../../../../assets/icons";
 import ReportCard from "../../../ReportCard";
 import { FC, useEffect, useRef, useState } from "react";
 
@@ -21,10 +21,15 @@ const ReportAccordion: FC<PropsType> = ({ title, count }) => {
     if (container.current && header.current && content.current) {
       if (isActive) {
         container.current.style.height = `${
-          header.current.offsetHeight + content.current.offsetHeight + gap + padding * 2
+          header.current.offsetHeight +
+          content.current.offsetHeight +
+          gap +
+          padding * 2
         }px `;
       } else {
-        container.current.style.height = `${header.current.offsetHeight + padding * 2}px`;
+        container.current.style.height = `${
+          header.current.offsetHeight + padding * 2
+        }px`;
       }
     }
   }, [isActive]);
@@ -42,7 +47,7 @@ const ReportAccordion: FC<PropsType> = ({ title, count }) => {
               transform: `rotate(${isActive ? 0 : 180}deg)`,
             }}
             alt="arrow"
-            src={Arrow}
+            src={UpArrowIcons}
           />
         </S.HeaderContainer>
       </div>

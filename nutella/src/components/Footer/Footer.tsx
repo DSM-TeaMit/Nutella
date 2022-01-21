@@ -1,6 +1,5 @@
 import * as S from "./styles";
-import Arrow from "../../assets/icons/rightArrow.svg";
-import GithubIcon from "../../assets/icons/github.svg";
+import { ArrowIcons, GithubIcons } from "../../assets/icons";
 
 const Footer = () => {
   return (
@@ -13,9 +12,9 @@ const Footer = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <S.Github alt="github" src={GithubIcon} />
+              <S.Github alt="github" src={GithubIcons} />
               Github
-              <img alt="arrow" src={Arrow} />
+              <img alt="arrow" src={ArrowIcons} />
             </S.NoDecoLink>
           </S.Flex>
         </div>
@@ -27,11 +26,13 @@ const Footer = () => {
               rel="noreferrer"
             >
               이용약관
-              <img alt="arrow" src={Arrow} />
+              <img alt="arrow" src={ArrowIcons} />
             </S.NoDecoLink>
           </S.Flex>
         </div>
-        <S.CopyRight>2021 Team Teamit | Copyright ⓒ Teamit Corp. All Rights Reserved.</S.CopyRight>
+        <S.CopyRight>
+          2021 Team Teamit | Copyright ⓒ Teamit Corp. All Rights Reserved.
+        </S.CopyRight>
       </S.ContentContainer>
     </S.Container>
   );
