@@ -1,22 +1,20 @@
 import * as S from "./styles";
-import ProjectPhotoImg from "../../assets/icons/projectPhoto.svg";
-import ProfileImg from "../../assets/icons/profile.svg";
-import ViewImg from "../../assets/icons/view.svg";
+import { ProfileIcons, ProjectPhotoIcons, ViewIcons } from "../../assets/icons";
 
 const Project = () => {
   return (
     <S.Content>
-      <S.ProjectPhoto src={ProjectPhotoImg} />
+      <S.ProjectPhoto src={ProjectPhotoIcons} />
       <S.ProjectBottom>
         <S.ProjectInfoBox>
           <S.ProjectInfo>
             <S.ProjectTitle>Teamit</S.ProjectTitle>
-            <img src={ProfileImg} />
+            <img src={ProfileIcons} />
           </S.ProjectInfo>
           <S.ProjectInfo>
             <S.Field>웹</S.Field>
             <div>
-              <img src={ViewImg} />
+              <img src={ViewIcons} />
               <S.Number>123</S.Number>
             </div>
           </S.ProjectInfo>

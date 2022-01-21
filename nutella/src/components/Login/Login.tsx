@@ -1,8 +1,7 @@
 import * as S from "./styles";
 import LoginLogoImg from "../../assets/logo/LoginLogo.svg";
 import GoogleLogoImg from "../../assets/logo/GoogleLogo.svg";
-import ArrowImg from "../../assets/icons/rightArrow.svg";
-import LineImg from "../../assets/icons/line.svg";
+import { LineIcons, RightArrowIcons } from "../../assets/icons";
 
 const Login = () => {
   return (
@@ -18,9 +17,9 @@ const Login = () => {
             </S.OauthBtn>
           </S.OauthContent>
           <S.Divider>
-            <img src={LineImg} />
+            <img src={LineIcons} />
             <span>또는</span>
-            <img src={LineImg} />
+            <img src={LineIcons} />
           </S.Divider>
           <S.OauthContent>
             <S.Title>로그인</S.Title>
@@ -32,7 +31,7 @@ const Login = () => {
         </S.OauthBox>
         <S.TeaLogin>
           선생님으로 <span>로그인</span>
-          <img src={ArrowImg} />
+          <img src={RightArrowIcons} />
         </S.TeaLogin>
       </S.LoginContent>
     </S.LoginBox>

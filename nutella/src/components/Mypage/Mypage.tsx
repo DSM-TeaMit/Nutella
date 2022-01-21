@@ -2,10 +2,12 @@ import { Route, Routes } from "react-router-dom";
 import NavigationType from "../../interface/Navigation";
 import SideBar from "./SideBar";
 import * as S from "./styles";
-import Personal from "../../assets/icons/personal.svg";
-import Document from "../../assets/icons/document.svg";
-import DocumentEdit from "../../assets/icons/document_edit.svg";
-import SettingIcon from "../../assets/icons/setting.svg";
+import {
+  DocumentEditIcons,
+  DocumentIcons,
+  PersonalIcons,
+  SettingIcons,
+} from "../../assets/icons";
 import Profile from "./Contents/Profile";
 import Project from "./Contents/Project";
 import Report from "./Contents/Report";
@@ -15,22 +17,22 @@ const navs: NavigationType[] = [
   {
     text: "프로필",
     to: "",
-    icon: Personal,
+    icon: PersonalIcons,
   },
   {
     text: "프로젝트",
     to: "project",
-    icon: Document,
+    icon: DocumentIcons,
   },
   {
     text: "보고서",
     to: "report",
-    icon: DocumentEdit,
+    icon: DocumentEditIcons,
   },
   {
     text: "계정 설정",
     to: "setting",
-    icon: SettingIcon,
+    icon: SettingIcons,
   },
 ];
 

@@ -1,9 +1,8 @@
 import { ContentInner } from "../styles";
 import * as S from "./styles";
-import Arrow from "../../../assets/icons/arrow_black.svg";
+import { ArrowBlack } from "../../../assets/icons";
 
 const Setting = () => {
-
   return (
     <ContentInner>
       <S.SettingContaienr>
@@ -13,7 +12,7 @@ const Setting = () => {
             <S.SettingTitle>Github</S.SettingTitle>
             <S.Gray>
               <span>KJG04</span>
-              <img alt="github arrow" src={Arrow} />
+              <img alt="github arrow" src={ArrowBlack} />
             </S.Gray>
           </S.ContentContainer>
         </div>
@@ -23,7 +22,7 @@ const Setting = () => {
             <S.SettingTitleRed>계정 삭제</S.SettingTitleRed>
             <S.Red>
               <span>삭제</span>
-              <img alt="github arrow" src={Arrow} />
+              <img alt="github arrow" src={ArrowBlack} />
             </S.Red>
           </S.ContentContainer>
         </div>
