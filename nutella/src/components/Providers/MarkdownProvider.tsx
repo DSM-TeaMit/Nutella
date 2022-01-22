@@ -1,9 +1,9 @@
-import { useCallback, useMemo, useState } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 import { MarkdownContext, MarkdownContextType, Row } from "../../context/MarkdownCotext";
 import {} from "../../constant/";
 import uniqueId from "../../constant/UniqueId";
 
-const MarkdownProvider = () => {
+const MarkdownProvider: FC = ({ children }) => {
   const [rows, setRows] = useState<Row[]>([
     {
       id: uniqueId(),
@@ -60,7 +60,7 @@ const MarkdownProvider = () => {
     [addRowAfterId, changeRowType, removeRowById, rows]
   );
 
-  return <MarkdownContext.Provider value={value}></MarkdownContext.Provider>;
+  return <MarkdownContext.Provider value={value}>{children}</MarkdownContext.Provider>;
 };
 
 export default MarkdownProvider;
