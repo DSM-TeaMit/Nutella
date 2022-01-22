@@ -10,7 +10,7 @@ export interface MarkdownContextType {
   rows: Row[];
   addRowAfterId: (id: string) => void;
   removeRowById: (id: string) => void;
-  changeRowType: (id: string) => void;
+  changeRowType: (id: string, type: string) => void;
 }
 
 export const MarkdownContext = createContext<MarkdownContextType>({
