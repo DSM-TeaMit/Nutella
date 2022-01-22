@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useState } from "react";
+import { FC, useCallback, useMemo, useRef, useState } from "react";
 import { MarkdownContext, MarkdownContextType, Row } from "../../context/MarkdownCotext";
 import {} from "../../constant/";
 import uniqueId from "../../constant/UniqueId";
@@ -33,7 +33,34 @@ const MarkdownProvider: FC = ({ children }) => {
 
   const removeRowById = useCallback(
     (id: string) => {
+      let index = rows.findIndex((value) => value.id === id) - 1;
       setRows(rows.filter((value) => value.id !== id));
+      if (index < 0) {
+        index = 0;
+      }
+
+      if (refs.current) {
+        const s = window.getSelection();
+        const r = document.createRange();
+        const p = refs.current[index].childNodes[0];
+
+        if (refs.current[index].childNodes.length <= 0) {
+          const p = refs.current[index];
+          r.setStart(p, 0);
+          r.setEnd(p, 0);
+        } else {
+          const length = rows[index].text.length;
+          r.setStart(p, length);
+          r.setEnd(p, length);
+        }
+
+        if (s) {
+          s.removeAllRanges();
+          s.addRange(r);
+        }
+
+        refs.current[index].focus();
+      }
     },
     [rows]
   );
@@ -62,6 +89,8 @@ const MarkdownProvider: FC = ({ children }) => {
     [rows]
   );
 
+  const refs = useRef<HTMLDivElement[]>([]);
+
   const value = useMemo<MarkdownContextType>(
     () => ({
       rows,
@@ -69,6 +98,7 @@ const MarkdownProvider: FC = ({ children }) => {
       removeRowById,
       changeRowType,
       changeText,
+      refs,
     }),
     [addRowAfterId, changeRowType, changeText, removeRowById, rows]
   );
