@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { MarkdownContext, Row as RowType } from "../../context/MarkdownCotext";
 
 interface PropsType {
@@ -7,16 +7,15 @@ interface PropsType {
 
 const Row: FC<PropsType> = ({ data }) => {
   const { text, id } = data;
-  const { changeText, addRowAfterId, removeRowById } = useContext(MarkdownContext);
-
-  const ref = useRef<HTMLDivElement>(null);
+  const { changeText, addRowAfterId, removeRowById, rows, refs } = useContext(MarkdownContext);
+  const currentIndex = rows.findIndex((value) => value.id === id);
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.focus();
-      ref.current.innerText = text;
+    if (refs.current) {
+      refs.current[currentIndex].focus();
+      refs.current[currentIndex].innerText = text;
     }
-  }, []);
+  }, [refs]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter") {
@@ -26,6 +25,8 @@ const Row: FC<PropsType> = ({ data }) => {
     }
 
     if (e.key === "Backspace" && text === "") {
+      e.stopPropagation();
+      e.preventDefault();
       removeRowById(id);
     }
   };
@@ -36,7 +37,16 @@ const Row: FC<PropsType> = ({ data }) => {
     changeText(id, (e.target as Node).textContent || "");
   };
 
-  return <div ref={ref} onKeyDown={onKeyDown} contentEditable onInput={onInput} />;
+  const setRef = useCallback(
+    (el: HTMLDivElement | null) => {
+      if (el && refs.current) {
+        refs.current[currentIndex] = el;
+      }
+    },
+    [currentIndex, refs]
+  );
+
+  return <div ref={setRef} onKeyDown={onKeyDown} contentEditable onInput={onInput} />;
 };
 
 export default Row;
