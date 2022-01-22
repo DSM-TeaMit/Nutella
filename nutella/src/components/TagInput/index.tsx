@@ -1,8 +1,14 @@
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
+import uniqueId from "../../constant/UniqueId";
 import * as S from "./styles";
 
+interface Tag {
+  id: string;
+  value: string;
+}
+
 const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
 
   const { value, onChange } = props;
 
@@ -14,7 +20,9 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
       e.target.value = e.target.value.replace(/^\s*/, ""); //앞 공백 제거
 
       if (e.target.value.split(" ").length > 1) {
-        const newTags = e.target.value.split(" ");
+        const newTags: Tag[] = e.target.value
+          .split(" ")
+          .map((value) => ({ id: uniqueId(), value: value }));
         newTags.pop();
         setTags([...tags, ...newTags]);
       }
@@ -23,10 +31,6 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
     },
     [onChange, tags]
   );
-
-  useEffect(() => {
-    console.log(tags);
-  }, [tags]);
 
   const onKeydown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -46,14 +50,14 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
       return;
     }
 
-    setTags([...tags, ...fixedValue.split(" ")]);
+    setTags([...tags, ...fixedValue.split(" ").map((value) => ({ id: uniqueId(), value: value }))]);
   }, [renderValue, tags]);
 
   return (
     <div>
       <S.Container>
         {tags.map((value) => (
-          <S.Tag>{value.replace(/_/g, " ")}</S.Tag>
+          <S.Tag key={value.id}>{value.value.replace(/_/g, " ")}</S.Tag>
         ))}
         <S.InputStyle
           {...props}
