@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useTagInput from "../../../hooks/useTagInput";
 import Input from "../../Input";
 import MemberInput from "../../MemberInput";
@@ -32,7 +32,11 @@ const types: Type[] = [
 
 const ProjectAddModal = () => {
   const [inputProps] = useTagInput("", [], true);
-  const [type, setType] = useState<Type>(types[0]);
+  const [type, setType] = useState<string>(types[0].type);
+
+  const onTypeClick = useCallback((type: Type) => {
+    setType(type.type);
+  }, []);
 
   return (
     <S.Container>
@@ -50,7 +54,7 @@ const ProjectAddModal = () => {
           <S.Subtitle>프로젝트 종류</S.Subtitle>
           <S.TypeContainer>
             {types.map((value) => (
-              <S.Type isActive={value.type === type.type}>
+              <S.Type isActive={value.type === type} onClick={() => onTypeClick(value)}>
                 <img src={value.img} alt={value.type} />
                 <span>{value.name}</span>
               </S.Type>
