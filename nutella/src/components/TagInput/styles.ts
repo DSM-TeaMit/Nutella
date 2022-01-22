@@ -49,4 +49,10 @@ export const Container = styled.div`
   margin-bottom: 4px;
   overflow-y: hidden;
   overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
