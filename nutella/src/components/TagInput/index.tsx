@@ -1,16 +1,24 @@
 import { FC, useCallback, useMemo, useState } from "react";
 import uniqueId from "../../constant/UniqueId";
+import State from "../../interface/State";
 import * as S from "./styles";
 
-interface Tag {
+export interface Tag {
   id: string;
   value: string;
 }
 
-const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
-  const [tags, setTags] = useState<Tag[]>([]);
+export interface PropsType {
+  clearValue: () => void;
+  tagState: State<Tag[]>;
+}
 
-  const { value, onChange } = props;
+const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement> & PropsType> = (props) => {
+  const [tags, setTags] = props.tagState;
+
+  const inputProps: React.InputHTMLAttributes<HTMLInputElement> = { ...props };
+
+  const { value, onChange, clearValue } = props;
 
   const renderValue = useMemo(() => value?.toString().split(" ").reverse()[0], [value]);
 
@@ -29,7 +37,7 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
 
       onChange && onChange(e);
     },
-    [onChange, tags]
+    [onChange, setTags, tags]
   );
 
   const onKeydown = useCallback(
@@ -40,7 +48,7 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
         setTags(copyTags);
       }
     },
-    [renderValue, tags]
+    [renderValue, setTags, tags]
   );
 
   const onFocusOut = useCallback(() => {
@@ -51,14 +59,15 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
     }
 
     setTags([...tags, ...fixedValue.split(" ").map((value) => ({ id: uniqueId(), value: value }))]);
-  }, [renderValue, tags]);
+    clearValue();
+  }, [clearValue, renderValue, setTags, tags]);
 
   const onTagClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
       e.stopPropagation();
       setTags(tags.filter((value) => value.id !== id));
     },
-    [tags]
+    [setTags, tags]
   );
 
   return (
@@ -70,7 +79,7 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
           </S.Tag>
         ))}
         <S.InputStyle
-          {...props}
+          {...inputProps}
           value={renderValue}
           onChange={onChangeHandler}
           onKeyDown={onKeydown}
