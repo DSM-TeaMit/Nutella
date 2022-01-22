@@ -1,8 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
+import { Row as RowType } from "../../context/MarkdownCotext";
 
-const Row = ({ setCount, count }: { setCount: (value: number) => void; count: number }) => {
+interface PropsType {
+  data: RowType;
+}
+
+const Row: FC<PropsType> = ({ data }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [value, setValue] = useState("");
 
   useEffect(() => {
     ref.current?.focus();
@@ -12,11 +16,9 @@ const Row = ({ setCount, count }: { setCount: (value: number) => void; count: nu
     if (e.key === "Enter") {
       e.stopPropagation();
       e.preventDefault();
-      setCount(count + 1);
     }
 
     if (e.key === "Backspace" && value === "") {
-      setCount(count - 1);
     }
   };
 

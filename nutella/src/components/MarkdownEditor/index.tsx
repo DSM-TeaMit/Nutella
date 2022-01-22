@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { MarkdownContext } from "../../context/MarkdownCotext";
+import MarkdownProvider from "../Providers/MarkdownProvider";
 import Row from "./Row";
 import * as S from "./styles";
 
 const MarkdownEditor = () => {
-  const [count, setCount] = useState(1);
+  return (
+    <MarkdownProvider>
+      <Inner />
+    </MarkdownProvider>
+  );
+};
+
+const Inner = () => {
+  const { rows } = useContext(MarkdownContext);
 
   return (
     <S.Container>
-      {new Array(count).fill(0).map(() => (
-        <Row setCount={setCount} count={count} />
+      {rows.map((value) => (
+        <Row key={value.id} data={value} />
       ))}
     </S.Container>
   );
