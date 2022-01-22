@@ -8,6 +8,8 @@ export const Container = styled.div`
   flex-direction: column;
   row-gap: 36px;
   min-width: 550px;
+  width: 550px;
+  max-width: 550px;
 `;
 
 export const Inner = styled.div`
