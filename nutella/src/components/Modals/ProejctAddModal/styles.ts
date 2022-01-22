@@ -34,3 +34,19 @@ export const Subtitle = styled.div`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
 `;
+
+export const TypeContainer = styled.div`
+  display: flex;
+  column-gap: 36px;
+`;
+
+export const Type = styled.button<{ isActive: boolean }>`
+  cursor: pointer;
+  display: flex;
+  border: none;
+  background-color: transparent;
+  column-gap: 8px;
+  color: #000000;
+  filter: ${({ theme, isActive }) =>
+    isActive ? theme.filters.primary.default : theme.filters.grayscale.gray1};
+`;
