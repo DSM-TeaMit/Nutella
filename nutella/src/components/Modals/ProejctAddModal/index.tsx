@@ -7,6 +7,7 @@ import * as S from "./styles";
 import { ClubIcons, PersonalIcons, TeamIcons } from "../../../assets/icons";
 import BlueButton from "../../Buttons/BlueButton";
 import BorderButton from "../../Buttons/BorderButton";
+import useModalContext from "../../../hooks/useModalContext";
 
 interface Type {
   img: string;
@@ -33,6 +34,8 @@ const types: Type[] = [
 ];
 
 const ProjectAddModal = () => {
+  const { closeCurrentModal } = useModalContext();
+
   const [inputProps] = useTagInput("", [], true);
   const [type, setType] = useState<string>(types[0].type);
 
@@ -69,7 +72,7 @@ const ProjectAddModal = () => {
         </S.ContentContainer>
       </S.Inner>
       <S.ButtonContainer>
-        <BorderButton>취소</BorderButton>
+        <BorderButton onClick={closeCurrentModal}>취소</BorderButton>
         <BlueButton>프로젝트 생성</BlueButton>
       </S.ButtonContainer>
     </S.Container>
