@@ -1,6 +1,7 @@
 import useInput from "../../../hooks/useInput";
 import useTagInput from "../../../hooks/useTagInput";
 import Input from "../../Input";
+import MemberInput from "../../MemberInput";
 import TagInput from "../../TagInput";
 import * as S from "./styles";
 
@@ -21,7 +22,7 @@ const ProjectAddModal = () => {
         </S.ContentContainer>
         <S.ContentContainer>
           <S.Subtitle>멤버</S.Subtitle>
-          <Input placeholder="학번 또는 이름으로 유저 검색..." />
+          <MemberInput />
         </S.ContentContainer>
       </S.Inner>
     </S.Container>
