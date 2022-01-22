@@ -47,6 +47,8 @@ export const Type = styled.button<{ isActive: boolean }>`
   background-color: transparent;
   column-gap: 8px;
   color: #000000;
+  font: ${({ theme }) => theme.fonts.body3};
+  align-items: center;
   filter: ${({ theme, isActive }) =>
     isActive ? theme.filters.primary.default : theme.filters.grayscale.gray1};
 `;

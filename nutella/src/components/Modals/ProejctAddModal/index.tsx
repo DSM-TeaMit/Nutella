@@ -4,7 +4,7 @@ import Input from "../../Input";
 import MemberInput from "../../MemberInput";
 import TagInput from "../../TagInput";
 import * as S from "./styles";
-import {  } from "../../../assets/icons";
+import { ClubIcons, PersonalIcons, TeamIcons } from "../../../assets/icons";
 
 interface Type {
   img: string;
@@ -12,9 +12,27 @@ interface Type {
   type: string;
 }
 
+const types: Type[] = [
+  {
+    img: PersonalIcons,
+    name: "개인",
+    type: "personal",
+  },
+  {
+    img: TeamIcons,
+    name: "팀",
+    type: "team",
+  },
+  {
+    img: ClubIcons,
+    name: "동아리",
+    type: "club",
+  },
+];
+
 const ProjectAddModal = () => {
   const [inputProps] = useTagInput("", [], true);
-  const [type, setType] = useState<Type>();
+  const [type, setType] = useState<Type>(types[0]);
 
   return (
     <S.Container>
@@ -30,6 +48,14 @@ const ProjectAddModal = () => {
         </S.ContentContainer>
         <S.ContentContainer>
           <S.Subtitle>프로젝트 종류</S.Subtitle>
+          <S.TypeContainer>
+            {types.map((value) => (
+              <S.Type isActive={value.type === type.type}>
+                <img src={value.img} alt={value.type} />
+                <span>{value.name}</span>
+              </S.Type>
+            ))}
+          </S.TypeContainer>
         </S.ContentContainer>
         <S.ContentContainer>
           <S.Subtitle>멤버</S.Subtitle>
