@@ -13,9 +13,9 @@ interface InputProps {
 
 type Dispatch = [InputProps, State<Value>];
 
-const useTagInput = (initValue?: Value, debug?: boolean): Dispatch => {
+const useTagInput = (initValue?: Value, initTagValue?: Tag[], debug?: boolean): Dispatch => {
   const [value, setValue] = useState<Value>(initValue || "");
-  const [tags, setTags] = useState<Tag[]>([]);
+  const [tags, setTags] = useState<Tag[]>(initTagValue || []);
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
