@@ -52,3 +52,9 @@ export const Type = styled.button<{ isActive: boolean }>`
   filter: ${({ theme, isActive }) =>
     isActive ? theme.filters.primary.default : theme.filters.grayscale.gray1};
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: right;
+  column-gap: 16px;
+`;
