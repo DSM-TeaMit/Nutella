@@ -27,7 +27,7 @@ export const Line = styled.div`
 export const Tag = styled.button`
   color: ${({ theme }) => theme.colors.grayscale.white};
   background-color: ${({ theme }) => theme.colors.primary.default};
-  padding: 2px;
+  padding: 4px;
   font: ${({ theme }) => theme.fonts.body3};
   cursor: pointer;
   border: none;
@@ -45,7 +45,7 @@ export const Tag = styled.button`
 
 export const Container = styled.div`
   display: flex;
-  column-gap: 2px;
+  column-gap: 4px;
   margin-bottom: 4px;
   overflow-y: hidden;
   overflow-x: scroll;
