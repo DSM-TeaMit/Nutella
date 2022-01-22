@@ -1,10 +1,11 @@
 import useInput from "../../../hooks/useInput";
+import useTagInput from "../../../hooks/useTagInput";
 import Input from "../../Input";
 import TagInput from "../../TagInput";
 import * as S from "./styles";
 
 const ProjectAddModal = () => {
-  const [inputProps] = useInput("", true);
+  const [inputProps] = useTagInput("", [], true);
 
   return (
     <S.Container>
