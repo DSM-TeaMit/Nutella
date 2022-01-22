@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, createRef } from "react";
 
 export interface Row {
   id: string;
@@ -12,6 +12,7 @@ export interface MarkdownContextType {
   removeRowById: (id: string) => void;
   changeRowType: (id: string, type: string) => void;
   changeText: (id: string, text: string) => void;
+  refs: React.RefObject<HTMLDivElement[]>;
 }
 
 export const MarkdownContext = createContext<MarkdownContextType>({
@@ -20,4 +21,5 @@ export const MarkdownContext = createContext<MarkdownContextType>({
   changeRowType: () => {},
   removeRowById: () => {},
   changeText: () => {},
+  refs: createRef<HTMLDivElement[]>(),
 });
