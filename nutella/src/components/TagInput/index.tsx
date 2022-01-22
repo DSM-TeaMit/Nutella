@@ -53,11 +53,21 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
     setTags([...tags, ...fixedValue.split(" ").map((value) => ({ id: uniqueId(), value: value }))]);
   }, [renderValue, tags]);
 
+  const onTagClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
+      e.stopPropagation();
+      setTags(tags.filter((value) => value.id !== id));
+    },
+    [tags]
+  );
+
   return (
     <div>
       <S.Container>
         {tags.map((value) => (
-          <S.Tag key={value.id}>{value.value.replace(/_/g, " ")}</S.Tag>
+          <S.Tag key={value.id} onClick={(e) => onTagClick(e, value.id)}>
+            {value.value.replace(/_/g, " ")}
+          </S.Tag>
         ))}
         <S.InputStyle
           {...props}
