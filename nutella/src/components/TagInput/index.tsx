@@ -10,6 +10,9 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
 
   const onChangeHandler = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.target.value = e.target.value.replace(/ +/g, " "); //연속된 공백을 하나로 합치기
+      e.target.value = e.target.value.replace(/^\s*/, ""); //앞 공백 제거
+
       if (e.target.value.split(" ").length > 1) {
         const newTags = e.target.value.split(" ");
         newTags.pop();
@@ -36,15 +39,30 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
     [renderValue, tags]
   );
 
+  const onFocusOut = useCallback(() => {
+    const fixedValue = renderValue?.replace(/ +/g, " ")?.replace(/^\s*/, "") || "";
+
+    if (fixedValue === "") {
+      return;
+    }
+
+    setTags([...tags, ...fixedValue.split(" ")]);
+  }, [renderValue, tags]);
+
   return (
     <div>
-      <S.InvisibleInput />
-      <S.InputStyle
-        {...props}
-        value={renderValue}
-        onChange={onChangeHandler}
-        onKeyDown={onKeydown}
-      />
+      <S.Container>
+        {tags.map((value) => (
+          <S.Tag>{value.replace(/_/g, " ")}</S.Tag>
+        ))}
+        <S.InputStyle
+          {...props}
+          value={renderValue}
+          onChange={onChangeHandler}
+          onKeyDown={onKeydown}
+          onBlur={onFocusOut}
+        />
+      </S.Container>
       <S.Line />
     </div>
   );
