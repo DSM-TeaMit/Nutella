@@ -44,6 +44,7 @@ export const Type = styled.button<{ isActive: boolean }>`
   cursor: pointer;
   display: flex;
   border: none;
+  padding: 0;
   background-color: transparent;
   column-gap: 8px;
   color: #000000;
