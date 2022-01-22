@@ -50,14 +50,27 @@ const MarkdownProvider: FC = ({ children }) => {
     [rows]
   );
 
+  const changeText = useCallback(
+    (id: string, text: string) => {
+      const index = rows.findIndex((value) => value.id === id);
+      const copyRows = [...rows];
+
+      copyRows[index].text = text;
+
+      setRows(copyRows);
+    },
+    [rows]
+  );
+
   const value = useMemo<MarkdownContextType>(
     () => ({
       rows,
       addRowAfterId,
       removeRowById,
       changeRowType,
+      changeText,
     }),
-    [addRowAfterId, changeRowType, removeRowById, rows]
+    [addRowAfterId, changeRowType, changeText, removeRowById, rows]
   );
 
   return <MarkdownContext.Provider value={value}>{children}</MarkdownContext.Provider>;
