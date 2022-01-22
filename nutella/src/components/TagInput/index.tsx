@@ -14,11 +14,9 @@ export interface PropsType {
 }
 
 const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement> & PropsType> = (props) => {
-  const [tags, setTags] = props.tagState;
-
   const inputProps: React.InputHTMLAttributes<HTMLInputElement> = { ...props };
-
-  const { value, onChange, clearValue } = props;
+  const { value, onChange, clearValue, tagState } = props;
+  const [tags, setTags] = tagState;
 
   const renderValue = useMemo(() => value?.toString().split(" ").reverse()[0], [value]);
 
