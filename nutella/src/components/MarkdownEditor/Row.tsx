@@ -7,7 +7,8 @@ interface PropsType {
 
 const Row: FC<PropsType> = ({ data }) => {
   const { text, id } = data;
-  const { changeText, addRowAfterId, removeRowById, rows, refs } = useContext(MarkdownContext);
+  const { changeText, addRowAfterId, removeRowById, rows, refs, changeVerticalFocus } =
+    useContext(MarkdownContext);
   const currentIndex = rows.findIndex((value) => value.id === id);
 
   useEffect(() => {
@@ -28,6 +29,13 @@ const Row: FC<PropsType> = ({ data }) => {
       e.stopPropagation();
       e.preventDefault();
       removeRowById(id);
+    }
+
+    const step = new Map<string, number>().set("ArrowUp", -1).set("ArrowDown", 1).get(e.key);
+    if (step) {
+      e.stopPropagation();
+      e.preventDefault();
+      changeVerticalFocus(id, step);
     }
   };
 
