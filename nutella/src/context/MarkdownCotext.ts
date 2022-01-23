@@ -4,6 +4,7 @@ export interface Row {
   id: string;
   text: string;
   type: string;
+  tab: number;
 }
 
 export interface MarkdownContextType {

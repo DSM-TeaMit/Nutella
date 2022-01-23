@@ -9,6 +9,7 @@ const MarkdownProvider: FC = ({ children }) => {
       id: uniqueId(),
       text: "",
       type: "p",
+      tab: 0,
     },
   ]);
   const refs = useRef<HTMLDivElement[]>([]);
@@ -30,6 +31,7 @@ const MarkdownProvider: FC = ({ children }) => {
         id: uniqueId(),
         text: "",
         type: "p",
+        tab: rows[index].tab,
       });
 
       setRows(copyRows);
