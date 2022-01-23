@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { MarkdownContext, Row as RowType } from "../../context/MarkdownCotext";
 
 interface PropsType {
@@ -46,52 +46,52 @@ const Row: FC<PropsType> = ({ data }) => {
     }
   }, [refs, type]);
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter") {
-      e.stopPropagation();
-      e.preventDefault();
-      addRowAfterId(id);
-    }
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "Enter") {
+        e.stopPropagation();
+        e.preventDefault();
+        addRowAfterId(id);
+      }
 
-    if (e.key === "Backspace" && text === "") {
-      e.stopPropagation();
-      e.preventDefault();
-      removeRowById(id);
-    }
+      if (e.key === "Backspace" && text === "") {
+        e.stopPropagation();
+        e.preventDefault();
+        removeRowById(id);
+      }
 
-    const step = new Map<string, number>().set("ArrowUp", -1).set("ArrowDown", 1).get(e.key);
-    if (step) {
-      e.stopPropagation();
-      e.preventDefault();
-      changeVerticalFocus(id, step);
-    }
-  };
+      const step = new Map<string, number>().set("ArrowUp", -1).set("ArrowDown", 1).get(e.key);
+      if (step) {
+        e.stopPropagation();
+        e.preventDefault();
+        changeVerticalFocus(id, step);
+      }
+    },
+    [addRowAfterId, changeVerticalFocus, id, removeRowById, text]
+  );
 
-  const onInput = (e: React.FormEvent<HTMLDivElement>) => {
-    let text =
-      (e.target as HTMLDivElement).innerHTML.replace(/&nbsp;/g, " ").replace(/&gt;/g, ">") || "";
-
-    const key = keyArray.find((value) => {
-      const regex = new RegExp(`^${value} `);
-      console.log(regex);
+  const onInput = useCallback(
+    (e: React.FormEvent<HTMLDivElement>) => {
+      let text =
+        (e.target as HTMLDivElement).innerHTML.replace(/&nbsp;/g, " ").replace(/&gt;/g, ">") || "";
       console.log(text);
 
-      return regex.test(text);
-    });
+      const key = keyArray.find((value) => new RegExp(`^${value} `).test(text));
 
-    if (key) {
-      const tag = tagMap.get(key)!;
-      e.preventDefault();
-      e.stopPropagation();
+      if (key) {
+        e.preventDefault();
+        e.stopPropagation();
+        const tag = tagMap.get(key)!;
 
-      text = text.replace(`${key} `, "");
-      console.log(tag);
+        text = text.replace(`${key} `, "");
 
-      changeRowType(id, tag);
-    }
+        changeRowType(id, tag);
+      }
 
-    changeText(id, text);
-  };
+      changeText(id, text);
+    },
+    [changeRowType, changeText, id]
+  );
 
   const setRef = useCallback(
     (el: HTMLElement | null) => {
@@ -102,13 +102,20 @@ const Row: FC<PropsType> = ({ data }) => {
     [currentIndex, refs]
   );
 
-  const renderRow = React.createElement(type, {
-    ref: setRef,
-    onKeyDown,
-    contentEditable: true,
-    onInput,
-    placeholder: placeholderMap.get(type),
-  });
+  const renderRow = useMemo(
+    () =>
+      React.createElement(type, {
+        ref: setRef,
+        onKeyDown,
+        contentEditable: true,
+        onInput,
+        placeholder: placeholderMap.get(type),
+        style: {
+          outline: "none",
+        },
+      }),
+    [onInput, onKeyDown, setRef, type]
+  );
 
   return renderRow;
 };
