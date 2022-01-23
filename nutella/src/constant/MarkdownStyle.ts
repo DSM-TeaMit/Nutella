@@ -66,8 +66,6 @@ const markdownStyle = styled.div`
   }
   blockquote {
     background-color: ${({ theme }) => theme.colors.background};
-    border-radius: 10px;
-    overflow: hidden;
     width: 100%;
     padding: 16px 36px;
     position: relative;
