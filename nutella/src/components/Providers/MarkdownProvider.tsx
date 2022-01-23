@@ -97,10 +97,46 @@ const MarkdownProvider: FC = ({ children }) => {
 
   const changeVerticalFocus = useCallback(
     (id: string, step: number) => {
-      const index = findIndexById(id);
-      
+      let index = findIndexById(id) + step;
+
+      if (index < 0) {
+        index = 0;
+      } else if (index >= rows.length) {
+        index = rows.length - 1;
+      }
+
+      const selection = window.getSelection();
+
+      if (!selection) {
+        return;
+      }
+
+      const nextNode = refs.current[index];
+      const range = document.createRange();
+
+      if (nextNode.childNodes.length > 0) {
+        let { startOffset } = selection.getRangeAt(0);
+        const textNode = nextNode.childNodes[0];
+        const length = textNode.textContent!.length;
+
+        if (startOffset >= length) {
+          startOffset = length;
+        }
+
+        range.setStart(textNode, startOffset);
+        range.setEnd(textNode, startOffset);
+      } else {
+        const node = refs.current[index];
+
+        range.setStart(node, 0);
+        range.setEnd(node, 0);
+      }
+      nextNode.focus();
+
+      selection.removeAllRanges();
+      selection.addRange(range);
     },
-    [findIndexById]
+    [findIndexById, rows]
   );
 
   const value = useMemo<MarkdownContextType>(
