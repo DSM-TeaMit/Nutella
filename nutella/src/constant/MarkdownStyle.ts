@@ -81,6 +81,17 @@ const markdownStyle = styled.div`
       left: 0px;
     }
   }
+
+  [placeholder]:empty::before {
+    content: attr(placeholder);
+    color: transparent;
+    transition: color 0s ease;
+  }
+  [placeholder]:empty:focus::before {
+    content: attr(placeholder);
+    color: ${({ theme }) => theme.colors.grayscale.gray1};
+    transition: color 0.2s ease;
+  }
 `;
 
 export default markdownStyle;

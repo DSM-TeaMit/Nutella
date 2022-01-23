@@ -14,6 +14,16 @@ const tagMap = new Map<string, string>()
   .set("######", "h6")
   .set(">", "blockquote");
 
+const placeholderMap = new Map<string, string>()
+  .set("p", "비어있는 본문")
+  .set("h1", "헤딩 1")
+  .set("h2", "헤딩 2")
+  .set("h3", "헤딩 3")
+  .set("h4", "헤딩 4")
+  .set("h5", "헤딩 5")
+  .set("h6", "헤딩 6")
+  .set("blockquote", "비어있는 인용");
+
 const keyArray = Array.from(tagMap.keys());
 
 const Row: FC<PropsType> = ({ data }) => {
@@ -97,6 +107,7 @@ const Row: FC<PropsType> = ({ data }) => {
     onKeyDown,
     contentEditable: true,
     onInput,
+    placeholder: placeholderMap.get(type),
   });
 
   return renderRow;
