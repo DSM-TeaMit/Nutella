@@ -13,12 +13,15 @@ const MarkdownProvider: FC = ({ children }) => {
   ]);
   const refs = useRef<HTMLDivElement[]>([]);
 
-  const findIndexById = (id: string) => rows.findIndex((value) => value.id === id);
+  const findIndexById = useCallback(
+    (id: string) => rows.findIndex((value) => value.id === id),
+    [rows]
+  );
 
   const addRowAfterId = useCallback(
     (id: string) => {
       const copyRows = [...rows];
-      const index = copyRows.findIndex((value) => value.id === id);
+      const index = findIndexById(id);
       if (index === -1) {
         throw new Error("존재하지 않는 ID입니다.");
       }
@@ -31,7 +34,7 @@ const MarkdownProvider: FC = ({ children }) => {
 
       setRows(copyRows);
     },
-    [rows]
+    [findIndexById, rows]
   );
 
   const removeRowById = useCallback(
@@ -65,7 +68,7 @@ const MarkdownProvider: FC = ({ children }) => {
         refs.current[index].focus();
       }
     },
-    [rows]
+    [findIndexById, rows]
   );
 
   const changeRowType = useCallback(
@@ -77,7 +80,7 @@ const MarkdownProvider: FC = ({ children }) => {
 
       setRows(copyRows);
     },
-    [rows]
+    [findIndexById, rows]
   );
 
   const changeText = useCallback(
@@ -89,12 +92,16 @@ const MarkdownProvider: FC = ({ children }) => {
 
       setRows(copyRows);
     },
-    [rows]
+    [findIndexById, rows]
   );
 
-  const changeVerticalFocus = useCallback((id: string, step: number) => {
-    const index = findIndexById(id);
-  }, []);
+  const changeVerticalFocus = useCallback(
+    (id: string, step: number) => {
+      const index = findIndexById(id);
+      
+    },
+    [findIndexById]
+  );
 
   const value = useMemo<MarkdownContextType>(
     () => ({
@@ -106,7 +113,7 @@ const MarkdownProvider: FC = ({ children }) => {
       refs,
       changeVerticalFocus,
     }),
-    [addRowAfterId, changeRowType, changeText, removeRowById, rows]
+    [addRowAfterId, changeRowType, changeText, changeVerticalFocus, removeRowById, rows]
   );
 
   return <MarkdownContext.Provider value={value}>{children}</MarkdownContext.Provider>;
