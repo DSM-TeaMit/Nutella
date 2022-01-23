@@ -82,12 +82,13 @@ const markdownStyle = styled.div`
     }
   }
 
-  [placeholder]:empty::before {
+  [placeholder]:focus::after,
+  [placeholder]:empty::after {
     content: attr(placeholder);
     color: transparent;
     transition: color 0s ease;
   }
-  [placeholder]:empty:focus::before {
+  [placeholder]:empty:focus::after {
     content: attr(placeholder);
     color: ${({ theme }) => theme.colors.grayscale.gray1};
     transition: color 0.2s ease;
