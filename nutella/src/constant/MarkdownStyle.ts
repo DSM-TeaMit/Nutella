@@ -20,7 +20,7 @@ const markdownStyle = styled.div`
     font: ${({ theme }) => theme.fonts.body1};
   }
   strong {
-    font: ${({ theme }) => theme.fonts.body1};
+    font-weight: bold;
   }
   p {
     font: ${({ theme }) => theme.fonts.body3};
