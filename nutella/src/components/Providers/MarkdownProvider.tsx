@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useMemo, useRef, useState, useEffect } from "react";
 import { MarkdownContext, MarkdownContextType, Row } from "../../context/MarkdownCotext";
 import {} from "../../constant/";
 import uniqueId from "../../constant/UniqueId";
@@ -11,6 +11,9 @@ const MarkdownProvider: FC = ({ children }) => {
       type: "p",
     },
   ]);
+  const refs = useRef<HTMLDivElement[]>([]);
+
+  const findIndexById = (id: string) => rows.findIndex((value) => value.id === id);
 
   const addRowAfterId = useCallback(
     (id: string) => {
@@ -33,7 +36,7 @@ const MarkdownProvider: FC = ({ children }) => {
 
   const removeRowById = useCallback(
     (id: string) => {
-      let index = rows.findIndex((value) => value.id === id) - 1;
+      let index = findIndexById(id) - 1;
       setRows(rows.filter((value) => value.id !== id));
       if (index < 0) {
         index = 0;
@@ -67,7 +70,7 @@ const MarkdownProvider: FC = ({ children }) => {
 
   const changeRowType = useCallback(
     (id: string, type: string) => {
-      const index = rows.findIndex((value) => value.id === id);
+      const index = findIndexById(id);
       const copyRows = [...rows];
 
       copyRows[index].type = type;
@@ -79,7 +82,7 @@ const MarkdownProvider: FC = ({ children }) => {
 
   const changeText = useCallback(
     (id: string, text: string) => {
-      const index = rows.findIndex((value) => value.id === id);
+      const index = findIndexById(id);
       const copyRows = [...rows];
 
       copyRows[index].text = text;
@@ -89,7 +92,9 @@ const MarkdownProvider: FC = ({ children }) => {
     [rows]
   );
 
-  const refs = useRef<HTMLDivElement[]>([]);
+  const changeVerticalFocus = useCallback((id: string, step: number) => {
+    const index = findIndexById(id);
+  }, []);
 
   const value = useMemo<MarkdownContextType>(
     () => ({
@@ -99,6 +104,7 @@ const MarkdownProvider: FC = ({ children }) => {
       changeRowType,
       changeText,
       refs,
+      changeVerticalFocus,
     }),
     [addRowAfterId, changeRowType, changeText, removeRowById, rows]
   );
