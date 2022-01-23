@@ -26,11 +26,12 @@ const MarkdownProvider: FC = ({ children }) => {
       if (index === -1) {
         throw new Error("존재하지 않는 ID입니다.");
       }
+      const type = rows[index].type;
 
       copyRows.splice(index + 1, 0, {
         id: uniqueId(),
         text: "",
-        type: "p",
+        type: ["ul"].includes(type) ? type : "p",
         tab: rows[index].tab,
       });
 
