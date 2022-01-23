@@ -49,15 +49,14 @@ const MarkdownProvider: FC = ({ children }) => {
         const s = window.getSelection();
         const r = document.createRange();
         const p = refs.current[index].childNodes[0];
+        r.collapse(true);
 
         if (refs.current[index].childNodes.length <= 0) {
           const p = refs.current[index];
           r.setStart(p, 0);
-          r.setEnd(p, 0);
         } else {
           const length = rows[index].text.length;
           r.setStart(p, length);
-          r.setEnd(p, length);
         }
 
         if (s) {
@@ -113,6 +112,7 @@ const MarkdownProvider: FC = ({ children }) => {
 
       const nextNode = refs.current[index];
       const range = document.createRange();
+      range.collapse(true);
 
       if (nextNode.childNodes.length > 0) {
         let { startOffset } = selection.getRangeAt(0);
@@ -124,12 +124,10 @@ const MarkdownProvider: FC = ({ children }) => {
         }
 
         range.setStart(textNode, startOffset);
-        range.setEnd(textNode, startOffset);
       } else {
         const node = refs.current[index];
 
         range.setStart(node, 0);
-        range.setEnd(node, 0);
       }
       nextNode.focus();
 
