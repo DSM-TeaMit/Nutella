@@ -12,7 +12,8 @@ const tagMap = new Map<string, string>()
   .set("####", "h4")
   .set("#####", "h5")
   .set("######", "h6")
-  .set(">", "blockquote");
+  .set(">", "blockquote")
+  .set("-", "ul");
 
 const placeholderMap = new Map<string, string>()
   .set("p", "비어있는 본문")
@@ -22,7 +23,15 @@ const placeholderMap = new Map<string, string>()
   .set("h4", "헤딩 4")
   .set("h5", "헤딩 5")
   .set("h6", "헤딩 6")
-  .set("blockquote", "비어있는 인용");
+  .set("blockquote", "비어있는 인용")
+  .set("ul", "비어있는 리스트");
+
+const getType = (type: string) => {
+  if (["ul"].includes(type)) {
+    return "p";
+  }
+  return type;
+};
 
 const keyArray = Array.from(tagMap.keys());
 
@@ -115,7 +124,7 @@ const Row: FC<PropsType> = ({ data }) => {
 
   const renderRow = useMemo(
     () =>
-      React.createElement(type, {
+      React.createElement(getType(type), {
         ref: setRef,
         onKeyDown,
         contentEditable: true,
@@ -129,7 +138,7 @@ const Row: FC<PropsType> = ({ data }) => {
     [onInput, onKeyDown, setRef, tab, type]
   );
 
-  return renderRow;
+  return ["ul"].includes(type) ? <li>{renderRow}</li> : renderRow;
 };
 
 export default Row;
