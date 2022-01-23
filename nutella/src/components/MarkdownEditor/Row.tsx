@@ -7,8 +7,15 @@ interface PropsType {
 
 const Row: FC<PropsType> = ({ data }) => {
   const { text, id, type } = data;
-  const { changeText, addRowAfterId, removeRowById, rows, refs, changeVerticalFocus } =
-    useContext(MarkdownContext);
+  const {
+    changeText,
+    addRowAfterId,
+    removeRowById,
+    rows,
+    refs,
+    changeVerticalFocus,
+    changeRowType,
+  } = useContext(MarkdownContext);
   const currentIndex = rows.findIndex((value) => value.id === id);
 
   useEffect(() => {
@@ -16,7 +23,7 @@ const Row: FC<PropsType> = ({ data }) => {
       refs.current[currentIndex].focus();
       refs.current[currentIndex].innerText = text;
     }
-  }, [refs]);
+  }, [refs, type]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter") {
@@ -40,9 +47,17 @@ const Row: FC<PropsType> = ({ data }) => {
   };
 
   const onInput = (e: React.FormEvent<HTMLDivElement>) => {
-    console.log((e.target as Node).textContent);
+    let text = (e.target as HTMLDivElement).innerHTML.replace(/&nbsp;/g, " ") || "";
 
-    changeText(id, (e.target as Node).textContent || "");
+    if (/^# /.test(text)) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      text = text.replace("# ", "");
+      changeRowType(id, "h1");
+    }
+
+    changeText(id, text);
   };
 
   const setRef = useCallback(
