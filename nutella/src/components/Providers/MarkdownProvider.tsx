@@ -139,15 +139,56 @@ const MarkdownProvider: FC = ({ children }) => {
     [findIndexById, rows]
   );
 
+  const changeTab = useCallback(
+    (id: string, step: number) => {
+      const index = findIndexById(id);
+      if (index === 0) {
+        return;
+      }
+      const copyRows = [...rows];
+      const fixedStep = Math.sign(step);
+      let tab = rows[index].tab + fixedStep;
+      let prevTab = rows[index - 1].tab;
+
+      if (tab < 0) {
+        tab = 0;
+      }
+
+      if (tab > prevTab + 1) {
+        tab = prevTab + 1;
+      }
+
+      copyRows[index].tab = tab;
+
+      setRows(
+        copyRows.map((value, index, array) => {
+          if (index === 0) {
+            return value;
+          }
+          const { tab } = value;
+          const { tab: prevTab } = array[index - 1];
+
+          if (tab > prevTab + 1) {
+            value.tab = prevTab + 1;
+          }
+
+          return value;
+        })
+      );
+    },
+    [findIndexById, rows]
+  );
+
   const value = useMemo<MarkdownContextType>(
     () => ({
       rows,
+      refs,
       addRowAfterId,
       removeRowById,
       changeRowType,
       changeText,
-      refs,
       changeVerticalFocus,
+      changeTab,
     }),
     [addRowAfterId, changeRowType, changeText, changeVerticalFocus, removeRowById, rows]
   );

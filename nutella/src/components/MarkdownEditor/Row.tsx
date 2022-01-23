@@ -27,7 +27,7 @@ const placeholderMap = new Map<string, string>()
 const keyArray = Array.from(tagMap.keys());
 
 const Row: FC<PropsType> = ({ data }) => {
-  const { text, id, type } = data;
+  const { text, id, type, tab } = data;
   const {
     changeText,
     addRowAfterId,
@@ -36,6 +36,7 @@ const Row: FC<PropsType> = ({ data }) => {
     refs,
     changeVerticalFocus,
     changeRowType,
+    changeTab,
   } = useContext(MarkdownContext);
   const currentIndex = rows.findIndex((value) => value.id === id);
 
@@ -66,8 +67,18 @@ const Row: FC<PropsType> = ({ data }) => {
         e.preventDefault();
         changeVerticalFocus(id, step);
       }
+
+      if (e.key === "Tab") {
+        e.stopPropagation();
+        e.preventDefault();
+        if (e.shiftKey) {
+          changeTab(id, -1);
+        } else {
+          changeTab(id, 1);
+        }
+      }
     },
-    [addRowAfterId, changeVerticalFocus, id, removeRowById, text]
+    [addRowAfterId, changeTab, changeVerticalFocus, id, removeRowById, text]
   );
 
   const onInput = useCallback(
@@ -112,9 +123,10 @@ const Row: FC<PropsType> = ({ data }) => {
         placeholder: placeholderMap.get(type),
         style: {
           outline: "none",
+          paddingLeft: `calc(${tab} * 1.2rem)`,
         },
       }),
-    [onInput, onKeyDown, setRef, type]
+    [onInput, onKeyDown, setRef, tab, type]
   );
 
   return renderRow;

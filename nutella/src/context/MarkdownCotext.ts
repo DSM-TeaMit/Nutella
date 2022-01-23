@@ -15,6 +15,7 @@ export interface MarkdownContextType {
   changeRowType: (id: string, type: string) => void;
   changeText: (id: string, text: string) => void;
   changeVerticalFocus: (id: string, step: number) => void;
+  changeTab: (id: string, step: number) => void;
 }
 
 export const MarkdownContext = createContext<MarkdownContextType>({
@@ -25,4 +26,5 @@ export const MarkdownContext = createContext<MarkdownContextType>({
   removeRowById: () => {},
   changeText: () => {},
   changeVerticalFocus: () => {},
+  changeTab: () => {},
 });
