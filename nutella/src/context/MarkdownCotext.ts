@@ -8,7 +8,7 @@ export interface Row {
 
 export interface MarkdownContextType {
   rows: Row[];
-  refs: React.RefObject<HTMLDivElement[]>;
+  refs: React.RefObject<HTMLElement[]>;
   addRowAfterId: (id: string) => void;
   removeRowById: (id: string) => void;
   changeRowType: (id: string, type: string) => void;
@@ -18,7 +18,7 @@ export interface MarkdownContextType {
 
 export const MarkdownContext = createContext<MarkdownContextType>({
   rows: [],
-  refs: createRef<HTMLDivElement[]>(),
+  refs: createRef<HTMLElement[]>(),
   addRowAfterId: () => {},
   changeRowType: () => {},
   removeRowById: () => {},

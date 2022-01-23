@@ -46,7 +46,7 @@ const Row: FC<PropsType> = ({ data }) => {
   };
 
   const setRef = useCallback(
-    (el: HTMLDivElement | null) => {
+    (el: HTMLElement | null) => {
       if (el && refs.current) {
         refs.current[currentIndex] = el;
       }
