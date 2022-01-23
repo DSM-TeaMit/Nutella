@@ -1,4 +1,4 @@
-import { FC, useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { MarkdownContext, Row as RowType } from "../../context/MarkdownCotext";
 
 interface PropsType {
@@ -6,7 +6,7 @@ interface PropsType {
 }
 
 const Row: FC<PropsType> = ({ data }) => {
-  const { text, id } = data;
+  const { text, id, type } = data;
   const { changeText, addRowAfterId, removeRowById, rows, refs, changeVerticalFocus } =
     useContext(MarkdownContext);
   const currentIndex = rows.findIndex((value) => value.id === id);
@@ -54,7 +54,14 @@ const Row: FC<PropsType> = ({ data }) => {
     [currentIndex, refs]
   );
 
-  return <div ref={setRef} onKeyDown={onKeyDown} contentEditable onInput={onInput} />;
+  const renderRow = React.createElement(type, {
+    ref: setRef,
+    onKeyDown,
+    contentEditable: true,
+    onInput,
+  });
+
+  return renderRow;
 };
 
 export default Row;
