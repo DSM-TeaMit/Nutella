@@ -5,6 +5,17 @@ interface PropsType {
   data: RowType;
 }
 
+const tagMap = new Map<string, string>()
+  .set("#", "h1")
+  .set("##", "h2")
+  .set("###", "h3")
+  .set("####", "h4")
+  .set("#####", "h5")
+  .set("######", "h6")
+  .set(">", "blockquote");
+
+const keyArray = Array.from(tagMap.keys());
+
 const Row: FC<PropsType> = ({ data }) => {
   const { text, id, type } = data;
   const {
@@ -47,14 +58,26 @@ const Row: FC<PropsType> = ({ data }) => {
   };
 
   const onInput = (e: React.FormEvent<HTMLDivElement>) => {
-    let text = (e.target as HTMLDivElement).innerHTML.replace(/&nbsp;/g, " ") || "";
+    let text =
+      (e.target as HTMLDivElement).innerHTML.replace(/&nbsp;/g, " ").replace(/&gt;/g, ">") || "";
 
-    if (/^# /.test(text)) {
+    const key = keyArray.find((value) => {
+      const regex = new RegExp(`^${value} `);
+      console.log(regex);
+      console.log(text);
+
+      return regex.test(text);
+    });
+
+    if (key) {
+      const tag = tagMap.get(key)!;
       e.preventDefault();
       e.stopPropagation();
 
-      text = text.replace("# ", "");
-      changeRowType(id, "h1");
+      text = text.replace(`${key} `, "");
+      console.log(tag);
+
+      changeRowType(id, tag);
     }
 
     changeText(id, text);
