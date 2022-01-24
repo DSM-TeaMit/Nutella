@@ -72,7 +72,7 @@ const Row: FC<PropsType> = ({ data }) => {
         e.stopPropagation();
         e.preventDefault();
 
-        if (isList(type)) {
+        if (type !== "p") {
           changeRowType(id, "p");
         } else if (tab > 0) {
           changeTab(id, -1);
@@ -98,7 +98,17 @@ const Row: FC<PropsType> = ({ data }) => {
         }
       }
     },
-    [addRowAfterId, changeTab, changeVerticalFocus, id, removeRowById, text]
+    [
+      addRowAfterId,
+      changeRowType,
+      changeTab,
+      changeVerticalFocus,
+      id,
+      removeRowById,
+      tab,
+      text,
+      type,
+    ]
   );
 
   const onInput = useCallback(
@@ -143,7 +153,8 @@ const Row: FC<PropsType> = ({ data }) => {
         placeholder: placeholderMap.get(type),
         style: {
           outline: "none",
-          paddingLeft: !isList(type) && `calc(${tab} * 1.2rem)`,
+          marginLeft: !isList(type) && `calc(${tab} * 1.2rem)`,
+          cursor: "text",
         },
       }),
     [onInput, onKeyDown, setRef, tab, type]
