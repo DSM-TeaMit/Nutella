@@ -26,6 +26,8 @@ const placeholderMap = new Map<string, string>()
   .set("blockquote", "비어있는 인용")
   .set("ul", "비어있는 리스트");
 
+const ulTypeMap = new Map<number, string>().set(0, "disc").set(1, "circle").set(2, "square");
+
 const getType = (type: string) => {
   if (["ul"].includes(type)) {
     return "p";
@@ -132,13 +134,19 @@ const Row: FC<PropsType> = ({ data }) => {
         placeholder: placeholderMap.get(type),
         style: {
           outline: "none",
-          paddingLeft: `calc(${tab} * 1.2rem)`,
+          paddingLeft: !["ul"].includes(type) && `calc(${tab} * 1.2rem)`,
         },
       }),
     [onInput, onKeyDown, setRef, tab, type]
   );
 
-  return ["ul"].includes(type) ? <li>{renderRow}</li> : renderRow;
+  return ["ul"].includes(type) ? (
+    <li style={{ paddingLeft: `calc(${tab} * 1.2rem)`, listStyleType: ulTypeMap.get(tab % 3) }}>
+      {renderRow}
+    </li>
+  ) : (
+    renderRow
+  );
 };
 
 export default Row;
