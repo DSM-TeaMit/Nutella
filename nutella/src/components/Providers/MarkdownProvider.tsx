@@ -3,6 +3,7 @@ import { MarkdownContext, MarkdownContextType, Row } from "../../context/Markdow
 import {} from "../../constant/";
 import uniqueId from "../../constant/UniqueId";
 
+const isList = (type: string) => ["ul", "ol"].includes(type);
 const MarkdownProvider: FC = ({ children }) => {
   const [rows, setRows] = useState<Row[]>([
     {
@@ -31,7 +32,7 @@ const MarkdownProvider: FC = ({ children }) => {
       copyRows.splice(index + 1, 0, {
         id: uniqueId(),
         text: "",
-        type: ["ul"].includes(type) ? type : "p",
+        type: isList(type) ? type : "p",
         tab: rows[index].tab,
       });
 
@@ -191,7 +192,7 @@ const MarkdownProvider: FC = ({ children }) => {
       changeVerticalFocus,
       changeTab,
     }),
-    [addRowAfterId, changeRowType, changeText, changeVerticalFocus, removeRowById, rows]
+    [addRowAfterId, changeRowType, changeTab, changeText, changeVerticalFocus, removeRowById, rows]
   );
 
   return <MarkdownContext.Provider value={value}>{children}</MarkdownContext.Provider>;

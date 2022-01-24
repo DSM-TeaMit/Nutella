@@ -28,8 +28,10 @@ const placeholderMap = new Map<string, string>()
 
 const ulTypeMap = new Map<number, string>().set(0, "disc").set(1, "circle").set(2, "square");
 
+const isList = (type: string) => ["ul", "ol"].includes(type);
+
 const getType = (type: string) => {
-  if (["ul"].includes(type)) {
+  if (isList(type)) {
     return "p";
   }
   return type;
@@ -69,7 +71,14 @@ const Row: FC<PropsType> = ({ data }) => {
       if (e.key === "Backspace" && text === "") {
         e.stopPropagation();
         e.preventDefault();
-        removeRowById(id);
+
+        if (isList(type)) {
+          changeRowType(id, "p");
+        } else if (tab > 0) {
+          changeTab(id, -1);
+        } else {
+          removeRowById(id);
+        }
       }
 
       const step = new Map<string, number>().set("ArrowUp", -1).set("ArrowDown", 1).get(e.key);
@@ -134,7 +143,7 @@ const Row: FC<PropsType> = ({ data }) => {
         placeholder: placeholderMap.get(type),
         style: {
           outline: "none",
-          paddingLeft: !["ul"].includes(type) && `calc(${tab} * 1.2rem)`,
+          paddingLeft: !isList(type) && `calc(${tab} * 1.2rem)`,
         },
       }),
     [onInput, onKeyDown, setRef, tab, type]
