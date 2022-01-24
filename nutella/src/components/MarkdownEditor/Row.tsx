@@ -13,7 +13,8 @@ const tagMap = new Map<string, string>()
   .set("#####", "h5")
   .set("######", "h6")
   .set(">", "blockquote")
-  .set("-", "ul");
+  .set("-", "ul")
+  .set("\\d+.", "ol");
 
 const placeholderMap = new Map<string, string>()
   .set("p", "비어있는 본문")
@@ -24,7 +25,8 @@ const placeholderMap = new Map<string, string>()
   .set("h5", "헤딩 5")
   .set("h6", "헤딩 6")
   .set("blockquote", "비어있는 인용")
-  .set("ul", "비어있는 리스트");
+  .set("ul", "비어있는 리스트")
+  .set("ol", "비어있는 리스트");
 
 const ulTypeMap = new Map<number, string>().set(0, "disc").set(1, "circle").set(2, "square");
 
@@ -115,7 +117,6 @@ const Row: FC<PropsType> = ({ data }) => {
     (e: React.FormEvent<HTMLDivElement>) => {
       let text =
         (e.target as HTMLDivElement).innerHTML.replace(/&nbsp;/g, " ").replace(/&gt;/g, ">") || "";
-      console.log(text);
 
       const key = keyArray.find((value) => new RegExp(`^${value} `).test(text));
 
@@ -124,7 +125,7 @@ const Row: FC<PropsType> = ({ data }) => {
         e.stopPropagation();
         const tag = tagMap.get(key)!;
 
-        text = text.replace(`${key} `, "");
+        text = text.replace(new RegExp(`${key} `), "");
 
         changeRowType(id, tag);
       }
@@ -160,10 +161,56 @@ const Row: FC<PropsType> = ({ data }) => {
     [onInput, onKeyDown, setRef, tab, type]
   );
 
-  return ["ul"].includes(type) ? (
-    <li style={{ paddingLeft: `calc(${tab} * 1.2rem)`, listStyleType: ulTypeMap.get(tab % 3) }}>
-      {renderRow}
-    </li>
+  const getStart = useCallback((): number => {
+    let index = currentIndex - 1;
+    let start = 1;
+    const { tab, type } = rows[currentIndex];
+
+    if (currentIndex === 0) {
+      return start;
+    }
+
+    while (true) {
+      if (index < 0) {
+        break;
+      }
+
+      const prev = rows[index];
+
+      if (prev.tab === tab && prev.type === type) start++;
+      else if (prev.type !== type) break;
+
+      index--;
+    }
+    return start;
+  }, [currentIndex, rows]);
+
+  return isList(type) ? (
+    type === "ul" ? (
+      <li
+        style={{
+          paddingLeft: `calc(${tab} * 1.2rem)`,
+          listStyleType: ulTypeMap.get(tab % 3),
+        }}
+      >
+        {renderRow}
+      </li>
+    ) : (
+      <ol
+        style={{
+          paddingLeft: `calc(${tab} * 1.2rem)`,
+        }}
+        start={getStart()}
+      >
+        <li
+          style={{
+            listStyleType: "decimal",
+          }}
+        >
+          {renderRow}
+        </li>
+      </ol>
+    )
   ) : (
     renderRow
   );
