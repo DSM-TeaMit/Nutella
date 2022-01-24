@@ -44,7 +44,11 @@ const MarkdownProvider: FC = ({ children }) => {
   const removeRowById = useCallback(
     (id: string) => {
       let index = findIndexById(id) - 1;
+      if (rows.length <= 1) {
+        return;
+      }
       setRows(rows.filter((value) => value.id !== id));
+
       if (index < 0) {
         index = 0;
       }
