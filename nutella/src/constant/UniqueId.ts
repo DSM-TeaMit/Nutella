@@ -5,20 +5,7 @@ const uniqueId = (): string => {
       .substring(1);
   };
 
-  return `
-  ${randomString()}
-  ${randomString()}
-  -
-  ${randomString()}
-  -
-  ${randomString()}
-  -
-  ${randomString()}
-  -
-  ${randomString()}
-  ${randomString()}
-  ${randomString()}
-  `;
+  return `${randomString()}${randomString()}-${randomString()}-${randomString()}-${randomString()}-${randomString()}${randomString()}${randomString()}`;
 };
 
 export default uniqueId;

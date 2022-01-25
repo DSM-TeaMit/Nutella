@@ -1,6 +1,5 @@
 import { FC, useCallback, useMemo, useRef, useState, useEffect } from "react";
 import { MarkdownContext, MarkdownContextType, Row } from "../../context/MarkdownCotext";
-import {} from "../../constant/";
 import uniqueId from "../../constant/UniqueId";
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
