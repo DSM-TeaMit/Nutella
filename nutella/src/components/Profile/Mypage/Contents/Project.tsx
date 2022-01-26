@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import { ContentInner } from "../styles";
+import { ContentInner } from "../../styles";
 import ProjectCard from "../../../ProjectCard";
 import { useCallback } from "react";
 import useModalContext from "../../../../hooks/useModalContext";

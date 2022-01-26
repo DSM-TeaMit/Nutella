@@ -1,4 +1,4 @@
-import { ContentInner } from "../styles";
+import { ContentInner } from "../../styles";
 import ReportAccordion from "./ReportAccordion";
 import * as S from "./styles";
 

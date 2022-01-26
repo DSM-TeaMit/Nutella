@@ -1,4 +1,4 @@
-import { ContentInner } from "../styles";
+import { ContentInner } from "../../styles";
 import * as S from "./styles";
 import { ArrowBlackIcons } from "../../../../assets/icons";
 

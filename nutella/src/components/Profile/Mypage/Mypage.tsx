@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import NavigationType from "../../../interface/Navigation";
 import SideBar from "../../SideBar";
-import * as S from "./styles";
+import * as S from "../styles";
 import {
   DocumentEditIcons,
   DocumentIcons,
