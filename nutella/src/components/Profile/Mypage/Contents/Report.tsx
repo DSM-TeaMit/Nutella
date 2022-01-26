@@ -1,16 +1,15 @@
-import { ContentInner } from "../../styles";
 import ReportAccordion from "./ReportAccordion";
-import * as S from "./styles";
+import * as I from "../..//styles";
 
 const Report = () => {
   return (
-    <ContentInner>
-      <S.Container>
+    <I.ContentInner>
+      <I.FlexContainer>
         <ReportAccordion title="승인 대기중인" count={12} />
         <ReportAccordion title="승인 거절된" count={12} />
         <ReportAccordion title="승인 된" count={12} />
-      </S.Container>
-    </ContentInner>
+      </I.FlexContainer>
+    </I.ContentInner>
   );
 };
 

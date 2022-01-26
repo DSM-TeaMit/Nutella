@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import { ContentInner } from "../../styles";
+import * as I from "../../styles";
 import ProjectCard from "../../../ProjectCard";
 import { useCallback } from "react";
 import useModalContext from "../../../../hooks/useModalContext";
@@ -17,8 +17,8 @@ const Project = () => {
   );
 
   return (
-    <ContentInner>
-      <S.Container>
+    <I.ContentInner>
+      <I.FlexContainer>
         <div>
           <S.ProjectTitle>
             <div>
@@ -33,8 +33,8 @@ const Project = () => {
             ))}
           </S.Grid>
         </div>
-      </S.Container>
-    </ContentInner>
+      </I.FlexContainer>
+    </I.ContentInner>
   );
 };
 
