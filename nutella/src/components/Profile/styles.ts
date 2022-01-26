@@ -145,3 +145,10 @@ export const BlueH3 = styled.span`
 export const ContentTitle = styled.div`
   margin-bottom: 16px;
 `;
+
+export const ProjectTitle = styled(ContentTitle)`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+`;

@@ -20,13 +20,13 @@ const Project = () => {
     <I.ContentInner>
       <I.FlexContainer>
         <div>
-          <S.ProjectTitle>
+          <I.ProjectTitle>
             <div>
               <I.H3>프로젝트&nbsp;</I.H3>
               <I.BlueH3>12</I.BlueH3>
             </div>
             <S.AddProject onClick={onMessageAddClick}>+ 프로젝트 생성</S.AddProject>
-          </S.ProjectTitle>
+          </I.ProjectTitle>
           <I.Grid>
             {new Array(12).fill(0).map((_, index) => (
               <ProjectCard key={index} />
