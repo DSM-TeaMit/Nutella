@@ -3,6 +3,7 @@ import NavigationType from "../../../interface/Navigation";
 import SideBar from "../../SideBar";
 import * as S from "../styles";
 import { DocumentIcons, PersonalIcons } from "../../../assets/icons";
+import Profile from "./Contents/Profile";
 
 const navs: NavigationType[] = [
   {
@@ -26,7 +27,7 @@ const User = () => {
         </S.SideBarContainer>
         <S.ContentContainer>
           <Routes>
-            <Route path="/" element={<div>profile</div>} />
+            <Route path="/" element={<Profile />} />
             <Route path="/project" element={<div>project</div>} />
           </Routes>
         </S.ContentContainer>
