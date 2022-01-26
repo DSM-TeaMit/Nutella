@@ -1,4 +1,4 @@
-import { ContentInner } from "../../styles";
+import * as I from "../../styles";
 import * as S from "./styles";
 import { ArrowBlackIcons, GithubBlackIcons } from "../../../../assets/icons";
 import MarkdownRender from "../../../MarkdownRender";
@@ -7,16 +7,16 @@ import ProjectCard from "../../../ProjectCard";
 
 const Profile = () => {
   return (
-    <ContentInner>
-      <S.Container>
-        <S.ProfileContainerOuter>
-          <S.ProfileContainer>
-            <S.ProfileImage alt="" src="" />
-            <S.ProfileInfoContainer>
-              <S.Name>2105 김진근</S.Name>
-              <S.ProfileDescriptionContainer>
-                <S.ProfileDescription>프로젝트 12</S.ProfileDescription>
-                <S.Github
+    <I.ContentInner>
+      <I.FlexContainer>
+        <I.ProfileContainerOuter>
+          <I.ProfileContainer>
+            <I.ProfileImage alt="" src="" />
+            <I.ProfileInfoContainer>
+              <I.Name>2105 김진근</I.Name>
+              <I.ProfileDescriptionContainer>
+                <I.ProfileDescription>프로젝트 12</I.ProfileDescription>
+                <I.Github
                   href="https://github.com/DSM-TeaMit/Nutella"
                   target="_blank"
                   rel="noreferrer"
@@ -24,12 +24,12 @@ const Profile = () => {
                   <img alt="github" src={GithubBlackIcons} />
                   KJG04
                   <img alt="arrow" src={ArrowBlackIcons} />
-                </S.Github>
-              </S.ProfileDescriptionContainer>
-            </S.ProfileInfoContainer>
-          </S.ProfileContainer>
-          <S.Line />
-        </S.ProfileContainerOuter>
+                </I.Github>
+              </I.ProfileDescriptionContainer>
+            </I.ProfileInfoContainer>
+          </I.ProfileContainer>
+          <I.Line />
+        </I.ProfileContainerOuter>
         <div>
           <S.Description>Github 에서 가져온 README</S.Description>
           <S.ReadMe>
@@ -58,8 +58,8 @@ const Profile = () => {
             ))}
           </S.Grid>
         </div>
-      </S.Container>
-    </ContentInner>
+      </I.FlexContainer>
+    </I.ContentInner>
   );
 };
 
