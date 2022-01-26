@@ -1,9 +1,9 @@
 import * as S from "./styles";
 import { ContentInner } from "../styles";
-import ProjectCard from "../../ProjectCard";
+import ProjectCard from "../../../ProjectCard";
 import { useCallback } from "react";
-import useModalContext from "../../../hooks/useModalContext";
-import ProjectAddModal from "../../Modals/ProejctAddModal";
+import useModalContext from "../../../../hooks/useModalContext";
+import ProjectAddModal from "../../../Modals/ProejctAddModal";
 
 const Project = () => {
   const { openModal } = useModalContext();

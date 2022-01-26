@@ -1,6 +1,6 @@
 import { ContentInner } from "../styles";
 import * as S from "./styles";
-import { ArrowBlackIcons } from "../../../assets/icons";
+import { ArrowBlackIcons } from "../../../../assets/icons";
 
 const Setting = () => {
   return (

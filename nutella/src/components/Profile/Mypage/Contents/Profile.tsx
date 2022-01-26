@@ -1,9 +1,9 @@
 import { ContentInner } from "../styles";
 import * as S from "./styles";
-import { ArrowBlackIcons, GithubBlackIcons } from "../../../assets/icons";
-import MarkdownRender from "../../MarkdownRender";
-import ReportCard from "../../ReportCard";
-import ProjectCard from "../../ProjectCard";
+import { ArrowBlackIcons, GithubBlackIcons } from "../../../../assets/icons";
+import MarkdownRender from "../../../MarkdownRender";
+import ReportCard from "../../../ReportCard";
+import ProjectCard from "../../../ProjectCard";
 
 const Profile = () => {
   return (
