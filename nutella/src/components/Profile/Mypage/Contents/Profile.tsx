@@ -1,5 +1,4 @@
 import * as I from "../../styles";
-import * as S from "./styles";
 import { ArrowBlackIcons, GithubBlackIcons } from "../../../../assets/icons";
 import MarkdownRender from "../../../MarkdownRender";
 import ReportCard from "../../../ReportCard";
@@ -31,32 +30,32 @@ const Profile = () => {
           <I.Line />
         </I.ProfileContainerOuter>
         <div>
-          <S.Description>Github 에서 가져온 README</S.Description>
-          <S.ReadMe>
+          <I.Description>Github 에서 가져온 README</I.Description>
+          <I.ReadMe>
             <MarkdownRender>{`### I want to be a Front-end developer 🙂\ni'm learning about:\n- JavaScript\n- TypeScript`}</MarkdownRender>
-          </S.ReadMe>
+          </I.ReadMe>
         </div>
         <div>
-          <S.ContentTitle>
-            <S.H3>승인 대기중인 보고서&nbsp;</S.H3>
-            <S.BlueH3>3</S.BlueH3>
-          </S.ContentTitle>
-          <S.Grid>
+          <I.ContentTitle>
+            <I.H3>승인 대기중인 보고서&nbsp;</I.H3>
+            <I.BlueH3>3</I.BlueH3>
+          </I.ContentTitle>
+          <I.Grid>
             {new Array(3).fill(0).map((_, index) => (
               <ReportCard key={index} />
             ))}
-          </S.Grid>
+          </I.Grid>
         </div>
         <div>
-          <S.ContentTitle>
-            <S.H3>프로젝트&nbsp;</S.H3>
-            <S.BlueH3>12</S.BlueH3>
-          </S.ContentTitle>
-          <S.Grid>
+          <I.ContentTitle>
+            <I.H3>프로젝트&nbsp;</I.H3>
+            <I.BlueH3>12</I.BlueH3>
+          </I.ContentTitle>
+          <I.Grid>
             {new Array(4).fill(0).map((_, index) => (
               <ProjectCard key={index} />
             ))}
-          </S.Grid>
+          </I.Grid>
         </div>
       </I.FlexContainer>
     </I.ContentInner>

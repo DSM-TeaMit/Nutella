@@ -22,16 +22,16 @@ const Project = () => {
         <div>
           <S.ProjectTitle>
             <div>
-              <S.H3>프로젝트&nbsp;</S.H3>
-              <S.BlueH3>12</S.BlueH3>
+              <I.H3>프로젝트&nbsp;</I.H3>
+              <I.BlueH3>12</I.BlueH3>
             </div>
             <S.AddProject onClick={onMessageAddClick}>+ 프로젝트 생성</S.AddProject>
           </S.ProjectTitle>
-          <S.Grid>
+          <I.Grid>
             {new Array(12).fill(0).map((_, index) => (
               <ProjectCard key={index} />
             ))}
-          </S.Grid>
+          </I.Grid>
         </div>
       </I.FlexContainer>
     </I.ContentInner>

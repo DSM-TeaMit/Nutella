@@ -1,5 +1,7 @@
 import * as I from "../../styles";
 import { ArrowBlackIcons, GithubBlackIcons } from "../../../../assets/icons";
+import ProjectCard from "../../../ProjectCard";
+import MarkdownRender from "../../../MarkdownRender";
 
 const Profile = () => {
   return (
@@ -26,6 +28,23 @@ const Profile = () => {
           </I.ProfileContainer>
           <I.Line />
         </I.ProfileContainerOuter>
+        <div>
+          <I.Description>Github 에서 가져온 README</I.Description>
+          <I.ReadMe>
+            <MarkdownRender>{`### I want to be a Front-end developer 🙂\ni'm learning about:\n- JavaScript\n- TypeScript`}</MarkdownRender>
+          </I.ReadMe>
+        </div>
+        <div>
+          <I.ContentTitle>
+            <I.H3>프로젝트&nbsp;</I.H3>
+            <I.BlueH3>12</I.BlueH3>
+          </I.ContentTitle>
+          <I.Grid>
+            {new Array(4).fill(0).map((_, index) => (
+              <ProjectCard key={index} />
+            ))}
+          </I.Grid>
+        </div>
       </I.FlexContainer>
     </I.ContentInner>
   );
