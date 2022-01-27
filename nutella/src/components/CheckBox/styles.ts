@@ -13,6 +13,9 @@ export const Box = styled.div<{ isActive: boolean }>`
   border-radius: 5px;
   background-color: ${({ theme, isActive }) =>
     isActive ? theme.colors.primary.default : theme.colors.grayscale.lightGray2};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Label = styled.div`

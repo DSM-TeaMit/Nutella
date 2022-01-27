@@ -1,10 +1,18 @@
+import { FC } from "react";
 import * as S from "./styles";
+import { CheckIcons } from "../../assets/icons";
 
-const CheckBox = () => {
+interface PropsType {
+  id?: string;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  isActive: boolean;
+}
+
+const CheckBox: FC<PropsType> = ({ children, id, onClick, isActive }) => {
   return (
-    <S.Contianer>
-      <S.Box isActive={false} />
-      <S.Label></S.Label>
+    <S.Contianer id={id} onClick={onClick}>
+      <S.Box isActive={isActive}>{isActive && <img alt="check" src={CheckIcons} />}</S.Box>
+      <S.Label>{children}</S.Label>
     </S.Contianer>
   );
 };
