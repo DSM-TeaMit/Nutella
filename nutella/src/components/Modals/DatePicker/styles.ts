@@ -44,3 +44,18 @@ export const DOWCell = styled.div`
   text-align: center;
   width: 50px;
 `;
+
+export const DateGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+`;
+
+export const DateCell = styled.div`
+  width: 50px;
+  height: 50px;
+  color: ${({ color }) => color};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
