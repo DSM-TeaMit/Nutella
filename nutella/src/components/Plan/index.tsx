@@ -1,10 +1,14 @@
+import useModalContext from "../../hooks/useModalContext";
 import CheckBox from "../CheckBox";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import MarkdownEditor from "../MarkdownEditor";
+import DatePicker from "../Modals/DatePicker";
 import * as S from "./styles";
 
 const Plan = () => {
+  const { openModal } = useModalContext();
+
   return (
     <>
       <Header />
@@ -18,7 +22,13 @@ const Plan = () => {
             </S.RowContainer>
             <S.RowContainer>
               <S.RowTitle>진행 기간</S.RowTitle>
-              <S.Time placeholder="시간을 선택해주세요..."></S.Time>
+              <S.Time
+                placeholder="시간을 선택해주세요..."
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal(<DatePicker />);
+                }}
+              ></S.Time>
             </S.RowContainer>
             <S.RowContainer>
               <S.RowTitle>신청자</S.RowTitle>
