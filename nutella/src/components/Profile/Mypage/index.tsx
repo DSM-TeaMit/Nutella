@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import NavigationType from "../../interface/Navigation";
-import SideBar from "./SideBar";
-import * as S from "./styles";
+import NavigationType from "../../../interface/Navigation";
+import SideBar from "../../SideBar";
+import * as S from "../styles";
 import {
   DocumentEditIcons,
   DocumentIcons,
   PersonalIcons,
   SettingIcons,
-} from "../../assets/icons";
+} from "../../../assets/icons";
 import Profile from "./Contents/Profile";
 import Project from "./Contents/Project";
 import Report from "./Contents/Report";

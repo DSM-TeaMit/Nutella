@@ -1,6 +1,6 @@
 import Navigation from "./Navigation";
 import * as S from "./styles";
-import NavigationType from "../../../interface/Navigation";
+import NavigationType from "../../interface/Navigation";
 import { FC } from "react";
 
 interface PropsType {
