@@ -65,6 +65,11 @@ export const RowLineContent = styled.div`
   color: ${({ theme }) => theme.colors.grayscale.black};
 `;
 
+export const CheckBoxContianer = styled.div`
+  display: flex;
+  column-gap: 16px;
+`;
+
 export const Time = styled(RowLineContent)`
   cursor: pointer;
 

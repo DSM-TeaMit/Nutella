@@ -1,3 +1,4 @@
+import CheckBox from "../CheckBox";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import MarkdownEditor from "../MarkdownEditor";
@@ -41,7 +42,14 @@ const Plan = () => {
                 <br />
                 (해당사항 체크)
               </S.RowTitle>
-              <S.RowLineContent>2105 김진근</S.RowLineContent>
+              <S.RowLineContent>
+                <S.CheckBoxContianer>
+                  <CheckBox isActive={false}>결과 보고서</CheckBox>
+                  <CheckBox isActive={false}>프로그램 코드</CheckBox>
+                  <CheckBox isActive={false}>실행물 (영상 또는 사진)</CheckBox>
+                  <CheckBox isActive={false}>기타</CheckBox>
+                </S.CheckBoxContianer>
+              </S.RowLineContent>
             </S.RowContainer>
             <S.RowContainer>
               <S.RowTitle>담당교사 확인</S.RowTitle>
