@@ -61,6 +61,17 @@ export const RowLineContent = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.black};
+`;
+
+export const Time = styled(RowLineContent)`
+  cursor: pointer;
+
+  &:empty::before {
+    content: attr(placeholder);
+    color: ${({ theme }) => theme.colors.grayscale.gray1};
+  }
 `;
 
 export const RowMutiLineContent = styled.div`
