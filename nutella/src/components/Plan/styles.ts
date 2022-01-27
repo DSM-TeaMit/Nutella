@@ -36,3 +36,35 @@ export const Title = styled.div`
   padding: 24px 0px;
   font: ${({ theme }) => theme.fonts.h1};
 `;
+
+export const RowContainer = styled.div`
+  display: flex;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.black};
+  &:last-of-type {
+    border-bottom: 0;
+  }
+`;
+
+export const RowTitle = styled.div`
+  padding: 12px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font: ${({ theme }) => theme.fonts.body1};
+  border-right: 1px solid ${({ theme }) => theme.colors.grayscale.black};
+  width: 20%;
+  text-align: center;
+`;
+
+export const RowLineContent = styled.div`
+  padding: 12px 16px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+`;
+
+export const RowMutiLineContent = styled.div`
+  padding: 16px;
+  flex: 1;
+  min-height: 150px;
+`;
