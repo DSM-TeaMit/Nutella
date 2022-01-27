@@ -1,3 +1,5 @@
-const DateCell = () => {};
+const DateCell = () => {
+    
+};
 
 export default DateCell;

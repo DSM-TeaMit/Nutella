@@ -51,11 +51,56 @@ export const DateGrid = styled.div`
   grid-template-rows: repeat(6, 1fr);
 `;
 
-export const DateCell = styled.div`
+export const Default = styled.div`
   width: 50px;
   height: 50px;
   color: ${({ color }) => color};
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const Disable = styled(Default)`
+  color: ${({ theme }) => theme.colors.grayscale.gray1};
+`;
+
+export const SelectedStyle = styled(Default)`
+  color: ${({ theme }) => theme.colors.grayscale.white};
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: ${({ theme }) => theme.colors.primary.default};
+  }
+`;
+
+export const Selected = styled(SelectedStyle)`
+  &::after {
+    margin: 5px;
+    border-radius: 50%;
+  }
+`;
+
+export const SelectedStart = styled(SelectedStyle)`
+  &::after {
+    margin: 5px 0px 5px 5px;
+    border-radius: 50% 0px 0px 50%;
+  }
+`;
+
+export const SelectedMiddle = styled(SelectedStyle)`
+  &::after {
+    margin: 5px 0px;
+    border-radius: 0px;
+  }
+`;
+
+export const SelectedEnd = styled(SelectedStyle)`
+  &::after {
+    margin: 5px 5px 5px 0px;
+    border-radius: 0px 50% 50% 0px;
+  }
 `;
