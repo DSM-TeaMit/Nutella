@@ -53,7 +53,18 @@ const Plan = () => {
             </S.RowContainer>
             <S.RowContainer>
               <S.RowTitle>담당교사 확인</S.RowTitle>
-              <S.RowLineContent>2105 김진근</S.RowLineContent>
+              <S.RowLineContent>
+                <S.DayContianer>
+                  <span>년</span>
+                  <span>월</span>
+                  <span>일</span>
+                </S.DayContianer>
+                <S.InfoContainer>
+                  <span>직위:</span>
+                  <span>이름:</span>
+                  <span>(인)</span>
+                </S.InfoContainer>
+              </S.RowLineContent>
             </S.RowContainer>
           </S.ContentInner>
         </S.ContentContainer>

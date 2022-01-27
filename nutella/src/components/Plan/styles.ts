@@ -84,3 +84,19 @@ export const RowMutiLineContent = styled.div`
   flex: 1;
   min-height: 150px;
 `;
+
+export const DayContianer = styled.div`
+  margin-left: 80px;
+  display: flex;
+  column-gap: 60px;
+  margin-right: 16px;
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.black};
+`;
+
+export const InfoContainer = styled.div`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.black};
+  display: flex;
+  column-gap: 120px;
+`;
