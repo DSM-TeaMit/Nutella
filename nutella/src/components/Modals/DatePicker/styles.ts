@@ -99,6 +99,7 @@ export const SelectedStyle = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  cursor: pointer;
 
   &::before {
     z-index: 1;

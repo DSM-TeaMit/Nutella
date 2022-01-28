@@ -6,7 +6,7 @@ import * as S from "./styles";
 export const DatePicker = () => {
   const themeContext = useContext(ThemeContext) as Theme;
   const [startDate] = useState<Date>(new Date("2022-01-10"));
-  const [endDate] = useState<Date>(new Date("2022-01-19"));
+  const [endDate] = useState<Date>(new Date("2022-01-10"));
 
   const renderDates = useCallback(() => {
     const offset = new Date(startDate);

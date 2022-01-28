@@ -22,7 +22,12 @@ const DateCell: FC<PropsType> = ({ currentDate, startDate, endDate }) => {
   const renderCell = useCallback(() => {
     let renderer = S.SelectedMiddle;
 
-    if (compareDate(currentDate, startDate) === -1 || compareDate(currentDate, endDate) === 1) {
+    if (compareDate(startDate, endDate) === 0 && compareDate(currentDate, startDate) === 0) {
+      renderer = S.Selected;
+    } else if (
+      compareDate(currentDate, startDate) === -1 ||
+      compareDate(currentDate, endDate) === 1
+    ) {
       //범위 밖
       renderer = S.Default;
     } else if (compareDate(currentDate, startDate) === 0) {
