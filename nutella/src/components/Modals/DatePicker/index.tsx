@@ -3,10 +3,42 @@ import { useCallback, useContext, useMemo, useState } from "react";
 import DateCell from "./DateCell";
 import * as S from "./styles";
 
+const compareDate = (d1: Date, d2: Date) => {
+  d1.setHours(0, 0, 0, 0);
+  d2.setHours(0, 0, 0, 0);
+
+  if (d1.getTime() === d2.getTime()) {
+    return 0;
+  } else if (d1.getTime() > d2.getTime()) {
+    return 1;
+  } else return -1;
+};
+
+const getCellType = (startDate: Date, endDate: Date, currentDate: Date): string => {
+  let type = "middle";
+  if (compareDate(startDate, endDate) === 0 && compareDate(currentDate, startDate) === 0) {
+    type = "selected";
+  } else if (
+    compareDate(currentDate, startDate) === -1 ||
+    compareDate(currentDate, endDate) === 1
+  ) {
+    //범위 밖
+    type = "default";
+  } else if (compareDate(currentDate, startDate) === 0) {
+    //시작
+    type = "start";
+  } else if (compareDate(currentDate, endDate) === 0) {
+    //종료
+    type = "end";
+  }
+
+  return type;
+};
+
 export const DatePicker = () => {
   const themeContext = useContext(ThemeContext) as Theme;
   const [startDate] = useState<Date>(new Date("2022-01-10"));
-  const [endDate] = useState<Date>(new Date("2022-01-10"));
+  const [endDate] = useState<Date>(new Date("2022-01-19"));
 
   const renderDates = useCallback(() => {
     const offset = new Date(startDate);
@@ -19,12 +51,9 @@ export const DatePicker = () => {
         const date = new Date(offset);
 
         return (
-          <DateCell
-            key={date.getTime()}
-            currentDate={date}
-            startDate={startDate}
-            endDate={endDate}
-          />
+          <DateCell type={getCellType(startDate, endDate, date)} key={date.getTime()}>
+            {date.getDate()}
+          </DateCell>
         );
       });
     });
