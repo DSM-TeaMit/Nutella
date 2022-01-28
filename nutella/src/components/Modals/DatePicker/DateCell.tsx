@@ -11,6 +11,7 @@ const DateCell: FC<PropsType> = ({ type, children }) => {
     const rendererMap = new Map<string, StyledComponent<{}, {}, {}>>()
       .set("middle", S.SelectedMiddle)
       .set("selected", S.Selected)
+      .set("disable", S.Disable)
       .set("default", S.Default)
       .set("start", S.SelectedStart)
       .set("end", S.SelectedEnd);

@@ -14,10 +14,20 @@ const compareDate = (d1: Date, d2: Date) => {
   } else return -1;
 };
 
-const getCellType = (startDate: Date, endDate: Date, currentDate: Date): string => {
+const getCellType = (
+  startDate: Date,
+  endDate: Date,
+  currentDate: Date,
+  calendarDate: Date
+): string => {
   let type = "middle";
   if (compareDate(startDate, endDate) === 0 && compareDate(currentDate, startDate) === 0) {
     type = "selected";
+  } else if (
+    currentDate.getFullYear() !== calendarDate.getFullYear() ||
+    currentDate.getMonth() !== calendarDate.getMonth()
+  ) {
+    type = "disable";
   } else if (
     compareDate(currentDate, startDate) === -1 ||
     compareDate(currentDate, endDate) === 1
@@ -37,11 +47,21 @@ const getCellType = (startDate: Date, endDate: Date, currentDate: Date): string 
 
 export const DatePicker = () => {
   const themeContext = useContext(ThemeContext) as Theme;
-  const [startDate] = useState<Date>(new Date("2022-01-10"));
-  const [endDate] = useState<Date>(new Date("2022-01-19"));
+  const [startDate] = useState<Date>(new Date("2022-01-10")); //선택한 날짜 시간 date
+  const [endDate] = useState<Date>(new Date("2022-01-19")); //선택한 날짜 종료 date
+  const [calendarDate] = useState<Date>(new Date("2022-01-01")); //표시되는 달력의 year, month를 가지는 date
+
+  const onClick = (date: Date) => () => {
+    if (compareDate(date, startDate) === 0 || compareDate(date, endDate) === 0) {
+      return;
+    }
+
+    if (compareDate(date, startDate) === 1) {
+    }
+  };
 
   const renderDates = useCallback(() => {
-    const offset = new Date(startDate);
+    const offset = new Date(calendarDate);
     offset.setDate(1);
     offset.setDate(offset.getDate() - offset.getDay() - 1);
 
@@ -51,13 +71,13 @@ export const DatePicker = () => {
         const date = new Date(offset);
 
         return (
-          <DateCell type={getCellType(startDate, endDate, date)} key={date.getTime()}>
+          <DateCell type={getCellType(startDate, endDate, date, calendarDate)} key={date.getTime()}>
             {date.getDate()}
           </DateCell>
         );
       });
     });
-  }, [startDate]);
+  }, [calendarDate, endDate, startDate]);
 
   return (
     <S.Container>
