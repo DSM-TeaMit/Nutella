@@ -9,9 +9,9 @@ interface PropsType {
 
 const DateCell: FC<PropsType> = ({ currentDate }) => {
   return (
-    <S.Default>
+    <S.SelectedEnd>
       <S.DateLabel>{currentDate.getDate()}</S.DateLabel>
-    </S.Default>
+    </S.SelectedEnd>
   );
 };
 

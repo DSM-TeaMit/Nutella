@@ -85,17 +85,68 @@ export const DateLabel = styled.div`
 
 export const Disable = styled(Default)`
   color: ${({ theme }) => theme.colors.grayscale.gray1};
+
+  &::before {
+    content: none;
+  }
 `;
 
-export const SelectedStyle = styled(Default)`
+export const SelectedStyle = styled.div`
+  width: 50px;
+  height: 50px;
   color: ${({ theme }) => theme.colors.grayscale.white};
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
 
   &::before {
-    z-index: 2;
+    z-index: 1;
     content: "";
     position: absolute;
     background-color: ${({ theme }) => theme.colors.primary.default};
-    box-sizing: content-box;
+  }
+`;
+
+export const Selected = styled(SelectedStyle)`
+  &::before {
+    width: 40px;
+    height: 40px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+  }
+`;
+
+export const SelectedStart = styled(SelectedStyle)`
+  &::before {
+    width: 45px;
+    height: 40px;
+    left: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50% 0% 0% 50%;
+  }
+`;
+
+export const SelectedEnd = styled(SelectedStyle)`
+  &::before {
+    width: 45px;
+    height: 40px;
+    left: 0%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 0% 50% 50% 0%;
+  }
+`;
+
+export const SelectedMiddle = styled(SelectedStyle)`
+  &::before {
+    width: 100%;
+    height: 40px;
+    left: 0%;
+    top: 50%;
+    transform: translateY(-50%);
   }
 `;
