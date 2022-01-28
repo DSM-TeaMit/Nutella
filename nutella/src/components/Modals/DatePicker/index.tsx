@@ -1,9 +1,33 @@
 import { Theme, ThemeContext } from "@emotion/react";
-import { useContext } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
+import DateCell from "./DateCell";
 import * as S from "./styles";
 
 export const DatePicker = () => {
   const themeContext = useContext(ThemeContext) as Theme;
+  const [startDate] = useState<Date>(new Date());
+
+  const renderDates = useCallback(() => {
+    const offset = new Date(startDate);
+    offset.setDate(1);
+    offset.setDate(offset.getDate() - offset.getDay() - 1);
+
+    return new Array(6).fill(0).map(() => {
+      return new Array(7).fill(0).map(() => {
+        offset.setDate(offset.getDate() + 1);
+        const date = new Date(offset);
+
+        return (
+          <DateCell
+            key={date.getTime()}
+            currentDate={date}
+            startDate={startDate}
+            endDate={startDate}
+          />
+        );
+      });
+    });
+  }, [startDate]);
 
   return (
     <S.Container>
@@ -20,6 +44,7 @@ export const DatePicker = () => {
           <S.DOWCell color={themeContext.colors.grayscale.black}>금</S.DOWCell>
           <S.DOWCell color={themeContext.colors.primary.default}>토</S.DOWCell>
         </S.DOWContainer>
+        <S.DateGrid>{renderDates()}</S.DateGrid>
       </S.DateContainer>
     </S.Container>
   );
