@@ -65,6 +65,8 @@ export const DatePicker = () => {
   const dateToString = (date: Date): string =>
     `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 
+  const onTypeClick = (type: DateName) => () => setSelectedType(type);
+
   const onClick = (date: Date) => () => {
     if (compareDate(date, start) === 0 || compareDate(date, end) === 0) {
       return;
@@ -97,7 +99,13 @@ export const DatePicker = () => {
     <S.Container>
       <S.Title>날짜를 선택해주세요</S.Title>
       <S.Date>
-        {dateToString(start)} ~ {dateToString(end)}
+        <S.DateSpan isActive={selectedType === "start"} onClick={onTypeClick("start")}>
+          {dateToString(start)}
+        </S.DateSpan>{" "}
+        ~{" "}
+        <S.DateSpan isActive={selectedType === "end"} onClick={onTypeClick("end")}>
+          {dateToString(end)}
+        </S.DateSpan>
       </S.Date>
       <S.DateContainer>
         <S.DateTitle>2022년 1월</S.DateTitle>

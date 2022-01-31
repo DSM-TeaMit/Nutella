@@ -18,6 +18,11 @@ export const Date = styled.div`
   margin-bottom: 24px;
 `;
 
+export const DateSpan = styled.span<{ isActive: boolean }>`
+  color: ${({ theme, isActive }) => isActive && theme.colors.primary.default};
+  cursor: pointer;
+`;
+
 export const DateContainer = styled.div`
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
