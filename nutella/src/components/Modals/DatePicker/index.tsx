@@ -54,7 +54,7 @@ type DateName = keyof DateState;
 
 export const DatePicker = () => {
   const themeContext = useContext(ThemeContext) as Theme;
-  const [dates, setDate] = useState<DateState>({
+  const [dates, setDates] = useState<DateState>({
     start: new Date("2022-01-10"),
     end: new Date("2022-01-19"),
   });
@@ -67,14 +67,28 @@ export const DatePicker = () => {
 
   const onTypeClick = (type: DateName) => () => setSelectedType(type);
 
-  const onClick = (date: Date) => () => {
-    if (compareDate(date, start) === 0 || compareDate(date, end) === 0) {
-      return;
-    }
+  const onClick = useCallback(
+    (date: Date) => (e: React.MouseEvent<HTMLDivElement>) => {
+      e.stopPropagation();
+      e.preventDefault();
+      const selectedDate = dates[selectedType];
+      let type = selectedType;
 
-    if (compareDate(date, start) === 1) {
-    }
-  };
+      if (compareDate(date, selectedDate) === 0) {
+        return;
+      }
+
+      if (selectedType === "start" && compareDate(date, end) === 1) {
+        type = "end";
+      } else if (selectedType === "end" && compareDate(date, start) === -1) {
+        type = "start";
+      }
+
+      setDates({ ...dates, [type]: date });
+      setSelectedType(type);
+    },
+    [dates, end, selectedType, start]
+  );
 
   const renderDates = useCallback(() => {
     const offset = new Date(calendarDate);
@@ -87,13 +101,17 @@ export const DatePicker = () => {
         const date = new Date(offset);
 
         return (
-          <DateCell type={getCellType(start, end, date, calendarDate)} key={date.getTime()}>
+          <DateCell
+            onClick={onClick(date)}
+            type={getCellType(start, end, date, calendarDate)}
+            key={date.getTime()}
+          >
             {date.getDate()}
           </DateCell>
         );
       });
     });
-  }, [calendarDate, end, start]);
+  }, [calendarDate, end, onClick, start]);
 
   return (
     <S.Container>
