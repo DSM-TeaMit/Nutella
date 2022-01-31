@@ -1,5 +1,5 @@
 import { Theme, ThemeContext } from "@emotion/react";
-import { useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import DateCell from "./DateCell";
 import * as S from "./styles";
 
@@ -51,6 +51,9 @@ export const DatePicker = () => {
   const [endDate] = useState<Date>(new Date("2022-01-19")); //선택한 날짜 종료 date
   const [calendarDate] = useState<Date>(new Date("2022-01-01")); //표시되는 달력의 year, month를 가지는 date
 
+  const dateToString = (date: Date): string =>
+    `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+
   const onClick = (date: Date) => () => {
     if (compareDate(date, startDate) === 0 || compareDate(date, endDate) === 0) {
       return;
@@ -82,7 +85,9 @@ export const DatePicker = () => {
   return (
     <S.Container>
       <S.Title>날짜를 선택해주세요</S.Title>
-      <S.Date>시작 ~ 종료</S.Date>
+      <S.Date>
+        {dateToString(startDate)} ~ {dateToString(endDate)}
+      </S.Date>
       <S.DateContainer>
         <S.DateTitle>2022년 1월</S.DateTitle>
         <S.DOWContainer>
