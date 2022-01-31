@@ -45,21 +45,32 @@ const getCellType = (
   return type;
 };
 
+interface DateState {
+  start: Date;
+  end: Date;
+}
+
+type DateName = keyof DateState;
+
 export const DatePicker = () => {
   const themeContext = useContext(ThemeContext) as Theme;
-  const [startDate] = useState<Date>(new Date("2022-01-10")); //선택한 날짜 시간 date
-  const [endDate] = useState<Date>(new Date("2022-01-19")); //선택한 날짜 종료 date
+  const [dates, setDate] = useState<DateState>({
+    start: new Date("2022-01-10"),
+    end: new Date("2022-01-19"),
+  });
+  const { start, end } = dates;
   const [calendarDate] = useState<Date>(new Date("2022-01-01")); //표시되는 달력의 year, month를 가지는 date
+  const [selectedType, setSelectedType] = useState<DateName>("start"); //선택된, 날짜 클릭시 바뀔 날짜 이름
 
   const dateToString = (date: Date): string =>
     `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 
   const onClick = (date: Date) => () => {
-    if (compareDate(date, startDate) === 0 || compareDate(date, endDate) === 0) {
+    if (compareDate(date, start) === 0 || compareDate(date, end) === 0) {
       return;
     }
 
-    if (compareDate(date, startDate) === 1) {
+    if (compareDate(date, start) === 1) {
     }
   };
 
@@ -74,19 +85,19 @@ export const DatePicker = () => {
         const date = new Date(offset);
 
         return (
-          <DateCell type={getCellType(startDate, endDate, date, calendarDate)} key={date.getTime()}>
+          <DateCell type={getCellType(start, end, date, calendarDate)} key={date.getTime()}>
             {date.getDate()}
           </DateCell>
         );
       });
     });
-  }, [calendarDate, endDate, startDate]);
+  }, [calendarDate, end, start]);
 
   return (
     <S.Container>
       <S.Title>날짜를 선택해주세요</S.Title>
       <S.Date>
-        {dateToString(startDate)} ~ {dateToString(endDate)}
+        {dateToString(start)} ~ {dateToString(end)}
       </S.Date>
       <S.DateContainer>
         <S.DateTitle>2022년 1월</S.DateTitle>
