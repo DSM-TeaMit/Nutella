@@ -68,9 +68,14 @@ export const DatePicker = () => {
   const onTypeClick = (type: DateName) => () => setSelectedType(type);
 
   const onClick = useCallback(
-    (date: Date) => (e: React.MouseEvent<HTMLDivElement>) => {
+    (date: Date, dateType: string) => (e: React.MouseEvent<HTMLDivElement>) => {
       e.stopPropagation();
       e.preventDefault();
+
+      if (dateType === "disable") {
+        return;
+      }
+
       const selectedDate = dates[selectedType];
       let type = selectedType;
 
@@ -99,13 +104,10 @@ export const DatePicker = () => {
       return new Array(7).fill(0).map(() => {
         offset.setDate(offset.getDate() + 1);
         const date = new Date(offset);
+        const type = getCellType(start, end, date, calendarDate);
 
         return (
-          <DateCell
-            onClick={onClick(date)}
-            type={getCellType(start, end, date, calendarDate)}
-            key={date.getTime()}
-          >
+          <DateCell onClick={onClick(date, type)} type={type} key={date.getTime()}>
             {date.getDate()}
           </DateCell>
         );
