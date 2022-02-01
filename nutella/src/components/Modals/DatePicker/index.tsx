@@ -61,7 +61,7 @@ interface PropsType {
 export const DatePicker: FC<PropsType> = ({ datesState }) => {
   const themeContext = useContext(ThemeContext) as Theme;
   const [, setDates] = datesState;
-  const [dates, setDisplayDates] = useState<DateState | null>(datesState[0]);
+  const [displayDates, setDisplayDates] = useState<DateState | null>(datesState[0]);
   const [calendarDate] = useState<Date>(new Date("2022-01-01")); //표시되는 달력의 year, month를 가지는 date
   const [selectedType, setSelectedType] = useState<DateName>("start"); //선택된, 날짜 클릭시 바뀔 날짜 이름
 
@@ -87,29 +87,29 @@ export const DatePicker: FC<PropsType> = ({ datesState }) => {
         return;
       }
 
-      if (!dates) {
+      if (!displayDates) {
         setDatesState({ start: date, end: date });
         setSelectedType("end");
         return;
       }
 
-      const selectedDate = dates[selectedType];
+      const selectedDate = displayDates[selectedType];
       let type = selectedType;
 
       if (compareDate(date, selectedDate) === 0) {
         return;
       }
 
-      if (selectedType === "start" && compareDate(date, dates.end) === 1) {
+      if (selectedType === "start" && compareDate(date, displayDates.end) === 1) {
         type = "end";
-      } else if (selectedType === "end" && compareDate(date, dates.start) === -1) {
+      } else if (selectedType === "end" && compareDate(date, displayDates.start) === -1) {
         type = "start";
       }
 
-      setDatesState({ ...dates, [type]: date });
+      setDatesState({ ...displayDates, [type]: date });
       setSelectedType(type);
     },
-    [dates, selectedType, setDatesState]
+    [displayDates, selectedType, setDatesState]
   );
 
   const renderDates = useCallback(() => {
@@ -121,7 +121,7 @@ export const DatePicker: FC<PropsType> = ({ datesState }) => {
       return new Array(7).fill(0).map(() => {
         offset.setDate(offset.getDate() + 1);
         const date = new Date(offset);
-        const type = getCellType(dates, date, calendarDate);
+        const type = getCellType(displayDates, date, calendarDate);
 
         return (
           <DateCell onClick={onClick(date, type)} type={type} key={date.getTime()}>
@@ -130,18 +130,18 @@ export const DatePicker: FC<PropsType> = ({ datesState }) => {
         );
       });
     });
-  }, [calendarDate, dates, onClick]);
+  }, [calendarDate, displayDates, onClick]);
 
   return (
     <S.Container>
       <S.Title>날짜를 선택해주세요</S.Title>
       <S.Date>
         <S.DateSpan isActive={selectedType === "start"} onClick={onTypeClick("start")}>
-          {dateToString("시작", dates?.start)}
+          {dateToString("시작", displayDates?.start)}
         </S.DateSpan>{" "}
         ~{" "}
         <S.DateSpan isActive={selectedType === "end"} onClick={onTypeClick("end")}>
-          {dateToString("종료", dates?.end)}
+          {dateToString("종료", displayDates?.end)}
         </S.DateSpan>
       </S.Date>
       <S.DateContainer>
