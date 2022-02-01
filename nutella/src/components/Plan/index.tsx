@@ -7,6 +7,9 @@ import MarkdownEditor from "../MarkdownEditor";
 import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
 
+const dateToString = (date: Date): string =>
+  `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+
 const Plan = () => {
   const { openModal } = useModalContext();
   const [dates, setDates] = useState<DateState | null>(null);
@@ -30,7 +33,9 @@ const Plan = () => {
                   e.stopPropagation();
                   openModal(<DatePicker datesState={[dates, setDates]} />);
                 }}
-              ></S.Time>
+              >
+                {dates && `${dateToString(dates.start)} ~ ${dateToString(dates.end)}`}
+              </S.Time>
             </S.RowContainer>
             <S.RowContainer>
               <S.RowTitle>신청자</S.RowTitle>
