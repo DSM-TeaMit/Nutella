@@ -60,8 +60,8 @@ interface PropsType {
 
 export const DatePicker: FC<PropsType> = ({ datesState }) => {
   const themeContext = useContext(ThemeContext) as Theme;
-  const [, setDates] = datesState;
-  const [displayDates, setDisplayDates] = useState<DateState | null>(datesState[0]);
+  const [dates, setDates] = datesState;
+  const [displayDates, setDisplayDates] = useState<DateState | null>(dates);
   const [calendarDate] = useState<Date>(new Date("2022-01-01")); //표시되는 달력의 year, month를 가지는 date
   const [selectedType, setSelectedType] = useState<DateName>("start"); //선택된, 날짜 클릭시 바뀔 날짜 이름
 
