@@ -1,13 +1,15 @@
+import { useState } from "react";
 import useModalContext from "../../hooks/useModalContext";
 import CheckBox from "../CheckBox";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import MarkdownEditor from "../MarkdownEditor";
-import DatePicker from "../Modals/DatePicker";
+import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
 
 const Plan = () => {
   const { openModal } = useModalContext();
+  const [dates, setDates] = useState<DateState | null>(null);
 
   return (
     <>
@@ -26,7 +28,7 @@ const Plan = () => {
                 placeholder="시간을 선택해주세요..."
                 onClick={(e) => {
                   e.stopPropagation();
-                  openModal(<DatePicker />);
+                  openModal(<DatePicker datesState={[dates, setDates]} />);
                 }}
               ></S.Time>
             </S.RowContainer>

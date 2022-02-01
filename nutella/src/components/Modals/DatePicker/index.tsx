@@ -1,5 +1,6 @@
 import { Theme, ThemeContext } from "@emotion/react";
-import { useCallback, useContext, useState } from "react";
+import { FC, useCallback, useContext, useState } from "react";
+import State from "../../../interface/State";
 import DateCell from "./DateCell";
 import * as S from "./styles";
 
@@ -14,12 +15,13 @@ const compareDate = (d1: Date, d2: Date) => {
   } else return -1;
 };
 
-const getCellType = (
-  startDate: Date,
-  endDate: Date,
-  currentDate: Date,
-  calendarDate: Date
-): string => {
+const getCellType = (dates: DateState | null, currentDate: Date, calendarDate: Date): string => {
+  if (!dates) {
+    return "default";
+  }
+
+  const { start: startDate, end: endDate } = dates;
+
   let type = "middle";
   if (compareDate(startDate, endDate) === 0 && compareDate(currentDate, startDate) === 0) {
     type = "selected";
@@ -45,25 +47,34 @@ const getCellType = (
   return type;
 };
 
-interface DateState {
+export interface DateState {
   start: Date;
   end: Date;
 }
 
 type DateName = keyof DateState;
 
-export const DatePicker = () => {
+interface PropsType {
+  datesState: State<DateState | null>;
+}
+
+export const DatePicker: FC<PropsType> = ({ datesState }) => {
   const themeContext = useContext(ThemeContext) as Theme;
-  const [dates, setDates] = useState<DateState>({
-    start: new Date("2022-01-10"),
-    end: new Date("2022-01-19"),
-  });
-  const { start, end } = dates;
+  const [, setDates] = datesState;
+  const [dates, setDisplayDates] = useState<DateState | null>(datesState[0]);
   const [calendarDate] = useState<Date>(new Date("2022-01-01")); //표시되는 달력의 year, month를 가지는 date
   const [selectedType, setSelectedType] = useState<DateName>("start"); //선택된, 날짜 클릭시 바뀔 날짜 이름
 
-  const dateToString = (date: Date): string =>
-    `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+  const setDatesState = useCallback(
+    (dates: DateState | null) => {
+      setDisplayDates(dates);
+      setDates(dates);
+    },
+    [setDates]
+  );
+
+  const dateToString = (placeholder: string, date?: Date): string =>
+    date ? `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일` : placeholder;
 
   const onTypeClick = (type: DateName) => () => setSelectedType(type);
 
@@ -76,6 +87,12 @@ export const DatePicker = () => {
         return;
       }
 
+      if (!dates) {
+        setDatesState({ start: date, end: date });
+        setSelectedType("end");
+        return;
+      }
+
       const selectedDate = dates[selectedType];
       let type = selectedType;
 
@@ -83,16 +100,16 @@ export const DatePicker = () => {
         return;
       }
 
-      if (selectedType === "start" && compareDate(date, end) === 1) {
+      if (selectedType === "start" && compareDate(date, dates.end) === 1) {
         type = "end";
-      } else if (selectedType === "end" && compareDate(date, start) === -1) {
+      } else if (selectedType === "end" && compareDate(date, dates.start) === -1) {
         type = "start";
       }
 
-      setDates({ ...dates, [type]: date });
+      setDatesState({ ...dates, [type]: date });
       setSelectedType(type);
     },
-    [dates, end, selectedType, start]
+    [dates, selectedType, setDatesState]
   );
 
   const renderDates = useCallback(() => {
@@ -104,7 +121,7 @@ export const DatePicker = () => {
       return new Array(7).fill(0).map(() => {
         offset.setDate(offset.getDate() + 1);
         const date = new Date(offset);
-        const type = getCellType(start, end, date, calendarDate);
+        const type = getCellType(dates, date, calendarDate);
 
         return (
           <DateCell onClick={onClick(date, type)} type={type} key={date.getTime()}>
@@ -113,18 +130,18 @@ export const DatePicker = () => {
         );
       });
     });
-  }, [calendarDate, end, onClick, start]);
+  }, [calendarDate, dates, onClick]);
 
   return (
     <S.Container>
       <S.Title>날짜를 선택해주세요</S.Title>
       <S.Date>
         <S.DateSpan isActive={selectedType === "start"} onClick={onTypeClick("start")}>
-          {dateToString(start)}
+          {dateToString("시작", dates?.start)}
         </S.DateSpan>{" "}
         ~{" "}
         <S.DateSpan isActive={selectedType === "end"} onClick={onTypeClick("end")}>
-          {dateToString(end)}
+          {dateToString("종료", dates?.end)}
         </S.DateSpan>
       </S.Date>
       <S.DateContainer>
