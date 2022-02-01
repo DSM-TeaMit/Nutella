@@ -16,35 +16,39 @@ const compareDate = (d1: Date, d2: Date) => {
 };
 
 const getCellType = (dates: DateState | null, currentDate: Date, calendarDate: Date): string => {
+  if (
+    currentDate.getFullYear() !== calendarDate.getFullYear() ||
+    currentDate.getMonth() !== calendarDate.getMonth()
+  ) {
+    return "disable";
+  }
+
   if (!dates) {
     return "default";
   }
 
   const { start: startDate, end: endDate } = dates;
 
-  let type = "middle";
   if (compareDate(startDate, endDate) === 0 && compareDate(currentDate, startDate) === 0) {
-    type = "selected";
-  } else if (
-    currentDate.getFullYear() !== calendarDate.getFullYear() ||
-    currentDate.getMonth() !== calendarDate.getMonth()
-  ) {
-    type = "disable";
-  } else if (
-    compareDate(currentDate, startDate) === -1 ||
-    compareDate(currentDate, endDate) === 1
-  ) {
-    //범위 밖
-    type = "default";
-  } else if (compareDate(currentDate, startDate) === 0) {
-    //시작
-    type = "start";
-  } else if (compareDate(currentDate, endDate) === 0) {
-    //종료
-    type = "end";
+    return "selected";
   }
 
-  return type;
+  if (compareDate(currentDate, startDate) === -1 || compareDate(currentDate, endDate) === 1) {
+    //범위 밖
+    return "default";
+  }
+
+  if (compareDate(currentDate, startDate) === 0) {
+    //시작
+    return "start";
+  }
+
+  if (compareDate(currentDate, endDate) === 0) {
+    //종료
+    return "end";
+  }
+
+  return "middle";
 };
 
 export interface DateState {
