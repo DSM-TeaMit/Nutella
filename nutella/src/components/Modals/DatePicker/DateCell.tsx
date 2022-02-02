@@ -2,15 +2,17 @@ import { StyledComponent } from "@emotion/styled";
 import React, { ComponentProps, FC, useCallback } from "react";
 import * as S from "./styles";
 
+export type DateCellType = "middle" | "selected" | "disabled" | "default" | "start" | "end";
+
 interface PropsType {
-  type: string;
+  type: DateCellType;
   onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const DateCell: FC<PropsType> = ({ type, children, onClick }) => {
   const renderCell = useCallback(() => {
     const rendererMap = new Map<
-      string,
+      DateCellType,
       StyledComponent<
         React.ClassAttributes<HTMLDivElement> & React.HTMLAttributes<HTMLDivElement>,
         {},
@@ -19,7 +21,7 @@ const DateCell: FC<PropsType> = ({ type, children, onClick }) => {
     >()
       .set("middle", S.SelectedMiddle)
       .set("selected", S.Selected)
-      .set("disable", S.Disable)
+      .set("disabled", S.Disable)
       .set("default", S.Default)
       .set("start", S.SelectedStart)
       .set("end", S.SelectedEnd);

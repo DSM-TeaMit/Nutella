@@ -1,7 +1,7 @@
 import { Theme, ThemeContext } from "@emotion/react";
 import { FC, useCallback, useContext, useState } from "react";
 import State from "../../../interface/State";
-import DateCell from "./DateCell";
+import DateCell, { DateCellType } from "./DateCell";
 import * as S from "./styles";
 
 const compareDate = (d1: Date, d2: Date) => {
@@ -15,12 +15,16 @@ const compareDate = (d1: Date, d2: Date) => {
   } else return -1;
 };
 
-const getCellType = (dates: DateState | null, currentDate: Date, calendarDate: Date): string => {
+const getCellType = (
+  dates: DateState | null,
+  currentDate: Date,
+  calendarDate: Date
+): DateCellType => {
   if (
     currentDate.getFullYear() !== calendarDate.getFullYear() ||
     currentDate.getMonth() !== calendarDate.getMonth()
   ) {
-    return "disable";
+    return "disabled";
   }
 
   if (!dates) {
