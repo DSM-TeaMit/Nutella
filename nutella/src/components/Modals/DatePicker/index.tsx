@@ -76,10 +76,22 @@ const getCellType = (
 const dateToYearMonth = (date: Date) => `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
 
 export const DatePicker: FC<PropsType> = ({ datesState }) => {
+  const initCalendarDate = () => {
+    const [dates] = datesState;
+    let d = new Date();
+    if (dates) {
+      d = new Date(dates.start);
+    }
+    d.setDate(1);
+    d.setHours(0, 0, 0, 0);
+
+    return d;
+  };
+
   const themeContext = useContext(ThemeContext) as Theme;
   const [dates, setDates] = datesState;
   const [displayDates, setDisplayDates] = useState<DateState | null>(dates);
-  const [calendarDate, setCalendarDate] = useState<Date>(new Date("2022-01-01")); //표시되는 달력의 year, month를 가지는 date
+  const [calendarDate, setCalendarDate] = useState<Date>(initCalendarDate()); //표시되는 달력의 year, month를 가지는 date
   const [selectedType, setSelectedType] = useState<DateName>("start"); //선택된, 날짜 클릭시 바뀔 날짜 이름
 
   const setDatesState = useCallback(
