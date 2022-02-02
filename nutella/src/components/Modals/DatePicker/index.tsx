@@ -88,11 +88,11 @@ export const DatePicker: FC<PropsType> = ({ datesState }) => {
   const onTypeClick = (type: DateName) => () => setSelectedType(type);
 
   const onClick = useCallback(
-    (date: Date, dateType: string) => (e: React.MouseEvent<HTMLDivElement>) => {
+    (date: Date, dateType: DateCellType) => (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
       e.preventDefault();
 
-      if (dateType === "disable") {
+      if (dateType === "disabled") {
         return;
       }
 

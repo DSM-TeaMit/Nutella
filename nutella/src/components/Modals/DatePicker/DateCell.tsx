@@ -6,7 +6,7 @@ export type DateCellType = "middle" | "selected" | "disabled" | "default" | "sta
 
 interface PropsType {
   type: DateCellType;
-  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const DateCell: FC<PropsType> = ({ type, children, onClick }) => {
@@ -14,7 +14,7 @@ const DateCell: FC<PropsType> = ({ type, children, onClick }) => {
     const rendererMap = new Map<
       DateCellType,
       StyledComponent<
-        React.ClassAttributes<HTMLDivElement> & React.HTMLAttributes<HTMLDivElement>,
+        React.ClassAttributes<HTMLButtonElement> & React.HTMLAttributes<HTMLButtonElement>,
         {},
         {}
       >

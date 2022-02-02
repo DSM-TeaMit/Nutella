@@ -68,7 +68,7 @@ export const DateGrid = styled.div`
   grid-template-rows: repeat(6, 1fr);
 `;
 
-export const Default = styled.div`
+export const Default = styled.button`
   width: 50px;
   height: 50px;
   color: ${({ color }) => color};
@@ -77,6 +77,10 @@ export const Default = styled.div`
   align-items: center;
   position: relative;
   cursor: pointer;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font: ${({ theme }) => theme.fonts.body3};
 
   &::before {
     content: "";
@@ -108,9 +112,13 @@ export const Disable = styled(Default)`
   }
 `;
 
-export const SelectedStyle = styled.div`
+export const SelectedStyle = styled.button`
+  font: ${({ theme }) => theme.fonts.body3};
   width: 50px;
   height: 50px;
+  background: transparent;
+  border: 0;
+  padding: 0;
   color: ${({ theme }) => theme.colors.grayscale.white};
   display: flex;
   justify-content: center;
