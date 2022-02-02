@@ -4,6 +4,17 @@ import State from "../../../interface/State";
 import DateCell, { DateCellType } from "./DateCell";
 import * as S from "./styles";
 
+export interface DateState {
+  start: Date;
+  end: Date;
+}
+
+type DateName = keyof DateState;
+
+interface PropsType {
+  datesState: State<DateState | null>;
+}
+
 const compareDate = (d1: Date, d2: Date) => {
   d1.setHours(0, 0, 0, 0);
   d2.setHours(0, 0, 0, 0);
@@ -54,17 +65,6 @@ const getCellType = (
 
   return "middle";
 };
-
-export interface DateState {
-  start: Date;
-  end: Date;
-}
-
-type DateName = keyof DateState;
-
-interface PropsType {
-  datesState: State<DateState | null>;
-}
 
 export const DatePicker: FC<PropsType> = ({ datesState }) => {
   const themeContext = useContext(ThemeContext) as Theme;
