@@ -67,11 +67,13 @@ const getCellType = (
   return "middle";
 };
 
+const dateToYearMonth = (date: Date) => `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
+
 export const DatePicker: FC<PropsType> = ({ datesState }) => {
   const themeContext = useContext(ThemeContext) as Theme;
   const [dates, setDates] = datesState;
   const [displayDates, setDisplayDates] = useState<DateState | null>(dates);
-  const [calendarDate] = useState<Date>(new Date("2022-01-01")); //표시되는 달력의 year, month를 가지는 date
+  const [calendarDate, setCalendarDate] = useState<Date>(new Date("2022-01-01")); //표시되는 달력의 year, month를 가지는 date
   const [selectedType, setSelectedType] = useState<DateName>("start"); //선택된, 날짜 클릭시 바뀔 날짜 이름
 
   const setDatesState = useCallback(
@@ -86,6 +88,13 @@ export const DatePicker: FC<PropsType> = ({ datesState }) => {
     date ? `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일` : placeholder;
 
   const onTypeClick = (type: DateName) => () => setSelectedType(type);
+
+  const onMonthChange = (offset: number) => () => {
+    const date = new Date(calendarDate);
+    date.setMonth(date.getMonth() + offset);
+
+    setCalendarDate(date);
+  };
 
   const onClick = useCallback(
     (date: Date, dateType: DateCellType) => (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -155,11 +164,11 @@ export const DatePicker: FC<PropsType> = ({ datesState }) => {
       </S.Date>
       <S.DateContainer>
         <S.DateTitle>
-          <S.MonthButton>
+          <S.MonthButton onClick={onMonthChange(-1)}>
             <S.Arrow angle={90} alt="decrease month" src={ArrowIcons} />
           </S.MonthButton>
-          <span>2022년 1월</span>
-          <S.MonthButton>
+          <span>{dateToYearMonth(calendarDate)}</span>
+          <S.MonthButton onClick={onMonthChange(1)}>
             <S.Arrow angle={-90} alt="increase month" src={ArrowIcons} />
           </S.MonthButton>
         </S.DateTitle>
