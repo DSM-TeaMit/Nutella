@@ -32,14 +32,14 @@ const getCellType = (
   currentDate: Date,
   calendarDate: Date
 ): DateCellType => {
-  if (
-    currentDate.getFullYear() !== calendarDate.getFullYear() ||
-    currentDate.getMonth() !== calendarDate.getMonth()
-  ) {
-    return "disabled";
-  }
-
   if (!dates) {
+    if (
+      currentDate.getFullYear() !== calendarDate.getFullYear() ||
+      currentDate.getMonth() !== calendarDate.getMonth()
+    ) {
+      return "disabled";
+    }
+
     return "default";
   }
 
@@ -47,11 +47,6 @@ const getCellType = (
 
   if (compareDate(startDate, endDate) === 0 && compareDate(currentDate, startDate) === 0) {
     return "selected";
-  }
-
-  if (compareDate(currentDate, startDate) === -1 || compareDate(currentDate, endDate) === 1) {
-    //범위 밖
-    return "default";
   }
 
   if (compareDate(currentDate, startDate) === 0) {
@@ -64,7 +59,18 @@ const getCellType = (
     return "end";
   }
 
-  return "middle";
+  if (compareDate(currentDate, startDate) === 1 && compareDate(currentDate, endDate) === -1) {
+    return "middle";
+  }
+
+  if (
+    currentDate.getFullYear() !== calendarDate.getFullYear() ||
+    currentDate.getMonth() !== calendarDate.getMonth()
+  ) {
+    return "disabled";
+  }
+
+  return "default";
 };
 
 const dateToYearMonth = (date: Date) => `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
