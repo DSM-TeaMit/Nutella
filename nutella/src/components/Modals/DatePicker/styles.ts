@@ -33,10 +33,22 @@ export const DateTitle = styled.div`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.black};
   border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
-  padding: 6px 0px;
+  padding: 6px 16px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+`;
+
+export const Arrow = styled.img<{ angle: number }>`
+  transform: rotate(${({ angle }) => angle}deg);
+  align-self: center;
+`;
+
+export const MonthButton = styled.button`
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
 `;
 
 export const DOWContainer = styled.div`

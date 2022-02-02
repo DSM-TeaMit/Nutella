@@ -3,6 +3,7 @@ import { FC, useCallback, useContext, useState } from "react";
 import State from "../../../interface/State";
 import DateCell, { DateCellType } from "./DateCell";
 import * as S from "./styles";
+import { ArrowIcons } from "../../../assets/icons";
 
 export interface DateState {
   start: Date;
@@ -146,14 +147,22 @@ export const DatePicker: FC<PropsType> = ({ datesState }) => {
       <S.Date>
         <S.DateSpan isActive={selectedType === "start"} onClick={onTypeClick("start")}>
           {dateToString("시작", displayDates?.start)}
-        </S.DateSpan>{" "}
-        ~{" "}
+        </S.DateSpan>
+        <span>&nbsp;~&nbsp;</span>
         <S.DateSpan isActive={selectedType === "end"} onClick={onTypeClick("end")}>
           {dateToString("종료", displayDates?.end)}
         </S.DateSpan>
       </S.Date>
       <S.DateContainer>
-        <S.DateTitle>2022년 1월</S.DateTitle>
+        <S.DateTitle>
+          <S.MonthButton>
+            <S.Arrow angle={90} alt="decrease month" src={ArrowIcons} />
+          </S.MonthButton>
+          <span>2022년 1월</span>
+          <S.MonthButton>
+            <S.Arrow angle={-90} alt="increase month" src={ArrowIcons} />
+          </S.MonthButton>
+        </S.DateTitle>
         <S.DOWContainer>
           <S.DOWCell color={themeContext.colors.red.default}>일</S.DOWCell>
           <S.DOWCell color={themeContext.colors.grayscale.black}>월</S.DOWCell>
