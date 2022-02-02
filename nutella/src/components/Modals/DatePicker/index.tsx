@@ -97,13 +97,9 @@ export const DatePicker: FC<PropsType> = ({ datesState }) => {
   };
 
   const onClick = useCallback(
-    (date: Date, dateType: DateCellType) => (e: React.MouseEvent<HTMLButtonElement>) => {
+    (date: Date) => (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
       e.preventDefault();
-
-      if (dateType === "disabled") {
-        return;
-      }
 
       if (!displayDates) {
         setDatesState({ start: date, end: date });
@@ -142,7 +138,7 @@ export const DatePicker: FC<PropsType> = ({ datesState }) => {
         const type = getCellType(displayDates, date, calendarDate);
 
         return (
-          <DateCell onClick={onClick(date, type)} type={type} key={date.getTime()}>
+          <DateCell onClick={onClick(date)} type={type} key={date.getTime()}>
             {date.getDate()}
           </DateCell>
         );
