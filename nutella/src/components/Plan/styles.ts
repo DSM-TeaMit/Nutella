@@ -40,6 +40,7 @@ export const Title = styled.div`
 export const RowContainer = styled.div`
   display: flex;
   border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.black};
+
   &:last-of-type {
     border-bottom: 0;
   }
@@ -99,4 +100,43 @@ export const InfoContainer = styled.div`
   color: ${({ theme }) => theme.colors.grayscale.black};
   display: flex;
   column-gap: 120px;
+`;
+
+export const Members = styled.div`
+  flex: 1;
+`;
+
+export const MemberContainer = styled.div`
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.black};
+  flex: 1;
+  display: flex;
+
+  &:last-of-type {
+    border-bottom: 0;
+  }
+`;
+
+export const MemberName = styled.div`
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.black};
+  border-right: 1px solid ${({ theme }) => theme.colors.grayscale.black};
+`;
+
+export const MemberRoleContainer = styled.div`
+  flex: 1;
+  display: flex;
+  column-gap: 16px;
+  padding: 8px 16px;
+`;
+
+export const Role = styled.div`
+  padding: 4px 6px;
+  background-color: ${({ theme }) => theme.colors.primary.default};
+  color: ${({ theme }) => theme.colors.grayscale.white};
+  font: ${({ theme }) => theme.fonts.body3};
+  border-radius: 10px;
 `;

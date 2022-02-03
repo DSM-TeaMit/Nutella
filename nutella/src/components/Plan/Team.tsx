@@ -18,7 +18,7 @@ const Team = () => {
     <S.Container>
       <S.ContentContainer>
         <S.ContentInner>
-          <S.Title>개인 프로젝트 계획서</S.Title>
+          <S.Title>팀 / 동아리 프로젝트 계획서</S.Title>
           <S.RowContainer>
             <S.RowTitle>프로젝트 명</S.RowTitle>
             <S.RowLineContent>Teamit</S.RowLineContent>
@@ -38,6 +38,30 @@ const Team = () => {
           <S.RowContainer>
             <S.RowTitle>신청자</S.RowTitle>
             <S.RowLineContent>2105 김진근</S.RowLineContent>
+          </S.RowContainer>
+          <S.RowContainer>
+            <S.RowTitle>프로젝트 및 팀원 역할</S.RowTitle>
+            <S.Members>
+              <S.MemberContainer>
+                <S.MemberName>2105 김진근</S.MemberName>
+                <S.MemberRoleContainer>
+                  <S.Role>디자인</S.Role>
+                  <S.Role>프론트 엔드 개발</S.Role>
+                </S.MemberRoleContainer>
+              </S.MemberContainer>
+              <S.MemberContainer>
+                <S.MemberName>2107 김해교</S.MemberName>
+                <S.MemberRoleContainer>
+                  <S.Role>프론트 엔드 개발</S.Role>
+                </S.MemberRoleContainer>
+              </S.MemberContainer>
+              <S.MemberContainer>
+                <S.MemberName>2405 박준형</S.MemberName>
+                <S.MemberRoleContainer>
+                  <S.Role>백 엔드 개발</S.Role>
+                </S.MemberRoleContainer>
+              </S.MemberContainer>
+            </S.Members>
           </S.RowContainer>
           <S.RowContainer>
             <S.RowTitle>프로젝트 목표</S.RowTitle>
