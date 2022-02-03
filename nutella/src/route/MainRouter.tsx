@@ -1,6 +1,6 @@
 import { FC, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import Plan from "../components/Plan";
+import Personal from "../components/Plan/Personal ";
 import { SearchContainer, LoginContainer, MypageContainer } from "../container";
 
 const MainRouter: FC = (): JSX.Element => {
@@ -13,7 +13,7 @@ const MainRouter: FC = (): JSX.Element => {
           <Route path="mypage/*" element={<MypageContainer />} />
           <Route path="project/:id/*">
             <Route path="" element={<div>this is project</div>} />
-            <Route path="plan" element={<Plan />} />
+            <Route path="plan" element={<Personal />} />
             <Route path="result" element={<div>this is project result</div>} />
           </Route>
         </Route>

@@ -10,7 +10,7 @@ import * as S from "./styles";
 const dateToString = (date: Date): string =>
   `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 
-const Plan = () => {
+const Team = () => {
   const { openModal } = useModalContext();
   const [dates, setDates] = useState<DateState | null>(null);
 
@@ -92,4 +92,4 @@ const Plan = () => {
   );
 };
 
-export default Plan;
+export default Team;
