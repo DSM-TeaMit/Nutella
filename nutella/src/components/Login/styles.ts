@@ -1,21 +1,10 @@
 import styled from "@emotion/styled";
 
-export const LoginBox = styled.div`
-  width: 414px;
-  height: 551px;
+export const LoginContent = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
-  background-color: ${({ theme }) => theme.colors.grayscale.white};
-`;
-
-export const LoginContent = styled.div`
-  width: 334px;
-  height: 419px;
-  margin: 40px 40px;
 `;
 
 export const Logo = styled.img`
@@ -32,6 +21,9 @@ export const OauthBox = styled.div`
 export const OauthContent = styled.div`
   width: 334px;
   height: 105px;
+  a {
+    text-decoration: none;
+  }
 `;
 
 export const Title = styled.div`
