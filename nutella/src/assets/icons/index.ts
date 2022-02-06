@@ -14,3 +14,4 @@ export { default as SettingIcons } from "./setting.svg";
 export { default as TeamIcons } from "./team.svg";
 export { default as UpArrowIcons } from "./up_arrow.svg";
 export { default as ViewIcons } from "./view.svg";
+export { default as LeftArrow } from "./leftArrow.svg";
