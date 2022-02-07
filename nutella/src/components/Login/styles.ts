@@ -5,6 +5,10 @@ export const LoginContent = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 `;
 
 export const Logo = styled.img`
