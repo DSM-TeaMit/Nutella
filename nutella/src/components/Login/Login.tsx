@@ -30,10 +30,12 @@ const Login = () => {
           </S.OauthBtn>
         </S.OauthContent>
       </S.OauthBox>
-      <S.TeaLogin>
-        선생님으로 <span>로그인</span>
-        <img src={RightArrowIcons} />
-      </S.TeaLogin>
+      <Link to="/teacherlogin">
+        <S.TeaLogin>
+          선생님으로 <span>로그인</span>
+          <img src={RightArrowIcons} />
+        </S.TeaLogin>
+      </Link>
     </S.LoginContent>
   );
 };
