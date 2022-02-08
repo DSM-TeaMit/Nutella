@@ -1,8 +1,6 @@
 import { useState } from "react";
 import useModalContext from "../../hooks/useModalContext";
 import CheckBox from "../CheckBox";
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
 import MarkdownEditor from "../MarkdownEditor";
 import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";

@@ -1,12 +1,12 @@
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import Team from "../../components/Plan/Team";
+import Personal from "../../components/Plan/Personal ";
 
 const PlanContainer = () => {
   return (
     <>
       <Header />
-      <Team />
+      <Personal />
       <Footer />
     </>
   );
