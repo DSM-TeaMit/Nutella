@@ -3,6 +3,8 @@ import useModalContext from "../../hooks/useModalContext";
 import BlueButton from "../Buttons/BlueButton";
 import BorderButton from "../Buttons/BorderButton";
 import CheckBox from "../CheckBox";
+import Comment from "../Comment";
+import CommentInput from "../CommentInput";
 import MarkdownEditor from "../MarkdownEditor";
 import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
@@ -90,6 +92,15 @@ const Personal = () => {
         </S.Buttons>
       </div>
       <S.Line />
+      <S.CommentContainer>
+        <div>
+          <S.CommentTitle>댓글</S.CommentTitle>
+          <S.CommentTitleBlue>2</S.CommentTitleBlue>
+        </div>
+        <CommentInput type="report" />
+        <Comment type="report" />
+        <Comment type="report" />
+      </S.CommentContainer>
     </S.Container>
   );
 };

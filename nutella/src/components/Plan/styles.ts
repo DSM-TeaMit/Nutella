@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import BlueButton from "../Buttons/BlueButton";
 
 export const Container = styled.div`
   display: flex;
@@ -8,6 +7,7 @@ export const Container = styled.div`
   width: 920px;
   margin: 0px auto;
   margin-top: 120px;
+  margin-bottom: 200px;
 `;
 
 export const ContentContainer = styled.div`
@@ -148,4 +148,19 @@ export const Buttons = styled.div`
   margin-top: 24px;
   width: 100%;
   justify-content: right;
+`;
+
+export const CommentContainer = styled.div`
+  width: 100%;
+  display: flex;
+  row-gap: 28px;
+  flex-direction: column;
+`;
+
+export const CommentTitle = styled.span`
+  font: ${({ theme }) => theme.fonts.h2};
+`;
+
+export const CommentTitleBlue = styled(CommentTitle)`
+  color: ${({ theme }) => theme.colors.primary.default};
 `;
