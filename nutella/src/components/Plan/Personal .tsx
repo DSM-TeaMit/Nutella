@@ -94,8 +94,8 @@ const Personal = () => {
       <S.Line />
       <S.CommentContainer>
         <div>
-          <S.CommentTitle>댓글</S.CommentTitle>
-          <S.CommentTitleBlue>2</S.CommentTitleBlue>
+          <S.CommentTitle>댓글&nbsp;</S.CommentTitle>
+          <S.CommentTitleBlue>2개</S.CommentTitleBlue>
         </div>
         <CommentInput type="report" />
         <Comment type="report" />
