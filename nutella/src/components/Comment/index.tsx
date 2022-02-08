@@ -1,8 +1,7 @@
 import { FC } from "react";
 import useThemeContext from "../../hooks/useThemeContext";
+import CommentType from "../../interface/CommentType";
 import * as S from "./styles";
-
-type CommentType = "project" | "report";
 
 interface PropsType {
   type: CommentType;
