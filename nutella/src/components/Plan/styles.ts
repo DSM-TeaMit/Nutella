@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import BlueButton from "../Buttons/BlueButton";
 
 export const Container = styled.div`
   display: flex;
@@ -139,4 +140,12 @@ export const Role = styled.div`
   color: ${({ theme }) => theme.colors.grayscale.white};
   font: ${({ theme }) => theme.fonts.body3};
   border-radius: 10px;
+`;
+
+export const Buttons = styled.div`
+  display: flex;
+  column-gap: 16px;
+  margin-top: 24px;
+  width: 100%;
+  justify-content: right;
 `;
