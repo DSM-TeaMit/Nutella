@@ -4,3 +4,4 @@ export { default as LoginContainer } from "./Login";
 export { default as UserContainer } from "./User";
 export { default as SignupContainer } from "./Signup";
 export { default as ProjectDetailContainer } from "./ProjectDetail";
+export { default as TeacherLoginContainer } from "./TeacherLogin";
