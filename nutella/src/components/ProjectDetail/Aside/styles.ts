@@ -11,10 +11,10 @@ export const AsideContainer = styled.div`
 export const AsideTop = styled.div`
   width: 273px;
   height: 30px;
-  border: 1px solid red;
   text-align: center;
   display: fixed;
   justify-content: space-between;
+  border-radius: 10px;
 `;
 
 export const Title = styled.div`
