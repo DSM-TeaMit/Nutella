@@ -8,6 +8,7 @@ import {
   SignupContainer,
   ProjectDetailContainer,
   TeacherLoginContainer,
+  FeedContainer,
 } from "../container";
 
 const MainRouter: FC = (): JSX.Element => {
@@ -19,6 +20,7 @@ const MainRouter: FC = (): JSX.Element => {
           <Route path="signup" element={<SignupContainer />} />
           <Route path="teacherlogin" element={<TeacherLoginContainer />} />
           <Route path="search" element={<SearchContainer />} />
+          <Route path="feed" element={<FeedContainer />} />
           <Route path="mypage/*" element={<MypageContainer />} />
           <Route path="user/:id/*" element={<UserContainer />} />
           <Route path="project/:id/" element={<ProjectDetailContainer />} />
