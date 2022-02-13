@@ -26,7 +26,7 @@ const MainRouter: FC = (): JSX.Element => {
             <Route path="" element={<ProjectDetailContainer />} />
             <Route path="plan" element={<PlanContainer />} />
             <Route path="result" element={<div>this is project result</div>} />
-          <Route />
+          </Route>
         </Route>
       </Routes>
     </Suspense>
