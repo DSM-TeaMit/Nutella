@@ -6,6 +6,7 @@ import {
   MypageContainer,
   UserContainer,
   SignupContainer,
+  PlanContainer,
   ProjectDetailContainer,
   TeacherLoginContainer,
 } from "../container";
@@ -21,7 +22,11 @@ const MainRouter: FC = (): JSX.Element => {
           <Route path="search" element={<SearchContainer />} />
           <Route path="mypage/*" element={<MypageContainer />} />
           <Route path="user/:id/*" element={<UserContainer />} />
-          <Route path="project/:id/" element={<ProjectDetailContainer />} />
+          <Route path="project/:id/*">
+            <Route path="" element={<ProjectDetailContainer />} />
+            <Route path="plan" element={<PlanContainer />} />
+            <Route path="result" element={<div>this is project result</div>} />
+          <Route />
         </Route>
       </Routes>
     </Suspense>
