@@ -2,13 +2,40 @@ import styled from "@emotion/styled";
 
 export const Container = styled.div`
   width: 100%;
+  margin-top: 120px;
+  margin-bottom: 200px;
+`;
+
+export const Inner = styled.div`
+  width: 1280px;
+  margin: 0 auto;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 20px;
+  display: grid;
+`;
+
+export const SideBarContainer = styled.div`
+  height: 100%;
+`;
+
+export const ContentContainer = styled.div`
+  grid-column: 2 / 5;
+`;
+
+export const ContentInner = styled.div`
+  width: 100%;
+  padding: 20px 32px 60px 32px;
+  background-color: ${({ theme }) => theme.colors.grayscale.white};
+  border: solid 1px ${({ theme }) => theme.colors.grayscale.lightGray1};
+  border-radius: 10px;
+  min-height: 664px;
+`;
+
+export const FlexContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 48px;
-`;
-
-export const SettingContaienr = styled(Container)`
-  row-gap: 28px;
 `;
 
 export const ProfileContainer = styled.div`
@@ -124,65 +151,4 @@ export const ProjectTitle = styled(ContentTitle)`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-`;
-
-export const AddProject = styled.button`
-  background: none;
-  border: none;
-  padding: 0;
-  color: ${({ theme }) => theme.colors.grayscale.gray1};
-  font: ${({ theme }) => theme.fonts.body3};
-  cursor: pointer;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.grayscale.black};
-  }
-`;
-
-export const Title = styled.div`
-  font: ${({ theme }) => theme.fonts.h3};
-  color: ${({ theme }) => theme.colors.grayscale.black};
-  margin-bottom: 16px;
-`;
-
-export const Subtitle = styled(Title)`
-  font: ${({ theme }) => theme.fonts.subtitle1};
-`;
-
-export const ContentContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4px 0px;
-`;
-
-export const SettingTitle = styled.div`
-  font: ${({ theme }) => theme.fonts.body2};
-  color: ${({ theme }) => theme.colors.grayscale.black};
-`;
-
-export const Gray = styled.div`
-  display: flex;
-  column-gap: 4px;
-  align-items: center;
-  color: black;
-  filter: ${({ theme }) => theme.filters.grayscale.gray2};
-  cursor: pointer;
-
-  &:hover {
-    filter: ${({ theme }) => theme.filters.grayscale.black};
-  }
-`;
-
-export const SettingTitleRed = styled(SettingTitle)`
-  color: ${({ theme }) => theme.colors.red.default};
-`;
-
-export const Red = styled(Gray)`
-  filter: ${({ theme }) => theme.filters.red.default};
-
-  &:hover {
-    filter: ${({ theme }) => theme.filters.red.hover};
-  }
 `;

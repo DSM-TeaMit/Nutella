@@ -1,6 +1,15 @@
 import { FC, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { SearchContainer, LoginContainer, MypageContainer, PlanContainer } from "../container";
+import {
+  SearchContainer,
+  LoginContainer,
+  MypageContainer,
+  UserContainer,
+  SignupContainer,
+  PlanContainer,
+  ProjectDetailContainer,
+  TeacherLoginContainer,
+} from "../container";
 
 const MainRouter: FC = (): JSX.Element => {
   return (
@@ -8,13 +17,16 @@ const MainRouter: FC = (): JSX.Element => {
       <Routes>
         <Route path="/*">
           <Route path="" element={<LoginContainer />} />
+          <Route path="signup" element={<SignupContainer />} />
+          <Route path="teacherlogin" element={<TeacherLoginContainer />} />
           <Route path="search" element={<SearchContainer />} />
           <Route path="mypage/*" element={<MypageContainer />} />
+          <Route path="user/:id/*" element={<UserContainer />} />
           <Route path="project/:id/*">
-            <Route path="" element={<div>this is project</div>} />
+            <Route path="" element={<ProjectDetailContainer />} />
             <Route path="plan" element={<PlanContainer />} />
             <Route path="result" element={<div>this is project result</div>} />
-          </Route>
+          <Route />
         </Route>
       </Routes>
     </Suspense>

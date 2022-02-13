@@ -1,6 +1,6 @@
 import * as S from "./styles";
-import { UpArrowIcons } from "../../../../assets/icons";
-import ReportCard from "../../../ReportCard";
+import { UpArrowIcons } from "../../../../../assets/icons";
+import ReportCard from "../../../../ReportCard";
 import { FC, useEffect, useRef, useState } from "react";
 
 interface PropsType {

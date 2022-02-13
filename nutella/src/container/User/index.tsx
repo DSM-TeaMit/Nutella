@@ -1,15 +1,15 @@
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import MyPage from "../../components/Profile/Mypage";
+import User from "../../components/Profile/User";
 
-const MypageContainer = () => {
+const UserContainer = () => {
   return (
     <>
       <Header />
-      <MyPage />
+      <User />
       <Footer />
     </>
   );
 };
 
-export default MypageContainer;
+export default UserContainer;
