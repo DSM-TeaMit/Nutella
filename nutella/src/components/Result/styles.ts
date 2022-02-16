@@ -93,3 +93,18 @@ export const ContentPadding = styled.div`
 export const ExampleDiv = styled.div`
   font: ${({ theme }) => theme.fonts.h2};
 `;
+
+export const AddButton = styled.button`
+  border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.grayscale.white};
+  text-align: center;
+  font: ${({ theme }) => theme.fonts.h1};
+  cursor: pointer;
+  width: 100%;
+  padding: 11px 0px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
+  }
+`;
