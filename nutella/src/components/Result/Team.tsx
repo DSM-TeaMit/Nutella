@@ -2,11 +2,11 @@ import BlueButton from "../Buttons/BlueButton";
 import BorderButton from "../Buttons/BorderButton";
 import Comment from "../Comment";
 import CommentInput from "../CommentInput";
-import AddPage from "./AddPage";
-import ContentExample from "./ContentExample";
-import Cover from "./Cover";
+import AddPage from "./Content/AddPage";
+import ContentExample from "./Content/ContentExample";
+import Cover from "./Content/Cover";
 import * as S from "./styles";
-import SubmitResult from "./SubmitResult";
+import SubmitResult from "./Content/SubmitResult";
 
 const Team = () => {
   return (
