@@ -85,3 +85,11 @@ export const CoverInfoContent = styled.div`
   text-align: center;
   flex: 1;
 `;
+
+export const ContentPadding = styled.div`
+  padding: 40px 36px;
+`;
+
+export const ExampleDiv = styled.div`
+  font: ${({ theme }) => theme.fonts.h2};
+`;
