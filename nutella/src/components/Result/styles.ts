@@ -108,3 +108,31 @@ export const AddButton = styled.button`
     background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
   }
 `;
+
+export const Buttons = styled.div`
+  margin-top: 24px;
+  display: flex;
+  column-gap: 16px;
+  justify-content: right;
+`;
+
+export const Line = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.grayscale.gray1};
+`;
+
+export const CommentContainer = styled.div`
+  width: 100%;
+  display: flex;
+  row-gap: 28px;
+  flex-direction: column;
+`;
+
+export const CommentTitle = styled.span`
+  font: ${({ theme }) => theme.fonts.h2};
+`;
+
+export const CommentTitleBlue = styled(CommentTitle)`
+  color: ${({ theme }) => theme.colors.primary.default};
+`;
