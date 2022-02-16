@@ -1,5 +1,5 @@
 import { FC } from "react";
-import * as S from "./styles";
+import * as S from "../styles";
 
 interface PropsType {
   name: "개인" | "팀 / 동아리";

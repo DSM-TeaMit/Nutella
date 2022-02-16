@@ -6,7 +6,7 @@ import AddPage from "./Content/AddPage";
 import ContentExample from "./Content/ContentExample";
 import Cover from "./Content/Cover";
 import * as S from "./styles";
-import SubmitResult from "./SubmitResult";
+import SubmitResult from "./Content/SubmitResult";
 
 const Personal = () => {
   return (
