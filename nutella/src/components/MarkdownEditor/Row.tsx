@@ -28,7 +28,10 @@ const placeholderMap = new Map<string, string>()
   .set("ul", "비어있는 리스트")
   .set("ol", "비어있는 리스트");
 
-const ulTypeMap = new Map<number, string>().set(0, "disc").set(1, "circle").set(2, "square");
+const ulTypeMap = new Map<number, string>()
+  .set(0, "disc")
+  .set(1, "circle")
+  .set(2, "square");
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
 
@@ -83,7 +86,10 @@ const Row: FC<PropsType> = ({ data }) => {
         }
       }
 
-      const step = new Map<string, number>().set("ArrowUp", -1).set("ArrowDown", 1).get(e.key);
+      const step = new Map<string, number>()
+        .set("ArrowUp", -1)
+        .set("ArrowDown", 1)
+        .get(e.key);
       if (step) {
         e.stopPropagation();
         e.preventDefault();
@@ -116,7 +122,9 @@ const Row: FC<PropsType> = ({ data }) => {
   const onInput = useCallback(
     (e: React.FormEvent<HTMLDivElement>) => {
       let text =
-        (e.target as HTMLDivElement).innerHTML.replace(/&nbsp;/g, " ").replace(/&gt;/g, ">") || "";
+        (e.target as HTMLDivElement).innerHTML
+          .replace(/&nbsp;/g, " ")
+          .replace(/&gt;/g, ">") || "";
 
       const key = keyArray.find((value) => new RegExp(`^${value} `).test(text));
 
@@ -161,21 +169,22 @@ const Row: FC<PropsType> = ({ data }) => {
     [onInput, onKeyDown, setRef, tab, type]
   );
 
+  //order list의 시작 숫자를 반환하는 함수
   const getStart = useCallback((): number => {
     let index = currentIndex - 1;
     let start = 1;
     const { tab, type } = rows[currentIndex];
 
+    //첫 줄이면 1을 반환
     if (currentIndex === 0) {
       return start;
     }
 
     while (true) {
-      if (index < 0) {
+      const prev = rows[index];
+      if (index < 0 || prev.tab < tab) {
         break;
       }
-
-      const prev = rows[index];
 
       if (prev.tab === tab && prev.type === type) start++;
       else if (prev.type !== type) break;
