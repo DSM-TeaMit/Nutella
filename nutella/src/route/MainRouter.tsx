@@ -9,6 +9,7 @@ import {
   PlanContainer,
   ProjectDetailContainer,
   TeacherLoginContainer,
+  ResultContainer,
 } from "../container";
 
 const MainRouter: FC = (): JSX.Element => {
@@ -25,7 +26,7 @@ const MainRouter: FC = (): JSX.Element => {
           <Route path="project/:id/*">
             <Route path="" element={<ProjectDetailContainer />} />
             <Route path="plan" element={<PlanContainer />} />
-            <Route path="result" element={<div>this is project result</div>} />
+            <Route path="result" element={<ResultContainer />} />
           </Route>
         </Route>
       </Routes>
