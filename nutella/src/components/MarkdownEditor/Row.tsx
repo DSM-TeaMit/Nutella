@@ -19,12 +19,12 @@ const tagMap = new Map<string, string>()
 
 const placeholderMap = new Map<string, string>()
   .set("p", "비어있는 본문")
-  .set("h1", "헤딩 1")
-  .set("h2", "헤딩 2")
-  .set("h3", "헤딩 3")
-  .set("h4", "헤딩 4")
-  .set("h5", "헤딩 5")
-  .set("h6", "헤딩 6")
+  .set("h1", "제목 1")
+  .set("h2", "제목 2")
+  .set("h3", "제목 3")
+  .set("h4", "제목 4")
+  .set("h5", "제목 5")
+  .set("h6", "제목 6")
   .set("blockquote", "비어있는 인용")
   .set("ul", "비어있는 리스트")
   .set("ol", "비어있는 리스트");
@@ -210,6 +210,17 @@ const Row: FC<PropsType> = ({ data }) => {
     <S.RowContainer margin={`calc(${tab} * 1.2rem)`}>
       <S.Handle className="handle">
         <S.HandleIcon src={HandleSVG} />
+        <S.PopUp>
+          <S.PopupRowTitle>행 종류</S.PopupRowTitle>
+          <S.PopupRowContainer>
+            <S.PopupRowTitle>제목 1</S.PopupRowTitle>
+            <S.PopupRowDescription>
+              2.25rem | 굵음
+              <br />
+              단축 : #
+            </S.PopupRowDescription>
+          </S.PopupRowContainer>
+        </S.PopUp>
       </S.Handle>
       {isList(type) ? renderListRow : renderRow}
     </S.RowContainer>
