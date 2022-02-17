@@ -202,7 +202,7 @@ const Row: FC<PropsType> = ({ data }) => {
           <li style={{ listStyleType: "decimal" }}>{renderRow}</li>
         </ol>
       ),
-    []
+    [type, tab, renderRow, getStart]
   );
 
   return (
