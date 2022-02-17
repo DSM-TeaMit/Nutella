@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useContext, useEffect, useMemo } from "react";
 import { MarkdownContext, Row as RowType } from "../../context/MarkdownCotext";
-
+import * as S from "./styles";
+import HandleSVG from "../../assets/icons/handle.svg";
 interface PropsType {
   data: RowType;
 }
@@ -206,9 +207,12 @@ const Row: FC<PropsType> = ({ data }) => {
   );
 
   return (
-    <div style={{ marginLeft: `calc(${tab} * 1.2rem)` }}>
+    <S.RowContainer margin={`calc(${tab} * 1.2rem)`}>
+      <S.Handle className="handle">
+        <S.HandleIcon src={HandleSVG} />
+      </S.Handle>
       {isList(type) ? renderListRow : renderRow}
-    </div>
+    </S.RowContainer>
   );
 };
 
