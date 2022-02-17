@@ -1,5 +1,9 @@
 import { FC, useCallback, useMemo, useRef, useState, useEffect } from "react";
-import { MarkdownContext, MarkdownContextType, Row } from "../../context/MarkdownCotext";
+import {
+  MarkdownContext,
+  MarkdownContextType,
+  Row,
+} from "../../context/MarkdownCotext";
 import uniqueId from "../../constant/UniqueId";
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
@@ -195,10 +199,22 @@ const MarkdownProvider: FC = ({ children }) => {
       changeVerticalFocus,
       changeTab,
     }),
-    [addRowAfterId, changeRowType, changeTab, changeText, changeVerticalFocus, removeRowById, rows]
+    [
+      addRowAfterId,
+      changeRowType,
+      changeTab,
+      changeText,
+      changeVerticalFocus,
+      removeRowById,
+      rows,
+    ]
   );
 
-  return <MarkdownContext.Provider value={value}>{children}</MarkdownContext.Provider>;
+  return (
+    <MarkdownContext.Provider value={value}>
+      {children}
+    </MarkdownContext.Provider>
+  );
 };
 
 export default MarkdownProvider;
