@@ -152,24 +152,6 @@ const Row: FC<PropsType> = ({ data }) => {
     },
     [currentIndex, refs]
   );
-
-  const renderRow = useMemo(
-    () =>
-      React.createElement(getType(type), {
-        ref: setRef,
-        onKeyDown,
-        contentEditable: true,
-        onInput,
-        placeholder: placeholderMap.get(type),
-        style: {
-          outline: "none",
-          marginLeft: !isList(type) && `calc(${tab} * 1.2rem)`,
-          cursor: "text",
-        },
-      }),
-    [onInput, onKeyDown, setRef, tab, type]
-  );
-
   //order list의 시작 숫자를 반환하는 함수
   const getStart = useCallback((): number => {
     let index = currentIndex - 1;
@@ -195,34 +177,38 @@ const Row: FC<PropsType> = ({ data }) => {
     return start;
   }, [currentIndex, rows]);
 
-  return isList(type) ? (
-    type === "ul" ? (
-      <li
-        style={{
-          paddingLeft: `calc(${tab} * 1.2rem)`,
-          listStyleType: ulTypeMap.get(tab % 3),
-        }}
-      >
-        {renderRow}
-      </li>
-    ) : (
-      <ol
-        style={{
-          paddingLeft: `calc(${tab} * 1.2rem)`,
-        }}
-        start={getStart()}
-      >
-        <li
-          style={{
-            listStyleType: "decimal",
-          }}
-        >
-          {renderRow}
-        </li>
-      </ol>
-    )
-  ) : (
-    renderRow
+  const renderRow = useMemo(
+    () =>
+      React.createElement(getType(type), {
+        ref: setRef,
+        onKeyDown,
+        contentEditable: true,
+        onInput,
+        placeholder: placeholderMap.get(type),
+        style: {
+          outline: "none",
+          cursor: "text",
+        },
+      }),
+    [onInput, onKeyDown, setRef, tab, type]
+  );
+
+  const renderListRow = useMemo(
+    () =>
+      type === "ul" ? (
+        <li style={{ listStyleType: ulTypeMap.get(tab % 3) }}>{renderRow}</li>
+      ) : (
+        <ol start={getStart()}>
+          <li style={{ listStyleType: "decimal" }}>{renderRow}</li>
+        </ol>
+      ),
+    []
+  );
+
+  return (
+    <div style={{ marginLeft: `calc(${tab} * 1.2rem)` }}>
+      {isList(type) ? renderListRow : renderRow}
+    </div>
   );
 };
 
