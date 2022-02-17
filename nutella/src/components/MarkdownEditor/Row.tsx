@@ -90,6 +90,7 @@ const Row: FC<PropsType> = ({ data }) => {
         .set("ArrowUp", -1)
         .set("ArrowDown", 1)
         .get(e.key);
+
       if (step) {
         e.stopPropagation();
         e.preventDefault();
