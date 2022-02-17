@@ -6,6 +6,12 @@ interface PropsType {
   data: RowType;
 }
 
+interface PopupItem {
+  title: string;
+  description: string[];
+  onClick: () => void;
+}
+
 const tagMap = new Map<string, string>()
   .set("#", "h1")
   .set("##", "h2")
@@ -26,8 +32,8 @@ const placeholderMap = new Map<string, string>()
   .set("h5", "제목 5")
   .set("h6", "제목 6")
   .set("blockquote", "비어있는 인용")
-  .set("ul", "비어있는 리스트")
-  .set("ol", "비어있는 리스트");
+  .set("ul", "비어있는 목록")
+  .set("ol", "비어있는 목록");
 
 const ulTypeMap = new Map<number, string>()
   .set(0, "disc")
@@ -58,6 +64,57 @@ const Row: FC<PropsType> = ({ data }) => {
     changeTab,
   } = useContext(MarkdownContext);
   const currentIndex = rows.findIndex((value) => value.id === id);
+
+  const popupItems = useMemo<PopupItem[]>(
+    () => [
+      {
+        title: "제목 1",
+        description: ["2.25rem | 굵음", "단축 : #"],
+        onClick: () => changeRowType(id, "h1"),
+      },
+      {
+        title: "제목 2",
+        description: ["1.75rem | 굵음", "단축 : ##"],
+        onClick: () => changeRowType(id, "h2"),
+      },
+      {
+        title: "제목 3",
+        description: ["1.5rem | 굵음", "단축 : ###"],
+        onClick: () => changeRowType(id, "h3"),
+      },
+      {
+        title: "제목 4",
+        description: ["1.25rem | 중간", "단축 : ####"],
+        onClick: () => changeRowType(id, "h4"),
+      },
+      {
+        title: "제목 5",
+        description: ["1.25rem | 중간", "단축 : #####"],
+        onClick: () => changeRowType(id, "h5"),
+      },
+      {
+        title: "제목 6",
+        description: ["1rem | 굵음", "단축 : ######"],
+        onClick: () => changeRowType(id, "h6"),
+      },
+      {
+        title: "인용",
+        description: ["1rem | 표준", "단축 : >"],
+        onClick: () => changeRowType(id, "blockquote"),
+      },
+      {
+        title: "순서 있는 목록",
+        description: ["1rem | 표준", "단축 : {아무 숫자}."],
+        onClick: () => changeRowType(id, "ol"),
+      },
+      {
+        title: "순서 없는 목록",
+        description: ["1rem | 표준", "단축 : -"],
+        onClick: () => changeRowType(id, "ul"),
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     if (refs.current) {
@@ -210,16 +267,23 @@ const Row: FC<PropsType> = ({ data }) => {
     <S.RowContainer margin={`calc(${tab} * 1.2rem)`}>
       <S.Handle className="handle">
         <S.HandleIcon src={HandleSVG} />
-        <S.PopUp>
+        <S.PopUp className="popup">
           <S.PopupRowTitle>행 종류</S.PopupRowTitle>
-          <S.PopupRowContainer>
-            <S.PopupRowTitle>제목 1</S.PopupRowTitle>
-            <S.PopupRowDescription>
-              2.25rem | 굵음
-              <br />
-              단축 : #
-            </S.PopupRowDescription>
-          </S.PopupRowContainer>
+          <S.PopupRowOuter>
+            {popupItems.map((value, index) => {
+              const { title, description, onClick } = value;
+              return (
+                <S.PopupRowContainer onClick={onClick} key={index}>
+                  <S.PopupRowTitle>{title}</S.PopupRowTitle>
+                  <S.PopupRowDescription>
+                    {description.map((value) => (
+                      <div>{value}</div>
+                    ))}
+                  </S.PopupRowDescription>
+                </S.PopupRowContainer>
+              );
+            })}
+          </S.PopupRowOuter>
         </S.PopUp>
       </S.Handle>
       {isList(type) ? renderListRow : renderRow}

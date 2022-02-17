@@ -33,15 +33,23 @@ export const Handle = styled.button`
   border: 0px;
   background-color: transparent;
   position: absolute;
-  top: 0px;
+  top: 50%;
   right: 0px;
   cursor: pointer;
   opacity: 0;
   visibility: hidden;
   transition: all 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+  z-index: 2;
+  transform: translateY(-50%);
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
+
+    .popup {
+      opacity: 1;
+      visibility: visible;
+      transition: all 0.25s ease;
+    }
   }
 `;
 
@@ -55,6 +63,19 @@ export const PopUp = styled.div`
   border-radius: 10px;
   width: max-content;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  z-index: 2;
+  max-height: 300px;
+  opacity: 0;
+  visibility: hidden;
+  transition: none;
+`;
+
+export const PopupRowOuter = styled.div`
+  overflow-y: scroll;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   row-gap: 4px;
