@@ -7,7 +7,6 @@ import * as S from "./styles";
 import HandleSVG from "../../../assets/icons/handle.svg";
 import Tag from "../../../interface/Tag";
 import Popup from "../Popup";
-import DropImage from "../DropImage";
 interface PropsType {
   data: RowType;
 }
@@ -220,7 +219,6 @@ const Row: FC<PropsType> = ({ data }) => {
         <Popup id={id} />
       </S.Handle>
       {isList(type) ? renderListRow : renderRow}
-      <DropImage />
     </S.RowContainer>
   );
 };
