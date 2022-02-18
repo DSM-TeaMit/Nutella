@@ -71,11 +71,11 @@ const Popup: FC<PropsType> = ({ id }) => {
       popupItems.map((value, index) => {
         const { title, description, onClick } = value;
         return (
-          <S.PopupRowContainer onClick={onClick} key={index}>
+          <S.PopupRowContainer onClick={onClick} key={`popup_${index}`}>
             <S.PopupRowTitle>{title}</S.PopupRowTitle>
             <S.PopupRowDescription>
-              {description.map((value) => (
-                <div>{value}</div>
+              {description.map((value, index) => (
+                <div key={`desc_${index}`}>{value}</div>
               ))}
             </S.PopupRowDescription>
           </S.PopupRowContainer>
