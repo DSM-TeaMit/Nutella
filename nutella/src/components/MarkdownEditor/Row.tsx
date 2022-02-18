@@ -41,9 +41,9 @@ const ulTypeMap = new Map<number, string>()
   .set(1, "circle")
   .set(2, "square");
 
-const isList = (type: string) => ["ul", "ol"].includes(type);
+const isList = (type: Tag) => ["ul", "ol"].includes(type);
 
-const getType = (type: string) => {
+const getType = (type: Tag) => {
   if (isList(type)) {
     return "p";
   }
@@ -211,6 +211,7 @@ const Row: FC<PropsType> = ({ data }) => {
     },
     [currentIndex, refs]
   );
+
   //order list의 시작 숫자를 반환하는 함수
   const getStart = useCallback((): number => {
     let index = currentIndex - 1;
