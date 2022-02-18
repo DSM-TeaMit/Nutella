@@ -272,6 +272,7 @@ const Row: FC<PropsType> = ({ data }) => {
         <Popup id={id} />
       </S.Handle>
       {isList(type) ? renderListRow : renderRow}
+      <S.DropHint active={isDragging} />
     </S.RowContainer>
   );
 };
