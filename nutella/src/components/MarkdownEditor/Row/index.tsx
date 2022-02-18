@@ -1,4 +1,11 @@
-import React, { FC, useCallback, useContext, useEffect, useMemo } from "react";
+import React, {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   MarkdownContext,
   Row as RowType,
@@ -63,6 +70,7 @@ const Row: FC<PropsType> = ({ data }) => {
     changeTab,
   } = useContext(MarkdownContext);
   const currentIndex = rows.findIndex((value) => value.id === id);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLElement>) => {
@@ -177,6 +185,45 @@ const Row: FC<PropsType> = ({ data }) => {
     return start;
   }, [currentIndex, rows]);
 
+  const onDragEnter = useCallback(
+    (e: React.DragEvent<HTMLDivElement>): void => {
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    []
+  );
+
+  const onDragLeave = useCallback(
+    (e: React.DragEvent<HTMLDivElement>): void => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      setIsDragging(false);
+    },
+    []
+  );
+
+  const onDragOver = useCallback((e: React.DragEvent<HTMLDivElement>): void => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (e.dataTransfer!.files) {
+      setIsDragging(true);
+    }
+  }, []);
+
+  const onDrop = useCallback(
+    (e: React.DragEvent<HTMLDivElement>): void => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // onChangeFiles(e);
+      setIsDragging(false);
+    },
+    // [onChangeFiles]
+    []
+  );
+
   const renderRow = useMemo(
     () =>
       React.createElement(getType(type), {
@@ -213,7 +260,13 @@ const Row: FC<PropsType> = ({ data }) => {
   }, [refs, type]);
 
   return (
-    <S.RowContainer margin={`calc(${tab} * 1.2rem)`}>
+    <S.RowContainer
+      margin={`calc(${tab} * 1.2rem)`}
+      onDragEnter={onDragEnter}
+      onDragLeave={onDragLeave}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+    >
       <S.Handle className="handle">
         <S.HandleIcon src={HandleSVG} />
         <Popup id={id} />
