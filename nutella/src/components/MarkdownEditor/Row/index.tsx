@@ -4,7 +4,7 @@ import {
   Row as RowType,
 } from "../../../context/MarkdownCotext";
 import * as S from "./styles";
-import HandleSVG from "../../assets/icons/handle.svg";
+import HandleSVG from "../../../assets/icons/handle.svg";
 import Tag from "../../../interface/Tag";
 import Popup from "../Popup";
 import DropImage from "../DropImage";
