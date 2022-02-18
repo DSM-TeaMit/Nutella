@@ -1,9 +1,12 @@
 import React, { FC, useCallback, useContext, useEffect, useMemo } from "react";
-import { MarkdownContext, Row as RowType } from "../../context/MarkdownCotext";
+import {
+  MarkdownContext,
+  Row as RowType,
+} from "../../../context/MarkdownCotext";
 import * as S from "./styles";
 import HandleSVG from "../../assets/icons/handle.svg";
-import Tag from "../../interface/Tag";
-import Popup from "./Popup";
+import Tag from "../../../interface/Tag";
+import Popup from "../Popup";
 interface PropsType {
   data: RowType;
 }
