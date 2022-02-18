@@ -1,4 +1,6 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import theme from "../../../utils/theme/theme";
 
 export const RowContainer = styled.div<{ margin: string }>`
   margin-left: ${({ margin }) => margin};
@@ -43,4 +45,24 @@ export const Handle = styled.div`
 export const HandleIcon = styled.img`
   height: 100%;
   filter: ${({ theme }) => theme.filters.grayscale.lightGray2};
+`;
+
+export const DropHint = styled.div<{ active: boolean }>`
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  border-radius: 5px;
+  transition: all 0.25s ease;
+  opacity: 0;
+  background-color: ${({ theme }) => theme.colors.primary.default}50;
+  top: 100%;
+  left: 0;
+  visibility: hidden;
+
+  ${({ active }) =>
+    active &&
+    css`
+      visibility: visible;
+      opacity: 1;
+    `}
 `;
