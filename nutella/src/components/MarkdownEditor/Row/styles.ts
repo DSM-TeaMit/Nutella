@@ -13,7 +13,7 @@ export const RowContainer = styled.div<{ margin: string }>`
   }
 `;
 
-export const Handle = styled.button`
+export const Handle = styled.div`
   height: 20px;
   padding: 2px;
   border-radius: 2px;
