@@ -62,7 +62,7 @@ const Row: FC<PropsType> = ({ data }) => {
   const currentIndex = rows.findIndex((value) => value.id === id);
 
   const onKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
+    (e: React.KeyboardEvent<HTMLElement>) => {
       if (e.key === "Enter") {
         e.stopPropagation();
         e.preventDefault();
@@ -117,9 +117,9 @@ const Row: FC<PropsType> = ({ data }) => {
   );
 
   const onInput = useCallback(
-    (e: React.FormEvent<HTMLDivElement>) => {
+    (e: React.FormEvent<HTMLElement>) => {
       let text =
-        (e.target as HTMLDivElement).innerHTML
+        (e.target as HTMLElement).innerHTML
           .replace(/&nbsp;/g, " ")
           .replace(/&gt;/g, ">") || "";
 
