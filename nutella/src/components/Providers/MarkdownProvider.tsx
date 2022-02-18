@@ -5,6 +5,7 @@ import {
   Row,
 } from "../../context/MarkdownCotext";
 import uniqueId from "../../constant/UniqueId";
+import Tag from "../../interface/Tag";
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
 const MarkdownProvider: FC = ({ children }) => {
@@ -82,7 +83,7 @@ const MarkdownProvider: FC = ({ children }) => {
   );
 
   const changeRowType = useCallback(
-    (id: string, type: string) => {
+    (id: string, type: Tag) => {
       const index = findIndexById(id);
       const copyRows = [...rows];
 

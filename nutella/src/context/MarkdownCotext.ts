@@ -1,9 +1,10 @@
 import { createContext, createRef } from "react";
+import Tag from "../interface/Tag";
 
 export interface Row {
   id: string;
   text: string;
-  type: string;
+  type: Tag;
   tab: number;
 }
 
@@ -12,7 +13,7 @@ export interface MarkdownContextType {
   refs: React.RefObject<HTMLElement[]>;
   addRowAfterId: (id: string) => void;
   removeRowById: (id: string) => void;
-  changeRowType: (id: string, type: string) => void;
+  changeRowType: (id: string, type: Tag) => void;
   changeText: (id: string, text: string) => void;
   changeVerticalFocus: (id: string, step: number) => void;
   changeTab: (id: string, step: number) => void;

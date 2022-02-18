@@ -2,6 +2,7 @@ import React, { FC, useCallback, useContext, useEffect, useMemo } from "react";
 import { MarkdownContext, Row as RowType } from "../../context/MarkdownCotext";
 import * as S from "./styles";
 import HandleSVG from "../../assets/icons/handle.svg";
+import Tag from "../../interface/Tag";
 interface PropsType {
   data: RowType;
 }
@@ -12,7 +13,7 @@ interface PopupItem {
   onClick: () => void;
 }
 
-const tagMap = new Map<string, string>()
+const tagMap = new Map<string, Tag>()
   .set("#", "h1")
   .set("##", "h2")
   .set("###", "h3")
@@ -23,7 +24,7 @@ const tagMap = new Map<string, string>()
   .set("-", "ul")
   .set("\\d+.", "ol");
 
-const placeholderMap = new Map<string, string>()
+const placeholderMap = new Map<Tag, string>()
   .set("p", "비어있는 본문")
   .set("h1", "제목 1")
   .set("h2", "제목 2")
