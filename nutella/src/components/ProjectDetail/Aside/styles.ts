@@ -28,6 +28,7 @@ export const Title = styled.div`
 export const SubTitle = styled.div`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
+  cursor: pointer;
 `;
 
 export const AsideContent = styled.div`

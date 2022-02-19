@@ -60,6 +60,7 @@ export const Font = styled.span`
 export const Modify = styled(Font)`
   margin-right: 0;
   margin-left: 28px;
+  cursor: pointer;
 `;
 
 export const ProjectContent = styled.div`
