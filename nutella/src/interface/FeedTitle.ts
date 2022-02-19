@@ -1,7 +1,6 @@
 interface FeedTitleType {
   title: string;
-  count: number;
-  click: boolean;
+  onClick: () => void;
 }
 
 export default FeedTitleType;
