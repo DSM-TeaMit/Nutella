@@ -1,8 +1,12 @@
 import * as S from "./styles";
 import { ProfileIcons, ViewIcons } from "../../../assets/icons";
+import useModalContext from "../../../hooks/useModalContext";
+import ProjectModifyModal from "../../Modals/ProjectInfoModify";
 
 const Top = () => {
   const Field = ["웹", "보안", "임베디드", "대마고"];
+  const { openModal } = useModalContext();
+
   return (
     <>
       <S.TopContainer>
@@ -18,7 +22,14 @@ const Top = () => {
                   <img src={ProfileIcons} />
                   <S.Font>팀 프로젝트</S.Font>
                 </div>
-                <S.Modify>수정</S.Modify>
+                <S.Modify
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openModal(<ProjectModifyModal />);
+                  }}
+                >
+                  수정
+                </S.Modify>
               </S.ProjectRincian>
             </S.ProjectTop>
             <S.ProjectContent>
