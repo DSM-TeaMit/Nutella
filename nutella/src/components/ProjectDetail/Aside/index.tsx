@@ -1,6 +1,10 @@
+import useModalContext from "../../../hooks/useModalContext";
+import ProjectMemberModifyModal from "../../Modals/ProjectMemberModify";
 import * as S from "./styles";
 
 const Aside = () => {
+  const { openModal } = useModalContext();
+
   return (
     <>
       <S.AsideContainer>
@@ -8,7 +12,14 @@ const Aside = () => {
           <S.Title>
             멤버 <span>3</span>
           </S.Title>
-          <S.SubTitle>수정</S.SubTitle>
+          <S.SubTitle
+            onClick={(e) => {
+              e.stopPropagation();
+              openModal(<ProjectMemberModifyModal />);
+            }}
+          >
+            수정
+          </S.SubTitle>
         </S.AsideTop>
         <S.AsideContent>
           <S.RoleBox>
