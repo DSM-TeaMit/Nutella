@@ -63,7 +63,7 @@ const Popup: FC<PropsType> = ({ id }) => {
         onClick: () => changeRowType(id, "ul"),
       },
     ],
-    []
+    [changeRowType]
   );
 
   const renderPopupRow = useMemo(
