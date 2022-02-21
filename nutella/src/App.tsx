@@ -6,19 +6,23 @@ import ModalProvider from "./components/Providers/ModalProvider";
 import RootRouter from "./route";
 import { reset } from "./style/globalStyle";
 import theme from "./utils/theme/theme";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 function App() {
+  const queryClient = new QueryClient();
   return (
-    <ThemeProvider theme={theme}>
-      <ModalProvider>
-        <MessageProvider>
-          <Global styles={reset} />
-          <RootRouter />
-          <ModalController />
-          <MessageController />
-        </MessageProvider>
-      </ModalProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <ModalProvider>
+          <MessageProvider>
+            <Global styles={reset} />
+            <RootRouter />
+            <ModalController />
+            <MessageController />
+          </MessageProvider>
+        </ModalProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 
