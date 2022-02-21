@@ -13,6 +13,10 @@ const refresh = async (
   const accessToken = localStorage.getItem("access_token");
   const refreshToken = localStorage.getItem("refresh_token");
 
+  /*
+    토큰 리프레시 작업...
+  */
+
   config.headers!["Authorization"] = `Bearer ${accessToken}`;
 
   return config;
