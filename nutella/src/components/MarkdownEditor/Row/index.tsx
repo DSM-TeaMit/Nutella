@@ -68,6 +68,7 @@ const Row: FC<PropsType> = ({ data }) => {
     changeVerticalFocus,
     changeRowType,
     changeTab,
+    addImages,
   } = useContext(MarkdownContext);
   const currentIndex = rows.findIndex((value) => value.id === id);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -216,12 +217,12 @@ const Row: FC<PropsType> = ({ data }) => {
     (e: React.DragEvent<HTMLDivElement>): void => {
       e.preventDefault();
       e.stopPropagation();
-
-      // onChangeFiles(e);
       setIsDragging(false);
+
+      const files = Array.from(e.dataTransfer.files);
+      addImages(id, files);
     },
-    // [onChangeFiles]
-    []
+    [addImages]
   );
 
   const renderRow = useMemo(

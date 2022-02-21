@@ -12,6 +12,7 @@ export interface MarkdownContextType {
   rows: Row[];
   refs: React.RefObject<HTMLElement[]>;
   addRowAfterId: (id: string) => void;
+  addImages: (id: string, files: File[]) => Promise<void>;
   removeRowById: (id: string) => void;
   changeRowType: (id: string, type: Tag) => void;
   changeText: (id: string, text: string) => void;
@@ -23,6 +24,7 @@ export const MarkdownContext = createContext<MarkdownContextType>({
   rows: [],
   refs: createRef<HTMLElement[]>(),
   addRowAfterId: () => {},
+  addImages: async () => {},
   changeRowType: () => {},
   removeRowById: () => {},
   changeText: () => {},

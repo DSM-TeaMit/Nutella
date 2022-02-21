@@ -6,9 +6,12 @@ import {
 } from "../../context/MarkdownCotext";
 import uniqueId from "../../constant/UniqueId";
 import Tag from "../../interface/Tag";
+import useMessageContext from "../../hooks/useMessageContext";
+import { postImage } from "../../utils/api/Image";
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
 const MarkdownProvider: FC = ({ children }) => {
+  const { showMessage } = useMessageContext();
   const [rows, setRows] = useState<Row[]>([
     {
       id: uniqueId(),
@@ -189,6 +192,28 @@ const MarkdownProvider: FC = ({ children }) => {
     [findIndexById, rows]
   );
 
+  const addImages = useCallback(
+    async (id: string, files: File[]) => {
+      files.forEach(async (value) => {
+        if (["image/jpeg", "image/png"].includes(value.type)) {
+          try {
+            await postImage(value);
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          //이미지가 아님
+          showMessage({
+            type: "Denial",
+            title: "이미지 업로드에 실패했습니다.",
+            content: `${value.name}은(는) 이미지 파일이 아닙니다. 이미지 파일만 업로드 가능합니다.`,
+          });
+        }
+      });
+    },
+    [showMessage]
+  );
+
   const value = useMemo<MarkdownContextType>(
     () => ({
       rows,
@@ -199,6 +224,7 @@ const MarkdownProvider: FC = ({ children }) => {
       changeText,
       changeVerticalFocus,
       changeTab,
+      addImages,
     }),
     [
       addRowAfterId,
@@ -208,6 +234,7 @@ const MarkdownProvider: FC = ({ children }) => {
       changeVerticalFocus,
       removeRowById,
       rows,
+      addImages,
     ]
   );
 
