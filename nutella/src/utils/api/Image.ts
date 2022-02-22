@@ -6,13 +6,14 @@ export const postImage = async (file: File) => {
   formData.append("image", file);
 
   try {
-    const response = await request.post(
+    const response = await request.post<string>(
       Uri.uploadImage.get({
         projectUuid: "a08c9142-2e64-4702-891e-8561933fdc96",
       }),
       formData
     );
-    console.log(response);
+
+    return response;
   } catch (error) {
     return Promise.reject(error);
   }
