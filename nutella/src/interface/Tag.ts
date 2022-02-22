@@ -8,6 +8,7 @@ type Tag =
   | "blockquote"
   | "ol"
   | "ul"
-  | "p";
+  | "p"
+  | "image";
 
 export default Tag;

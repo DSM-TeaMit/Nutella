@@ -8,6 +8,7 @@ import uniqueId from "../../constant/UniqueId";
 import Tag from "../../interface/Tag";
 import useMessageContext from "../../hooks/useMessageContext";
 import { postImage } from "../../utils/api/Image";
+import { MessageType } from "../../context/MessageContext";
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
 const MarkdownProvider: FC = ({ children }) => {
@@ -194,24 +195,47 @@ const MarkdownProvider: FC = ({ children }) => {
 
   const addImages = useCallback(
     async (id: string, files: File[]) => {
+      const messages: Omit<MessageType, "id">[] = [];
+      const urls: string[] = [];
+
       files.forEach(async (value) => {
         if (["image/jpeg", "image/png"].includes(value.type)) {
           try {
-            await postImage(value);
+            const { data: url } = await postImage(value);
+
+            urls.push(url);
           } catch (error) {
-            console.log(error);
+            messages.push({
+              type: "Denial",
+              title: "이미지 업로드에 실패했습니다.",
+              content: `${error}`,
+            });
           }
         } else {
           //이미지가 아님
-          showMessage({
+          messages.push({
             type: "Denial",
             title: "이미지 업로드에 실패했습니다.",
             content: `${value.name}은(는) 이미지 파일이 아닙니다. 이미지 파일만 업로드 가능합니다.`,
           });
         }
       });
+
+      const copyRows = [...rows];
+      const index = findIndexById(id);
+
+      const additionalRows: Row[] = urls.map<Row>((value) => ({
+        id: uniqueId(),
+        text: value,
+        type: "image",
+        tab: 0,
+      }));
+
+      copyRows.splice(index + 1, 0, ...additionalRows);
+
+      setRows(copyRows);
     },
-    [showMessage]
+    [showMessage, findIndexById]
   );
 
   const value = useMemo<MarkdownContextType>(
