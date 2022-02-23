@@ -8,7 +8,6 @@ import uniqueId from "../../constant/UniqueId";
 import Tag from "../../interface/Tag";
 import useMessageContext from "../../hooks/useMessageContext";
 import { postImage } from "../../utils/api/Image";
-import { MessageType } from "../../context/MessageContext";
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
 const MarkdownProvider: FC = ({ children }) => {
@@ -236,10 +235,6 @@ const MarkdownProvider: FC = ({ children }) => {
     },
     [showMessage, findIndexById, rows]
   );
-
-  useEffect(() => {
-    console.log(rows);
-  }, [rows]);
 
   const value = useMemo<MarkdownContextType>(
     () => ({
