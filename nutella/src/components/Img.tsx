@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
 import { FC, useCallback, useMemo } from "react";
 import { useQuery } from "react-query";
-import request from "../../utils/axios";
+import request from "../utils/axios";
 import { Buffer } from "buffer";
-import * as S from "./styles";
 
 type ImageProps = React.DetailedHTMLProps<
   React.ImgHTMLAttributes<HTMLImageElement>,
@@ -11,13 +10,12 @@ type ImageProps = React.DetailedHTMLProps<
 >;
 
 const Img: FC<ImageProps> = (props) => {
-  const propsWithoutSomething: Omit<ImageProps, "src" | "loading" | "onInput"> =
-    useMemo(
-      () => ({
-        ...props,
-      }),
-      [props]
-    );
+  const propsWithoutSomething: Omit<ImageProps, "src"> = useMemo(
+    () => ({
+      ...props,
+    }),
+    [props]
+  );
 
   const { src } = props;
 
@@ -34,12 +32,7 @@ const Img: FC<ImageProps> = (props) => {
     return data;
   });
 
-  return (
-    <S.Container className={props.className}>
-      <S.Image {...propsWithoutSomething} src={data} />
-      <S.Overlay />
-    </S.Container>
-  );
+  return <img {...propsWithoutSomething} src={data} />;
 };
 
 export default Img;
