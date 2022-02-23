@@ -54,7 +54,13 @@ const MarkdownProvider: FC = ({ children }) => {
       if (rows.length <= 1) {
         return;
       }
+      const type = rows[index].type;
+
       setRows(rows.filter((value) => value.id !== id));
+
+      if (type === "image") {
+        return;
+      }
 
       if (index < 0) {
         index = 0;
