@@ -251,6 +251,7 @@ const MarkdownProvider: FC = ({ children }) => {
   const value = useMemo<MarkdownContextType>(
     () => ({
       rows,
+      setRows,
       refs,
       addRowAfterId,
       removeRowById,
@@ -262,6 +263,7 @@ const MarkdownProvider: FC = ({ children }) => {
     }),
     [
       addRowAfterId,
+      setRows,
       changeRowType,
       changeTab,
       changeText,

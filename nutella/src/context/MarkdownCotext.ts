@@ -10,6 +10,7 @@ export interface Row {
 
 export interface MarkdownContextType {
   rows: Row[];
+  setRows: (rows: Row[]) => void;
   refs: React.RefObject<HTMLElement[]>;
   addRowAfterId: (id: string) => void;
   addImages: (id: string, files: File[], projectUuid: string) => Promise<void>;
@@ -22,6 +23,7 @@ export interface MarkdownContextType {
 
 export const MarkdownContext = createContext<MarkdownContextType>({
   rows: [],
+  setRows: () => {},
   refs: createRef<HTMLElement[]>(),
   addRowAfterId: () => {},
   addImages: async () => {},
