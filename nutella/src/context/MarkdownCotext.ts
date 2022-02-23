@@ -12,7 +12,7 @@ export interface MarkdownContextType {
   rows: Row[];
   refs: React.RefObject<HTMLElement[]>;
   addRowAfterId: (id: string) => void;
-  addImages: (id: string, files: File[]) => Promise<void>;
+  addImages: (id: string, files: File[], projectUuid: string) => Promise<void>;
   removeRowById: (id: string) => void;
   changeRowType: (id: string, type: Tag) => void;
   changeText: (id: string, text: string) => void;

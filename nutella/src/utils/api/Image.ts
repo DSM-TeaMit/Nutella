@@ -1,15 +1,13 @@
 import Uri from "../../constant/Uri";
 import request from "../axios";
 
-export const postImage = async (file: File) => {
+export const postImage = async (file: File, projectUuid: string) => {
   const formData = new FormData();
   formData.append("image", file);
 
   try {
     const response = await request.post<string>(
-      Uri.uploadImage.get({
-        projectUuid: "a08c9142-2e64-4702-891e-8561933fdc96",
-      }),
+      Uri.uploadImage.get({ projectUuid }),
       formData
     );
 

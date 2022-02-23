@@ -220,7 +220,7 @@ const Row: FC<PropsType> = ({ data }) => {
       setIsDragging(false);
 
       const files = Array.from(e.dataTransfer.files);
-      addImages(id, files);
+      addImages(id, files, "0ecfaf8f-62f5-4a13-ba01-76966aa98e13");
     },
     [addImages]
   );
