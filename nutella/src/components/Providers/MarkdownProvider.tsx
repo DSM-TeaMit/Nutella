@@ -194,49 +194,52 @@ const MarkdownProvider: FC = ({ children }) => {
   );
 
   const addImages = useCallback(
-    async (id: string, files: File[]) => {
-      const messages: Omit<MessageType, "id">[] = [];
+    async (id: string, files: File[], projectUuid: string) => {
+      let idx = 0;
       const urls: string[] = [];
 
-      files.forEach(async (value) => {
-        if (["image/jpeg", "image/png"].includes(value.type)) {
-          try {
-            const { data: url } = await postImage(value);
-
-            urls.push(url);
-          } catch (error) {
-            messages.push({
-              type: "Denial",
-              title: "이미지 업로드에 실패했습니다.",
-              content: `${error}`,
-            });
-          }
-        } else {
-          //이미지가 아님
-          messages.push({
-            type: "Denial",
-            title: "이미지 업로드에 실패했습니다.",
-            content: `${value.name}은(는) 이미지 파일이 아닙니다. 이미지 파일만 업로드 가능합니다.`,
-          });
+      const postingImage = async () => {
+        if (idx === files.length) {
+          return;
         }
-      });
+        try {
+          const { data: url } = await postImage(files[idx], projectUuid);
 
-      const copyRows = [...rows];
+          urls.push(url);
+        } catch (error) {
+          console.log(error);
+        }
+
+        idx++;
+        await postingImage();
+      };
+
+      await postingImage();
+
       const index = findIndexById(id);
+      if (index === -1) {
+        throw new Error("존재하지 않는 ID입니다.");
+      }
 
       const additionalRows: Row[] = urls.map<Row>((value) => ({
         id: uniqueId(),
-        text: value,
         type: "image",
+        text: value,
         tab: 0,
       }));
+
+      const copyRows = [...rows];
 
       copyRows.splice(index + 1, 0, ...additionalRows);
 
       setRows(copyRows);
     },
-    [showMessage, findIndexById]
+    [showMessage, findIndexById, rows]
   );
+
+  useEffect(() => {
+    console.log(rows);
+  }, [rows]);
 
   const value = useMemo<MarkdownContextType>(
     () => ({
