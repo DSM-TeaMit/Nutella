@@ -50,15 +50,21 @@ const MarkdownProvider: FC = ({ children }) => {
 
   const removeRowById = useCallback(
     (id: string) => {
-      let index = findIndexById(id) - 1;
-      if (rows.length <= 1) {
+      let currnetIndex = findIndexById(id);
+      let index = currnetIndex - 1;
+      const { type: currentType } = rows[currnetIndex];
+      const { type } = rows[index];
+      if (
+        currentType !== "image" &&
+        (rows.length <= 1 ||
+          rows.filter((value) => value.type !== "image").length <= 1)
+      ) {
         return;
       }
-      const type = rows[index].type;
 
       setRows(rows.filter((value) => value.id !== id));
 
-      if (type === "image") {
+      if (currentType === "image" || type === "image") {
         return;
       }
 
