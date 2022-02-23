@@ -18,7 +18,7 @@ const Image: FC<PropsType> = ({ item }) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
   const { id } = item;
-  const { removeRowById } = useContext(MarkdownContext);
+  const { removeRowById, addRowAfterId } = useContext(MarkdownContext);
 
   const onClick = (e: MouseEvent) => {
     setIsSelected(
@@ -33,10 +33,19 @@ const Image: FC<PropsType> = ({ item }) => {
       }
 
       if (["Backspace", "Delete"].includes(e.key)) {
+        e.stopPropagation();
+        e.preventDefault();
         removeRowById(id);
       }
+
+      if (e.key === "Enter") {
+        e.stopPropagation();
+        e.preventDefault();
+        addRowAfterId(id);
+        setIsSelected(false);
+      }
     },
-    [removeRowById, isSelected, id]
+    [removeRowById, isSelected, id, addRowAfterId]
   );
 
   useEffect(() => {
