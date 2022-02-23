@@ -11,4 +11,10 @@ export const Container = styled(markdownStyle)`
       display: inline-block;
     }
   }
+
+  .first:empty::after {
+    content: attr(placeholder);
+    color: ${({ theme }) => theme.colors.grayscale.gray1};
+    transition: color 0.2s ease;
+  }
 `;
