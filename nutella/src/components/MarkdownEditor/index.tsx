@@ -11,7 +11,7 @@ interface PropsType {
   rowState: State<RowType[]>;
 }
 
-export const initRows: RowType[] = [
+export const getInitRows = (): RowType[] => [
   {
     id: uniqueId(),
     type: "p",
