@@ -6,7 +6,7 @@ import BorderButton from "../Buttons/BorderButton";
 import CheckBox from "../CheckBox";
 import Comment from "../Comment";
 import CommentInput from "../CommentInput";
-import MarkdownEditor, { initRows } from "../MarkdownEditor";
+import MarkdownEditor, { getInitRows } from "../MarkdownEditor";
 import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
 
@@ -16,8 +16,8 @@ const dateToString = (date: Date): string =>
 const Personal = () => {
   const { openModal } = useModalContext();
   const [dates, setDates] = useState<DateState | null>(null);
-  const [goalRows, setGoalRows] = useState<Row[]>(initRows);
-  const [contentRows, setContentRows] = useState<Row[]>(initRows);
+  const [goalRows, setGoalRows] = useState<Row[]>([...getInitRows()]);
+  const [contentRows, setContentRows] = useState<Row[]>([...getInitRows()]);
 
   return (
     <S.Container>

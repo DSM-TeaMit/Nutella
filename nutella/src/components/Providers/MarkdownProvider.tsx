@@ -9,6 +9,7 @@ import Tag from "../../interface/Tag";
 import useMessageContext from "../../hooks/useMessageContext";
 import { postImage } from "../../utils/api/Image";
 import State from "../../interface/State";
+import { getInitRows } from "../MarkdownEditor";
 
 interface PropsType {
   rowState: State<Row[]>;
@@ -59,7 +60,13 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
         return;
       }
 
-      setRows(rows.filter((value) => value.id !== id));
+      const idRemoved = rows.filter((value) => value.id !== id);
+
+      if (idRemoved.length <= 0) {
+        setRows([...getInitRows()]);
+      } else {
+        setRows(idRemoved);
+      }
 
       let index = currentIndex - 1;
       const { type } = rows[index];
