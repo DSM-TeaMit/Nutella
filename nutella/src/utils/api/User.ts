@@ -3,7 +3,7 @@ import ProjectTypes from "../../interface/ProjectTypes";
 import { ReportStatus, ReportTypes } from "../../interface/Report";
 import request from "../axios";
 
-interface ReportType {
+export interface ReportType {
   uuid: string;
   projectName: string;
   type: ReportTypes;
@@ -11,13 +11,13 @@ interface ReportType {
   thumbnailUrl: string;
 }
 
-interface ProjectMember {
+export interface ProjectMember {
   uuid: string;
   name: string;
   thumbnailUrl: string;
 }
 
-interface ProjectType {
+export interface ProjectType {
   uuid: string;
   projectName: string;
   projectDescription: string;
@@ -26,7 +26,7 @@ interface ProjectType {
   members: ProjectMember[];
 }
 
-interface ProfileType {
+export interface MyProfileType {
   studentNo: number;
   name: string;
   email: string;
@@ -37,17 +37,26 @@ interface ProfileType {
   projects: ProjectType[];
 }
 
-export const getProfile = async (userUuid: string) => {
+export interface UserProfileType {
+  studentNo: number;
+  name: string;
+  email: string;
+  githubId?: string;
+  projectCount: number;
+  projects: ProjectType[];
+}
+
+export const getProfile = async <T>(userUuid: string) => {
   const uri = Uri.userProfile.get({ userUuid });
 
   try {
-    return await request.get<ProfileType>(uri);
+    return await request.get<T>(uri);
   } catch (error) {
     console.log(error);
   }
 };
 
-interface UserProjects {
+export interface UserProjects {
   count: number;
   projects: ProjectType[];
 }
@@ -62,19 +71,19 @@ export const getUserProjects = async (userUuid: string) => {
   }
 };
 
-interface ReportList {
+export interface ReportList {
   uuid: string;
   projectName: string;
   type: ReportTypes;
   thumbnailUrl: string;
 }
 
-interface Reports {
+export interface Reports {
   count: number;
   projects: ReportList[];
 }
 
-interface UserReports {
+export interface UserReports {
   accepted: Reports;
   rejected: Reports;
   pending: Reports;
