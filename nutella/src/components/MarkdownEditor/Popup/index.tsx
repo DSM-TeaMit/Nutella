@@ -1,5 +1,6 @@
-import { FC, useContext, useMemo } from "react";
+import { FC, useCallback, useContext, useMemo, useRef } from "react";
 import { MarkdownContext } from "../../../context/MarkdownCotext";
+import { postImage } from "../../../utils/api/Image";
 import * as S from "./styles";
 
 interface PopupItem {
@@ -13,7 +14,8 @@ interface PropsType {
 }
 
 const Popup: FC<PropsType> = ({ id }) => {
-  const { changeRowType } = useContext(MarkdownContext);
+  const { changeRowType, setRows, rows } = useContext(MarkdownContext);
+  const fileSelecterRef = useRef<HTMLInputElement>(null);
 
   const popupItems = useMemo<PopupItem[]>(
     () => [
@@ -84,10 +86,55 @@ const Popup: FC<PropsType> = ({ id }) => {
     [popupItems]
   );
 
+  const onImageSelectClick = useCallback(() => {
+    fileSelecterRef.current?.click();
+  }, []);
+
+  const onImageChange = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      if (!e.target.files) {
+        return;
+      }
+
+      const file = e.target.files[0];
+
+      const { data: url } = await postImage(
+        file,
+        "0ecfaf8f-62f5-4a13-ba01-76966aa98e13"
+      );
+
+      const index = rows.findIndex((value) => value.id === id);
+      const copyRows = [...rows];
+
+      copyRows[index].type = "image";
+      copyRows[index].text = url;
+
+      setRows(copyRows);
+    },
+    [id, setRows, rows]
+  );
+
   return (
     <S.PopUp className="popup">
       <S.PopupRowTitle>행 종류</S.PopupRowTitle>
-      <S.PopupRowOuter>{renderPopupRow}</S.PopupRowOuter>
+      <S.PopupRowOuter>
+        {renderPopupRow}
+        <S.PopupRowContainer onClick={onImageSelectClick}>
+          <S.PopupRowTitle>이미지</S.PopupRowTitle>
+          <S.PopupRowDescription>
+            <div>선택한 이미지 파일을 추가합니다</div>
+          </S.PopupRowDescription>
+        </S.PopupRowContainer>
+        <S.FileSelecter
+          ref={fileSelecterRef}
+          type="file"
+          accept="image/png, image/gif, image/jpeg"
+          onChange={onImageChange}
+        />
+      </S.PopupRowOuter>
     </S.PopUp>
   );
 };
