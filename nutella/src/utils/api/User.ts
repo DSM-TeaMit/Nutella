@@ -61,3 +61,31 @@ export const getUserProjects = async (userUuid: string) => {
     console.log(error);
   }
 };
+
+interface ReportList {
+  uuid: string;
+  projectName: string;
+  type: ReportTypes;
+  thumbnailUrl: string;
+}
+
+interface Reports {
+  count: number;
+  projects: ReportList[];
+}
+
+interface UserReports {
+  accepted: Reports;
+  rejected: Reports;
+  pending: Reports;
+}
+
+export const getUserReports = async (userUuid: string) => {
+  const uri = Uri.userReports.get({ userUuid });
+
+  try {
+    return await request.get<UserReports>(uri);
+  } catch (error) {
+    console.log(error);
+  }
+};
