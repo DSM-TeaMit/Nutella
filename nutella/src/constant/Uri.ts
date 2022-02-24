@@ -15,7 +15,7 @@ const Uri = {
   register: new URI(`auth/register-admin`),
   defaultInfomation: new URI(`user/register`),
   user: new URI(`user`),
-  userProfile: new URI(`user/profile`),
+  userProfile: new URI<UserUuid>(`user/profile/{${userUuid}}`),
   userProject: new URI<UserUuid>(`user/profile/{${userUuid}}/projects`),
   userReports: new URI<UserUuid>(`user/profile/{${userUuid}}/reports`),
   changeGithubId: new URI(`user/profile/githubId`),
