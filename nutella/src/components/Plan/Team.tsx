@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Row } from "../../context/MarkdownCotext";
 import useModalContext from "../../hooks/useModalContext";
 import BlueButton from "../Buttons/BlueButton";
 import BorderButton from "../Buttons/BorderButton";
@@ -7,7 +8,7 @@ import Comment from "../Comment";
 import CommentInput from "../CommentInput";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
-import MarkdownEditor from "../MarkdownEditor";
+import MarkdownEditor, { getInitRows } from "../MarkdownEditor";
 import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
 
@@ -17,6 +18,8 @@ const dateToString = (date: Date): string =>
 const Team = () => {
   const { openModal } = useModalContext();
   const [dates, setDates] = useState<DateState | null>(null);
+  const [goalRows, setGoalRows] = useState<Row[]>([...getInitRows()]);
+  const [contentRows, setContentRows] = useState<Row[]>([...getInitRows()]);
 
   return (
     <S.Container>
@@ -37,7 +40,8 @@ const Team = () => {
                   openModal(<DatePicker datesState={[dates, setDates]} />);
                 }}
               >
-                {dates && `${dateToString(dates.start)} ~ ${dateToString(dates.end)}`}
+                {dates &&
+                  `${dateToString(dates.start)} ~ ${dateToString(dates.end)}`}
               </S.Time>
             </S.RowContainer>
             <S.RowContainer>
@@ -71,13 +75,13 @@ const Team = () => {
             <S.RowContainer>
               <S.RowTitle>프로젝트 목표</S.RowTitle>
               <S.RowMutiLineContent>
-                <MarkdownEditor />
+                <MarkdownEditor rowState={[goalRows, setGoalRows]} />
               </S.RowMutiLineContent>
             </S.RowContainer>
             <S.RowContainer>
               <S.RowTitle>프로젝트 내용</S.RowTitle>
               <S.RowMutiLineContent>
-                <MarkdownEditor />
+                <MarkdownEditor rowState={[contentRows, setContentRows]} />
               </S.RowMutiLineContent>
             </S.RowContainer>
             <S.RowContainer>

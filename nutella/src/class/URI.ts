@@ -12,10 +12,10 @@ class URI<T extends string | number | symbol> {
 
     const keys = Object.keys(variables);
 
-    const copyPath = this.path;
+    let copyPath = this.path;
 
     keys.forEach((value) => {
-      copyPath.replace(`{${value}}`, variables[value as T]);
+      copyPath = copyPath.replace(`{${value}}`, variables[value as T]);
     });
 
     return copyPath;

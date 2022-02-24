@@ -1,17 +1,25 @@
-import { FC, useCallback, useMemo, useRef, useState, useEffect } from "react";
-import { MarkdownContext, MarkdownContextType, Row } from "../../context/MarkdownCotext";
+import { FC, useCallback, useMemo, useRef } from "react";
+import {
+  MarkdownContext,
+  MarkdownContextType,
+  Row,
+} from "../../context/MarkdownCotext";
 import uniqueId from "../../constant/UniqueId";
+import Tag from "../../interface/Tag";
+import useMessageContext from "../../hooks/useMessageContext";
+import { postImage } from "../../utils/api/Image";
+import State from "../../interface/State";
+import { getInitRows } from "../MarkdownEditor";
+
+interface PropsType {
+  rowState: State<Row[]>;
+}
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
-const MarkdownProvider: FC = ({ children }) => {
-  const [rows, setRows] = useState<Row[]>([
-    {
-      id: uniqueId(),
-      text: "",
-      type: "p",
-      tab: 0,
-    },
-  ]);
+
+const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
+  const { showMessage } = useMessageContext();
+  const [rows, setRows] = rowState;
   const refs = useRef<HTMLDivElement[]>([]);
 
   const findIndexById = useCallback(
@@ -42,14 +50,32 @@ const MarkdownProvider: FC = ({ children }) => {
 
   const removeRowById = useCallback(
     (id: string) => {
-      let index = findIndexById(id) - 1;
-      if (rows.length <= 1) {
+      let currentIndex = findIndexById(id);
+      const { type: currentType } = rows[currentIndex];
+      if (
+        currentType !== "image" &&
+        (rows.length <= 1 ||
+          rows.filter((value) => value.type !== "image").length <= 1)
+      ) {
         return;
       }
-      setRows(rows.filter((value) => value.id !== id));
 
+      const idRemoved = rows.filter((value) => value.id !== id);
+
+      if (idRemoved.length <= 0) {
+        setRows([...getInitRows()]);
+      } else {
+        setRows(idRemoved);
+      }
+
+      let index = currentIndex - 1;
+      const { type } = rows[index];
       if (index < 0) {
         index = 0;
+      }
+
+      if (currentType === "image" || type === "image") {
+        return;
       }
 
       if (refs.current) {
@@ -78,7 +104,7 @@ const MarkdownProvider: FC = ({ children }) => {
   );
 
   const changeRowType = useCallback(
-    (id: string, type: string) => {
+    (id: string, type: Tag) => {
       const index = findIndexById(id);
       const copyRows = [...rows];
 
@@ -109,6 +135,10 @@ const MarkdownProvider: FC = ({ children }) => {
         index = 0;
       } else if (index >= rows.length) {
         index = rows.length - 1;
+      }
+
+      if (rows[index].type === "image") {
+        return;
       }
 
       const selection = window.getSelection();
@@ -184,9 +214,54 @@ const MarkdownProvider: FC = ({ children }) => {
     [findIndexById, rows]
   );
 
+  const addImages = useCallback(
+    async (id: string, files: File[], projectUuid: string) => {
+      let idx = 0;
+      const urls: string[] = [];
+
+      const postingImage = async () => {
+        if (idx === files.length) {
+          return;
+        }
+        try {
+          const { data: url } = await postImage(files[idx], projectUuid);
+
+          urls.push(url);
+        } catch (error) {
+          console.log(error);
+        }
+
+        idx++;
+        await postingImage();
+      };
+
+      await postingImage();
+
+      const index = findIndexById(id);
+      if (index === -1) {
+        throw new Error("존재하지 않는 ID입니다.");
+      }
+
+      const additionalRows: Row[] = urls.map<Row>((value) => ({
+        id: uniqueId(),
+        type: "image",
+        text: value,
+        tab: 0,
+      }));
+
+      const copyRows = [...rows];
+
+      copyRows.splice(index + 1, 0, ...additionalRows);
+
+      setRows(copyRows);
+    },
+    [showMessage, findIndexById, rows]
+  );
+
   const value = useMemo<MarkdownContextType>(
     () => ({
       rows,
+      setRows,
       refs,
       addRowAfterId,
       removeRowById,
@@ -194,11 +269,26 @@ const MarkdownProvider: FC = ({ children }) => {
       changeText,
       changeVerticalFocus,
       changeTab,
+      addImages,
     }),
-    [addRowAfterId, changeRowType, changeTab, changeText, changeVerticalFocus, removeRowById, rows]
+    [
+      addRowAfterId,
+      setRows,
+      changeRowType,
+      changeTab,
+      changeText,
+      changeVerticalFocus,
+      removeRowById,
+      rows,
+      addImages,
+    ]
   );
 
-  return <MarkdownContext.Provider value={value}>{children}</MarkdownContext.Provider>;
+  return (
+    <MarkdownContext.Provider value={value}>
+      {children}
+    </MarkdownContext.Provider>
+  );
 };
 
 export default MarkdownProvider;

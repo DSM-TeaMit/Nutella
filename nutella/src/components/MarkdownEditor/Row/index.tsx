@@ -1,11 +1,24 @@
-import React, { FC, useCallback, useContext, useEffect, useMemo } from "react";
-import { MarkdownContext, Row as RowType } from "../../context/MarkdownCotext";
-
+import React, {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import {
+  MarkdownContext,
+  Row as RowType,
+} from "../../../context/MarkdownCotext";
+import * as S from "./styles";
+import HandleSVG from "../../../assets/icons/handle.svg";
+import Tag from "../../../interface/Tag";
+import Popup from "../Popup";
 interface PropsType {
   data: RowType;
 }
 
-const tagMap = new Map<string, string>()
+const tagMap = new Map<string, Tag>()
   .set("#", "h1")
   .set("##", "h2")
   .set("###", "h3")
@@ -16,26 +29,26 @@ const tagMap = new Map<string, string>()
   .set("-", "ul")
   .set("\\d+.", "ol");
 
-const placeholderMap = new Map<string, string>()
+const placeholderMap = new Map<Tag, string>()
   .set("p", "비어있는 본문")
-  .set("h1", "헤딩 1")
-  .set("h2", "헤딩 2")
-  .set("h3", "헤딩 3")
-  .set("h4", "헤딩 4")
-  .set("h5", "헤딩 5")
-  .set("h6", "헤딩 6")
+  .set("h1", "제목 1")
+  .set("h2", "제목 2")
+  .set("h3", "제목 3")
+  .set("h4", "제목 4")
+  .set("h5", "제목 5")
+  .set("h6", "제목 6")
   .set("blockquote", "비어있는 인용")
-  .set("ul", "비어있는 리스트")
-  .set("ol", "비어있는 리스트");
+  .set("ul", "비어있는 목록")
+  .set("ol", "비어있는 목록");
 
 const ulTypeMap = new Map<number, string>()
   .set(0, "disc")
   .set(1, "circle")
   .set(2, "square");
 
-const isList = (type: string) => ["ul", "ol"].includes(type);
+const isList = (type: Tag) => ["ul", "ol"].includes(type);
 
-const getType = (type: string) => {
+const getType = (type: Tag) => {
   if (isList(type)) {
     return "p";
   }
@@ -55,18 +68,13 @@ const Row: FC<PropsType> = ({ data }) => {
     changeVerticalFocus,
     changeRowType,
     changeTab,
+    addImages,
   } = useContext(MarkdownContext);
   const currentIndex = rows.findIndex((value) => value.id === id);
-
-  useEffect(() => {
-    if (refs.current) {
-      refs.current[currentIndex].focus();
-      refs.current[currentIndex].innerText = text;
-    }
-  }, [refs, type]);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const onKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
+    (e: React.KeyboardEvent<HTMLElement>) => {
       if (e.key === "Enter") {
         e.stopPropagation();
         e.preventDefault();
@@ -90,6 +98,7 @@ const Row: FC<PropsType> = ({ data }) => {
         .set("ArrowUp", -1)
         .set("ArrowDown", 1)
         .get(e.key);
+
       if (step) {
         e.stopPropagation();
         e.preventDefault();
@@ -120,9 +129,9 @@ const Row: FC<PropsType> = ({ data }) => {
   );
 
   const onInput = useCallback(
-    (e: React.FormEvent<HTMLDivElement>) => {
+    (e: React.FormEvent<HTMLElement>) => {
       let text =
-        (e.target as HTMLDivElement).innerHTML
+        (e.target as HTMLElement).innerHTML
           .replace(/&nbsp;/g, " ")
           .replace(/&gt;/g, ">") || "";
 
@@ -152,23 +161,6 @@ const Row: FC<PropsType> = ({ data }) => {
     [currentIndex, refs]
   );
 
-  const renderRow = useMemo(
-    () =>
-      React.createElement(getType(type), {
-        ref: setRef,
-        onKeyDown,
-        contentEditable: true,
-        onInput,
-        placeholder: placeholderMap.get(type),
-        style: {
-          outline: "none",
-          marginLeft: !isList(type) && `calc(${tab} * 1.2rem)`,
-          cursor: "text",
-        },
-      }),
-    [onInput, onKeyDown, setRef, tab, type]
-  );
-
   //order list의 시작 숫자를 반환하는 함수
   const getStart = useCallback((): number => {
     let index = currentIndex - 1;
@@ -194,34 +186,96 @@ const Row: FC<PropsType> = ({ data }) => {
     return start;
   }, [currentIndex, rows]);
 
-  return isList(type) ? (
-    type === "ul" ? (
-      <li
-        style={{
-          paddingLeft: `calc(${tab} * 1.2rem)`,
-          listStyleType: ulTypeMap.get(tab % 3),
-        }}
-      >
-        {renderRow}
-      </li>
-    ) : (
-      <ol
-        style={{
-          paddingLeft: `calc(${tab} * 1.2rem)`,
-        }}
-        start={getStart()}
-      >
-        <li
-          style={{
-            listStyleType: "decimal",
-          }}
-        >
-          {renderRow}
-        </li>
-      </ol>
-    )
-  ) : (
-    renderRow
+  const onDragEnter = useCallback(
+    (e: React.DragEvent<HTMLDivElement>): void => {
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    []
+  );
+
+  const onDragLeave = useCallback(
+    (e: React.DragEvent<HTMLDivElement>): void => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      setIsDragging(false);
+    },
+    []
+  );
+
+  const onDragOver = useCallback((e: React.DragEvent<HTMLDivElement>): void => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (e.dataTransfer!.files) {
+      setIsDragging(true);
+    }
+  }, []);
+
+  const onDrop = useCallback(
+    (e: React.DragEvent<HTMLDivElement>): void => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
+
+      const files = Array.from(e.dataTransfer.files);
+      addImages(id, files, "0ecfaf8f-62f5-4a13-ba01-76966aa98e13");
+    },
+    [addImages]
+  );
+
+  const renderRow = useMemo(
+    () =>
+      React.createElement(getType(type), {
+        ref: setRef,
+        onKeyDown,
+        contentEditable: true,
+        onInput,
+        placeholder: placeholderMap.get(type),
+        style: {
+          outline: "none",
+          cursor: "text",
+        },
+        className: rows.length <= 1 ? "first" : undefined,
+      }),
+    [onInput, onKeyDown, setRef, tab, type]
+  );
+
+  const renderListRow = useMemo(
+    () =>
+      type === "ul" ? (
+        <li style={{ listStyleType: ulTypeMap.get(tab % 3) }}>{renderRow}</li>
+      ) : (
+        <ol start={getStart()}>
+          <li style={{ listStyleType: "decimal" }}>{renderRow}</li>
+        </ol>
+      ),
+    [type, tab, renderRow, getStart]
+  );
+
+  useEffect(() => {
+    if (refs.current) {
+      refs.current[currentIndex].focus();
+      refs.current[currentIndex].innerText = text;
+    }
+  }, [refs, type]);
+
+  return (
+    <S.RowContainer
+      margin={`calc(${tab} * 1.2rem)`}
+      onDragEnter={onDragEnter}
+      onDragLeave={onDragLeave}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+    >
+      <S.Handle className="handle">
+        <S.HandleIcon src={HandleSVG} />
+        <Popup id={id} />
+      </S.Handle>
+      {isList(type) ? renderListRow : renderRow}
+      <S.DropHint active={isDragging} />
+    </S.RowContainer>
   );
 };
 

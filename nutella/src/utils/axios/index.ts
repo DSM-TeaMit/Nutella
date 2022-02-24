@@ -1,10 +1,10 @@
 import axios, { AxiosError } from "axios";
+import baseURL from "../../constant/BaseUrl";
 import { refresh } from "./refresh";
 
-export const baseURL = "https://spectre-psnldev.dev:8202/";
 
 const request = axios.create({
-  baseURL,
+  baseURL: baseURL,
   timeout: 100000,
 });
 

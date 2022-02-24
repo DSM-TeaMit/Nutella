@@ -34,7 +34,7 @@ const Uri = {
   downloadImage: new URI<ProjectUuid | ImageUuid>(
     `file/{${projectUuid}}/image/{${imageUuid}}`
   ),
-  file: `file/{uuid}/archive`,
-};
+  file: new URI<ProjectUuid>(`file/{${projectUuid}}/archive`),
+} as const;
 
 export default Uri;
