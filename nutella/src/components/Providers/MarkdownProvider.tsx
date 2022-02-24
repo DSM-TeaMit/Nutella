@@ -125,14 +125,14 @@ const MarkdownProvider: FC = ({ children }) => {
     (id: string, step: number) => {
       let index = findIndexById(id) + step;
 
-      if (rows[index].type === "image") {
-        return;
-      }
-
       if (index < 0) {
         index = 0;
       } else if (index >= rows.length) {
         index = rows.length - 1;
+      }
+
+      if (rows[index].type === "image") {
+        return;
       }
 
       const selection = window.getSelection();
