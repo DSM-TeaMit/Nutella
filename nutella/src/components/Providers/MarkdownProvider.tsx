@@ -8,18 +8,16 @@ import uniqueId from "../../constant/UniqueId";
 import Tag from "../../interface/Tag";
 import useMessageContext from "../../hooks/useMessageContext";
 import { postImage } from "../../utils/api/Image";
+import State from "../../interface/State";
+
+interface PropsType {
+  rowState: State<Row[]>;
+}
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
-const MarkdownProvider: FC = ({ children }) => {
+const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
   const { showMessage } = useMessageContext();
-  const [rows, setRows] = useState<Row[]>([
-    {
-      id: uniqueId(),
-      text: "",
-      type: "p",
-      tab: 0,
-    },
-  ]);
+  const [rows, setRows] = rowState;
   const refs = useRef<HTMLDivElement[]>([]);
 
   const findIndexById = useCallback(

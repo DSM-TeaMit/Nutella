@@ -1,13 +1,18 @@
-import { useContext, useState } from "react";
-import { MarkdownContext } from "../../context/MarkdownCotext";
+import { FC, useContext, useState } from "react";
+import { MarkdownContext, Row as RowType } from "../../context/MarkdownCotext";
+import State from "../../interface/State";
 import MarkdownProvider from "../Providers/MarkdownProvider";
 import Image from "./Image";
 import Row from "./Row";
 import * as S from "./styles";
 
-const MarkdownEditor = () => {
+interface PropsType {
+  rowState: State<RowType[]>;
+}
+
+const MarkdownEditor: FC<PropsType> = ({ rowState }) => {
   return (
-    <MarkdownProvider>
+    <MarkdownProvider rowState={rowState}>
       <Inner />
     </MarkdownProvider>
   );
