@@ -1,4 +1,5 @@
 import { FC, useContext, useState } from "react";
+import uniqueId from "../../constant/UniqueId";
 import { MarkdownContext, Row as RowType } from "../../context/MarkdownCotext";
 import State from "../../interface/State";
 import MarkdownProvider from "../Providers/MarkdownProvider";
@@ -9,6 +10,15 @@ import * as S from "./styles";
 interface PropsType {
   rowState: State<RowType[]>;
 }
+
+export const initRows: RowType[] = [
+  {
+    id: uniqueId(),
+    type: "p",
+    text: "",
+    tab: 0,
+  },
+];
 
 const MarkdownEditor: FC<PropsType> = ({ rowState }) => {
   return (

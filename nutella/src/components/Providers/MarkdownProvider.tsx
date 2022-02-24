@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useRef, useState, useEffect } from "react";
+import { FC, useCallback, useMemo, useRef } from "react";
 import {
   MarkdownContext,
   MarkdownContextType,
@@ -15,6 +15,7 @@ interface PropsType {
 }
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
+
 const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
   const { showMessage } = useMessageContext();
   const [rows, setRows] = rowState;
