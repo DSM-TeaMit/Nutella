@@ -237,7 +237,7 @@ const Row: FC<PropsType> = ({ data }) => {
           outline: "none",
           cursor: "text",
         },
-        className: rows.length <= 1 && "first",
+        className: rows.length <= 1 ? "first" : undefined,
       }),
     [onInput, onKeyDown, setRef, tab, type]
   );
