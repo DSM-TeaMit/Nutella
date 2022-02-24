@@ -46,3 +46,18 @@ export const getProfile = async (userUuid: string) => {
     console.log(error);
   }
 };
+
+interface UserProjects {
+  count: number;
+  projects: ProjectType[];
+}
+
+export const getUserProjects = async (userUuid: string) => {
+  const uri = Uri.userProject.get({ userUuid });
+
+  try {
+    return await request.get<UserProjects>(uri);
+  } catch (error) {
+    console.log(error);
+  }
+};
