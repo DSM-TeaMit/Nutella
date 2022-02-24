@@ -42,6 +42,10 @@ export const PopupRowContainer = styled.button`
   }
 `;
 
+export const FileSelecter = styled.input`
+  display: none;
+`;
+
 export const PopupTitle = styled.div`
   font: ${({ theme }) => theme.fonts.subtitle1};
   color: ${({ theme }) => theme.colors.grayscale.gray1};
