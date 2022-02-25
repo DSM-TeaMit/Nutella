@@ -28,7 +28,6 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
     pendingCount,
     pendingProjects: pendingReports,
     projects,
-    email,
   } = data!.data;
 
   return (
@@ -68,8 +67,8 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
             <I.BlueH3>{pendingCount}</I.BlueH3>
           </I.ContentTitle>
           <I.Grid>
-            {pendingReports.map((_, index) => (
-              <ReportCard key={index} />
+            {pendingReports.map((value) => (
+              <ReportCard key={value.uuid} data={value} />
             ))}
           </I.Grid>
         </div>

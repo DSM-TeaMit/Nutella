@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import { ReportStatus } from "../../interface/Report";
 
 export const Container = styled(Link)`
   width: 100%;
@@ -49,9 +50,14 @@ export const Title = styled.span`
   white-space: nowrap;
 `;
 
-export const Description = styled.span`
+export const Description = styled.span<{ status?: ReportStatus }>`
   font: ${({ theme }) => theme.fonts.body3};
-  color: ${({ theme }) => theme.colors.grayscale.gray2};
+  color: ${({ theme, status }) =>
+    !status
+      ? theme.colors.grayscale.gray2
+      : status === "PENDING"
+      ? theme.colors.grayscale.gray2
+      : theme.colors.red.default};
   white-space: nowrap;
   flex-shrink: 0;
 `;
