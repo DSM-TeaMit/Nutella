@@ -7,7 +7,6 @@ import {
   useState,
 } from "react";
 import { MarkdownContext, Row } from "../../../context/MarkdownCotext";
-import Img from "../../Img";
 import * as S from "./styles";
 
 interface PropsType {
