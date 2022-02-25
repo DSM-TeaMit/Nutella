@@ -87,3 +87,27 @@ export const getPlanReport = async (projectUuid: string) => {
     return Promise.reject(error);
   }
 };
+
+export const modifyPlanReport = async (
+  projectUuid: string,
+  data: ParsedPlanType
+) => {
+  const uri = Uri.plan.get({ projectUuid });
+
+  const requestData: PlanType = {
+    startDate: dateToString(data.startDate),
+    endDate: dateToString(data.endDate),
+    goal: JSON.stringify(data.goal),
+    content: JSON.stringify(data.content),
+    includes: data.includes,
+  };
+
+  try {
+    return await request.patch<any, AxiosResponse<any, any>, PlanType>(
+      uri,
+      requestData
+    );
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
