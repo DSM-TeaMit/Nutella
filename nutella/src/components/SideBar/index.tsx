@@ -2,19 +2,25 @@ import Navigation from "./Navigation";
 import * as S from "./styles";
 import NavigationType from "../../interface/Navigation";
 import { FC } from "react";
+import { UseQueryResult } from "react-query";
+import { MyProfileType } from "../../utils/api/User";
+import { AxiosResponse } from "axios";
 
 interface PropsType {
   navs: NavigationType[];
+  data: UseQueryResult<AxiosResponse<MyProfileType, any>, unknown>;
 }
 
-const SideBar: FC<PropsType> = ({ navs }) => {
+const SideBar: FC<PropsType> = ({ navs, data: queryData }) => {
+  const { data } = queryData;
+
   return (
     <S.Container>
       <S.InfoContainer>
         <S.ProfileImage alt="" src="" />
         <S.TextContainer>
-          <S.Name>2105 김진근</S.Name>
-          <S.Email>201403kjg@dsm.hs.kr</S.Email>
+          <S.Name>{data?.data.name}</S.Name>
+          <S.Email>{data?.data.email}</S.Email>
         </S.TextContainer>
       </S.InfoContainer>
       <S.Line />
