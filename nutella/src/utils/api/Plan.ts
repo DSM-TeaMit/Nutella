@@ -21,7 +21,7 @@ interface Uuid {
   uuid: string;
 }
 
-interface ParsedPlanType {
+export interface ParsedPlanType {
   startDate: Date;
   endDate: Date;
   goal: Row[];
