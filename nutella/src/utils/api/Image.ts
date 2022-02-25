@@ -1,5 +1,6 @@
 import Uri from "../../constant/Uri";
 import request from "../axios";
+import { Buffer } from "buffer";
 
 export const postImage = async (file: File, projectUuid: string) => {
   const formData = new FormData();
