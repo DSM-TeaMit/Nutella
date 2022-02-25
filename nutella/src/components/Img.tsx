@@ -1,8 +1,4 @@
-import styled from "@emotion/styled";
-import { FC, useCallback, useMemo } from "react";
-import { useQuery } from "react-query";
-import request from "../utils/axios";
-import { Buffer } from "buffer";
+import { FC, useMemo } from "react";
 import { useImage } from "../queries/Image";
 
 type ImageProps = React.DetailedHTMLProps<
