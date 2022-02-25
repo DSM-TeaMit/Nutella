@@ -45,47 +45,39 @@ export const createPlanReport = async (projectUuid: string) => {
 
   const dateString = dateToString(date);
 
-  try {
-    return await request.post<Uuid, AxiosResponse<Uuid>, PlanType>(uri, {
-      startDate: dateString,
-      endDate: dateString,
-      includes: { report: true, code: true, outcome: true, others: false },
-      goal: JSON.stringify(getInitRows()),
-      content: JSON.stringify(getInitRows()),
-    });
-  } catch (error) {
-    return Promise.reject(error);
-  }
+  return await request.post<Uuid, AxiosResponse<Uuid>, PlanType>(uri, {
+    startDate: dateString,
+    endDate: dateString,
+    includes: { report: true, code: true, outcome: true, others: false },
+    goal: JSON.stringify(getInitRows()),
+    content: JSON.stringify(getInitRows()),
+  });
 };
 
 export const getPlanReport = async (projectUuid: string) => {
   const uri = Uri.plan.get({ projectUuid });
 
-  try {
-    const response = await request.get<PlanType>(uri);
-    const { data } = response;
+  const response = await request.get<PlanType>(uri);
+  const { data } = response;
 
-    const result: ParsedPlanType = {
-      startDate: new Date(data.startDate),
-      endDate: new Date(data.endDate),
-      goal: JSON.parse(data.goal) as Row[],
-      content: JSON.parse(data.content) as Row[],
-      includes: data.includes,
-    };
+  const result: ParsedPlanType = {
+    startDate: new Date(data.startDate),
+    endDate: new Date(data.endDate),
+    goal: JSON.parse(data.goal) as Row[],
+    content: JSON.parse(data.content) as Row[],
+    includes: data.includes,
+  };
 
-    const responseWithoutData: Omit<AxiosResponse<PlanType, any>, "data"> = {
-      ...response,
-    };
+  const responseWithoutData: Omit<AxiosResponse<PlanType, any>, "data"> = {
+    ...response,
+  };
 
-    const resultResponse: AxiosResponse<ParsedPlanType, any> = {
-      ...responseWithoutData,
-      data: result,
-    };
+  const resultResponse: AxiosResponse<ParsedPlanType, any> = {
+    ...responseWithoutData,
+    data: result,
+  };
 
-    return resultResponse;
-  } catch (error) {
-    return Promise.reject(error);
-  }
+  return resultResponse;
 };
 
 export const modifyPlanReport = async (
@@ -102,22 +94,14 @@ export const modifyPlanReport = async (
     includes: data.includes,
   };
 
-  try {
-    return await request.patch<any, AxiosResponse<any, any>, PlanType>(
-      uri,
-      requestData
-    );
-  } catch (error) {
-    return Promise.reject(error);
-  }
+  return await request.patch<any, AxiosResponse<any, any>, PlanType>(
+    uri,
+    requestData
+  );
 };
 
 export const submitPlanReport = async (projectUuid: string) => {
   const uri = Uri.submitPlan.get({ projectUuid });
 
-  try {
-    return await request.patch(uri);
-  } catch (error) {
-    return Promise.reject(error);
-  }
+  return await request.patch(uri);
 };
