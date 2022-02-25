@@ -16,3 +16,16 @@ export const postImage = async (file: File, projectUuid: string) => {
     return Promise.reject(error);
   }
 };
+
+export const getImage = async (src: string) => {
+  const response = await request.get(src || "", {
+    responseType: "arraybuffer",
+  });
+
+  const data = `data:${response.headers["content-type"]};base64,${Buffer.from(
+    response.data,
+    "binary"
+  ).toString("base64")}`;
+
+  return data;
+};
