@@ -111,3 +111,13 @@ export const modifyPlanReport = async (
     return Promise.reject(error);
   }
 };
+
+export const submitPlanReport = async (projectUuid: string) => {
+  const uri = Uri.submitPlan.get({ projectUuid });
+
+  try {
+    return await request.patch(uri);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
