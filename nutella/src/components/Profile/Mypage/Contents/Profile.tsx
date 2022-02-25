@@ -4,11 +4,17 @@ import ReportCard from "../../../ReportCard";
 import ProjectCard from "../../../ProjectCard";
 import { useMyProfile } from "../../../../queries/User";
 import GithubReadme from "../../../GithubReadme";
+import { UseQueryResult } from "react-query";
+import { AxiosResponse } from "axios";
+import { MyProfileType } from "../../../../utils/api/User";
+import { FC } from "react";
 
-const Profile = () => {
-  const { data, isLoading, isError } = useMyProfile(
-    "e973c27b-3e0e-4863-86be-b2e0dfd24908"
-  );
+interface PropsType {
+  data: UseQueryResult<AxiosResponse<MyProfileType, any>, unknown>;
+}
+
+const Profile: FC<PropsType> = ({ data: queryData }) => {
+  const { data, isLoading, isError } = queryData;
 
   if (isLoading || isError) {
     return <></>;
