@@ -1,6 +1,6 @@
 import Uri from "../../constant/Uri";
 import request from "../axios";
-import { Buffer } from "buffer";
+import { Buffer as BufferLib } from "buffer";
 
 export const postImage = async (file: File, projectUuid: string) => {
   const formData = new FormData();
@@ -19,10 +19,9 @@ export const getImage = async (src: string) => {
     responseType: "arraybuffer",
   });
 
-  const data = `data:${response.headers["content-type"]};base64,${Buffer.from(
-    response.data,
-    "binary"
-  ).toString("base64")}`;
+  const data = `data:${
+    response.headers["content-type"]
+  };base64,${BufferLib.from(response.data, "binary").toString("base64")}`;
 
   return data;
 };
