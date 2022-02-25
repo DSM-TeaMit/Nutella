@@ -4,6 +4,7 @@ import {
   getPlanReport,
   modifyPlanReport,
   ParsedPlanType,
+  submitPlanReport,
 } from "../utils/api/Plan";
 
 export const useCreatePlanMutation = (projectUuid: string) =>
@@ -14,3 +15,6 @@ export const usePlanMutation = (projectUuid: string) =>
 
 export const usePlan = (projectUuid: string) =>
   useQuery(["plan_detail", projectUuid], () => getPlanReport(projectUuid));
+
+export const useSubmitPlanMutation = (projectUuid: string) =>
+  useMutation(() => submitPlanReport(projectUuid));
