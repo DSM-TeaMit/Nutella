@@ -64,3 +64,9 @@ export const modifyResultReport = async (
     requestData
   );
 };
+
+export const submitResultReport = async (projectUuid: string) => {
+  const uri = Uri.submitResult.get({ projectUuid });
+
+  return await request.patch(uri);
+};
