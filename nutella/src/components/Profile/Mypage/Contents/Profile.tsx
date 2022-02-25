@@ -1,10 +1,30 @@
 import * as I from "../../styles";
 import { ArrowBlackIcons, GithubBlackIcons } from "../../../../assets/icons";
-import MarkdownRender from "../../../MarkdownRender";
 import ReportCard from "../../../ReportCard";
 import ProjectCard from "../../../ProjectCard";
+import { useMyProfile } from "../../../../queries/User";
+import GithubReadme from "../../../GithubReadme";
 
 const Profile = () => {
+  const { data, isLoading, isError } = useMyProfile(
+    "e973c27b-3e0e-4863-86be-b2e0dfd24908"
+  );
+
+  if (isLoading || isError) {
+    return <></>;
+  }
+
+  const {
+    name,
+    studentNo,
+    projectCount,
+    githubId,
+    pendingCount,
+    pendingProjects: pendingReports,
+    projects,
+    email,
+  } = data!.data;
+
   return (
     <I.ContentInner>
       <I.FlexContainer>
@@ -12,36 +32,37 @@ const Profile = () => {
           <I.ProfileContainer>
             <I.ProfileImage alt="" src="" />
             <I.ProfileInfoContainer>
-              <I.Name>2105 김진근</I.Name>
+              <I.Name>
+                {studentNo} {name}
+              </I.Name>
               <I.ProfileDescriptionContainer>
-                <I.ProfileDescription>프로젝트 12</I.ProfileDescription>
-                <I.Github
-                  href="https://github.com/DSM-TeaMit/Nutella"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img alt="github" src={GithubBlackIcons} />
-                  KJG04
-                  <img alt="arrow" src={ArrowBlackIcons} />
-                </I.Github>
+                <I.ProfileDescription>
+                  프로젝트 {projectCount}
+                </I.ProfileDescription>
+                {githubId && (
+                  <I.Github
+                    href={`https://github.com/${githubId}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img alt="github" src={GithubBlackIcons} />
+                    {githubId}
+                    <img alt="arrow" src={ArrowBlackIcons} />
+                  </I.Github>
+                )}
               </I.ProfileDescriptionContainer>
             </I.ProfileInfoContainer>
           </I.ProfileContainer>
           <I.Line />
         </I.ProfileContainerOuter>
-        <div>
-          <I.Description>Github 에서 가져온 README</I.Description>
-          <I.ReadMe>
-            <MarkdownRender>{`### I want to be a Front-end developer 🙂\ni'm learning about:\n- JavaScript\n- TypeScript`}</MarkdownRender>
-          </I.ReadMe>
-        </div>
+        <GithubReadme githubId={githubId} />
         <div>
           <I.ContentTitle>
             <I.H3>승인 대기중인 보고서&nbsp;</I.H3>
-            <I.BlueH3>3</I.BlueH3>
+            <I.BlueH3>{pendingCount}</I.BlueH3>
           </I.ContentTitle>
           <I.Grid>
-            {new Array(3).fill(0).map((_, index) => (
+            {pendingReports.map((_, index) => (
               <ReportCard key={index} />
             ))}
           </I.Grid>
@@ -49,10 +70,10 @@ const Profile = () => {
         <div>
           <I.ContentTitle>
             <I.H3>프로젝트&nbsp;</I.H3>
-            <I.BlueH3>12</I.BlueH3>
+            <I.BlueH3>{projectCount}</I.BlueH3>
           </I.ContentTitle>
           <I.Grid>
-            {new Array(4).fill(0).map((_, index) => (
+            {projects.map((_, index) => (
               <ProjectCard key={index} />
             ))}
           </I.Grid>

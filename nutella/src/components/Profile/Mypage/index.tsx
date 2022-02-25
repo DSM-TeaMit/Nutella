@@ -37,6 +37,7 @@ const navs: NavigationType[] = [
 ];
 
 const MyPage = () => {
+
   return (
     <S.Container>
       <S.Inner>
