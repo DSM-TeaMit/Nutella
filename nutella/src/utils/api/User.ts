@@ -49,11 +49,7 @@ export interface UserProfileType {
 export const getProfile = async <T>(userUuid: string) => {
   const uri = Uri.userProfile.get({ userUuid });
 
-  try {
-    return await request.get<T>(uri);
-  } catch (error) {
-    console.log(error);
-  }
+  return await request.get<T>(uri);
 };
 
 export interface UserProjects {
@@ -64,11 +60,7 @@ export interface UserProjects {
 export const getUserProjects = async (userUuid: string) => {
   const uri = Uri.userProject.get({ userUuid });
 
-  try {
-    return await request.get<UserProjects>(uri);
-  } catch (error) {
-    console.log(error);
-  }
+  return await request.get<UserProjects>(uri);
 };
 
 export interface ReportList {
@@ -92,9 +84,5 @@ export interface UserReports {
 export const getUserReports = async (userUuid: string) => {
   const uri = Uri.userReports.get({ userUuid });
 
-  try {
-    return await request.get<UserReports>(uri);
-  } catch (error) {
-    console.log(error);
-  }
+  return await request.get<UserReports>(uri);
 };
