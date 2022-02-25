@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import {
   getProfile,
+  getUserGithub as getGithubReadme,
   getUserProjects,
   getUserReports,
   MyProfileType,
@@ -18,3 +19,6 @@ export const useUserProjects = (userUuid: string) =>
 
 export const useUserReports = (userUuid: string) =>
   useQuery(["reports", userUuid], () => getUserReports(userUuid));
+
+export const useGithubReadme = (githubId: string) =>
+  useQuery(["profile", "readme", githubId], () => getGithubReadme(githubId));

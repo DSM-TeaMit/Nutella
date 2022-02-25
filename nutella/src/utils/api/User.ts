@@ -1,3 +1,4 @@
+import axios from "axios";
 import Uri from "../../constant/Uri";
 import ProjectTypes from "../../interface/ProjectTypes";
 import { ReportStatus, ReportTypes } from "../../interface/Report";
@@ -85,4 +86,10 @@ export const getUserReports = async (userUuid: string) => {
   const uri = Uri.userReports.get({ userUuid });
 
   return await request.get<UserReports>(uri);
+};
+
+export const getUserGithub = async (githubId: string) => {
+  const uri = `https://raw.githubusercontent.com/${githubId}/${githubId}/main/README.md`;
+
+  return await axios.get<string>(uri);
 };
