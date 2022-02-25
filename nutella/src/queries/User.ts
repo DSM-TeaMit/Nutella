@@ -13,8 +13,8 @@ export const useMyProfile = (userUuid: string) =>
 export const useUserProfile = (userUuid: string) =>
   useQuery(["profile", userUuid], () => getProfile<UserProfileType>(userUuid));
 
-export const useUserProject = (userUuid: string) =>
+export const useUserProjects = (userUuid: string) =>
   useQuery(["projects", userUuid], () => getUserProjects(userUuid));
 
-export const useUserReport = (userUuid: string) =>
+export const useUserReports = (userUuid: string) =>
   useQuery(["reports", userUuid], () => getUserReports(userUuid));
