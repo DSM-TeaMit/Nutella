@@ -65,10 +65,9 @@ const ModalPortal = forwardRef<ModalPoralRef, PropsType>(
       if (currentModal === id) {
         return ReactDOM.createPortal(
           <S.Background>
-            <div ref={modalRef}>{children}</div>
+            <S.Container ref={modalRef}>{children}</S.Container>
           </S.Background>,
-          el,
-          id
+          el
         );
       }
     }
