@@ -60,19 +60,20 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
           <I.Line />
         </I.ProfileContainerOuter>
         <GithubReadme githubId={githubId} />
-        {pendingCount !== 0 && (
-          <div>
-            <I.ContentTitle>
-              <I.H3>승인 대기중인 보고서&nbsp;</I.H3>
-              <I.BlueH3>{pendingCount}</I.BlueH3>
-            </I.ContentTitle>
-            <I.Grid>
-              {pendingReports.map((value) => (
-                <ReportCard key={value.uuid} data={value} />
-              ))}
-            </I.Grid>
-          </div>
-        )}
+        <div>
+          <I.ContentTitle>
+            <I.H3>승인 대기중인 보고서&nbsp;</I.H3>
+            <I.BlueH3>{pendingCount}</I.BlueH3>
+          </I.ContentTitle>
+          <I.Grid>
+            {pendingReports.map((value) => (
+              <ReportCard key={value.uuid} data={value} />
+            ))}
+          </I.Grid>
+          {pendingCount === 0 && (
+            <I.Message>승인 대기중인 보고서가 존재하지 않습니다.</I.Message>
+          )}
+        </div>
         <div>
           <I.ContentTitle>
             <I.H3>프로젝트&nbsp;</I.H3>
@@ -83,6 +84,9 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
               <ProjectCard key={value.uuid} data={value} />
             ))}
           </I.Grid>
+          {projectCount === 0 && (
+            <I.Message>프로젝트가 존재하지 않습니다.</I.Message>
+          )}
         </div>
       </I.FlexContainer>
     </I.ContentInner>
