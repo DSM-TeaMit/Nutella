@@ -139,3 +139,10 @@ export const ProjectTitle = styled(ContentTitle)`
   justify-content: space-between;
   align-items: flex-end;
 `;
+
+export const Message = styled.div`
+  font: ${({ theme }) => theme.fonts.subtitle2};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
+  text-align: center;
+  margin: 16px 0px;
+`;

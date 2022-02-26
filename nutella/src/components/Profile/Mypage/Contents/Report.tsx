@@ -20,17 +20,26 @@ const Report = () => {
   return (
     <I.ContentInner>
       <I.FlexContainer>
-        <ReportAccordion
-          title="승인 대기중인"
-          data={pending}
-          status="ACCEPTED"
-        />
-        <ReportAccordion
-          title="승인 거절된"
-          data={rejected}
-          status="DECLINED"
-        />
-        <ReportAccordion title="승인 된" data={accepted} status="PENDING" />
+        {pending.count > 0 && (
+          <ReportAccordion
+            title="승인 대기중인"
+            data={pending}
+            status="ACCEPTED"
+          />
+        )}
+        {rejected.count > 0 && (
+          <ReportAccordion
+            title="승인 거절된"
+            data={rejected}
+            status="DECLINED"
+          />
+        )}
+        {accepted.count > 0 && (
+          <ReportAccordion title="승인 된" data={accepted} status="PENDING" />
+        )}
+        {accepted.count + rejected.count + pending.count === 0 && (
+          <I.Message>보고서가 존재하지 않습니다.</I.Message>
+        )}
       </I.FlexContainer>
     </I.ContentInner>
   );
