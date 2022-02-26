@@ -23,7 +23,9 @@ export const useUserReports = (userUuid: string) =>
   useQuery(["reports", userUuid], () => getUserReports(userUuid));
 
 export const useGithubReadme = (githubId: string) =>
-  useQuery(["profile", "readme", githubId], () => getGithubReadme(githubId));
+  useQuery(["profile", "readme", githubId], () => getGithubReadme(githubId), {
+    retry: false,
+  });
 
 export const useDeleteAccount = () => useMutation(() => deleteUser());
 
