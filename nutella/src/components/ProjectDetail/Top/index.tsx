@@ -2,13 +2,17 @@ import * as S from "./styles";
 import { ProfileIcons, ViewIcons } from "../../../assets/icons";
 import useModalContext from "../../../hooks/useModalContext";
 import ProjectModifyModal from "../../Modals/ProjectInfoModify";
+import { Fragment } from "react";
+import ModalPortal from "../../ModalPortal";
+import useModalRef from "../../../hooks/useModalRef";
 
 const Top = () => {
   const Field = ["웹", "보안", "임베디드", "대마고"];
   const { openModal } = useModalContext();
+  const modalRef = useModalRef();
 
   return (
-    <>
+    <Fragment>
       <S.TopContainer>
         <S.TopContent>
           <S.ProjectImg alt="" src="" />
@@ -25,7 +29,7 @@ const Top = () => {
                 <S.Modify
                   onClick={(e) => {
                     e.stopPropagation();
-                    openModal(<ProjectModifyModal />);
+                    modalRef.current?.show();
                   }}
                 >
                   수정
@@ -48,7 +52,10 @@ const Top = () => {
           </div>
         </S.TopContent>
       </S.TopContainer>
-    </>
+      <ModalPortal ref={modalRef}>
+        <ProjectModifyModal />
+      </ModalPortal>
+    </Fragment>
   );
 };
 

@@ -1,10 +1,10 @@
 import { createContext } from "react";
 
 export interface ModalContextType {
-  modals: JSX.Element[];
+  modals: string[];
   closeCurrentModal: () => void;
   closeByStep: (step: number) => void;
-  openModal: (modal: JSX.Element) => void;
+  openModal: (modal: string) => void;
 }
 
 export const ModalContext = createContext<ModalContextType>({

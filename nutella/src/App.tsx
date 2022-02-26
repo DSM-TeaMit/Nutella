@@ -1,6 +1,5 @@
 import { Global, ThemeProvider } from "@emotion/react";
 import MessageController from "./components/MessageController";
-import ModalController from "./components/ModalController";
 import MessageProvider from "./components/Providers/MessageProvider";
 import ModalProvider from "./components/Providers/ModalProvider";
 import RootRouter from "./route";
@@ -17,7 +16,6 @@ function App() {
           <MessageProvider>
             <Global styles={reset} />
             <RootRouter />
-            <ModalController />
             <MessageController />
           </MessageProvider>
         </ModalProvider>

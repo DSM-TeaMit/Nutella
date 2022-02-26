@@ -12,3 +12,7 @@ export const Background = styled.div`
   align-items: center;
   z-index: 1000;
 `;
+
+export const Container = styled.div`
+  z-index: 1001;
+`;

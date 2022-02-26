@@ -1,12 +1,14 @@
-import useModalContext from "../../../hooks/useModalContext";
+import { Fragment } from "react";
+import useModalRef from "../../../hooks/useModalRef";
+import ModalPortal from "../../ModalPortal";
 import ProjectMemberModifyModal from "../../Modals/ProjectMemberModify";
 import * as S from "./styles";
 
 const Aside = () => {
-  const { openModal } = useModalContext();
+  const modalRef = useModalRef();
 
   return (
-    <>
+    <Fragment>
       <S.AsideContainer>
         <S.AsideTop>
           <S.Title>
@@ -15,7 +17,7 @@ const Aside = () => {
           <S.SubTitle
             onClick={(e) => {
               e.stopPropagation();
-              openModal(<ProjectMemberModifyModal />);
+              modalRef.current?.show();
             }}
           >
             수정
@@ -49,7 +51,10 @@ const Aside = () => {
           </S.RoleBox>
         </S.AsideContent>
       </S.AsideContainer>
-    </>
+      <ModalPortal ref={modalRef}>
+        <ProjectMemberModifyModal />
+      </ModalPortal>
+    </Fragment>
   );
 };
 

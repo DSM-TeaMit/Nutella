@@ -2,7 +2,7 @@ import { FC, useCallback, useMemo, useState } from "react";
 import { ModalContextType, ModalContext } from "../../context/ModalContext";
 
 const ModalProvider: FC = ({ children }) => {
-  const [modals, setModals] = useState<JSX.Element[]>([]);
+  const [modals, setModals] = useState<string[]>([]);
 
   const closeCurrentModal = useCallback(() => {
     if (modals.length <= 0) {
@@ -33,7 +33,7 @@ const ModalProvider: FC = ({ children }) => {
   }, []);
 
   const openModal = useCallback(
-    (modal: JSX.Element) => {
+    (modal: string) => {
       setModals([...modals, modal]);
     },
     [modals]
@@ -44,7 +44,9 @@ const ModalProvider: FC = ({ children }) => {
     [closeByStep, closeCurrentModal, modals, openModal]
   );
 
-  return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
+  return (
+    <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
+  );
 };
 
 export default ModalProvider;
