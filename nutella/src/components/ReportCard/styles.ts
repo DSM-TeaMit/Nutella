@@ -50,14 +50,9 @@ export const Title = styled.span`
   white-space: nowrap;
 `;
 
-export const Description = styled.span<{ status?: ReportStatus }>`
+export const Description = styled.span`
   font: ${({ theme }) => theme.fonts.body3};
-  color: ${({ theme, status }) =>
-    !status
-      ? theme.colors.grayscale.gray2
-      : status === "PENDING"
-      ? theme.colors.grayscale.gray2
-      : theme.colors.red.default};
+  color: ${({ color, theme }) => color || theme.colors.grayscale.gray2};
   white-space: nowrap;
   flex-shrink: 0;
 `;
