@@ -1,7 +1,23 @@
 import * as I from "../../styles";
 import ProjectCard from "../../../ProjectCard";
+import { useParams } from "react-router-dom";
+import { useUserProjects } from "../../../../queries/User";
 
 const Project = () => {
+  const { uuid } = useParams<{ uuid: string }>();
+
+  if (!uuid) {
+    return <></>;
+  }
+
+  const { data, isError, isLoading } = useUserProjects(uuid);
+
+  if (isError || isLoading) {
+    return <></>;
+  }
+
+  const { count, projects } = data!.data;
+
   return (
     <I.ContentInner>
       <I.FlexContainer>
@@ -9,12 +25,12 @@ const Project = () => {
           <I.ProjectTitle>
             <div>
               <I.H3>프로젝트&nbsp;</I.H3>
-              <I.BlueH3>12</I.BlueH3>
+              <I.BlueH3>{count}</I.BlueH3>
             </div>
           </I.ProjectTitle>
           <I.Grid>
-            {new Array(12).fill(0).map((_, index) => (
-              <ProjectCard key={index} />
+            {projects.map((value) => (
+              <ProjectCard key={value.uuid} data={value} />
             ))}
           </I.Grid>
         </div>
