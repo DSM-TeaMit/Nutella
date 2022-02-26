@@ -20,7 +20,7 @@ export const Title = styled.div`
 export const Form = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 16px;
+  row-gap: 8px;
 `;
 
 export const FormTitle = styled.div`
