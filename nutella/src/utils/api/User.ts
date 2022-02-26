@@ -25,6 +25,7 @@ export interface ProjectType {
   projectType: ProjectTypes;
   fields: string;
   members: ProjectMember[];
+  thumbnailUrl: string;
 }
 
 export interface MyProfileType {
