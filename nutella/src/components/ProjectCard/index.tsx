@@ -1,15 +1,16 @@
 import * as S from "./styles";
 import { TeamIcons, PersonalIcons, ClubIcons } from "../../assets/icons";
 import { ProjectType } from "../../utils/api/User";
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import ProjectTypes from "../../interface/ProjectTypes";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface PropsType {
   data: ProjectType;
 }
 
 const ProjectCard: FC<PropsType> = ({ data }) => {
+  const navigate = useNavigate();
   const {
     uuid,
     fields,
@@ -24,6 +25,16 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
     .set("PERS", PersonalIcons)
     .set("TEAM", TeamIcons)
     .set("CLUB", ClubIcons);
+
+  const onMemberClick = useCallback(
+    (uuid: string) => (e: React.MouseEvent<HTMLImageElement>) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      navigate(`/user/${uuid}`);
+    },
+    [navigate]
+  );
 
   return (
     <S.Container to={`/project/${uuid}`}>
@@ -40,11 +51,12 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
           <S.UserContainer>
             <S.UserImageContainer>
               {members.slice(0, 3).map((value) => (
-                <Link to={`/user/${value.uuid}`} key={value.uuid}>
-                  <S.UserImageOuter>
-                    <S.UserImage src={value.thumbnailUrl} />
-                  </S.UserImageOuter>
-                </Link>
+                <S.UserImageOuter key={value.uuid}>
+                  <S.UserImage
+                    src={value.thumbnailUrl}
+                    onClick={onMemberClick(uuid)}
+                  />
+                </S.UserImageOuter>
               ))}
             </S.UserImageContainer>
             {members.length > 3 && (
