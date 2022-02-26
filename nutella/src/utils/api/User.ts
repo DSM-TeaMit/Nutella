@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import Uri from "../../constant/Uri";
 import ProjectTypes from "../../interface/ProjectTypes";
 import { ReportStatus, ReportTypes } from "../../interface/Report";
@@ -93,4 +93,22 @@ export const getUserGithub = async (githubId: string) => {
   const uri = `https://raw.githubusercontent.com/${githubId}/${githubId}/main/README.md`;
 
   return await axios.get<string>(uri);
+};
+
+export const removeUser = async (userUuid: string) => {
+  const uri = Uri.user.get();
+
+  return await request.delete(uri);
+};
+
+interface ModifyGithubId {
+  githubId: string;
+}
+
+export const modifyGithubId = async (githubId: string) => {
+  const uri = Uri.changeGithubId.get();
+
+  return await request.put<any, AxiosResponse<any, any>, ModifyGithubId>(uri, {
+    githubId,
+  });
 };
