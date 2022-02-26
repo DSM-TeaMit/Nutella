@@ -19,60 +19,62 @@ export interface ModalPoralRef {
   show: () => void;
 }
 
-const ModalPortal = forwardRef<ModalPoralRef, PropsType>(({ children }, ref) => {
-  const id = useMemo(() => uniqueId(), []);
-  const { modals, openModal, closeCurrentModal } = useModalContext();
-  const modalRef = useRef<HTMLDivElement>(null);
-  const el = useMemo(() => document.getElementById("modal")!, []);
+const ModalPortal = forwardRef<ModalPoralRef, PropsType>(
+  ({ children }, ref) => {
+    const id = useMemo(() => uniqueId(), []);
+    const { modals, openModal, closeCurrentModal } = useModalContext();
+    const modalRef = useRef<HTMLDivElement>(null);
+    const el = useMemo(() => document.getElementById("modal")!, []);
 
-  const showModal = useCallback(() => {
-    openModal(id);
-  }, [id]);
+    const showModal = useCallback(() => {
+      openModal(id);
+    }, [id, openModal]);
 
-  useImperativeHandle(ref, () => ({ show: showModal }));
+    useImperativeHandle(ref, () => ({ show: showModal }));
 
-  const onOutsideClick = useCallback(
-    (e: MouseEvent) => {
-      if (!modalRef.current) return;
+    const onOutsideClick = useCallback(
+      (e: MouseEvent) => {
+        if (!modalRef.current) return;
 
-      if (!modalRef.current.contains(e.target as Node)) {
-        closeCurrentModal();
+        if (!modalRef.current.contains(e.target as Node)) {
+          closeCurrentModal();
+        }
+      },
+      [closeCurrentModal]
+    );
+
+    useEffect(() => {
+      if (modals.length > 0) {
+        window.addEventListener("click", onOutsideClick);
+      } else {
+        window.removeEventListener("click", onOutsideClick);
       }
-    },
-    [closeCurrentModal]
-  );
+    }, [modals, onOutsideClick]);
 
-  useEffect(() => {
+    useEffect(() => {
+      if (modals.length > 0) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "unset";
+      }
+    }, [modals]);
+
     if (modals.length > 0) {
-      window.addEventListener("click", onOutsideClick);
-    } else {
-      window.removeEventListener("click", onOutsideClick);
-    }
-  }, [modals, onOutsideClick]);
+      const currentModal = modals.reverse()[0];
 
-  useEffect(() => {
-    if (modals.length > 0) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
+      if (currentModal === id) {
+        return ReactDOM.createPortal(
+          <S.Background>
+            <div ref={modalRef}>{children}</div>
+          </S.Background>,
+          el,
+          id
+        );
+      }
     }
-  }, [modals]);
 
-  if (modals.length > 0) {
-    const currentModal = modals.reverse()[0];
-
-    if (currentModal === id) {
-      return ReactDOM.createPortal(
-        <S.Background>
-          <div ref={modalRef}>{children}</div>
-        </S.Background>,
-        el,
-        id
-      );
-    }
+    return <></>;
   }
-
-  return <></>;
-});
+);
 
 export default ModalPortal;
