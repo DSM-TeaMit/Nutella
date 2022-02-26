@@ -1,8 +1,19 @@
 import { ContentInner } from "../../styles";
 import * as S from "./styles";
 import { ArrowBlackIcons } from "../../../../assets/icons";
+import { useMyProfile } from "../../../../queries/User";
 
 const Setting = () => {
+  const { data, isError, isLoading } = useMyProfile(
+    "e973c27b-3e0e-4863-86be-b2e0dfd24908"
+  );
+
+  if (isError || isLoading) {
+    return <></>;
+  }
+
+  const { githubId } = data!.data;
+
   return (
     <ContentInner>
       <S.SettingContaienr>
@@ -11,7 +22,7 @@ const Setting = () => {
           <S.ContentContainer>
             <S.SettingTitle>Github</S.SettingTitle>
             <S.Gray>
-              <span>KJG04</span>
+              <span>{githubId || "입력하지 않음"}</span>
               <img alt="github arrow" src={ArrowBlackIcons} />
             </S.Gray>
           </S.ContentContainer>
