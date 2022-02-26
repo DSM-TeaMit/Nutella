@@ -16,11 +16,11 @@ export const useMyProfile = (userUuid: string) =>
 export const useUserProfile = (userUuid: string) =>
   useQuery(["profile", userUuid], () => getProfile<UserProfileType>(userUuid));
 
-export const useUserProjects = (userUuid: string) =>
-  useQuery(["projects", userUuid], () => getUserProjects(userUuid));
+export const useUserProjects = (userUuid: string, page: number) =>
+  useQuery(["projects", userUuid, page], () => getUserProjects(userUuid, page));
 
-export const useUserReports = (userUuid: string) =>
-  useQuery(["reports", userUuid], () => getUserReports(userUuid));
+export const useUserReports = (userUuid: string, page: number) =>
+  useQuery(["reports", userUuid, page], () => getUserReports(userUuid, page));
 
 export const useGithubReadme = (githubId: string) =>
   useQuery(["profile", "readme", githubId], () => getGithubReadme(githubId), {
