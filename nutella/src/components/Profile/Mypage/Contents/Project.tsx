@@ -7,7 +7,8 @@ import ProjectAddModal from "../../../Modals/ProejctAddModal";
 import { useUserProjects } from "../../../../queries/User";
 import useModalRef from "../../../../hooks/useModalRef";
 import ModalPortal from "../../../ModalPortal";
-import { ProjectType } from "../../../../utils/api/User";
+import { LIMIT, ProjectType } from "../../../../utils/api/User";
+import isMore from "../../../../constant/IsMore";
 
 const Project = () => {
   const { openModal } = useModalContext();
@@ -55,7 +56,9 @@ const Project = () => {
             {projects.length === 0 && (
               <I.Message>프로젝트가 존재하지 않습니다.</I.Message>
             )}
-            <I.More>더 가져오기...</I.More>
+            {isMore(LIMIT, page, count) && (
+              <I.More onClick={() => setPage(page + 1)}>더 가져오기...</I.More>
+            )}
           </div>
         </I.FlexContainer>
       </I.ContentInner>
