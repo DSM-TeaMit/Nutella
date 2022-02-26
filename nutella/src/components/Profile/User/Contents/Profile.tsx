@@ -1,9 +1,25 @@
 import * as I from "../../styles";
 import { ArrowBlackIcons, GithubBlackIcons } from "../../../../assets/icons";
 import ProjectCard from "../../../ProjectCard";
-import MarkdownRender from "../../../MarkdownRender";
+import GithubReadme from "../../../GithubReadme";
+import { FC } from "react";
+import { UserProfileType } from "../../../../utils/api/User";
+import { UseQueryResult } from "react-query";
+import { AxiosResponse } from "axios";
 
-const Profile = () => {
+interface PropsType {
+  data: UseQueryResult<AxiosResponse<UserProfileType, any>, unknown>;
+}
+
+const Profile: FC<PropsType> = ({ data: queryData }) => {
+  const { data, isLoading, isError } = queryData;
+
+  if (isLoading || isError) {
+    return <></>;
+  }
+
+  const { name, studentNo, projects, projectCount } = data!.data;
+
   return (
     <I.ContentInner>
       <I.FlexContainer>
@@ -11,9 +27,13 @@ const Profile = () => {
           <I.ProfileContainer>
             <I.ProfileImage alt="" src="" />
             <I.ProfileInfoContainer>
-              <I.Name>2105 김진근</I.Name>
+              <I.Name>
+                {studentNo} {name}
+              </I.Name>
               <I.ProfileDescriptionContainer>
-                <I.ProfileDescription>프로젝트 12</I.ProfileDescription>
+                <I.ProfileDescription>
+                  프로젝트 {projectCount}
+                </I.ProfileDescription>
                 <I.Github
                   href="https://github.com/DSM-TeaMit/Nutella"
                   target="_blank"
@@ -28,20 +48,15 @@ const Profile = () => {
           </I.ProfileContainer>
           <I.Line />
         </I.ProfileContainerOuter>
-        <div>
-          <I.Description>Github 에서 가져온 README</I.Description>
-          <I.ReadMe>
-            <MarkdownRender>{`### I want to be a Front-end developer 🙂\ni'm learning about:\n- JavaScript\n- TypeScript`}</MarkdownRender>
-          </I.ReadMe>
-        </div>
+        <GithubReadme />
         <div>
           <I.ContentTitle>
             <I.H3>프로젝트&nbsp;</I.H3>
-            <I.BlueH3>12</I.BlueH3>
+            <I.BlueH3>{projectCount}</I.BlueH3>
           </I.ContentTitle>
           <I.Grid>
-            {new Array(4).fill(0).map((_, index) => (
-              <ProjectCard key={index} />
+            {projects.map((value) => (
+              <ProjectCard key={value.uuid} data={value} />
             ))}
           </I.Grid>
         </div>

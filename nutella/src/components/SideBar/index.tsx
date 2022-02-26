@@ -3,12 +3,15 @@ import * as S from "./styles";
 import NavigationType from "../../interface/Navigation";
 import { FC } from "react";
 import { UseQueryResult } from "react-query";
-import { MyProfileType } from "../../utils/api/User";
+import { MyProfileType, UserProfileType } from "../../utils/api/User";
 import { AxiosResponse } from "axios";
 
 interface PropsType {
   navs: NavigationType[];
-  data: UseQueryResult<AxiosResponse<MyProfileType, any>, unknown>;
+  data: UseQueryResult<
+    AxiosResponse<MyProfileType | UserProfileType, any>,
+    unknown
+  >;
 }
 
 const SideBar: FC<PropsType> = ({ navs, data: queryData }) => {
