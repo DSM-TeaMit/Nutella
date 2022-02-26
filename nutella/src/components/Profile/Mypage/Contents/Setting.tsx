@@ -6,11 +6,12 @@ import { Fragment, useCallback } from "react";
 import ModalPortal, { ModalPoralRef } from "../../../ModalPortal";
 import useModalRef from "../../../../hooks/useModalRef";
 import GithubIdModal from "../../../Modals/GithubIdModal";
+import AccountDeleteModal from "../../../Modals/AccountDeleteModal";
 
 const Setting = () => {
-  const { data, isError, isLoading } = useMyProfile(
-    "e973c27b-3e0e-4863-86be-b2e0dfd24908"
-  );
+  const myProfileQuery = useMyProfile("e973c27b-3e0e-4863-86be-b2e0dfd24908");
+  const { data, isError, isLoading } = myProfileQuery;
+
   const githubModalRef = useModalRef();
   const deleteUserModalRef = useModalRef();
 
@@ -30,7 +31,7 @@ const Setting = () => {
   }
 
   const { githubId } = data!.data;
-  
+
   return (
     <Fragment>
       <ContentInner>
@@ -65,7 +66,7 @@ const Setting = () => {
         <GithubIdModal />
       </ModalPortal>
       <ModalPortal ref={deleteUserModalRef}>
-        <div>hello world!</div>
+        <AccountDeleteModal data={myProfileQuery} />
       </ModalPortal>
     </Fragment>
   );
