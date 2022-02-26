@@ -15,11 +15,11 @@ interface PropsType {
   children: React.ReactNode;
 }
 
-interface RefType {
+export interface ModalPoralRef {
   show: () => void;
 }
 
-const ModalPortal = forwardRef<RefType, PropsType>(({ children }, ref) => {
+const ModalPortal = forwardRef<ModalPoralRef, PropsType>(({ children }, ref) => {
   const id = useMemo(() => uniqueId(), []);
   const { modals, openModal, closeCurrentModal } = useModalContext();
   const modalRef = useRef<HTMLDivElement>(null);
