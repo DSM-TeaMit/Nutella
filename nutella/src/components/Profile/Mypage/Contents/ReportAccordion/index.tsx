@@ -1,21 +1,26 @@
 import * as S from "./styles";
 import { UpArrowIcons } from "../../../../../assets/icons";
 import ReportCard from "../../../../ReportCard";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { Reports } from "../../../../../utils/api/User";
+import { ReportStatus } from "../../../../../interface/Report";
 
 interface PropsType {
   title: string;
-  count: number;
+  data: Reports;
+  status: ReportStatus;
 }
 
-const ReportAccordion: FC<PropsType> = ({ title, count }) => {
+const padding = 12;
+const gap = 16;
+
+const ReportAccordion: FC<PropsType> = ({ title, data, status }) => {
   const [isActive, setIsActive] = useState(false);
   const container = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
 
-  const padding = 12;
-  const gap = 16;
+  const { count, projects: reports } = data;
 
   useEffect(() => {
     if (container.current && header.current && content.current) {
@@ -52,8 +57,8 @@ const ReportAccordion: FC<PropsType> = ({ title, count }) => {
         </S.HeaderContainer>
       </div>
       <S.ContentContainer isActive={isActive} ref={content}>
-        {new Array(5).fill(0).map((_, index) => (
-          <ReportCard key={index} />
+        {reports.map((value) => (
+          <ReportCard key={value.uuid} data={{ ...value, status }} />
         ))}
       </S.ContentContainer>
     </S.Container>
