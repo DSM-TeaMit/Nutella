@@ -1,39 +1,61 @@
 import * as S from "./styles";
-import { TeamIcons } from "../../assets/icons";
+import { TeamIcons, PersonalIcons, ClubIcons } from "../../assets/icons";
+import { ProjectType } from "../../utils/api/User";
+import { FC } from "react";
+import ProjectTypes from "../../interface/ProjectTypes";
+import { Link } from "react-router-dom";
 
-const ProjectCard = () => {
+interface PropsType {
+  data: ProjectType;
+}
+
+const ProjectCard: FC<PropsType> = ({ data }) => {
+  const {
+    uuid,
+    fields,
+    members,
+    projectDescription,
+    projectName,
+    projectType,
+    thumbnailUrl,
+  } = data;
+
+  const iconMap = new Map<ProjectTypes, any>()
+    .set("PERS", PersonalIcons)
+    .set("TEAM", TeamIcons)
+    .set("CLUB", ClubIcons);
+
   return (
-    <S.Container to="">
-      <S.Image alt="project image" src="" />
+    <S.Container to={`/project/${uuid}`}>
+      <S.Image alt="project image" src={thumbnailUrl} />
       <S.InfoContainer>
         <div>
           <S.TitleContaienr>
-            <S.Title>Teamit</S.Title>
-            <S.TypeIcon alt="type icon" src={TeamIcons} />
+            <S.Title>{projectName}</S.Title>
+            <S.TypeIcon alt="type icon" src={iconMap.get(projectType)!} />
           </S.TitleContaienr>
-          <S.Description>
-            Teamit은 위원은 정당에 가입하거나 정치에 관여할 수 없다.
-            헌법헌법헌법헌법헌법
-          </S.Description>
+          <S.Description>{projectDescription}</S.Description>
         </div>
         <S.BottonContainer>
           <S.UserContainer>
             <S.UserImageContainer>
-              <S.UserImageOuter>
-                <S.UserImage />
-              </S.UserImageOuter>
-              <S.UserImageOuter>
-                <S.UserImage />
-              </S.UserImageOuter>
-              <S.UserImageOuter>
-                <S.UserImage />
-              </S.UserImageOuter>
+              {members.slice(0, 3).map((value) => (
+                <Link to={`/user/${value.uuid}`}>
+                  <S.UserImageOuter>
+                    <S.UserImage src={value.thumbnailUrl} />
+                  </S.UserImageOuter>
+                </Link>
+              ))}
             </S.UserImageContainer>
-            <S.UserAdditional>+3</S.UserAdditional>
+            {members.length > 3 && (
+              <S.UserAdditional>+{members.length - 3}</S.UserAdditional>
+            )}
           </S.UserContainer>
           <div>
-            <S.Type>웹 · 보안&nbsp;</S.Type>
-            <S.TypeAdditional>+3</S.TypeAdditional>
+            <S.Type>{fields.split(",").slice(0, 3).join(" · ")}&nbsp;</S.Type>
+            {fields.length > 3 && (
+              <S.TypeAdditional>+${fields.length - 3}</S.TypeAdditional>
+            )}
           </div>
         </S.BottonContainer>
       </S.InfoContainer>
