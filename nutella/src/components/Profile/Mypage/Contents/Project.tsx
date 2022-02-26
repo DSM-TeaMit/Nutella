@@ -55,6 +55,7 @@ const Project = () => {
             {projects.length === 0 && (
               <I.Message>프로젝트가 존재하지 않습니다.</I.Message>
             )}
+            <I.More>더 가져오기...</I.More>
           </div>
         </I.FlexContainer>
       </I.ContentInner>

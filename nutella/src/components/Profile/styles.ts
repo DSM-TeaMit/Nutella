@@ -146,3 +146,20 @@ export const Message = styled.div`
   text-align: center;
   margin: 16px 0px;
 `;
+
+export const More = styled.button`
+  padding: 0px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+  margin: 36px 0px;
+  font: ${({ theme }) => theme.fonts.body2};
+  color: ${({ theme }) => theme.colors.grayscale.gray1};
+  text-align: center;
+  border-radius: 10px;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.grayscale.black};
+  }
+`;
