@@ -53,13 +53,20 @@ const ProjectAddModal = () => {
         </S.ContentContainer>
         <S.ContentContainer>
           <S.Subtitle>프로젝트 분야</S.Subtitle>
-          <TagInput placeholder="프로젝트 분야를 입력해주세요..." {...inputProps} />
+          <TagInput
+            placeholder="프로젝트 분야를 입력해주세요..."
+            {...inputProps}
+          />
         </S.ContentContainer>
         <S.ContentContainer>
           <S.Subtitle>프로젝트 종류</S.Subtitle>
           <S.TypeContainer>
-            {types.map((value) => (
-              <S.Type isActive={value.type === type} onClick={() => onTypeClick(value)}>
+            {types.map((value, index) => (
+              <S.Type
+                key={index}
+                isActive={value.type === type}
+                onClick={() => onTypeClick(value)}
+              >
                 <img src={value.img} alt={value.type} />
                 <span>{value.name}</span>
               </S.Type>
