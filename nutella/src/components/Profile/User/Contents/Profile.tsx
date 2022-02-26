@@ -18,7 +18,7 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
     return <></>;
   }
 
-  const { name, studentNo, projects, projectCount } = data!.data;
+  const { name, studentNo, projects, projectCount, githubId } = data!.data;
 
   return (
     <I.ContentInner>
@@ -34,21 +34,23 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
                 <I.ProfileDescription>
                   프로젝트 {projectCount}
                 </I.ProfileDescription>
-                <I.Github
-                  href="https://github.com/DSM-TeaMit/Nutella"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img alt="github" src={GithubBlackIcons} />
-                  KJG04
-                  <img alt="arrow" src={ArrowBlackIcons} />
-                </I.Github>
+                {githubId && (
+                  <I.Github
+                    href={`https://github.com/${githubId}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img alt="github" src={GithubBlackIcons} />
+                    {githubId}
+                    <img alt="arrow" src={ArrowBlackIcons} />
+                  </I.Github>
+                )}
               </I.ProfileDescriptionContainer>
             </I.ProfileInfoContainer>
           </I.ProfileContainer>
           <I.Line />
         </I.ProfileContainerOuter>
-        <GithubReadme />
+        <GithubReadme githubId={githubId} />
         <div>
           <I.ContentTitle>
             <I.H3>프로젝트&nbsp;</I.H3>
@@ -59,6 +61,9 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
               <ProjectCard key={value.uuid} data={value} />
             ))}
           </I.Grid>
+          {projectCount === 0 && (
+            <I.Message>프로젝트가 존재하지 않습니다.</I.Message>
+          )}
         </div>
       </I.FlexContainer>
     </I.ContentInner>
