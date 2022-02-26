@@ -11,7 +11,7 @@ const Report = () => {
     page
   );
 
-  if (isError && isLoading) {
+  if (isError || isLoading) {
     return <></>;
   }
 
