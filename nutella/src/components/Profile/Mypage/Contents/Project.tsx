@@ -7,6 +7,7 @@ import ProjectAddModal from "../../../Modals/ProejctAddModal";
 import { useUserProjects } from "../../../../queries/User";
 import useModalRef from "../../../../hooks/useModalRef";
 import ModalPortal from "../../../ModalPortal";
+import { ProjectType } from "../../../../utils/api/User";
 
 const Project = () => {
   const { openModal } = useModalContext();
@@ -51,6 +52,9 @@ const Project = () => {
                 <ProjectCard key={value.uuid} data={value} />
               ))}
             </I.Grid>
+            {projects.length === 0 && (
+              <I.Message>프로젝트가 존재하지 않습니다.</I.Message>
+            )}
           </div>
         </I.FlexContainer>
       </I.ContentInner>
