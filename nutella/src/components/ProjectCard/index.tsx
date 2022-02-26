@@ -40,7 +40,7 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
           <S.UserContainer>
             <S.UserImageContainer>
               {members.slice(0, 3).map((value) => (
-                <Link to={`/user/${value.uuid}`}>
+                <Link to={`/user/${value.uuid}`} key={value.uuid}>
                   <S.UserImageOuter>
                     <S.UserImage src={value.thumbnailUrl} />
                   </S.UserImageOuter>
@@ -54,7 +54,7 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
           <div>
             <S.Type>{fields.split(",").slice(0, 3).join(" · ")}&nbsp;</S.Type>
             {fields.length > 3 && (
-              <S.TypeAdditional>+${fields.length - 3}</S.TypeAdditional>
+              <S.TypeAdditional>+{fields.length - 3}</S.TypeAdditional>
             )}
           </div>
         </S.BottonContainer>
