@@ -1,10 +1,14 @@
 import ReportAccordion from "./ReportAccordion";
 import * as I from "../..//styles";
 import { useUserReports } from "../../../../queries/User";
+import { useState } from "react";
 
 const Report = () => {
+  const [page, setPage] = useState<number>(1);
+
   const { data, isError, isLoading } = useUserReports(
-    "e973c27b-3e0e-4863-86be-b2e0dfd24908"
+    "e973c27b-3e0e-4863-86be-b2e0dfd24908",
+    page
   );
 
   if (isError && isLoading) {
