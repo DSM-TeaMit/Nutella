@@ -35,6 +35,7 @@ const ModalController = () => {
       document.body.style.overflow = "unset";
     }
   }, [modals]);
+
   return modals.length > 0 ? (
     ReactDOM.createPortal(
       <S.Background>
