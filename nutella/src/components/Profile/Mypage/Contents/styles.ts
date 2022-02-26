@@ -48,12 +48,11 @@ export const SettingTitle = styled.div`
   color: ${({ theme }) => theme.colors.grayscale.black};
 `;
 
-export const Gray = styled.div`
-  display: flex;
-  column-gap: 4px;
-  align-items: center;
-  color: black;
+export const GrayButton = styled.button`
   filter: ${({ theme }) => theme.filters.grayscale.gray2};
+  padding: none;
+  border: none;
+  background: transparent;
   cursor: pointer;
 
   &:hover {
@@ -61,11 +60,18 @@ export const Gray = styled.div`
   }
 `;
 
+export const Button = styled.div`
+  display: flex;
+  column-gap: 4px;
+  align-items: center;
+  color: black;
+`;
+
 export const SettingTitleRed = styled(SettingTitle)`
   color: ${({ theme }) => theme.colors.red.default};
 `;
 
-export const Red = styled(Gray)`
+export const RedButton = styled(GrayButton)`
   filter: ${({ theme }) => theme.filters.red.default};
 
   &:hover {

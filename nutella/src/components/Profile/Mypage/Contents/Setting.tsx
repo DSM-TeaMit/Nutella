@@ -21,20 +21,24 @@ const Setting = () => {
           <S.Title>계정 설정</S.Title>
           <S.ContentContainer>
             <S.SettingTitle>Github</S.SettingTitle>
-            <S.Gray>
-              <span>{githubId || "입력하지 않음"}</span>
-              <img alt="github arrow" src={ArrowBlackIcons} />
-            </S.Gray>
+            <S.GrayButton>
+              <S.Button>
+                <span>{githubId || "입력하지 않음"}</span>
+                <img alt="github arrow" src={ArrowBlackIcons} />
+              </S.Button>
+            </S.GrayButton>
           </S.ContentContainer>
         </div>
         <div>
           <S.Subtitle>위험</S.Subtitle>
           <S.ContentContainer>
             <S.SettingTitleRed>계정 삭제</S.SettingTitleRed>
-            <S.Red>
-              <span>삭제</span>
-              <img alt="github arrow" src={ArrowBlackIcons} />
-            </S.Red>
+            <S.RedButton>
+              <S.Button>
+                <span>삭제</span>
+                <img alt="github arrow" src={ArrowBlackIcons} />
+              </S.Button>
+            </S.RedButton>
           </S.ContentContainer>
         </div>
       </S.SettingContaienr>
