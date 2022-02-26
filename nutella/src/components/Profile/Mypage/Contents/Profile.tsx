@@ -2,7 +2,6 @@ import * as I from "../../styles";
 import { ArrowBlackIcons, GithubBlackIcons } from "../../../../assets/icons";
 import ReportCard from "../../../ReportCard";
 import ProjectCard from "../../../ProjectCard";
-import { useMyProfile } from "../../../../queries/User";
 import GithubReadme from "../../../GithubReadme";
 import { UseQueryResult } from "react-query";
 import { AxiosResponse } from "axios";
@@ -78,8 +77,8 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
             <I.BlueH3>{projectCount}</I.BlueH3>
           </I.ContentTitle>
           <I.Grid>
-            {projects.map((_, index) => (
-              <ProjectCard key={index} />
+            {projects.map((value) => (
+              <ProjectCard key={value.uuid} data={value} />
             ))}
           </I.Grid>
         </div>
