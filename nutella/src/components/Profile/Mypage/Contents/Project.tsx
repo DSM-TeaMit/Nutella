@@ -7,7 +7,7 @@ import ProjectAddModal from "../../../Modals/ProejctAddModal";
 import { useUserProjects } from "../../../../queries/User";
 import useModalRef from "../../../../hooks/useModalRef";
 import ModalPortal from "../../../ModalPortal";
-import { LIMIT, ProjectType } from "../../../../utils/api/User";
+import { LIMIT } from "../../../../utils/api/User";
 import isMore from "../../../../constant/IsMore";
 
 const Project = () => {
