@@ -5,12 +5,11 @@ import { useUserProjects } from "../../../../queries/User";
 
 const Project = () => {
   const { uuid } = useParams<{ uuid: string }>();
+  const { data, isError, isLoading } = useUserProjects(uuid || "");
 
   if (!uuid) {
     return <></>;
   }
-
-  const { data, isError, isLoading } = useUserProjects(uuid);
 
   if (isError || isLoading) {
     return <></>;

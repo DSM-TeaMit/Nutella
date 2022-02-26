@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useGithubReadme } from "../../queries/User";
 import MarkdownRender from "../MarkdownRender";
 import * as S from "./styles";
@@ -8,11 +8,11 @@ interface PropsType {
 }
 
 const GithubReadme: FC<PropsType> = ({ githubId }) => {
+  const { data, isError, isLoading } = useGithubReadme(githubId || "");
+
   if (!githubId) {
     return <></>;
   }
-
-  const { data, isError, isLoading } = useGithubReadme(githubId);
 
   if (isError || isLoading) {
     return <></>;
