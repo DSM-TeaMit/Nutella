@@ -95,7 +95,7 @@ export const getUserGithub = async (githubId: string) => {
   return await axios.get<string>(uri);
 };
 
-export const removeUser = async (userUuid: string) => {
+export const deleteUser = async () => {
   const uri = Uri.user.get();
 
   return await request.delete(uri);
