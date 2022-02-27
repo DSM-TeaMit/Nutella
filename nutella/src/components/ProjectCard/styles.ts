@@ -55,7 +55,7 @@ export const TypeIcon = styled.img`
 
 export const Description = styled.div`
   display: -webkit-box;
-  height: calc(1.4rem * 2);
+  height: calc(1.2rem * 2);
   line-height: 1rem;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
