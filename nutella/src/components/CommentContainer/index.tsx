@@ -7,19 +7,20 @@ import * as S from "./styles";
 
 interface PropsType {
   styleType: CommentType;
-  status: CommentSource;
+  source: CommentSource;
+  uuid: string;
 }
 
-const CommentContainer: FC<PropsType> = ({ styleType: type }) => {
+const CommentContainer: FC<PropsType> = ({ styleType, uuid, source }) => {
   return (
     <S.CommentContainer>
       <div>
         <S.CommentTitle>댓글&nbsp;</S.CommentTitle>
         <S.CommentTitleBlue>2개</S.CommentTitleBlue>
       </div>
-      <CommentInput type={type} />
-      <Comment type={type} />
-      <Comment type={type} />
+      <CommentInput uuid={uuid} type={styleType} source={source} />
+      <Comment type={styleType} />
+      <Comment type={styleType} />
     </S.CommentContainer>
   );
 };
