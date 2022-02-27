@@ -21,3 +21,14 @@ export const getComment = async (projectUuid: string, type: CommentSource) => {
 
   return await request.get<CommentList>(uri, { params: { type } });
 };
+
+interface PostComment {
+  content: string;
+  type: CommentSource;
+}
+
+export const postComment = async (projectUuid: string, data: PostComment) => {
+  const uri = Uri.projectComment.get({ projectUuid });
+
+  return await request.post(uri, data);
+};
