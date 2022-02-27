@@ -43,6 +43,7 @@ export const OauthBtn = styled.div`
   font: ${({ theme }) => theme.fonts.body2};
   color: ${({ theme }) => theme.colors.grayscale.black};
   border-radius: 10px;
+  cursor: pointer;
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   img {
