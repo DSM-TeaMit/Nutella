@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { ReportStatus } from "../../interface/Report";
+import Img from "../Img";
 
 export const Container = styled(Link)`
   width: 100%;
@@ -17,7 +18,7 @@ export const Container = styled(Link)`
   }
 `;
 
-export const Image = styled.img`
+export const Image = styled(Img)`
   border-radius: 10px;
   width: 180px;
   object-fit: cover;

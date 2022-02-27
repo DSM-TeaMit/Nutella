@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Img from "../Img";
 
 export const Container = styled.div`
   width: 100%;
@@ -33,7 +34,7 @@ export const InfoContainer = styled.div`
   align-items: center;
 `;
 
-export const ProfileImage = styled.img`
+export const ProfileImage = styled(Img)`
   background-color: ${({ theme }) => theme.colors.grayscale.gray1};
   width: 40px;
   height: 40px;

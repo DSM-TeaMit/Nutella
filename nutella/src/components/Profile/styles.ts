@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Img from "../Img";
 
 export const Container = styled.div`
   width: 100%;
@@ -57,7 +58,7 @@ export const Line = styled.div`
   background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
 `;
 
-export const ProfileImage = styled.img`
+export const ProfileImage = styled(Img)`
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -71,6 +72,7 @@ export const ProfileInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 8px;
+  flex: 1;
 `;
 
 export const Name = styled.div`
