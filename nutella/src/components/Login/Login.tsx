@@ -4,18 +4,21 @@ import { LineIcons, RightArrowIcons } from "../../assets/icons";
 import { Link } from "react-router-dom";
 
 const Login = () => {
+  const OauthUrl = "https://spectre-psnldev.dev:8202/auth/google";
+  const oauthBtnClickHandler = () => {
+    window.location.href = OauthUrl;
+  };
+
   return (
     <S.LoginContent>
       <S.Logo alt="LoginLogoImg" src={LoginLogo} />
       <S.OauthBox>
         <S.OauthContent>
           <S.Title>회원가입</S.Title>
-          <Link to="/signup">
-            <S.OauthBtn>
-              <img src={GoogleLogo} />
-              Google 계정으로 계속하기
-            </S.OauthBtn>
-          </Link>
+          <S.OauthBtn onClick={oauthBtnClickHandler}>
+            <img src={GoogleLogo} />
+            Google 계정으로 계속하기
+          </S.OauthBtn>
         </S.OauthContent>
         <S.Divider>
           <img src={LineIcons} />
@@ -24,7 +27,7 @@ const Login = () => {
         </S.Divider>
         <S.OauthContent>
           <S.Title>로그인</S.Title>
-          <S.OauthBtn>
+          <S.OauthBtn onClick={oauthBtnClickHandler}>
             <img src={GoogleLogo} />
             Google 계정으로 계속하기
           </S.OauthBtn>
