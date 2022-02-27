@@ -32,3 +32,9 @@ export const postComment = async (projectUuid: string, data: PostComment) => {
 
   return await request.post(uri, data);
 };
+
+export const deleteComment = async (commentUuid: string) => {
+  const uri = Uri.removeComment.get({ commentUuid });
+
+  return await request.delete(uri);
+};
