@@ -1,4 +1,5 @@
 import { FC } from "react";
+import CommentSource from "../../interface/CommentSource";
 import CommentType from "../../interface/CommentType";
 import Comment from "../Comment";
 import CommentInput from "../CommentInput";
@@ -6,7 +7,7 @@ import * as S from "./styles";
 
 interface PropsType {
   styleType: CommentType;
-  status: "project" | "plan" | "report";
+  status: CommentSource;
 }
 
 const CommentContainer: FC<PropsType> = ({ styleType: type }) => {
