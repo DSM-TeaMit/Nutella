@@ -2,7 +2,7 @@ import Uri from "../../constant/Uri";
 import CommentSource from "../../interface/CommentSource";
 import request from "../axios";
 
-interface CommentType {
+export interface CommentType {
   uuid: string;
   writerId: string;
   writerType: string;

@@ -2,14 +2,14 @@ import { ChangeEvent, FC, useCallback, useState } from "react";
 import useMessageContext from "../../hooks/useMessageContext";
 import useThemeContext from "../../hooks/useThemeContext";
 import CommentSource from "../../interface/CommentSource";
-import CommentType from "../../interface/CommentType";
+import CommentStyleType from "../../interface/CommentStyleType";
 import { useCommentMutation } from "../../queries/Comment";
 import { useMyProfile } from "../../queries/User";
 import BlueButton from "../Buttons/BlueButton";
 import * as S from "./styles";
 
 interface PropsType {
-  type: CommentType;
+  type: CommentStyleType;
   source: CommentSource;
   uuid: string;
 }
@@ -21,7 +21,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
   const { data } = useMyProfile("e973c27b-3e0e-4863-86be-b2e0dfd24908");
   const { showMessage } = useMessageContext();
 
-  const bgColorMap = new Map<CommentType, string>()
+  const bgColorMap = new Map<CommentStyleType, string>()
     .set("project", themeContext.colors.grayscale.lightGray1)
     .set("report", themeContext.colors.grayscale.white);
 
