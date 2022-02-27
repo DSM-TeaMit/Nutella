@@ -26,6 +26,7 @@ export const Input = styled(TextareaAutosize)<{ borderWidth: number }>`
   padding: 16px;
   flex: 1;
   outline: none;
+  resize: none;
 
   &::placeholder {
     font: ${({ theme }) => theme.fonts.body3};

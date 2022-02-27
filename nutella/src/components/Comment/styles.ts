@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Img from "../Img";
 
 export const Container = styled.div`
   width: 100%;
@@ -6,7 +7,7 @@ export const Container = styled.div`
   column-gap: 16px;
 `;
 
-export const Image = styled.img`
+export const Image = styled(Img)`
   width: 36px;
   height: 36px;
   background-color: ${({ theme }) => theme.colors.grayscale.gray1};

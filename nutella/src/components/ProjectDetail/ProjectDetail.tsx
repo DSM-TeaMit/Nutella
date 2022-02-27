@@ -1,10 +1,13 @@
 import * as S from "./styles";
 import Aside from "./Aside";
 import Top from "./Top";
-import Comment from "./Comment";
 import SubmitContent from "./SubmitContent";
+import CommentContainer from "../CommentContainer";
+import { useParams } from "react-router-dom";
 
 const ProjectDetail = () => {
+  const { uuid } = useParams<{ uuid: string }>();
+
   return (
     <>
       <S.Container>
@@ -12,7 +15,11 @@ const ProjectDetail = () => {
           <S.DetailContent>
             <Top />
             <SubmitContent />
-            <Comment />
+            <CommentContainer
+              styleType="project"
+              source="project"
+              uuid={uuid || ""}
+            />
           </S.DetailContent>
           <S.SideContent>
             <Aside />

@@ -1,12 +1,11 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Row } from "../../context/MarkdownCotext";
-import useModalContext from "../../hooks/useModalContext";
 import useModalRef from "../../hooks/useModalRef";
 import BlueButton from "../Buttons/BlueButton";
 import BorderButton from "../Buttons/BorderButton";
 import CheckBox from "../CheckBox";
-import Comment from "../Comment";
-import CommentInput from "../CommentInput";
+import CommentContainer from "../CommentContainer";
 import MarkdownEditor, { getInitRows } from "../MarkdownEditor";
 import ModalPortal from "../ModalPortal";
 import DatePicker, { DateState } from "../Modals/DatePicker";
@@ -20,6 +19,7 @@ const Personal = () => {
   const [goalRows, setGoalRows] = useState<Row[]>([...getInitRows()]);
   const [contentRows, setContentRows] = useState<Row[]>([...getInitRows()]);
   const modalRef = useModalRef();
+  const { uuid } = useParams<{ uuid: string }>();
 
   return (
     <Fragment>
@@ -101,15 +101,7 @@ const Personal = () => {
           </S.Buttons>
         </div>
         <S.Line />
-        <S.CommentContainer>
-          <div>
-            <S.CommentTitle>댓글&nbsp;</S.CommentTitle>
-            <S.CommentTitleBlue>2개</S.CommentTitleBlue>
-          </div>
-          <CommentInput type="report" />
-          <Comment type="report" />
-          <Comment type="report" />
-        </S.CommentContainer>
+        <CommentContainer source="plan" uuid={uuid || ""} styleType="report" />
       </S.Container>
       <ModalPortal ref={modalRef}>
         <DatePicker datesState={[dates, setDates]} />
