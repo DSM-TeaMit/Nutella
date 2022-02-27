@@ -30,12 +30,14 @@ const Comment: FC<PropsType> = ({ type, data }) => {
           <S.Name>
             {writerSno} {writerName} {writerType === "admin" && "선생님"}
           </S.Name>
-          <S.MoreContainer>
-            <S.More onClick={() => setIsMore(!isMore)}>
-              <S.Icon src={MoreIcons} alt="more" />
-            </S.More>
-            {isMore && <S.DeletePopup />}
-          </S.MoreContainer>
+          {writerId === "e973c27b-3e0e-4863-86be-b2e0dfd24908" && (
+            <S.MoreContainer>
+              <S.More onClick={() => setIsMore(!isMore)}>
+                <S.Icon src={MoreIcons} alt="more" />
+              </S.More>
+              {isMore && <S.DeletePopup>댓글 삭제</S.DeletePopup>}
+            </S.MoreContainer>
+          )}
         </S.NameContainer>
         <S.Content>
           {content.split("\n").map((value, index) => (

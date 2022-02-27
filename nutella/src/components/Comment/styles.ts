@@ -49,6 +49,10 @@ export const More = styled.button`
   width: 20px;
   height: 20px;
   filter: ${({ theme }) => theme.filters.grayscale.gray1};
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
 
   &:hover {
     filter: ${({ theme }) => theme.filters.grayscale.gray2};
@@ -64,10 +68,13 @@ export const DeletePopup = styled.button`
   position: absolute;
   top: 0px;
   left: calc(100% + 8px);
-  padding: 16px;
+  padding: 8px;
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   color: ${({ theme }) => theme.colors.red.default};
+  border-radius: 10px;
+  cursor: pointer;
+  width: max-content;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
