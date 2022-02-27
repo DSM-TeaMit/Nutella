@@ -1,9 +1,11 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import useThemeContext from "../../hooks/useThemeContext";
 import CommentStyleType from "../../interface/CommentStyleType";
 import { CommentType } from "../../utils/api/Comment";
 import * as S from "./styles";
 import { MoreIcons } from "../../assets/icons";
+import { useDeleteComment } from "../../queries/Comment";
+import useMessageContext from "../../hooks/useMessageContext";
 
 interface PropsType {
   type: CommentStyleType;
@@ -14,10 +16,24 @@ const Comment: FC<PropsType> = ({ type, data }) => {
   const themeContext = useThemeContext();
   const { content, writerName, writerSno, writerType, uuid, writerId } = data;
   const [isMore, setIsMore] = useState<boolean>(false);
+  const deleteCommentMutation = useDeleteComment();
+  const { showMessage } = useMessageContext();
 
   const bgColorMap = new Map<CommentStyleType, string>()
     .set("project", themeContext.colors.grayscale.lightGray1)
     .set("report", themeContext.colors.grayscale.white);
+
+  const onCommentDelete = useCallback(() => {
+    deleteCommentMutation.mutate(uuid, {
+      onSuccess: () => {
+        showMessage({
+          type: "Positive",
+          title: "댓글 삭제 성공",
+          content: "댓글 삭제 성공했습니다.",
+        });
+      },
+    });
+  }, [deleteCommentMutation, showMessage, uuid]);
 
   return (
     <S.Container>
@@ -35,7 +51,11 @@ const Comment: FC<PropsType> = ({ type, data }) => {
               <S.More onClick={() => setIsMore(!isMore)}>
                 <S.Icon src={MoreIcons} alt="more" />
               </S.More>
-              {isMore && <S.DeletePopup>댓글 삭제</S.DeletePopup>}
+              {isMore && (
+                <S.DeletePopup onClick={onCommentDelete}>
+                  댓글 삭제
+                </S.DeletePopup>
+              )}
             </S.MoreContainer>
           )}
         </S.NameContainer>
