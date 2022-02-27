@@ -1,8 +1,9 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import useThemeContext from "../../hooks/useThemeContext";
 import CommentStyleType from "../../interface/CommentStyleType";
 import { CommentType } from "../../utils/api/Comment";
 import * as S from "./styles";
+import { MoreIcons } from "../../assets/icons";
 
 interface PropsType {
   type: CommentStyleType;
@@ -11,6 +12,8 @@ interface PropsType {
 
 const Comment: FC<PropsType> = ({ type, data }) => {
   const themeContext = useThemeContext();
+  const { content, writerName, writerSno, writerType, uuid, writerId } = data;
+  const [isMore, setIsMore] = useState<boolean>(false);
 
   const bgColorMap = new Map<CommentStyleType, string>()
     .set("project", themeContext.colors.grayscale.lightGray1)
@@ -23,11 +26,21 @@ const Comment: FC<PropsType> = ({ type, data }) => {
         color={bgColorMap.get(type)}
         borderWidth={type === "project" ? 0 : 1}
       >
-        <S.Name>2105 김진근</S.Name>
+        <S.NameContainer>
+          <S.Name>
+            {writerSno} {writerName} {writerType === "admin" && "선생님"}
+          </S.Name>
+          <S.MoreContainer>
+            <S.More onClick={() => setIsMore(!isMore)}>
+              <S.Icon src={MoreIcons} alt="more" />
+            </S.More>
+            {isMore && <S.DeletePopup />}
+          </S.MoreContainer>
+        </S.NameContainer>
         <S.Content>
-          안녕하세요. 사면·감형 및 복권에 관한 사항은 법률로 정한다. 모든 국민은
-          주거의 자유를 침해받지 아니한다. 주거에 대한 압수나 수색을 할 때에는
-          검사의 신청에 의하여 법관이 발부한 영장을 제시하여야 한다.
+          {content.split("\n").map((value, index) => (
+            <div key={`${value}${index}`}>{value}</div>
+          ))}
         </S.Content>
       </S.ContentContainer>
     </S.Container>

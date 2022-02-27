@@ -5,7 +5,7 @@ import request from "../axios";
 export interface CommentType {
   uuid: string;
   writerId: string;
-  writerType: string;
+  writerType: "user" | "admin";
   writerName: string;
   writerSno: number;
   content: string;

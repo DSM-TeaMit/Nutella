@@ -30,7 +30,45 @@ export const Name = styled.div`
   color: ${({ theme }) => theme.colors.grayscale.gray2};
 `;
 
+export const NameContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const Content = styled.div`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.black};
+`;
+
+export const MoreContainer = styled.div`
+  position: relative;
+`;
+
+export const More = styled.button`
+  width: 20px;
+  height: 20px;
+  filter: ${({ theme }) => theme.filters.grayscale.gray1};
+
+  &:hover {
+    filter: ${({ theme }) => theme.filters.grayscale.gray2};
+  }
+`;
+
+export const Icon = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+export const DeletePopup = styled.button`
+  position: absolute;
+  top: 0px;
+  left: calc(100% + 8px);
+  padding: 16px;
+  border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
+  background-color: ${({ theme }) => theme.colors.grayscale.white};
+  color: ${({ theme }) => theme.colors.red.default};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
+  }
 `;
