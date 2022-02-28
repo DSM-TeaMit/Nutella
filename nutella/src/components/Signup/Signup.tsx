@@ -2,9 +2,10 @@ import * as S from "./styles";
 import { LeftArrow } from "../../assets/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { postUserInfo } from "../../utils/api/Signup";
+import { useUserInfo } from "../../queries/Signup";
 
 const Signup = () => {
+  const infoMutation = useUserInfo();
   const [studentId, setStudentID] = useState("");
   const [studentName, setStudentName] = useState("");
   const [githubId, setGithubId] = useState("");
@@ -25,20 +26,27 @@ const Signup = () => {
     console.log(githubId);
   };
 
-  const onSubmit = async () => {
-    const data = {
-      studentNo: studentId,
-      name: studentName,
-      githubId: githubId,
-    };
-    try {
-      await postUserInfo(data);
-      alert("로그인에 성공하셨습니다.");
-      console.log(data);
-      navigate("/feed");
-    } catch (error) {
-      console.log(error);
+  const onClickBtn = () => {
+    if (githubId !== "") {
+      const OauthUrl = "https://spectre-psnldev.dev:8202/auth/github";
+      window.location.href = OauthUrl;
+    } else {
+      onSubmit();
     }
+  };
+
+  const onSubmit = () => {
+    infoMutation.mutate(
+      { studentNo: studentId, name: studentName, githubId: githubId },
+      { onSuccess: onSubmitSuccess }
+    );
+  };
+
+  const onSubmitSuccess = () => {
+    setStudentID("");
+    setStudentName("");
+    setGithubId("");
+    navigate("/feed");
   };
 
   return (
@@ -75,7 +83,7 @@ const Signup = () => {
             <span>로그인</span>
           </S.LoginText>
         </Link>
-        <S.SignUpBtn onClick={onSubmit}>회원가입</S.SignUpBtn>
+        <S.SignUpBtn onClick={onClickBtn}>회원가입</S.SignUpBtn>
       </S.ClickBox>
     </S.SignupContent>
   );
