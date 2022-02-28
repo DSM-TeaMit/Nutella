@@ -7,8 +7,12 @@ import ContentExample from "./Content/ContentExample";
 import Cover from "./Content/Cover";
 import * as S from "./styles";
 import SubmitResult from "./Content/SubmitResult";
+import CommentContainer from "../CommentContainer";
+import { useParams } from "react-router-dom";
 
 const Team = () => {
+  const { uuid } = useParams<{ uuid: string }>();
+
   return (
     <S.Container>
       <Cover name="팀 / 동아리" />
@@ -22,15 +26,7 @@ const Team = () => {
         </S.Buttons>
       </div>
       <S.Line />
-      <S.CommentContainer>
-        <div>
-          <S.CommentTitle>댓글&nbsp;</S.CommentTitle>
-          <S.CommentTitleBlue>2개</S.CommentTitleBlue>
-        </div>
-        <CommentInput type="report" />
-        <Comment type="report" />
-        <Comment type="report" />
-      </S.CommentContainer>
+      <CommentContainer source="plan" uuid={uuid || ""} styleType="report" />
     </S.Container>
   );
 };

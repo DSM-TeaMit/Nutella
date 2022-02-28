@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import TextareaAutosize from "react-textarea-autosize";
 
 export const Container = styled.div`
   display: flex;
@@ -15,7 +16,7 @@ export const Image = styled.img`
   background-color: ${({ theme }) => theme.colors.grayscale.gray1};
 `;
 
-export const Input = styled.input<{ borderWidth: number }>`
+export const Input = styled(TextareaAutosize)<{ borderWidth: number }>`
   border: ${({ borderWidth }) => borderWidth}px solid
     ${({ theme }) => theme.colors.grayscale.lightGray1};
   background-color: ${({ color }) => color};
@@ -25,6 +26,7 @@ export const Input = styled.input<{ borderWidth: number }>`
   padding: 16px;
   flex: 1;
   outline: none;
+  resize: none;
 
   &::placeholder {
     font: ${({ theme }) => theme.fonts.body3};
