@@ -3,8 +3,8 @@ import request from "../axios";
 
 interface TokenType {
   type: string;
-  accessToken: string;
-  refresh_token: string;
+  accessToken: string | any;
+  refreshToken: string | any;
 }
 
 export const getOauthSignup = async (code: string | null) => {
@@ -12,7 +12,7 @@ export const getOauthSignup = async (code: string | null) => {
   try {
     const response = await request.get<TokenType>(uri);
     localStorage.setItem("access_token", response.data.accessToken);
-    localStorage.setItem("refresh_token", response.data.refresh_token);
+    localStorage.setItem("refresh_token", response.data.refreshToken);
     const token = localStorage.getItem("access_token");
     const reftoken = localStorage.getItem("refresh_token");
     console.log(token);
@@ -23,7 +23,7 @@ export const getOauthSignup = async (code: string | null) => {
   }
 };
 
-interface InfoType {
+export interface InfoType {
   studentNo: string;
   name: string;
   githubId: string;
@@ -39,6 +39,16 @@ export const postUserInfo = async (data: any) => {
       data
     );
     return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const githubOauth = async (code: string | null) => {
+  const uri = `/auth/callback-github?code=${code}`;
+  try {
+    const response = await request.get(uri);
+    console.log("rltgjqmehehlteksmsd");
   } catch (error) {
     console.log(error);
   }
