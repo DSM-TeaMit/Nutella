@@ -11,6 +11,8 @@ import {
   TeacherLoginContainer,
   ResultContainer,
   FeedContainer,
+  SignupLoadingContainer,
+  GithubLoadingContainer,
 } from "../container";
 
 const MainRouter: FC = (): JSX.Element => {
@@ -19,6 +21,14 @@ const MainRouter: FC = (): JSX.Element => {
       <Routes>
         <Route path="/*">
           <Route path="" element={<LoginContainer />} />
+          <Route
+            path="auth/callback-google"
+            element={<SignupLoadingContainer />}
+          />
+          <Route
+            path="auth/callback-github"
+            element={<GithubLoadingContainer />}
+          />
           <Route path="signup" element={<SignupContainer />} />
           <Route path="teacherlogin" element={<TeacherLoginContainer />} />
           <Route path="search" element={<SearchContainer />} />
