@@ -29,6 +29,10 @@ export const NoDecoLink = styled.a`
   }
 `;
 
+export const Arrow = styled.img`
+  filter: ${({ theme }) => theme.filters.grayscale.black};
+`;
+
 export const Github = styled.img`
   margin-right: 4px;
 `;

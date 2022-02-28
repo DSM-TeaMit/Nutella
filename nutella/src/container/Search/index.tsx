@@ -1,6 +1,6 @@
-import Header from "../../components/Header/Header";
+import Header from "../../components/Header";
 import Search from "../../components/Search/Search";
-import Footer from "../../components/Footer/Footer";
+import Footer from "../../components/Footer";
 
 const SearchContainer = () => {
   return (

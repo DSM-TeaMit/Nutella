@@ -1,6 +1,6 @@
-import Header from "../../components/Header/Header";
+import Header from "../../components/Header";
 import Feed from "../../components/Feed/Feed";
-import Footer from "../../components/Footer/Footer";
+import Footer from "../../components/Footer";
 
 const FeedContainer = () => {
   return (
