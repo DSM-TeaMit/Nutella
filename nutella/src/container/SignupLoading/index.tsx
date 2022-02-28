@@ -17,8 +17,7 @@ const SignupLoadingContainer: FC = () => {
         if (signType === "registration") {
           navigate("/signup");
         } else {
-          alert("로그인을 사용해 주세요.");
-          navigate("/");
+          navigate("/feed");
         }
       }
     } catch {
