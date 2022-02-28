@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import { ArrowIcons, GithubIcons } from "../../assets/icons";
+import { ArrowBlackIcons, GithubIcons } from "../../assets/icons";
 
 const Footer = () => {
   return (
@@ -14,7 +14,7 @@ const Footer = () => {
             >
               <S.Github alt="github" src={GithubIcons} />
               Github
-              <img alt="arrow" src={ArrowIcons} />
+              <S.Arrow alt="arrow" src={ArrowBlackIcons} />
             </S.NoDecoLink>
           </S.Flex>
         </div>
@@ -26,7 +26,7 @@ const Footer = () => {
               rel="noreferrer"
             >
               이용약관
-              <img alt="arrow" src={ArrowIcons} />
+              <S.Arrow alt="arrow" src={ArrowBlackIcons} />
             </S.NoDecoLink>
           </S.Flex>
         </div>
