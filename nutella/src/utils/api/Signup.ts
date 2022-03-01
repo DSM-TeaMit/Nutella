@@ -1,7 +1,7 @@
 import Uri from "../../constant/Uri";
 import request from "../axios";
 
-interface TokenType {
+export interface TokenType {
   type: string;
   accessToken: string | any;
   refreshToken: string | any;
@@ -9,18 +9,13 @@ interface TokenType {
 
 export const getOauthSignup = async (code: string | null) => {
   const uri = `auth/callback-google?code=${code}`;
-  try {
-    const response = await request.get<TokenType>(uri);
-    localStorage.setItem("access_token", response.data.accessToken);
-    localStorage.setItem("refresh_token", response.data.refreshToken);
-    const token = localStorage.getItem("access_token");
-    const reftoken = localStorage.getItem("refresh_token");
-    console.log(token);
-    console.log(reftoken);
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await request.get<TokenType>(uri);
+  localStorage.setItem("access_token", response.data.accessToken);
+  localStorage.setItem("refresh_token", response.data.refreshToken);
+  const token = localStorage.getItem("access_token");
+  const reftoken = localStorage.getItem("refresh_token");
+  console.log(token);
+  console.log(reftoken);
 };
 
 export interface InfoType {
@@ -30,26 +25,10 @@ export interface InfoType {
 }
 
 export const postUserInfo = async (data: any) => {
-  try {
-    const response = await request.post<InfoType>(
-      Uri.defaultInfomation.get({
-        "Content-Type": "application/json",
-      }),
-
-      data
-    );
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
+  await request.post<InfoType>(Uri.defaultInfomation.get(data));
 };
 
-export const githubOauth = async (code: string | null) => {
+export const getOauthGithub = async (code: string | null) => {
   const uri = `/auth/callback-github?code=${code}`;
-  try {
-    const response = await request.get(uri);
-    console.log("rltgjqmehehlteksmsd");
-  } catch (error) {
-    console.log(error);
-  }
+  await request.get(uri);
 };
