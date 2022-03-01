@@ -1,8 +1,12 @@
 import useModalContext from "../../../hooks/useModalContext";
+import BorderButton from "../../Buttons/BorderButton";
+import RedButton from "../../Buttons/RedButton";
+import Input from "../../Input";
 import * as S from "./styles";
 
 const ProjectDeleteModal = () => {
   const { closeCurrentModal } = useModalContext();
+  const onClickDelete = () => {};
 
   return (
     <S.ProjectDeleteContainer>
@@ -15,11 +19,11 @@ const ProjectDeleteModal = () => {
         <S.ContentText>
           삭제를 진행하시려면 <span>Teamit</span>을 입력해 주세요.
         </S.ContentText>
-        <S.InputBox placeholder="Teamit을 입력해 주세요." />
+        <Input placeholder="Teamit을 입력해 주세요." />
       </S.ContentBox>
       <S.BtnBox>
-        <S.Btn>삭제</S.Btn>
-        <S.CancelBtn onClick={closeCurrentModal}>취소</S.CancelBtn>
+        <RedButton onClick={onClickDelete}>삭제</RedButton>
+        <BorderButton onClick={closeCurrentModal}>취소</BorderButton>
       </S.BtnBox>
     </S.ProjectDeleteContainer>
   );

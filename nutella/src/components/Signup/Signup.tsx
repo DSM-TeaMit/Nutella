@@ -3,6 +3,7 @@ import { LeftArrow } from "../../assets/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useUserInfo } from "../../queries/Signup";
+import BlueButton from "../Buttons/BlueButton";
 
 const Signup = () => {
   const infoMutation = useUserInfo();
@@ -13,17 +14,14 @@ const Signup = () => {
 
   const onStudentIdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStudentID(e.currentTarget.value);
-    console.log(studentId);
   };
 
   const onStudentNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStudentName(e.currentTarget.value);
-    console.log(studentName);
   };
 
   const onGithubIdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGithubId(e.currentTarget.value);
-    console.log(githubId);
   };
 
   const onClickBtn = () => {
@@ -83,7 +81,7 @@ const Signup = () => {
             <span>로그인</span>
           </S.LoginText>
         </Link>
-        <S.SignUpBtn onClick={onClickBtn}>회원가입</S.SignUpBtn>
+        <BlueButton onClick={onClickBtn}>회원가입</BlueButton>
       </S.ClickBox>
     </S.SignupContent>
   );

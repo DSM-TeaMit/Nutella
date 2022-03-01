@@ -1,8 +1,11 @@
 import * as S from "./styles";
 import { Link } from "react-router-dom";
 import { LeftArrow } from "../../assets/icons";
+import BlueButton from "../Buttons/BlueButton";
 
 const TeacherLogin = () => {
+  const onLogin = () => {};
+
   return (
     <S.TeacherLoginContent>
       <S.Title>선생님 로그인</S.Title>
@@ -21,7 +24,7 @@ const TeacherLogin = () => {
             <span>학생 로그인</span>
           </S.LoginText>
         </Link>
-        <S.SignUpBtn>로그인</S.SignUpBtn>
+        <BlueButton onClick={onLogin}>로그인</BlueButton>
       </S.ClickBox>
     </S.TeacherLoginContent>
   );

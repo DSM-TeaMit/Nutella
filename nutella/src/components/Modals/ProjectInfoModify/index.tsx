@@ -1,6 +1,9 @@
 import { Fragment, useCallback, useEffect, useRef } from "react";
 import useModalContext from "../../../hooks/useModalContext";
 import useModalRef from "../../../hooks/useModalRef";
+import BlueButton from "../../Buttons/BlueButton";
+import BorderButton from "../../Buttons/BorderButton";
+import RedButton from "../../Buttons/RedButton";
 import ModalPortal, { ModalPoralRef } from "../../ModalPortal";
 import ProjectDeleteModal from "../ProjectDelete";
 import * as S from "./styles";
@@ -52,17 +55,17 @@ const ProjectModifyModal = () => {
           </S.Content>
         </S.ContentBox>
         <S.BtnBox>
-          <S.DelBtn
+          <RedButton
             onClick={(e) => {
               e.stopPropagation();
               modalRef.current?.show();
             }}
           >
             삭제
-          </S.DelBtn>
+          </RedButton>
           <div>
-            <S.CancelBtn onClick={closeCurrentModal}>취소</S.CancelBtn>
-            <S.Btn>수정</S.Btn>
+            <BorderButton onClick={closeCurrentModal}>취소</BorderButton>
+            <BlueButton>수정</BlueButton>
           </div>
         </S.BtnBox>
       </S.ProjectModifyModalContainer>
