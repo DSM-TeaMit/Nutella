@@ -58,15 +58,3 @@ export const LoginText = styled.div`
     text-decoration: none;
   }
 `;
-
-export const SignUpBtn = styled.div`
-  width: 91px;
-  height: 39px;
-  margin-left: 182px;
-  background: ${({ theme }) => theme.colors.primary.click};
-  border-radius: 10px;
-  font: ${({ theme }) => theme.fonts.body2};
-  color: ${({ theme }) => theme.colors.grayscale.white};
-  text-align: center;
-  padding-top: 5px;
-`;
