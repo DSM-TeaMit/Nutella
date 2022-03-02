@@ -1,3 +1,4 @@
+import PendingReportCard from "../PendingReportCard";
 import * as S from "./styles";
 
 const PendingReport = () => {
@@ -7,7 +8,13 @@ const PendingReport = () => {
         <S.Title>승인 요청 보고서&nbsp;</S.Title>
         <S.Count>12</S.Count>
       </div>
-      <S.List></S.List>
+      <S.List>
+        <PendingReportCard />
+        <PendingReportCard />
+        <PendingReportCard />
+        <PendingReportCard />
+        <PendingReportCard />
+      </S.List>
     </S.Container>
   );
 };
