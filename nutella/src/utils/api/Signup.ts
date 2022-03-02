@@ -16,6 +16,7 @@ export const getOauthSignup = async (code: string | null) => {
   const reftoken = localStorage.getItem("refresh_token");
   console.log(token);
   console.log(reftoken);
+  return response;
 };
 
 export interface InfoType {
