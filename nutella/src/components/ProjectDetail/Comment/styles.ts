@@ -46,17 +46,6 @@ export const CommentInput = styled.input`
   }
 `;
 
-export const CommentBtn = styled.div`
-  margin-left: 16px;
-  width: 95px;
-  border-radius: 10px;
-  height: 55px;
-  padding: 16px;
-  font: ${({ theme }) => theme.fonts.body2};
-  color: ${({ theme }) => theme.colors.grayscale.white};
-  background: ${({ theme }) => theme.colors.primary.click};
-`;
-
 export const CommentView = styled.div`
   height: fit-content;
   width: 810px;

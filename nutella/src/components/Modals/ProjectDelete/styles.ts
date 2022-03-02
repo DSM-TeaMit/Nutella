@@ -30,40 +30,10 @@ export const ContentText = styled.div`
   }
 `;
 
-export const InputBox = styled.input`
-  width: 480px;
-  height: fit-content;
-  margin-top: 16px;
-  border: none;
-  outline: none;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
-  ::placeholder {
-    color: ${({ theme }) => theme.colors.grayscale.gray1};
-  }
-`;
-
 export const BtnBox = styled.div`
   width: 140px;
   height: 40px;
   margin-top: 36px;
   display: flex;
   float: right;
-`;
-
-export const Btn = styled.div`
-  width: 62px;
-  height: 38px;
-  background: ${({ theme }) => theme.colors.red.default};
-  border-radius: 10px;
-  padding: 6px 15px;
-  font: ${({ theme }) => theme.fonts.body2};
-  color: ${({ theme }) => theme.colors.grayscale.white};
-  cursor: pointer;
-`;
-
-export const CancelBtn = styled(Btn)`
-  border: 1px solid black;
-  background: none;
-  color: ${({ theme }) => theme.colors.grayscale.black};
-  margin-left: 16px;
 `;
