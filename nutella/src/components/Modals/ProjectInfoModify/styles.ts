@@ -98,25 +98,3 @@ export const BtnBox = styled.div`
     display: flex;
   }
 `;
-
-export const Btn = styled.div`
-  width: 62px;
-  height: 38px;
-  background: ${({ theme }) => theme.colors.primary.default};
-  border-radius: 10px;
-  padding: 6px 15px;
-  font: ${({ theme }) => theme.fonts.body2};
-  color: ${({ theme }) => theme.colors.grayscale.white};
-  cursor: pointer;
-`;
-
-export const CancelBtn = styled(Btn)`
-  border: 1px solid black;
-  background: none;
-  margin-right: 16px;
-  color: ${({ theme }) => theme.colors.grayscale.black};
-`;
-
-export const DelBtn = styled(Btn)`
-  background: ${({ theme }) => theme.colors.red.default};
-`;

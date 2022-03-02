@@ -8,6 +8,6 @@ export { default as SignupContainer } from "./Signup";
 export { default as ProjectDetailContainer } from "./ProjectDetail";
 export { default as TeacherLoginContainer } from "./TeacherLogin";
 export { default as ResultContainer } from "./Result";
-export { default as SignupLoadingContainer } from "./SignupLoading";
+export { default as SignLoadingContainer } from "./SignLoading";
 export { default as GithubLoadingContainer } from "./GithubLoading";
 export { default as PendingReportContainer } from "./PendingReport";
