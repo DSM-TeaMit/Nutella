@@ -12,12 +12,18 @@ const getDateWithAddHour = (hour: number) => {
   return date;
 };
 
+interface Token {
+  accessToken: string;
+  refreshToken: string;
+}
+
 const refresh = async (
   config: AxiosRequestConfig
 ): Promise<AxiosRequestConfig> => {
   const expireAt = localStorage.getItem("expire_at");
   const accessToken = localStorage.getItem("access_token");
   const refreshToken = localStorage.getItem("refresh_token");
+  const code = localStorage.getItem("google_code");
   if (!refreshToken || !expireAt) {
     window.location.href = "/";
     localStorage.removeItem("expire_at");
@@ -26,11 +32,15 @@ const refresh = async (
 
     return config;
   }
-  /* 이부분링크에code를담아서보내야하는데방법을잘모르겠어...!
-   const uri = `auth/callback-google?code=${code}`;
+
+  const uri = `auth/callback-google`;
+
   try {
-    const { accessToken, refreshToken } = (await request.post(uri))
-      .data;
+    const { accessToken, refreshToken } = (
+      await request.post<Token>(uri, null, {
+        params: { code },
+      })
+    ).data;
 
     localStorage.setItem("access_token", accessToken);
     localStorage.setItem("refresh_token", refreshToken);
@@ -42,7 +52,7 @@ const refresh = async (
     localStorage.removeItem("refresh_token");
 
     return config;
-  }*/
+  }
   config.headers!["Authorization"] = `Bearer ${accessToken}`;
 
   return config;
