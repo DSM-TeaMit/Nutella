@@ -13,6 +13,7 @@ import {
   FeedContainer,
   SignupLoadingContainer,
   GithubLoadingContainer,
+  PendingReportContainer,
 } from "../container";
 
 const MainRouter: FC = (): JSX.Element => {
@@ -40,6 +41,7 @@ const MainRouter: FC = (): JSX.Element => {
             <Route path="plan" element={<PlanContainer />} />
             <Route path="result" element={<ResultContainer />} />
           </Route>
+          <Route path="pending-report" element={<PendingReportContainer />} />
         </Route>
       </Routes>
     </Suspense>
