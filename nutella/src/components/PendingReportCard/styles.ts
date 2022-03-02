@@ -1,23 +1,36 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
-export const Container = styled.div`
+export const Container = styled(Link)`
   column-gap: 20px;
   display: grid;
+  text-decoration: none;
   grid-template-columns: repeat(6, 1fr);
-  height: 200px;
+  border-radius: 10px;
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   border: solid 1px ${({ theme }) => theme.colors.grayscale.lightGray1};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
+  }
+
+  &:active {
+    background-color: ${({ theme }) => theme.colors.grayscale.white};
+  }
 `;
 
 export const Img = styled.div`
   grid-column: 1 / 2;
   height: 100%;
+  background-color: ${({ theme }) => theme.colors.grayscale.gray1};
+  border-radius: 10px;
 `;
 
 export const ContentContainer = styled.div`
   grid-column: 2 / 7;
   padding: 16px 28px;
   padding-left: 0px;
+  row-gap: 62px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

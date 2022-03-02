@@ -2,7 +2,7 @@ import * as S from "./styles";
 
 const PendingReportCard = () => {
   return (
-    <S.Container>
+    <S.Container to="">
       <S.Img />
       <S.ContentContainer>
         <S.TopContainer>

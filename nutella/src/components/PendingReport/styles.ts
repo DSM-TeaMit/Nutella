@@ -4,6 +4,7 @@ export const Container = styled.div`
   margin: 0 auto;
   width: 1280px;
   padding-top: 120px;
+  padding-bottom: 200px;
 `;
 
 export const Title = styled.span`
