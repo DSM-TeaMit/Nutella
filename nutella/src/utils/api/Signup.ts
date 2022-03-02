@@ -12,10 +12,6 @@ export const getOauthSignup = async (code: string | null) => {
   const response = await request.get<TokenType>(uri);
   localStorage.setItem("access_token", response.data.accessToken);
   localStorage.setItem("refresh_token", response.data.refreshToken);
-  const token = localStorage.getItem("access_token");
-  const reftoken = localStorage.getItem("refresh_token");
-  console.log(token);
-  console.log(reftoken);
   return response;
 };
 
@@ -26,7 +22,7 @@ export interface InfoType {
 }
 
 export const postUserInfo = async (data: any) => {
-  await request.post<InfoType>(Uri.defaultInfomation.get(data));
+  await request.post<InfoType>(Uri.defaultInfomation.get());
 };
 
 export const getOauthGithub = async (code: string | null) => {
