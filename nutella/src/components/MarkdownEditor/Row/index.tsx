@@ -114,6 +114,11 @@ const Row: FC<PropsType> = ({ data }) => {
           changeTab(id, 1);
         }
       }
+
+      if ((e.ctrlKey || e.metaKey) && ["c", "v"].includes(e.key)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
     },
     [
       addRowAfterId,
