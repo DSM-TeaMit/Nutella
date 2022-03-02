@@ -22,7 +22,7 @@ export interface InfoType {
 }
 
 export const postUserInfo = async (data: any) => {
-  await request.post<InfoType>(Uri.defaultInfomation.get());
+  await request.post<InfoType>(Uri.defaultInfomation.get(), data);
 };
 
 export const getOauthGithub = async (code: string | null) => {
