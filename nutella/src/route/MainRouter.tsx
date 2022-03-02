@@ -1,20 +1,13 @@
 import { FC, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import {
-  SearchContainer,
   LoginContainer,
-  MypageContainer,
-  UserContainer,
   SignupContainer,
-  PlanContainer,
-  ProjectDetailContainer,
   TeacherLoginContainer,
-  ResultContainer,
-  FeedContainer,
-  SignLoadingContainer,
+  SignupLoadingContainer,
   GithubLoadingContainer,
-  PendingReportContainer,
 } from "../container";
+import RouterWithDefaultComponent from "./RouterWithDefaultComponent";
 
 const MainRouter: FC = (): JSX.Element => {
   return (
@@ -32,16 +25,7 @@ const MainRouter: FC = (): JSX.Element => {
           />
           <Route path="signup" element={<SignupContainer />} />
           <Route path="teacherlogin" element={<TeacherLoginContainer />} />
-          <Route path="search" element={<SearchContainer />} />
-          <Route path="feed" element={<FeedContainer />} />
-          <Route path="mypage/*" element={<MypageContainer />} />
-          <Route path="user/:id/*" element={<UserContainer />} />
-          <Route path="project/:id/*">
-            <Route path="" element={<ProjectDetailContainer />} />
-            <Route path="plan" element={<PlanContainer />} />
-            <Route path="result" element={<ResultContainer />} />
-          </Route>
-          <Route path="pending-report" element={<PendingReportContainer />} />
+          <Route path="*" element={<RouterWithDefaultComponent />} />
         </Route>
       </Routes>
     </Suspense>
