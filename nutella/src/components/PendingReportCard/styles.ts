@@ -5,6 +5,8 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   height: 200px;
+  background-color: ${({ theme }) => theme.colors.grayscale.white};
+  border: solid 1px ${({ theme }) => theme.colors.grayscale.lightGray1};
 `;
 
 export const Img = styled.div`
