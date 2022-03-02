@@ -4,7 +4,7 @@ import {
   LoginContainer,
   SignupContainer,
   TeacherLoginContainer,
-  SignupLoadingContainer,
+  SignLoadingContainer,
   GithubLoadingContainer,
 } from "../container";
 import RouterWithDefaultComponent from "./RouterWithDefaultComponent";
