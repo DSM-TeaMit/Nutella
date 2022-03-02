@@ -1,15 +1,7 @@
-import Header from "../../components/Header";
 import Search from "../../components/Search/Search";
-import Footer from "../../components/Footer";
 
 const SearchContainer = () => {
-  return (
-    <>
-      <Header />
-      <Search />
-      <Footer />
-    </>
-  );
+  return <Search />;
 };
 
 export default SearchContainer;
