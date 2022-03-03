@@ -1,5 +1,5 @@
 import Uri from "../../constant/Uri";
-import request from "../axios";
+import request, { instance } from "../axios";
 
 export interface TokenType {
   type: "login" | "registration" | undefined;
@@ -11,8 +11,8 @@ export interface TokenType {
   refreshToken: string;
 }
 
-export const getOauthGoogle = async (code: string | undefined) => {
-  const response = await request.get<TokenType>(Uri.googleCallback.get(), {
+export const getOauthGoogle = async (code: string | null) => {
+  const response = await instance.get<TokenType>(Uri.googleCallback.get(), {
     params: { code },
   });
   return response;

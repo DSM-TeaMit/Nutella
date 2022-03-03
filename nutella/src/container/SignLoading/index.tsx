@@ -5,7 +5,8 @@ import { useOauthGoogle } from "../../queries/Signup";
 
 const SignLoadingContainer: FC = () => {
   const navigate = useNavigate();
-  const { code } = useParams<{ code: string }>();
+  const code = new URL(window.location.href).searchParams.get("code");
+
   const { showMessage } = useMessageContext();
   const { data } = useOauthGoogle(code);
 

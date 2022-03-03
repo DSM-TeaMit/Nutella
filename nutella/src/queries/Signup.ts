@@ -11,7 +11,7 @@ import {
   TokenType,
 } from "../utils/api/Signup";
 
-export const useOauthGoogle = (code: string | undefined) => {
+export const useOauthGoogle = (code: string | null) => {
   const [, setUser] = useUserContext();
 
   const onSuccess = useCallback(
