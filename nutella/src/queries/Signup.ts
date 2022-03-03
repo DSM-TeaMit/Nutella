@@ -7,7 +7,14 @@ import {
 } from "../utils/api/Signup";
 
 export const useOauthGoogleSingup = (code: string | null) =>
-  useQuery(["Signup", code], () => getOauthSignup(code));
+  useQuery(["Signup", code], () => getOauthSignup(code), {
+    onSuccess: (data) => {
+      const { accessToken, refreshToken } = data.data;
+      localStorage.setItem("access_token", accessToken);
+      localStorage.setItem("refresh_token", refreshToken);
+      
+    },
+  });
 
 export const useUserInfo = () => {
   const queryClient = useQueryClient();
