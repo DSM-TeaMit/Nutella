@@ -27,7 +27,7 @@ const tagMap = new Map<string, Tag>()
   .set("######", "h6")
   .set(">", "blockquote")
   .set("-", "ul")
-  .set("\\d+.", "ol");
+  .set("\\d+\\.", "ol");
 
 const placeholderMap = new Map<Tag, string>()
   .set("p", "비어있는 본문")
@@ -113,6 +113,11 @@ const Row: FC<PropsType> = ({ data }) => {
         } else {
           changeTab(id, 1);
         }
+      }
+
+      if ((e.ctrlKey || e.metaKey) && ["c", "v"].includes(e.key)) {
+        e.preventDefault();
+        e.stopPropagation();
       }
     },
     [
