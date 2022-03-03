@@ -11,7 +11,7 @@ export interface TokenType {
   refreshToken: string;
 }
 
-export const getOauthSignup = async (code: string | null) => {
+export const getOauthGoogle = async (code: string | undefined) => {
   const response = await request.get<TokenType>(Uri.googleCallback.get(), {
     params: { code },
   });
