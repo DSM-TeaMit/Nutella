@@ -27,7 +27,7 @@ const tagMap = new Map<string, Tag>()
   .set("######", "h6")
   .set(">", "blockquote")
   .set("-", "ul")
-  .set("\\d+.", "ol");
+  .set("\\d+\\.", "ol");
 
 const placeholderMap = new Map<Tag, string>()
   .set("p", "비어있는 본문")
