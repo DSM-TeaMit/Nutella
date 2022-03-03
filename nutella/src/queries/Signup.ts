@@ -1,7 +1,9 @@
 import { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useMutation, useQueryClient, useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { Admin, User } from "../context/UserContext";
+import useMessageContext from "../hooks/useMessageContext";
 import useUserContext from "../hooks/useUserContext";
 import {
   postUserInfo,
@@ -13,6 +15,8 @@ import {
 
 export const useOauthGoogle = (code: string | null) => {
   const [, setUser] = useUserContext();
+  const { showMessage } = useMessageContext();
+  const navigate = useNavigate();
 
   const onSuccess = useCallback(
     (data: AxiosResponse<TokenType, any>) => {
@@ -31,8 +35,20 @@ export const useOauthGoogle = (code: string | null) => {
     [setUser]
   );
 
+  const onError = useCallback(() => {
+    showMessage({
+      type: "Denial",
+      title: "학교 계정으로 인증해주세요.",
+      content:
+        "Teamit을 이용하려면 대덕소프트웨어마이스터고등학교 계정이 필요합니다.",
+    });
+    navigate("/");
+  }, [showMessage, navigate]);
+
   return useQuery(["sign_up", code], () => getOauthGoogle(code), {
-    onSuccess: onSuccess,
+    onSuccess,
+    onError,
+    retry: false,
   });
 };
 

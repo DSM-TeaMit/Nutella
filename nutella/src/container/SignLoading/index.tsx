@@ -17,14 +17,7 @@ const SignLoadingContainer: FC = () => {
 
     const { type } = data.data;
 
-    if (!type) {
-      showMessage({
-        type: "Denial",
-        title: "회원가입에 실패하였습니다.",
-        content: "학교 계정인지 확인해 주세요.",
-      });
-      navigate("/");
-    } else if (type === "registration") {
+    if (type === "registration") {
       navigate("/signup");
       return;
     } else {
