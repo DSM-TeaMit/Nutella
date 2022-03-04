@@ -6,8 +6,6 @@ import { DocumentIcons, PersonalIcons } from "../../../assets/icons";
 import Profile from "./Contents/Profile";
 import Project from "./Contents/Project";
 import { useUserProfile } from "../../../queries/User";
-import { useEffect } from "react";
-import useMessageContext from "../../../hooks/useMessageContext";
 
 const navs: NavigationType[] = [
   {
