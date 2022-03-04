@@ -49,10 +49,16 @@ export interface UserProfileType {
   projects: ProjectType[];
 }
 
-export const getProfile = async <T>(userUuid: string) => {
+export const getProfile = async (userUuid: string) => {
   const uri = Uri.userProfile.get({ userUuid });
 
-  return await request.get<T>(uri);
+  return await request.get<UserProfileType>(uri);
+};
+
+export const getMyProfile = async () => {
+  const uri = Uri.myProfile.get();
+
+  return await request.get<MyProfileType>(uri);
 };
 
 export const LIMIT = 20 as const;
@@ -69,6 +75,17 @@ export interface UserProjects {
 
 export const getUserProjects = async (userUuid: string, page: number) => {
   const uri = Uri.userProject.get({ userUuid });
+
+  const params: Pagination = {
+    limit: LIMIT,
+    page,
+  };
+
+  return await request.get<UserProjects>(uri, { params });
+};
+
+export const getMyProjects = async (page: number) => {
+  const uri = Uri.myProjects.get();
 
   const params: Pagination = {
     limit: LIMIT,
@@ -98,6 +115,17 @@ export interface UserReports {
 
 export const getUserReports = async (userUuid: string, page: number) => {
   const uri = Uri.userReports.get({ userUuid });
+
+  const params: Pagination = {
+    limit: LIMIT,
+    page,
+  };
+
+  return await request.get<UserReports>(uri, { params });
+};
+
+export const getMyReports = async (page: number) => {
+  const uri = Uri.myReports.get();
 
   const params: Pagination = {
     limit: LIMIT,
