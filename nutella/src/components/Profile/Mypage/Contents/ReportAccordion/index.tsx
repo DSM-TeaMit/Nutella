@@ -1,16 +1,18 @@
 import * as S from "./styles";
 import { UpArrowIcons } from "../../../../../assets/icons";
 import ReportCard from "../../../../ReportCard";
-import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { LIMIT, Reports } from "../../../../../utils/api/User";
 import { ReportStatus } from "../../../../../interface/Report";
 import isMore from "../../../../../constant/IsMore";
 import ReportPathType from "../../../../../interface/ReportPathType";
+import { useEachReports } from "../../../../../queries/User";
 
 interface PropsType {
   title: string;
   data: Reports;
   status: ReportStatus;
+  userUuid?: string;
 }
 
 const padding = 12 as const;
@@ -21,14 +23,23 @@ const pathMap = new Map<ReportStatus, ReportPathType>()
   .set("ACCEPTED", "accepted")
   .set("DECLINED", "rejected");
 
-const ReportAccordion: FC<PropsType> = ({ title, data, status }) => {
-  const [isActive, setIsActive] = useState(false);
+const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
+  const [isActive, setIsActive] = useState<boolean>(false);
   const container = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(2);
+  const [queryEnabled, setQueryEnabled] = useState<boolean>(false);
+  const pathType = useMemo(() => pathMap.get(status)!, [status]);
 
   const { count, projects: reports } = data;
+
+  const { data: eachData } = useEachReports(
+    pathType,
+    page,
+    queryEnabled,
+    userUuid
+  );
 
   useEffect(() => {
     if (container.current && header.current && content.current) {
@@ -46,6 +57,15 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status }) => {
       }
     }
   }, [isActive]);
+
+  const onMore = useCallback(() => {
+    if (!queryEnabled) {
+      setQueryEnabled(true);
+      return;
+    }
+
+    setPage((prev) => prev + 1);
+  }, [queryEnabled]);
 
   return (
     <S.Container ref={container}>
@@ -69,11 +89,12 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status }) => {
           {reports.map((value) => (
             <ReportCard key={value.uuid} data={{ ...value, status }} />
           ))}
+          {eachData?.data[pathType].projects.map((value) => {
+            <ReportCard key={value.uuid} data={{ ...value, status }} />;
+          })}
         </S.Grid>
         {isMore(LIMIT, page, count) && (
-          <S.More onClick={() => setPage((prev) => prev + 1)}>
-            더 가져오기
-          </S.More>
+          <S.More onClick={onMore}>더 가져오기</S.More>
         )}
       </S.ContentContainer>
     </S.Container>
