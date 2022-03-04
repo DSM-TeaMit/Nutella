@@ -27,6 +27,7 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
     pendingCount,
     pendingProjects: pendingReports,
     projects,
+    thumbnailUrl,
   } = data!.data;
 
   return (
@@ -34,7 +35,7 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
       <I.FlexContainer>
         <I.ProfileContainerOuter>
           <I.ProfileContainer>
-            <I.ProfileImage alt="" src="" />
+            <I.ProfileImage alt="profile image" src={thumbnailUrl} />
             <I.ProfileInfoContainer>
               <I.Name>
                 {studentNo} {name}

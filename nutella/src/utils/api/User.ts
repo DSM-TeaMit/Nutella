@@ -9,13 +9,13 @@ export interface ReportType {
   projectName: string;
   type: ReportTypes;
   status: ReportStatus;
-  thumbnailUrl: string;
+  thumbnailUrl?: string;
 }
 
 export interface ProjectMember {
   uuid: string;
   name: string;
-  thumbnailUrl: string;
+  thumbnailUrl?: string;
 }
 
 export interface ProjectType {
@@ -25,7 +25,7 @@ export interface ProjectType {
   projectType: ProjectTypes;
   fields: string;
   members: ProjectMember[];
-  thumbnailUrl: string;
+  thumbnailUrl?: string;
 }
 
 export interface MyProfileType {
@@ -37,6 +37,7 @@ export interface MyProfileType {
   pendingProjects: ReportType[];
   projectCount: number;
   projects: ProjectType[];
+  thumbnailUrl?: string;
 }
 
 export interface UserProfileType {
