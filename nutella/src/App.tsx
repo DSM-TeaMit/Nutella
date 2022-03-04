@@ -2,7 +2,6 @@ import { Global, ThemeProvider } from "@emotion/react";
 import MessageController from "./components/MessageController";
 import MessageProvider from "./components/Providers/MessageProvider";
 import ModalProvider from "./components/Providers/ModalProvider";
-import UserProvider from "./components/Providers/UserProvider";
 import RootRouter from "./route";
 import { reset } from "./style/globalStyle";
 import theme from "./utils/theme/theme";
@@ -15,16 +14,14 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <UserProvider>
-          <ModalProvider>
-            <MessageProvider>
-              <Global styles={reset} />
-              <RootRouter />
-              <MessageController />
-              <Toaster position="bottom-right" />
-            </MessageProvider>
-          </ModalProvider>
-        </UserProvider>
+        <ModalProvider>
+          <MessageProvider>
+            <Global styles={reset} />
+            <RootRouter />
+            <MessageController />
+            <Toaster position="bottom-right" />
+          </MessageProvider>
+        </ModalProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

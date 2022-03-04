@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import { ReportStatus } from "../../interface/Report";
+import Img from "../Img";
 
 export const Container = styled(Link)`
   width: 100%;
@@ -16,7 +18,7 @@ export const Container = styled(Link)`
   }
 `;
 
-export const Image = styled.img`
+export const Image = styled(Img)`
   border-radius: 10px;
   width: 180px;
   object-fit: cover;
@@ -51,7 +53,7 @@ export const Title = styled.span`
 
 export const Description = styled.span`
   font: ${({ theme }) => theme.fonts.body3};
-  color: ${({ theme }) => theme.colors.grayscale.gray2};
+  color: ${({ color, theme }) => color || theme.colors.grayscale.gray2};
   white-space: nowrap;
   flex-shrink: 0;
 `;

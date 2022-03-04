@@ -12,6 +12,7 @@ import Profile from "./Contents/Profile";
 import Project from "./Contents/Project";
 import Report from "./Contents/Report";
 import Setting from "./Contents/Setting";
+import { useMyProfile } from "../../../queries/User";
 
 const navs: NavigationType[] = [
   {
@@ -37,15 +38,17 @@ const navs: NavigationType[] = [
 ];
 
 const MyPage = () => {
+  const myPageQuery = useMyProfile();
+
   return (
     <S.Container>
       <S.Inner>
         <S.SideBarContainer>
-          <SideBar {...{ navs }} />
+          <SideBar navs={navs} data={myPageQuery} />
         </S.SideBarContainer>
         <S.ContentContainer>
           <Routes>
-            <Route path="/" element={<Profile />} />
+            <Route path="/" element={<Profile data={myPageQuery} />} />
             <Route path="/project" element={<Project />} />
             <Route path="/report" element={<Report />} />
             <Route path="/setting" element={<Setting />} />

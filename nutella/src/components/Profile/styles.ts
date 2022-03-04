@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Img from "../Img";
 
 export const Container = styled.div`
   width: 100%;
@@ -57,7 +58,7 @@ export const Line = styled.div`
   background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
 `;
 
-export const ProfileImage = styled.img`
+export const ProfileImage = styled(Img)`
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -71,6 +72,7 @@ export const ProfileInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 8px;
+  flex: 1;
 `;
 
 export const Name = styled.div`
@@ -112,19 +114,6 @@ export const Github = styled.a`
   }
 `;
 
-export const Description = styled.div`
-  font: ${({ theme }) => theme.fonts.description};
-  color: ${({ theme }) => theme.colors.grayscale.gray2};
-  margin-bottom: 12px;
-`;
-
-export const ReadMe = styled.div`
-  padding: 24px;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.colors.grayscale.white};
-  border: solid 1px ${({ theme }) => theme.colors.grayscale.lightGray1};
-`;
-
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -151,4 +140,28 @@ export const ProjectTitle = styled(ContentTitle)`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+`;
+
+export const Message = styled.div`
+  font: ${({ theme }) => theme.fonts.subtitle2};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
+  text-align: center;
+  margin: 16px 0px;
+`;
+
+export const More = styled.button`
+  padding: 0px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+  margin: 36px 0px;
+  font: ${({ theme }) => theme.fonts.body2};
+  color: ${({ theme }) => theme.colors.grayscale.gray1};
+  text-align: center;
+  border-radius: 10px;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.grayscale.black};
+  }
 `;

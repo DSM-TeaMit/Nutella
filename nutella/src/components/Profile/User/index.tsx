@@ -1,10 +1,11 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import NavigationType from "../../../interface/Navigation";
 import SideBar from "../../SideBar";
 import * as S from "../styles";
 import { DocumentIcons, PersonalIcons } from "../../../assets/icons";
 import Profile from "./Contents/Profile";
 import Project from "./Contents/Project";
+import { useUserProfile } from "../../../queries/User";
 
 const navs: NavigationType[] = [
   {
@@ -20,15 +21,18 @@ const navs: NavigationType[] = [
 ];
 
 const User = () => {
+  const { uuid } = useParams<{ uuid: string }>();
+  const profileQuery = useUserProfile(uuid || "");
+
   return (
     <S.Container>
       <S.Inner>
         <S.SideBarContainer>
-          <SideBar {...{ navs }} />
+          <SideBar navs={navs} data={profileQuery} />
         </S.SideBarContainer>
         <S.ContentContainer>
           <Routes>
-            <Route path="/" element={<Profile />} />
+            <Route path="/" element={<Profile data={profileQuery} />} />
             <Route path="/project" element={<Project />} />
           </Routes>
         </S.ContentContainer>

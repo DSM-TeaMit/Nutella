@@ -3,9 +3,7 @@ import { useCallback } from "react";
 import { useMutation, useQueryClient, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import storageKeys from "../constant/StorageKeys";
-import { Admin, User } from "../context/UserContext";
 import useMessageContext from "../hooks/useMessageContext";
-import useUserContext from "../hooks/useUserContext";
 import {
   postUserInfo,
   InfoType,
@@ -21,30 +19,18 @@ const getDateWithAddHour = (hour: number) => {
 };
 
 export const useOauthGoogle = (code: string | null) => {
-  const [, setUser] = useUserContext();
   const { showMessage } = useMessageContext();
   const navigate = useNavigate();
 
-  const onSuccess = useCallback(
-    (data: AxiosResponse<TokenType, any>) => {
-      const { accessToken, refreshToken, uuid, name, studentNo, userType } =
-        data.data;
-      localStorage.setItem("access_token", accessToken);
-      localStorage.setItem("refresh_token", refreshToken);
-      localStorage.setItem(
-        storageKeys.expireAt,
-        getDateWithAddHour(24).toString()
-      );
-
-      const userData: User | Admin =
-        userType === "user"
-          ? { uuid, name, studentNo, userType }
-          : { uuid, name, userType };
-
-      setUser(userData);
-    },
-    [setUser]
-  );
+  const onSuccess = useCallback((data: AxiosResponse<TokenType, any>) => {
+    const { accessToken, refreshToken } = data.data;
+    localStorage.setItem("access_token", accessToken);
+    localStorage.setItem("refresh_token", refreshToken);
+    localStorage.setItem(
+      storageKeys.expireAt,
+      getDateWithAddHour(24).toString()
+    );
+  }, []);
 
   const onError = useCallback(() => {
     showMessage({

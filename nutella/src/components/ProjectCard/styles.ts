@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import Img from "../Img";
 
 export const Container = styled(Link)`
   width: 100%;
@@ -16,7 +17,7 @@ export const Container = styled(Link)`
   }
 `;
 
-export const Image = styled.img`
+export const Image = styled(Img)`
   width: 180px;
   height: 180px;
   border-radius: 10px;
@@ -54,7 +55,7 @@ export const TypeIcon = styled.img`
 
 export const Description = styled.div`
   display: -webkit-box;
-  height: calc(1.4rem * 2);
+  height: calc(1.2rem * 2);
   line-height: 1rem;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -76,7 +77,7 @@ export const UserContainer = styled.div`
   column-gap: 16px;
 `;
 
-export const UserImage = styled.img`
+export const UserImage = styled(Img)`
   width: 24px;
   height: 24px;
   border-radius: 50%;

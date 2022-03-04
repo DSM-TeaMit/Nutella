@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import TextareaAutosize from "react-textarea-autosize";
+import Img from "../Img";
 
 export const Container = styled.div`
   display: flex;
@@ -7,7 +8,7 @@ export const Container = styled.div`
   width: 100%;
 `;
 
-export const Image = styled.img`
+export const Image = styled(Img)`
   width: 36px;
   height: 36px;
   border-radius: 50%;
