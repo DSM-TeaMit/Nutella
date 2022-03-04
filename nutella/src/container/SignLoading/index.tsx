@@ -1,7 +1,8 @@
-import { useNavigate, useParams } from "react-router-dom";
-import React, { FC, useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { FC, useCallback, useEffect } from "react";
 import useMessageContext from "../../hooks/useMessageContext";
 import { useOauthGoogle } from "../../queries/Signup";
+import * as S from "./styles";
 
 const SignLoadingContainer: FC = () => {
   const navigate = useNavigate();
@@ -22,6 +23,11 @@ const SignLoadingContainer: FC = () => {
       return;
     } else {
       navigate("/feed");
+      showMessage({
+        type: "Positive",
+        title: "로그인 성공",
+        content: "Teamit에 오신걸 환영합니다.",
+      });
     }
   }, [data, navigate, showMessage]);
 
@@ -31,7 +37,12 @@ const SignLoadingContainer: FC = () => {
 
   return (
     <>
-      <div>회원가입 중입니다...</div>
+      <S.Container>
+        <div>
+          <S.Title>인증중입니다...</S.Title>
+          <S.Description>잠시만 기다려주세요.</S.Description>
+        </div>
+      </S.Container>
     </>
   );
 };
