@@ -114,6 +114,10 @@ export interface UserReports {
   pending: Reports;
 }
 
+interface EachReportPagination extends Pagination {
+  type: ReportPathType;
+}
+
 export const getUserReports = async (userUuid: string, page: number) => {
   const uri = Uri.userReports.get({ userUuid });
 
@@ -125,18 +129,29 @@ export const getUserReports = async (userUuid: string, page: number) => {
   return await request.get<UserReports>(uri, { params });
 };
 
-export const getMyReports = async (page: number) => {
-  const uri = Uri.myReports.get();
+export const getEachReports = async (
+  type: ReportPathType,
+  page: number,
+  userUuid?: string
+) => {
+  let uri = "";
 
-  const params: Pagination = {
+  if (userUuid) {
+    uri = Uri.userReports.get({ userUuid });
+  } else {
+    uri = Uri.eachMyReports.get();
+  }
+
+  const params: EachReportPagination = {
     limit: LIMIT,
     page,
+    type,
   };
 
   return await request.get<UserReports>(uri, { params });
 };
 
-export const getEachMyReports = async (page: number, type: ReportPathType) => {
+export const getMyReports = async (page: number) => {
   const uri = Uri.myReports.get();
 
   const params: Pagination = {
