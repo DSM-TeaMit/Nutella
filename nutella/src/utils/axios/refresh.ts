@@ -1,5 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { instance } from ".";
 import baseURL from "../../constant/BaseUrl";
+import storageKeys from "../../constant/StorageKeys";
+import Uri from "../../constant/Uri";
+import toast from "react-hot-toast";
+import RefreshError from "../../interface/RefreshError";
 
 export const request = axios.create({
   baseURL,
@@ -17,45 +22,50 @@ interface Token {
   refreshToken: string;
 }
 
-const refresh = async (
+export const refresh = async (
   config: AxiosRequestConfig
 ): Promise<AxiosRequestConfig> => {
-  const expireAt = localStorage.getItem("expire_at");
-  const accessToken = localStorage.getItem("access_token");
-  const refreshToken = localStorage.getItem("refresh_token");
-  const code = localStorage.getItem("google_code");
+  const expireAt = localStorage.getItem(storageKeys.expireAt);
+  let accessToken = localStorage.getItem(storageKeys.accessToken);
+  const refreshToken = localStorage.getItem(storageKeys.refreshToken);
+
   if (!refreshToken || !expireAt) {
-    window.location.href = "/";
-    localStorage.removeItem("expire_at");
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-
-    return config;
+    //리프레시 토큰이 없거나 만료 기간이 로컬 스토리지에 없을때
+    throw new RefreshError("NO_TOKEN");
   }
 
-  const uri = `auth/callback-google`;
+  const uri = Uri.refresh.get();
 
-  try {
-    const { accessToken, refreshToken } = (
-      await request.post<Token>(uri, null, {
-        params: { code },
-      })
-    ).data;
+  if (new Date() >= new Date(expireAt)) {
+    //현재 시간이 엑세스 토큰 만료 시간을 지났을 때
 
-    localStorage.setItem("access_token", accessToken);
-    localStorage.setItem("refresh_token", refreshToken);
-    localStorage.setItem("expire_at", getDateWithAddHour(2).toString());
-  } catch {
-    window.location.href = "/";
-    localStorage.removeItem("expire_at");
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
+    try {
+      const { accessToken: newAccessToken, refreshToken: newRefreshToken } = (
+        await instance.put<Token>(uri, { refreshToken })
+      ).data;
 
-    return config;
+      localStorage.setItem(storageKeys.accessToken, newAccessToken);
+      localStorage.setItem(storageKeys.refreshToken, newRefreshToken);
+      localStorage.setItem(
+        storageKeys.expireAt,
+        getDateWithAddHour(24).toString()
+      );
+
+      accessToken = newAccessToken;
+    } catch (error) {
+      //토큰 리프레시시 오류 발생 (토큰 만료 등)
+      if (axios.isAxiosError(error)) {
+        if (error.response && error.response?.status === 401) {
+          //토큰 만료
+          throw new RefreshError("EXPIRED_TOKEN");
+        }
+      }
+      //다른 오류
+      throw new RefreshError("NETWORK_ERROR");
+    }
   }
+
   config.headers!["Authorization"] = `Bearer ${accessToken}`;
 
   return config;
 };
-
-export { refresh };

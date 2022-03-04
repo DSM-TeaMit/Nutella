@@ -1,5 +1,6 @@
-import { FC, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { FC, Suspense, useCallback } from "react";
+import { useQueryClient } from "react-query";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import {
   LoginContainer,
   SignupContainer,
@@ -7,28 +8,49 @@ import {
   SignLoadingContainer,
   GithubLoadingContainer,
 } from "../container";
+import RefreshError from "../interface/RefreshError";
 import RouterWithDefaultComponent from "./RouterWithDefaultComponent";
+import toast from "react-hot-toast";
+import storageKeys from "../constant/StorageKeys";
 
 const MainRouter: FC = (): JSX.Element => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        <Route path="/*">
-          <Route path="" element={<LoginContainer />} />
-          <Route
-            path="auth/callback-google"
-            element={<SignLoadingContainer />}
-          />
-          <Route
-            path="auth/callback-github"
-            element={<GithubLoadingContainer />}
-          />
-          <Route path="signup" element={<SignupContainer />} />
-          <Route path="teacherlogin" element={<TeacherLoginContainer />} />
-          <Route path="*" element={<RouterWithDefaultComponent />} />
-        </Route>
+        <Route path="/*" element={<SubRouter />} />
       </Routes>
     </Suspense>
+  );
+};
+
+const SubRouter = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const onError = useCallback(
+    (error: unknown) => {
+      if (error instanceof RefreshError) {
+        toast.error(error.message);
+        navigate("/");
+        localStorage.removeItem(storageKeys.accessToken);
+        localStorage.removeItem(storageKeys.refreshToken);
+        localStorage.removeItem(storageKeys.expireAt);
+      }
+    },
+    [navigate]
+  );
+
+  queryClient.setDefaultOptions({ queries: { onError, retry: false } });
+
+  return (
+    <Routes>
+      <Route path="" element={<LoginContainer />} />
+      <Route path="auth/callback-google" element={<SignLoadingContainer />} />
+      <Route path="auth/callback-github" element={<GithubLoadingContainer />} />
+      <Route path="signup" element={<SignupContainer />} />
+      <Route path="teacherlogin" element={<TeacherLoginContainer />} />
+      <Route path="*" element={<RouterWithDefaultComponent />} />
+    </Routes>
   );
 };
 
