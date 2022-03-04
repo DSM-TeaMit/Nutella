@@ -16,8 +16,8 @@ export const Title = styled.div`
 
 export const Box = styled.div`
   width: 334px;
-  height: 64px;
   margin-top: 36px;
+  justify-content: space-between;
 `;
 
 export const SubTitle = styled.div`
