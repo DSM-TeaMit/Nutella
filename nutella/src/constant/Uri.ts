@@ -11,6 +11,7 @@ type CommentUuid = typeof commentUuid;
 type ImageUuid = typeof imageUuid;
 
 const Uri = {
+  googleCallback: new URI(`auth/callback-google`),
   login: new URI(`auth/uidlogin`),
   register: new URI(`auth/register-admin`),
   defaultInfomation: new URI(`user/register`),

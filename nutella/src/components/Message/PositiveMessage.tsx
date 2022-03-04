@@ -23,10 +23,7 @@ const PositiveMessage: FC<MessageType> = ({ title, content, id }) => {
 
   return (
     <S.PositiveContainer onClick={onClick}>
-      <S.Title>
-        {title}
-        {id}
-      </S.Title>
+      <S.Title>{title}</S.Title>
       <S.Content>{content}</S.Content>
     </S.PositiveContainer>
   );

@@ -1,17 +1,20 @@
 import Uri from "../../constant/Uri";
-import request from "../axios";
+import request, { instance } from "../axios";
 
 export interface TokenType {
-  type: string;
-  accessToken: string | any;
-  refreshToken: string | any;
+  type: "login" | "registration" | undefined;
+  uuid: string;
+  studentNo: number;
+  name: string;
+  userType: "user" | "admin";
+  accessToken: string;
+  refreshToken: string;
 }
 
-export const getOauthSignup = async (code: string | null) => {
-  const uri = `auth/callback-google?code=${code}`;
-  const response = await request.get<TokenType>(uri);
-  localStorage.setItem("access_token", response.data.accessToken);
-  localStorage.setItem("refresh_token", response.data.refreshToken);
+export const getOauthGoogle = async (code: string | null) => {
+  const response = await instance.get<TokenType>(Uri.googleCallback.get(), {
+    params: { code },
+  });
   return response;
 };
 
