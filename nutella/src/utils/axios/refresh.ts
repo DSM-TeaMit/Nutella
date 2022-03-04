@@ -1,5 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { instance } from ".";
 import baseURL from "../../constant/BaseUrl";
+import storageKeys from "../../constant/StorageKeys";
+import Uri from "../../constant/Uri";
 
 export const request = axios.create({
   baseURL,
@@ -17,39 +20,41 @@ interface Token {
   refreshToken: string;
 }
 
-const refresh = async (
+export const refresh = async (
   config: AxiosRequestConfig
 ): Promise<AxiosRequestConfig> => {
-  const expireAt = localStorage.getItem("expire_at");
-  const accessToken = localStorage.getItem("access_token");
-  const refreshToken = localStorage.getItem("refresh_token");
-  const code = localStorage.getItem("google_code");
+  const expireAt = localStorage.getItem(storageKeys.expireAt);
+  const accessToken = localStorage.getItem(storageKeys.accessToken);
+  const refreshToken = localStorage.getItem(storageKeys.refreshToken);
+
   if (!refreshToken || !expireAt) {
-    window.location.href = "/";
-    localStorage.removeItem("expire_at");
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
+    //리프레시 토큰이 없거나 만료 기간이 로컬 스토리지에 없을때
+    window.location.href = "/"; //로그인으로 보내고 스토리지를 비운다
+    localStorage.removeItem(storageKeys.accessToken);
+    localStorage.removeItem(storageKeys.refreshToken);
+    localStorage.removeItem(storageKeys.expireAt);
 
     return config;
   }
 
-  const uri = `auth/callback-google`;
+  const uri = Uri.refresh.get();
 
   try {
-    const { accessToken, refreshToken } = (
-      await request.post<Token>(uri, null, {
-        params: { code },
-      })
+    const { accessToken: newAccessToken, refreshToken: newRefreshToken } = (
+      await instance.put<Token>(uri, { refreshToken })
     ).data;
 
-    localStorage.setItem("access_token", accessToken);
-    localStorage.setItem("refresh_token", refreshToken);
-    localStorage.setItem("expire_at", getDateWithAddHour(2).toString());
+    localStorage.setItem(storageKeys.accessToken, newAccessToken);
+    localStorage.setItem(storageKeys.refreshToken, newRefreshToken);
+    localStorage.setItem(
+      storageKeys.expireAt,
+      getDateWithAddHour(2).toString()
+    );
   } catch {
     window.location.href = "/";
-    localStorage.removeItem("expire_at");
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
+    localStorage.removeItem(storageKeys.accessToken);
+    localStorage.removeItem(storageKeys.refreshToken);
+    localStorage.removeItem(storageKeys.expireAt);
 
     return config;
   }
@@ -57,5 +62,3 @@ const refresh = async (
 
   return config;
 };
-
-export { refresh };
