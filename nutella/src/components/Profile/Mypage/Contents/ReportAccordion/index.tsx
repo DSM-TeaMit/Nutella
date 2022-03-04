@@ -2,8 +2,9 @@ import * as S from "./styles";
 import { UpArrowIcons } from "../../../../../assets/icons";
 import ReportCard from "../../../../ReportCard";
 import { FC, useEffect, useMemo, useRef, useState } from "react";
-import { Reports } from "../../../../../utils/api/User";
+import { LIMIT, Reports } from "../../../../../utils/api/User";
 import { ReportStatus } from "../../../../../interface/Report";
+import isMore from "../../../../../constant/IsMore";
 
 interface PropsType {
   title: string;
@@ -11,14 +12,22 @@ interface PropsType {
   status: ReportStatus;
 }
 
-const padding = 12;
-const gap = 16;
+export type ReportPath = "pending" | "accepted" | "rejected";
+
+const padding = 12 as const;
+const gap = 16 as const;
+
+const pathMap = new Map<ReportStatus, ReportPath>()
+  .set("PENDING", "pending")
+  .set("ACCEPTED", "accepted")
+  .set("DECLINED", "rejected");
 
 const ReportAccordion: FC<PropsType> = ({ title, data, status }) => {
   const [isActive, setIsActive] = useState(false);
   const container = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
+  const [page, setPage] = useState<number>(1);
 
   const { count, projects: reports } = data;
 
@@ -57,9 +66,16 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status }) => {
         </S.HeaderContainer>
       </div>
       <S.ContentContainer isActive={isActive} ref={content}>
-        {reports.map((value) => (
-          <ReportCard key={value.uuid} data={{ ...value, status }} />
-        ))}
+        <S.Grid>
+          {reports.map((value) => (
+            <ReportCard key={value.uuid} data={{ ...value, status }} />
+          ))}
+        </S.Grid>
+        {isMore(LIMIT, page, count) && (
+          <S.More onClick={() => setPage((prev) => prev + 1)}>
+            더 가져오기
+          </S.More>
+        )}
       </S.ContentContainer>
     </S.Container>
   );
