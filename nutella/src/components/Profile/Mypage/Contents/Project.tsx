@@ -54,7 +54,9 @@ const Project = () => {
               <I.Message>프로젝트가 존재하지 않습니다.</I.Message>
             )}
             {isMore(LIMIT, page, count) && (
-              <I.More onClick={() => setPage(page + 1)}>더 가져오기...</I.More>
+              <I.More onClick={() => setPage((prev) => prev + 1)}>
+                더 가져오기...
+              </I.More>
             )}
           </div>
         </I.FlexContainer>
