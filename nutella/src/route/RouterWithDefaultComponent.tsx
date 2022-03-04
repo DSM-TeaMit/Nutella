@@ -20,8 +20,8 @@ const RouterWithDefaultComponent = () => {
         <Route path="search" element={<SearchContainer />} />
         <Route path="feed" element={<FeedContainer />} />
         <Route path="mypage/*" element={<MypageContainer />} />
-        <Route path="user/:id/*" element={<UserContainer />} />
-        <Route path="project/:id/*">
+        <Route path="user/:uuid/*" element={<UserContainer />} />
+        <Route path="project/:uuid/*">
           <Route path="" element={<ProjectDetailContainer />} />
           <Route path="plan" element={<PlanContainer />} />
           <Route path="result" element={<ResultContainer />} />
