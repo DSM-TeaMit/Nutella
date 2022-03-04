@@ -3,6 +3,7 @@ import { instance } from ".";
 import baseURL from "../../constant/BaseUrl";
 import storageKeys from "../../constant/StorageKeys";
 import Uri from "../../constant/Uri";
+import toast from "react-hot-toast";
 import RefreshError from "../../interface/RefreshError";
 
 export const request = axios.create({
@@ -30,7 +31,6 @@ export const refresh = async (
 
   if (!refreshToken || !expireAt) {
     //리프레시 토큰이 없거나 만료 기간이 로컬 스토리지에 없을때
-
     throw new RefreshError("NO_TOKEN");
   }
 
