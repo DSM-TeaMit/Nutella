@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import baseURL from "../../constant/BaseUrl";
 import { refresh } from "./refresh";
+import toast from "react-hot-toast";
 
 const request = axios.create({
   baseURL: baseURL,
@@ -13,6 +14,7 @@ export const instance = axios.create({
 });
 
 request.interceptors.request.use(refresh, function (error: AxiosError) {
+  toast.error("네트워크를 확인해주세요.");
   return Promise.reject(error);
 });
 

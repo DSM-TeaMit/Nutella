@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useMutation, useQueryClient, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import storageKeys from "../constant/StorageKeys";
 import { Admin, User } from "../context/UserContext";
 import useMessageContext from "../hooks/useMessageContext";
 import useUserContext from "../hooks/useUserContext";
@@ -12,6 +13,12 @@ import {
   getOauthGithub,
   TokenType,
 } from "../utils/api/Signup";
+
+const getDateWithAddHour = (hour: number) => {
+  const date = new Date();
+  date.setHours(date.getHours() + hour);
+  return date;
+};
 
 export const useOauthGoogle = (code: string | null) => {
   const [, setUser] = useUserContext();
@@ -24,6 +31,10 @@ export const useOauthGoogle = (code: string | null) => {
         data.data;
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
+      localStorage.setItem(
+        storageKeys.expireAt,
+        getDateWithAddHour(24).toString()
+      );
 
       const userData: User | Admin =
         userType === "user"
