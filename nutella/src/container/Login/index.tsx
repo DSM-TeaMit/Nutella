@@ -4,7 +4,7 @@ import Background from "../../components/LoginBackground";
 const LoginContainer = () => {
   return (
     <>
-      <Background height={550} />
+      <Background height={350} />
       <Login />
     </>
   );

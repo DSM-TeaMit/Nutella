@@ -1,6 +1,6 @@
 import * as S from "./styles";
 import { GoogleLogo, LoginLogo } from "../../assets/logo";
-import { LineIcons, RightArrowIcons } from "../../assets/icons";
+import { RightArrowIcons } from "../../assets/icons";
 import { Link } from "react-router-dom";
 
 const Login = () => {
@@ -14,19 +14,7 @@ const Login = () => {
       <S.Logo alt="LoginLogoImg" src={LoginLogo} />
       <S.OauthBox>
         <S.OauthContent>
-          <S.Title>회원가입</S.Title>
-          <S.OauthBtn onClick={oauthBtnClickHandler}>
-            <img src={GoogleLogo} />
-            Google 계정으로 계속하기
-          </S.OauthBtn>
-        </S.OauthContent>
-        <S.Divider>
-          <img src={LineIcons} />
-          <span>또는</span>
-          <img src={LineIcons} />
-        </S.Divider>
-        <S.OauthContent>
-          <S.Title>로그인</S.Title>
+          <S.Title>Teamit에 로그인</S.Title>
           <S.OauthBtn onClick={oauthBtnClickHandler}>
             <img src={GoogleLogo} />
             Google 계정으로 계속하기
