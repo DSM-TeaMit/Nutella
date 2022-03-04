@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import Uri from "../../constant/Uri";
 import ProjectTypes from "../../interface/ProjectTypes";
 import { ReportStatus, ReportTypes } from "../../interface/Report";
+import ReportPathType from "../../interface/ReportPathType";
 import request from "../axios";
 
 export interface ReportType {
@@ -125,6 +126,17 @@ export const getUserReports = async (userUuid: string, page: number) => {
 };
 
 export const getMyReports = async (page: number) => {
+  const uri = Uri.myReports.get();
+
+  const params: Pagination = {
+    limit: LIMIT,
+    page,
+  };
+
+  return await request.get<UserReports>(uri, { params });
+};
+
+export const getEachMyReports = async (page: number, type: ReportPathType) => {
   const uri = Uri.myReports.get();
 
   const params: Pagination = {

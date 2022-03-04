@@ -5,6 +5,7 @@ import { FC, useEffect, useMemo, useRef, useState } from "react";
 import { LIMIT, Reports } from "../../../../../utils/api/User";
 import { ReportStatus } from "../../../../../interface/Report";
 import isMore from "../../../../../constant/IsMore";
+import ReportPathType from "../../../../../interface/ReportPathType";
 
 interface PropsType {
   title: string;
@@ -12,12 +13,10 @@ interface PropsType {
   status: ReportStatus;
 }
 
-export type ReportPath = "pending" | "accepted" | "rejected";
-
 const padding = 12 as const;
 const gap = 16 as const;
 
-const pathMap = new Map<ReportStatus, ReportPath>()
+const pathMap = new Map<ReportStatus, ReportPathType>()
   .set("PENDING", "pending")
   .set("ACCEPTED", "accepted")
   .set("DECLINED", "rejected");
