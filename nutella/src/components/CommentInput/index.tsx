@@ -18,7 +18,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
   const themeContext = useThemeContext();
   const commentMutation = useCommentMutation(uuid);
   const [input, setInput] = useState<string>("");
-  const { data } = useMyProfile("e973c27b-3e0e-4863-86be-b2e0dfd24908");
+  const { data } = useMyProfile();
   const { showMessage } = useMessageContext();
 
   const bgColorMap = new Map<CommentStyleType, string>()

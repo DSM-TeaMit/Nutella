@@ -9,7 +9,7 @@ import GithubIdModal from "../../../Modals/GithubIdModal";
 import AccountDeleteModal from "../../../Modals/AccountDeleteModal";
 
 const Setting = () => {
-  const myProfileQuery = useMyProfile("e973c27b-3e0e-4863-86be-b2e0dfd24908");
+  const myProfileQuery = useMyProfile();
   const { data, isError, isLoading } = myProfileQuery;
 
   const githubModalRef = useModalRef();

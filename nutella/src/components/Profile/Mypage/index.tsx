@@ -38,7 +38,7 @@ const navs: NavigationType[] = [
 ];
 
 const MyPage = () => {
-  const myPageQuery = useMyProfile("e973c27b-3e0e-4863-86be-b2e0dfd24908");
+  const myPageQuery = useMyProfile();
 
   return (
     <S.Container>

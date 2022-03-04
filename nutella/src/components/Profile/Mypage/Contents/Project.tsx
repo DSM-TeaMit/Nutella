@@ -4,7 +4,7 @@ import ProjectCard from "../../../ProjectCard";
 import { Fragment, useCallback, useState } from "react";
 import useModalContext from "../../../../hooks/useModalContext";
 import ProjectAddModal from "../../../Modals/ProejctAddModal";
-import { useUserProjects } from "../../../../queries/User";
+import { useMyProjects } from "../../../../queries/User";
 import useModalRef from "../../../../hooks/useModalRef";
 import ModalPortal from "../../../ModalPortal";
 import { LIMIT } from "../../../../utils/api/User";
@@ -14,10 +14,7 @@ const Project = () => {
   const { openModal } = useModalContext();
   const modalRef = useModalRef();
   const [page, setPage] = useState<number>(1);
-  const { data, isError, isLoading } = useUserProjects(
-    "e973c27b-3e0e-4863-86be-b2e0dfd24908",
-    page
-  );
+  const { data, isError, isLoading } = useMyProjects(page);
 
   const onProjectAddClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
