@@ -4,9 +4,7 @@ import { useMyReports } from "../../../../queries/User";
 import { useState } from "react";
 
 const Report = () => {
-  const [page, setPage] = useState<number>(1);
-
-  const { data, isError, isLoading } = useMyReports(page);
+  const { data, isError, isLoading } = useMyReports(1);
 
   if (isError || isLoading) {
     return <></>;
