@@ -15,16 +15,22 @@ interface PropsType {
 }
 
 const SideBar: FC<PropsType> = ({ navs, data: queryData }) => {
-  const { data } = queryData;
+  const { data, isError, isLoading } = queryData;
 
   return (
     <S.Container>
       <S.InfoContainer>
-        <S.ProfileImage alt="" src="" />
-        <S.TextContainer>
-          <S.Name>{data?.data.name}</S.Name>
-          <S.Email>{data?.data.email}</S.Email>
-        </S.TextContainer>
+        <S.ProfileImage alt="image" src={data?.data.thumbnailUrl} />
+        {isError ? (
+          <S.TextContainer>
+            <S.Name>오류 발생</S.Name>
+          </S.TextContainer>
+        ) : (
+          <S.TextContainer>
+            <S.Name>{isLoading ? "로딩중..." : data?.data.name}</S.Name>
+            <S.Email>{isLoading ? "로딩중..." : data?.data.email}</S.Email>
+          </S.TextContainer>
+        )}
       </S.InfoContainer>
       <S.Line />
       <S.NavContainer>

@@ -25,21 +25,6 @@ const navs: NavigationType[] = [
 const User = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const profileQuery = useUserProfile(uuid || "");
-  const { isError } = profileQuery;
-  const { showMessage } = useMessageContext();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isError) {
-      showMessage({
-        type: "Denial",
-        title: "유저 프로필을 가져오는데 실패하였습니다.",
-        content: `잠시 후 다시 시도해보거나, 경로를 확인해보세요.`,
-      });
-
-      navigate("/mypage");
-    }
-  }, [isError, showMessage, navigate]);
 
   return (
     <S.Container>
