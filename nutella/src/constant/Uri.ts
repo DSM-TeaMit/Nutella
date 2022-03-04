@@ -23,6 +23,8 @@ const Uri = {
   userProfile: new URI<UserUuid>(`user/profile/{${userUuid}}`),
   userProject: new URI<UserUuid>(`user/profile/{${userUuid}}/projects`),
   userReports: new URI<UserUuid>(`user/profile/{${userUuid}}/reports`),
+  eachUserReports: new URI<UserUuid>(`user/profile/{${userUuid}}/reports/each`),
+  eachMyReports: new URI(`user/profile/reports/each`),
   changeGithubId: new URI(`user/profile/githubId`),
   plan: new URI<ProjectUuid>(`project/{${projectUuid}}/plan`),
   submitPlan: new URI<ProjectUuid>(`project/{${projectUuid}}/plan/submit`),
