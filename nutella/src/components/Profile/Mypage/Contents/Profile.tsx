@@ -6,7 +6,10 @@ import GithubReadme from "../../../GithubReadme";
 import { UseQueryResult } from "react-query";
 import { AxiosResponse } from "axios";
 import { MyProfileType } from "../../../../utils/api/User";
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import toast from "react-hot-toast";
+import Loading from "../../Loading";
+import Error from "../../Error";
 
 interface PropsType {
   data: UseQueryResult<AxiosResponse<MyProfileType, any>, unknown>;
@@ -15,8 +18,20 @@ interface PropsType {
 const Profile: FC<PropsType> = ({ data: queryData }) => {
   const { data, isLoading, isError } = queryData;
 
-  if (isLoading || isError) {
-    return <></>;
+  useEffect(() => {
+    if (isError) {
+      toast.error("프로필을 가져올 수 없습니다.");
+    }
+  }, [isError]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return (
+      <Error message="오류 발생. 프로필을 가져올 수 없습니다. 다시 시도해주세요." />
+    );
   }
 
   const {

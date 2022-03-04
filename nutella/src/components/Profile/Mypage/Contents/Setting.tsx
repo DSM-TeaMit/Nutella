@@ -2,11 +2,14 @@ import { ContentInner } from "../../styles";
 import * as S from "./styles";
 import { ArrowBlackIcons } from "../../../../assets/icons";
 import { useMyProfile } from "../../../../queries/User";
-import { Fragment, useCallback } from "react";
+import { Fragment, useCallback, useEffect } from "react";
 import ModalPortal, { ModalPoralRef } from "../../../ModalPortal";
 import useModalRef from "../../../../hooks/useModalRef";
 import GithubIdModal from "../../../Modals/GithubIdModal";
 import AccountDeleteModal from "../../../Modals/AccountDeleteModal";
+import Loading from "../../Loading";
+import Error from "../../Error";
+import toast from "react-hot-toast";
 
 const Setting = () => {
   const myProfileQuery = useMyProfile();
@@ -26,8 +29,20 @@ const Setting = () => {
     []
   );
 
-  if (isError || isLoading) {
-    return <></>;
+  useEffect(() => {
+    if (isError) {
+      toast.error("유저 설정을 가져올 수 없습니다.");
+    }
+  }, [isError]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return (
+      <Error message="오류 발생. 설정을 가져올 수 없습니다. 다시 시도해주세요." />
+    );
   }
 
   const { githubId } = data!.data;

@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import * as I from "../../styles";
 import ProjectCard from "../../../ProjectCard";
-import { Fragment, useCallback, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import useModalContext from "../../../../hooks/useModalContext";
 import ProjectAddModal from "../../../Modals/ProejctAddModal";
 import { useMyProjects } from "../../../../queries/User";
@@ -9,6 +9,9 @@ import useModalRef from "../../../../hooks/useModalRef";
 import ModalPortal from "../../../ModalPortal";
 import { LIMIT } from "../../../../utils/api/User";
 import isMore from "../../../../constant/IsMore";
+import toast from "react-hot-toast";
+import Loading from "../../Loading";
+import Error from "../../Error";
 
 const Project = () => {
   const { openModal } = useModalContext();
@@ -25,8 +28,20 @@ const Project = () => {
     [openModal]
   );
 
-  if (isError || isLoading) {
-    return <></>;
+  useEffect(() => {
+    if (isError) {
+      toast.error("유저 프로젝트를 가져올 수 없습니다.");
+    }
+  }, [isError]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return (
+      <Error message="오류 발생. 프로젝트를 가져올 수 없습니다. 다시 시도해주세요." />
+    );
   }
 
   const { count, projects } = data!.data;

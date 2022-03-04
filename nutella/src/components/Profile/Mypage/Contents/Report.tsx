@@ -1,15 +1,29 @@
 import ReportAccordion from "./ReportAccordion";
 import * as I from "../..//styles";
 import { useMyReports } from "../../../../queries/User";
-import { useState } from "react";
+import { useEffect } from "react";
+import Error from "../../Error";
+import Loading from "../../Loading";
+import toast from "react-hot-toast";
 
 const Report = () => {
   const { data, isError, isLoading } = useMyReports(1);
 
-  if (isError || isLoading) {
-    return <></>;
+  useEffect(() => {
+    if (isError) {
+      toast.error("유저 보고서를 가져올 수 없습니다.");
+    }
+  }, [isError]);
+
+  if (isLoading) {
+    return <Loading />;
   }
 
+  if (isError) {
+    return (
+      <Error message="오류 발생. 보고서를 가져올 수 없습니다. 다시 시도해주세요." />
+    );
+  }
   const { accepted, pending, rejected } = data!.data;
 
   return (
