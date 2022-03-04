@@ -2,10 +2,13 @@ import * as I from "../../styles";
 import { ArrowBlackIcons, GithubBlackIcons } from "../../../../assets/icons";
 import ProjectCard from "../../../ProjectCard";
 import GithubReadme from "../../../GithubReadme";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { UserProfileType } from "../../../../utils/api/User";
 import { UseQueryResult } from "react-query";
 import { AxiosResponse } from "axios";
+import Loading from "../../Loading";
+import Error from "../../Error";
+import toast from "react-hot-toast";
 
 interface PropsType {
   data: UseQueryResult<AxiosResponse<UserProfileType, any>, unknown>;
@@ -14,18 +17,31 @@ interface PropsType {
 const Profile: FC<PropsType> = ({ data: queryData }) => {
   const { data, isLoading, isError } = queryData;
 
-  if (isLoading || isError) {
-    return <></>;
+  useEffect(() => {
+    if (isError) {
+      toast.error("프로필을 가져올 수 없습니다.");
+    }
+  }, [isError]);
+
+  if (isLoading) {
+    return <Loading />;
   }
 
-  const { name, studentNo, projects, projectCount, githubId } = data!.data;
+  if (isError) {
+    return (
+      <Error message="오류 발생. 유저 프로필을 가져올 수 없습니다. 다시 시도해주세요." />
+    );
+  }
+
+  const { name, studentNo, projects, projectCount, githubId, thumbnailUrl } =
+    data!.data;
 
   return (
     <I.ContentInner>
       <I.FlexContainer>
         <I.ProfileContainerOuter>
           <I.ProfileContainer>
-            <I.ProfileImage alt="" src="" />
+            <I.ProfileImage alt="user profile image" src={thumbnailUrl} />
             <I.ProfileInfoContainer>
               <I.Name>
                 {studentNo} {name}

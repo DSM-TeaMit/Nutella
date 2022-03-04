@@ -48,6 +48,7 @@ export interface UserProfileType {
   githubId?: string;
   projectCount: number;
   projects: ProjectType[];
+  thumbnailUrl?: string;
 }
 
 export const getProfile = async (userUuid: string) => {
