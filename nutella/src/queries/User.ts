@@ -62,6 +62,7 @@ export const useEachReports = (
 export const useGithubReadme = (githubId: string) =>
   useQuery(["profile", "readme", githubId], () => getGithubReadme(githubId), {
     retry: false,
+    refetchOnWindowFocus: false,
   });
 
 export const useDeleteAccount = () => useMutation(() => deleteUser());
