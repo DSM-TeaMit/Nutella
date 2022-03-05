@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Container = styled.div`
+  margin-top: 16px;
   display: flex;
   flex-direction: column;
   row-gap: 20px;
@@ -17,6 +18,7 @@ export const AddAccount = styled.button`
   font: ${({ theme }) => theme.fonts.body3};
   padding: none;
   border: none;
+  background: transparent;
   cursor: pointer;
 
   &:hover {

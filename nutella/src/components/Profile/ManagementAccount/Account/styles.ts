@@ -11,6 +11,7 @@ export const Image = styled(Img)`
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  background-color: ${({ theme }) => theme.colors.grayscale.gray1};
 `;
 
 export const InfoContainer = styled.div`
@@ -40,6 +41,7 @@ export const Delete = styled.button`
   background: transparent;
   color: ${({ theme }) => theme.colors.red.default};
   font: ${({ theme }) => theme.fonts.body3};
+  cursor: pointer;
 
   &:hover {
     color: ${({ theme }) => theme.colors.red.hover};
