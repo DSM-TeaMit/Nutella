@@ -29,7 +29,7 @@ const Img: FC<PropsType> = (props) => {
   }, [emoji, isError]);
 
   if (isLoading) {
-    return <img {...propsWithoutSomething} />;
+    return <img {...propsWithoutSomething} alt={undefined} />;
   }
 
   if (emoji) {
@@ -47,7 +47,7 @@ const Img: FC<PropsType> = (props) => {
   }
 
   if (isError) {
-    return <img {...propsWithoutSomething} />;
+    return <img {...propsWithoutSomething} alt={undefined} />;
   }
 
   return <img {...propsWithoutSomething} src={data} />;
