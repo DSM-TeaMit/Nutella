@@ -1,6 +1,7 @@
-import { FC, useMemo } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { useImage } from "../queries/Image";
 import Twemoji from "react-twemoji";
+import toast from "react-hot-toast";
 
 type PropsType = ImageProps & { emoji?: string };
 
@@ -20,6 +21,12 @@ const Img: FC<PropsType> = (props) => {
   const { src, emoji } = props;
 
   const { data, isError, isLoading } = useImage(src || "");
+
+  useEffect(() => {
+    if (isError && !emoji) {
+      toast.error("이미지를 가져올 수 없습니다.");
+    }
+  }, [emoji, isError]);
 
   if (isLoading) {
     return <img {...propsWithoutSomething} />;
