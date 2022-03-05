@@ -3,6 +3,7 @@ import * as I from "../styles";
 import * as S from "./styles";
 import { SettingIcons } from "../../../assets/icons";
 import AdminSideBar from "../../SideBar/Admin";
+import Account from "./Account";
 
 const navs: NavigationType[] = [
   {
@@ -24,7 +25,12 @@ const ManagementAccount = () => {
             <I.FlexContainer>
               <div>
                 <S.Title>계정 관리</S.Title>
-                <S.Container></S.Container>
+                <S.Container>
+                  <Account />
+                  <Account />
+                  <Account />
+                  <Account />
+                </S.Container>
                 <S.AddAccount>+ 선생님 계정 추가</S.AddAccount>
               </div>
             </I.FlexContainer>
