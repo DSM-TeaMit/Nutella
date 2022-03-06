@@ -53,7 +53,8 @@ const getBefore = (date: Date) => {
 };
 
 const PendingReportCard: FC<PropsType> = ({ data }) => {
-  const { projectName, projectType, reportType, submittedAt, writer } = data;
+  const { projectName, projectType, reportType, submittedAt, writer, uuid } =
+    data;
 
   const projectLabel = useMemo(
     () => projectMap.get(projectType)!,
@@ -61,7 +62,9 @@ const PendingReportCard: FC<PropsType> = ({ data }) => {
   );
 
   return (
-    <S.Container to={``}>
+    <S.Container
+      to={`/project/${uuid}/${reportType === "PLAN" ? "plan" : "result"}`}
+    >
       <S.Img />
       <S.ContentContainer>
         <S.TopContainer>

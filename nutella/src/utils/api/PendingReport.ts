@@ -10,6 +10,7 @@ export interface PendingReport {
   projectType: ProjectTypes;
   reportType: ReportTypes;
   submittedAt: string;
+  uuid: string;
   writer: {
     studentNo: number;
     name: string;

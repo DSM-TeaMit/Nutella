@@ -36,7 +36,7 @@ const PendingReport = () => {
         })}
       </S.List>
       {data?.data.count === 0 && (
-        <S.Message>승인 요첨 보고서가 없습니다.</S.Message>
+        <S.Message>승인 요청 보고서가 없습니다.</S.Message>
       )}
     </S.Container>
   );
