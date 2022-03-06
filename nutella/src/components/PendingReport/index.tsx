@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { usePendingReport } from "../../queries/PendingReport";
 import PendingReportCard from "../PendingReportCard";
 import * as S from "./styles";
 
 const PendingReport = () => {
-  const { data, isLoading, isError } = usePendingReport();
+  const [page, setPage] = useState<number>(1);
+  const { data, isLoading, isError } = usePendingReport(page);
 
   if (isLoading) {
     return (

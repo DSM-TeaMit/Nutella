@@ -1,4 +1,6 @@
+import LIMIT from "../../constant/Limit";
 import Uri from "../../constant/Uri";
+import Pagination from "../../interface/Pagination";
 import ProjectTypes from "../../interface/ProjectTypes";
 import { ReportTypes } from "../../interface/Report";
 import request from "../axios";
@@ -19,8 +21,13 @@ interface PendingReportList {
   projects: PendingReport[];
 }
 
-export const getPendingReports = async () => {
+export const getPendingReports = async (page: number) => {
   const uri = Uri.pendingReport.get();
 
-  return await request.get<PendingReportList>(uri);
+  const params: Pagination = {
+    limit: LIMIT,
+    page,
+  };
+
+  return await request.get<PendingReportList>(uri, { params });
 };
