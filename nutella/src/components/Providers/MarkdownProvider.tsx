@@ -6,10 +6,10 @@ import {
 } from "../../context/MarkdownCotext";
 import uniqueId from "../../constant/UniqueId";
 import Tag from "../../interface/Tag";
-import useMessageContext from "../../hooks/useMessageContext";
 import { postImage } from "../../utils/api/Image";
 import State from "../../interface/State";
 import { getInitRows } from "../MarkdownEditor";
+import toast from "react-hot-toast";
 
 interface PropsType {
   rowState: State<Row[]>;
@@ -18,7 +18,6 @@ interface PropsType {
 const isList = (type: string) => ["ul", "ol"].includes(type);
 
 const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
-  const { showMessage } = useMessageContext();
   const [rows, setRows] = rowState;
   const refs = useRef<HTMLDivElement[]>([]);
 
@@ -228,7 +227,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
 
           urls.push(url);
         } catch (error) {
-          console.log(error);
+          toast.error(`사진 ${files[idx].name} 업로드 실패`);
         }
 
         idx++;
@@ -255,7 +254,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
 
       setRows(copyRows);
     },
-    [showMessage, findIndexById, rows]
+    [findIndexById, rows]
   );
 
   const value = useMemo<MarkdownContextType>(

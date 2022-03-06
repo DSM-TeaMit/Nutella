@@ -5,7 +5,7 @@ import { CommentType } from "../../utils/api/Comment";
 import * as S from "./styles";
 import { MoreIcons } from "../../assets/icons";
 import { useDeleteComment } from "../../queries/Comment";
-import useMessageContext from "../../hooks/useMessageContext";
+import toast from "react-hot-toast";
 
 interface PropsType {
   type: CommentStyleType;
@@ -17,7 +17,6 @@ const Comment: FC<PropsType> = ({ type, data }) => {
   const { content, writerName, writerSno, writerType, uuid, writerId } = data;
   const [isMore, setIsMore] = useState<boolean>(false);
   const deleteCommentMutation = useDeleteComment();
-  const { showMessage } = useMessageContext();
 
   const bgColorMap = new Map<CommentStyleType, string>()
     .set("project", themeContext.colors.grayscale.lightGray1)
@@ -26,14 +25,10 @@ const Comment: FC<PropsType> = ({ type, data }) => {
   const onCommentDelete = useCallback(() => {
     deleteCommentMutation.mutate(uuid, {
       onSuccess: () => {
-        showMessage({
-          type: "Positive",
-          title: "댓글 삭제 성공",
-          content: "댓글 삭제 성공했습니다.",
-        });
+        toast.success("댓글 삭제 성공");
       },
     });
-  }, [deleteCommentMutation, showMessage, uuid]);
+  }, [deleteCommentMutation, uuid]);
 
   return (
     <S.Container>

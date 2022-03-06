@@ -1,14 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { FC, useCallback, useEffect } from "react";
-import useMessageContext from "../../hooks/useMessageContext";
 import { useOauthGoogle } from "../../queries/Signup";
 import * as S from "./styles";
+import toast from "react-hot-toast";
 
 const SignLoadingContainer: FC = () => {
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get("code");
 
-  const { showMessage } = useMessageContext();
   const { data } = useOauthGoogle(code);
 
   const onLand = useCallback(() => {
@@ -23,13 +22,9 @@ const SignLoadingContainer: FC = () => {
       return;
     } else {
       navigate("/feed");
-      showMessage({
-        type: "Positive",
-        title: "로그인 성공",
-        content: "Teamit에 오신걸 환영합니다.",
-      });
+      toast.success("로그인 성공");
     }
-  }, [data, navigate, showMessage]);
+  }, [data, navigate]);
 
   useEffect(() => {
     onLand();
