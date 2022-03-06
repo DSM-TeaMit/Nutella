@@ -1,4 +1,4 @@
-import ProjectDetail from "../../components/ProjectDetail";
+import ProjectDetail from "../components/ProjectDetail";
 
 const ProjectDetailContainer = () => {
   return <ProjectDetail />;

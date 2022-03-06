@@ -1,4 +1,4 @@
-import PendingReport from "../../components/PendingReport";
+import PendingReport from "../components/PendingReport";
 
 const PendingReportContainer = () => {
   return <PendingReport />;
