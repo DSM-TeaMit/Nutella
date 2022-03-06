@@ -10,9 +10,6 @@ const PendingReport = () => {
   if (isLoading) {
     return (
       <S.Container>
-        <div>
-          <S.Title>승인 요청 보고서&nbsp;</S.Title>
-        </div>
         <S.Message>승인 요청 보고서 가져오는 중...</S.Message>
       </S.Container>
     );
