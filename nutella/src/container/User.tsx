@@ -1,4 +1,4 @@
-import User from "../../components/Profile/User";
+import User from "../components/Profile/User";
 
 const UserContainer = () => {
   return <User />;

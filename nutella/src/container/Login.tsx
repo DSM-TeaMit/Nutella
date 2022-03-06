@@ -1,5 +1,5 @@
-import Login from "../../components/Login/Login";
-import Background from "../../components/LoginBackground";
+import Login from "../components/Login";
+import Background from "../components/LoginBackground";
 
 const LoginContainer = () => {
   return (

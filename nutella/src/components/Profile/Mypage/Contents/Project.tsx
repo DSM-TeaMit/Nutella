@@ -3,7 +3,7 @@ import * as I from "../../styles";
 import ProjectCard from "../../../ProjectCard";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import useModalContext from "../../../../hooks/useModalContext";
-import ProjectAddModal from "../../../Modals/ProejctAddModal";
+import ProjectAddModal from "../../../Modals/ProejctAdd";
 import { useMyProjects } from "../../../../queries/User";
 import useModalRef from "../../../../hooks/useModalRef";
 import ModalPortal from "../../../ModalPortal";

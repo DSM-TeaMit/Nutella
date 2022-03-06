@@ -1,4 +1,4 @@
-import Team from "../../components/Plan/Team";
+import Team from "../components/Plan/Team";
 
 const PlanContainer = () => {
   return <Team />;

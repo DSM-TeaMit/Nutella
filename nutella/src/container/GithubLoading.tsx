@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useOauthGithubSignup, useUserInfo } from "../../queries/Signup";
+import { useOauthGithubSignup, useUserInfo } from "../queries/Signup";
 
 const GithubLoadingContainer = () => {
   const navigate = useNavigate();

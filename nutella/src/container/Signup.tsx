@@ -1,5 +1,5 @@
-import Signup from "../../components/Signup/Signup";
-import Background from "../../components/LoginBackground";
+import Signup from "../components/Signup";
+import Background from "../components/LoginBackground";
 
 const SignupContainer = () => {
   return (

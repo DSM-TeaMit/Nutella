@@ -1,4 +1,4 @@
-import Personal from "../../components/Result/Personal";
+import Personal from "../components/Result/Personal";
 
 const ResultContainer = () => {
   return <Personal />;
