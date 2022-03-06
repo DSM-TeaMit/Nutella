@@ -10,6 +10,7 @@ import {
   ResultContainer,
   SearchContainer,
   UserContainer,
+  ManagementAccountContainer,
 } from "../container";
 
 const RouterWithDefaultComponent = () => {
@@ -19,6 +20,7 @@ const RouterWithDefaultComponent = () => {
       <Routes>
         <Route path="search" element={<SearchContainer />} />
         <Route path="feed" element={<FeedContainer />} />
+        <Route path="admin-mypage" element={<ManagementAccountContainer />} />
         <Route path="mypage/*" element={<MypageContainer />} />
         <Route path="user/:uuid/*" element={<UserContainer />} />
         <Route path="project/:uuid/*">

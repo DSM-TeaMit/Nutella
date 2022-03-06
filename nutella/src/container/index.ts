@@ -11,3 +11,4 @@ export { default as ResultContainer } from "./Result";
 export { default as SignLoadingContainer } from "./SignLoading";
 export { default as GithubLoadingContainer } from "./GithubLoading";
 export { default as PendingReportContainer } from "./PendingReport";
+export { default as ManagementAccountContainer } from "./ManagementAccount";
