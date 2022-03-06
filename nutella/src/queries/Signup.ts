@@ -25,7 +25,7 @@ export const useOauthGoogle = (code: string | null) => {
   const onSuccess = useCallback((data: AxiosResponse<TokenType, any>) => {
     const { accessToken, refreshToken } = data.data;
     localStorage.setItem(storageKeys.accessToken, accessToken);
-    localStorage.setItem(storageKeys.accessToken, refreshToken);
+    localStorage.setItem(storageKeys.refreshToken, refreshToken);
     localStorage.setItem(
       storageKeys.expireAt,
       getDateWithAddHour(24).toString()
