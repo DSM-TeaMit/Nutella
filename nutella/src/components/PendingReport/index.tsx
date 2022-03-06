@@ -35,6 +35,9 @@ const PendingReport = () => {
           return <PendingReportCard data={value} />;
         })}
       </S.List>
+      {data?.data.count === 0 && (
+        <S.Message>승인 요첨 보고서가 없습니다.</S.Message>
+      )}
     </S.Container>
   );
 };
