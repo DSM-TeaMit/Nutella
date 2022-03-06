@@ -1,4 +1,4 @@
-import TeacherLogin from "../../components/TeacherLogin/TeacherLogin";
+import TeacherLogin from "../../components/TeacherLogin";
 import Background from "../../components/LoginBackground";
 
 const TeacherLoginContainer = () => {
