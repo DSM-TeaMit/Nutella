@@ -2,8 +2,8 @@ import { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useMutation, useQueryClient, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import queryKeys from "../constant/QueryKeys";
 import storageKeys from "../constant/StorageKeys";
-import useMessageContext from "../hooks/useMessageContext";
 import {
   postUserInfo,
   InfoType,
@@ -11,6 +11,7 @@ import {
   getOauthGithub,
   TokenType,
 } from "../utils/api/Signup";
+import toast from "react-hot-toast";
 
 const getDateWithAddHour = (hour: number) => {
   const date = new Date();
@@ -19,13 +20,12 @@ const getDateWithAddHour = (hour: number) => {
 };
 
 export const useOauthGoogle = (code: string | null) => {
-  const { showMessage } = useMessageContext();
   const navigate = useNavigate();
 
   const onSuccess = useCallback((data: AxiosResponse<TokenType, any>) => {
     const { accessToken, refreshToken } = data.data;
-    localStorage.setItem("access_token", accessToken);
-    localStorage.setItem("refresh_token", refreshToken);
+    localStorage.setItem(storageKeys.accessToken, accessToken);
+    localStorage.setItem(storageKeys.accessToken, refreshToken);
     localStorage.setItem(
       storageKeys.expireAt,
       getDateWithAddHour(24).toString()
@@ -33,31 +33,19 @@ export const useOauthGoogle = (code: string | null) => {
   }, []);
 
   const onError = useCallback(() => {
-    showMessage({
-      type: "Denial",
-      title: "학교 계정으로 인증해주세요.",
-      content:
-        "Teamit을 이용하려면 대덕소프트웨어마이스터고등학교 계정이 필요합니다.",
-    });
+    toast.error("학교 계정으로 인증해주세요.");
     navigate("/");
-  }, [showMessage, navigate]);
+  }, [navigate]);
 
-  return useQuery(["sign_up", code], () => getOauthGoogle(code), {
+  return useQuery([queryKeys.googleOauth, code], () => getOauthGoogle(code), {
     onSuccess,
     onError,
     retry: false,
   });
 };
 
-export const useUserInfo = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation((data: InfoType) => postUserInfo(data), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["info"]);
-    },
-  });
-};
+export const useUserInfo = () =>
+  useMutation((data: InfoType) => postUserInfo(data));
 
 export const useOauthGithubSignup = (code: string | null) =>
-  useQuery(["GithubSignup", code], () => getOauthGithub(code));
+  useQuery([queryKeys.githubOauth, code], () => getOauthGithub(code));

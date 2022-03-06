@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import queryKeys from "../constant/QueryKeys";
 import CommentSource from "../interface/CommentSource";
 import {
   deleteComment,
@@ -8,14 +9,20 @@ import {
 } from "../utils/api/Comment";
 
 export const useComment = (projectUuid: string, type: CommentSource) =>
-  useQuery(["comment", projectUuid, type], () => getComment(projectUuid, type));
+  useQuery([queryKeys.comment, projectUuid, type], () =>
+    getComment(projectUuid, type)
+  );
 
 export const useCommentMutation = (projectUuid: string) => {
   const queryClient = useQueryClient();
 
   return useMutation((data: PostComment) => postComment(projectUuid, data), {
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries(["comment", projectUuid, variables.type]);
+      queryClient.invalidateQueries([
+        queryKeys.comment,
+        projectUuid,
+        variables.type,
+      ]);
     },
   });
 };
@@ -25,7 +32,7 @@ export const useDeleteComment = () => {
 
   return useMutation((commentUuid: string) => deleteComment(commentUuid), {
     onSuccess: () => {
-      queryClient.invalidateQueries("comment");
+      queryClient.invalidateQueries(queryKeys.comment);
     },
   });
 };

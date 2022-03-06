@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "react-query";
+import queryKeys from "../constant/QueryKeys";
 import {
   createResultReport,
   getResultReport,
@@ -11,7 +12,7 @@ export const useCreateResultMutation = (projectUuid: string) =>
   useMutation(() => createResultReport(projectUuid));
 
 export const useResult = (projectUuid: string) =>
-  useQuery(["result", projectUuid], () => getResultReport(projectUuid));
+  useQuery([queryKeys.result, projectUuid], () => getResultReport(projectUuid));
 
 export const useResultMutation = (projectUuid: string) =>
   useMutation((data: ParsedResultReport) =>

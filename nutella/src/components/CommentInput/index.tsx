@@ -1,5 +1,4 @@
 import { ChangeEvent, FC, useCallback, useState } from "react";
-import useMessageContext from "../../hooks/useMessageContext";
 import useThemeContext from "../../hooks/useThemeContext";
 import CommentSource from "../../interface/CommentSource";
 import CommentStyleType from "../../interface/CommentStyleType";
@@ -7,6 +6,7 @@ import { useCommentMutation } from "../../queries/Comment";
 import { useMyProfile } from "../../queries/User";
 import BlueButton from "../Buttons/BlueButton";
 import * as S from "./styles";
+import toast from "react-hot-toast";
 
 interface PropsType {
   type: CommentStyleType;
@@ -19,7 +19,6 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
   const commentMutation = useCommentMutation(uuid);
   const [input, setInput] = useState<string>("");
   const { data } = useMyProfile();
-  const { showMessage } = useMessageContext();
 
   const bgColorMap = new Map<CommentStyleType, string>()
     .set("project", themeContext.colors.grayscale.lightGray1)
@@ -32,13 +31,8 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
 
   const onSubmitSuccess = useCallback(() => {
     setInput("");
-
-    showMessage({
-      type: "Positive",
-      title: "댓글 작성 완료",
-      content: "댓글 작성이 완료되었습니다.",
-    });
-  }, [showMessage]);
+    toast.success("댓글 작성 완료");
+  }, []);
 
   const onSubmitClick = useCallback(() => {
     commentMutation.mutate(
