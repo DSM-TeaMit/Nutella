@@ -3,7 +3,7 @@ import ProjectTypes from "../../interface/ProjectTypes";
 import { ReportTypes } from "../../interface/Report";
 import request from "../axios";
 
-interface PendingReport {
+export interface PendingReport {
   projectName: string;
   projectType: ProjectTypes;
   reportType: ReportTypes;

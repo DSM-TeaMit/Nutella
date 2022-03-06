@@ -32,8 +32,8 @@ const PendingReport = () => {
         <S.Count>{data?.data.count}</S.Count>
       </div>
       <S.List>
-        {data?.data.projects.map(() => {
-          return <PendingReportCard />;
+        {data?.data.projects.map((value) => {
+          return <PendingReportCard data={value} />;
         })}
       </S.List>
     </S.Container>
