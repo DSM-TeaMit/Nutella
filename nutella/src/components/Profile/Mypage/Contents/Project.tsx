@@ -7,11 +7,11 @@ import ProjectAddModal from "../../../Modals/ProejctAdd";
 import { useMyProjects } from "../../../../queries/User";
 import useModalRef from "../../../../hooks/useModalRef";
 import ModalPortal from "../../../ModalPortal";
-import { LIMIT } from "../../../../utils/api/User";
 import isMore from "../../../../constant/IsMore";
 import toast from "react-hot-toast";
 import Loading from "../../Loading";
 import Error from "../../Error";
+import LIMIT from "../../../../constant/Limit";
 
 const Project = () => {
   const { openModal } = useModalContext();

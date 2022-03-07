@@ -42,6 +42,7 @@ const Uri = {
     `file/{${projectUuid}}/image/{${imageUuid}}`
   ),
   file: new URI<ProjectUuid>(`file/{${projectUuid}}/archive`),
+  pendingReport: new URI(`project/feed/pending`),
 } as const;
 
 export default Uri;

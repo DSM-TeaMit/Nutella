@@ -10,6 +10,7 @@ const queryKeys = {
   projects: "projects",
   reports: "reports",
   readme: "readme",
+  pendingReport: "pending_report",
 } as const;
 
 export default queryKeys;

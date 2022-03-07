@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from "axios";
+import LIMIT from "../../constant/Limit";
 import Uri from "../../constant/Uri";
+import Pagination from "../../interface/Pagination";
 import ProjectTypes from "../../interface/ProjectTypes";
 import { ReportStatus, ReportTypes } from "../../interface/Report";
 import ReportPathType from "../../interface/ReportPathType";
@@ -62,13 +64,6 @@ export const getMyProfile = async () => {
 
   return await request.get<MyProfileType>(uri);
 };
-
-export const LIMIT = 20 as const;
-
-export interface Pagination {
-  limit: number;
-  page: number;
-}
 
 export interface UserProjects {
   count: number;

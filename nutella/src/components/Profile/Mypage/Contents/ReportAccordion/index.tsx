@@ -2,11 +2,12 @@ import * as S from "./styles";
 import { UpArrowIcons } from "../../../../../assets/icons";
 import ReportCard from "../../../../ReportCard";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { LIMIT, Reports } from "../../../../../utils/api/User";
+import {  Reports } from "../../../../../utils/api/User";
 import { ReportStatus } from "../../../../../interface/Report";
 import isMore from "../../../../../constant/IsMore";
 import ReportPathType from "../../../../../interface/ReportPathType";
 import { useEachReports } from "../../../../../queries/User";
+import LIMIT from "../../../../../constant/Limit";
 
 interface PropsType {
   title: string;
