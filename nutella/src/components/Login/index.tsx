@@ -12,15 +12,13 @@ const Login = () => {
   return (
     <S.LoginContent>
       <S.Logo alt="LoginLogoImg" src={LoginLogo} />
-      <S.OauthBox>
-        <S.OauthContent>
-          <S.Title>Teamit에 로그인</S.Title>
-          <S.OauthBtn onClick={oauthBtnClickHandler}>
-            <img src={GoogleLogo} />
-            Google 계정으로 계속하기
-          </S.OauthBtn>
-        </S.OauthContent>
-      </S.OauthBox>
+      <S.OauthContent>
+        <S.Title>Teamit에 로그인</S.Title>
+        <S.OauthBtn onClick={oauthBtnClickHandler}>
+          <img src={GoogleLogo} />
+          Google 계정으로 계속하기
+        </S.OauthBtn>
+      </S.OauthContent>
       <Link to="/teacherlogin">
         <S.TeaLogin>
           선생님으로 <span>로그인</span>

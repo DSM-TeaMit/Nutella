@@ -12,18 +12,10 @@ export const LoginContent = styled.div`
 `;
 
 export const Logo = styled.img`
-  height: 65px;
   margin-bottom: 48px;
 `;
 
-export const OauthBox = styled.div`
-  width: 334px;
-  padding: 0;
-`;
-
 export const OauthContent = styled.div`
-  width: 334px;
-  height: 105px;
   a {
     text-decoration: none;
   }
@@ -36,10 +28,8 @@ export const Title = styled.div`
 
 export const OauthBtn = styled.div`
   width: 330px;
-  height: 40px;
-  margin-top: 24px;
-  margin-bottom: 28px;
-  padding: 5px 16px;
+  margin: 24px 0 28px;
+  padding: 9px 16px;
   font: ${({ theme }) => theme.fonts.body2};
   color: ${({ theme }) => theme.colors.grayscale.black};
   border-radius: 10px;
@@ -47,7 +37,7 @@ export const OauthBtn = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   img {
-    vertical-align: middle;
+    vertical-align: sub;
     margin-right: 43px;
   }
 `;

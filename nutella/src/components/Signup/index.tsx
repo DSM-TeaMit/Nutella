@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUserInfo } from "../../queries/Signup";
 import BlueButton from "../Buttons/BlueButton";
 import useInputs, { NameTypes } from "../../hooks/useInputs";
+import Input from "../Input";
 
 interface InputType extends NameTypes {
   no: string;
@@ -47,7 +48,7 @@ const Signup = () => {
       <S.Title>정보입력</S.Title>
       <S.Box>
         <S.SubTitle>학번</S.SubTitle>
-        <S.Input
+        <Input
           type="text"
           placeholder="학번을 입력해 주세요..."
           {...inputProps[no]}
@@ -55,7 +56,7 @@ const Signup = () => {
       </S.Box>
       <S.Box>
         <S.SubTitle>이름</S.SubTitle>
-        <S.Input
+        <Input
           type="text"
           placeholder="이름을 입력해 주세요..."
           {...inputProps[name]}
@@ -63,7 +64,7 @@ const Signup = () => {
       </S.Box>
       <S.Box>
         <S.SubTitle>Github 아이디(선택)</S.SubTitle>
-        <S.Input
+        <Input
           type="text"
           placeholder="Github 아이디를 입력해 주세요..."
           {...inputProps[githubId]}

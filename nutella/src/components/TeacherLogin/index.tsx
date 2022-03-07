@@ -2,6 +2,7 @@ import * as S from "./styles";
 import { Link } from "react-router-dom";
 import { LeftArrow } from "../../assets/icons";
 import BlueButton from "../Buttons/BlueButton";
+import Input from "../Input";
 
 const TeacherLogin = () => {
   const onLogin = () => {};
@@ -11,11 +12,11 @@ const TeacherLogin = () => {
       <S.Title>선생님 로그인</S.Title>
       <S.Box>
         <S.SubTitle>아이디</S.SubTitle>
-        <S.Input placeholder="아이디를 입력해 주세요..." />
+        <Input placeholder="아이디를 입력해 주세요..." />
       </S.Box>
       <S.Box>
         <S.SubTitle>비밀번호</S.SubTitle>
-        <S.Input placeholder="비밀번호를 입력해 주세요..." />
+        <Input placeholder="비밀번호를 입력해 주세요..." />
       </S.Box>
       <S.ClickBox>
         <Link to="/">
