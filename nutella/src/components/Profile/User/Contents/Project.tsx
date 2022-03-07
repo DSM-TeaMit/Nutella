@@ -1,5 +1,5 @@
 import * as I from "../../styles";
-import ProjectCard from "../../../ProjectCard";
+import ProjectCard from "../../../Cards/ProjectCard";
 import { useParams } from "react-router-dom";
 import { useUserProjects } from "../../../../queries/User";
 import { useEffect, useState } from "react";

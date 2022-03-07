@@ -1,4 +1,4 @@
-import Project from "../../Project/Project";
+import Project from "../../Cards/MainProjectCard";
 import * as S from "./styles";
 import { FC } from "react";
 

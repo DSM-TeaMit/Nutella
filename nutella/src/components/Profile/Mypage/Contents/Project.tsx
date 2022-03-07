@@ -1,6 +1,6 @@
 import * as S from "./styles";
 import * as I from "../../styles";
-import ProjectCard from "../../../ProjectCard";
+import ProjectCard from "../../../Cards/ProjectCard";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import useModalContext from "../../../../hooks/useModalContext";
 import ProjectAddModal from "../../../Modals/ProejctAdd";
