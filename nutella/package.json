@@ -51,5 +51,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^7.1.0",
+    "eslint-config-react-app": "^7.0.0",
+    "eslint-plugin-flowtype": "^8.0.3",
+    "eslint-plugin-react-hooks": "^4.3.0"
   }
 }
