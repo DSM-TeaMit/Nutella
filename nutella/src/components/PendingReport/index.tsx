@@ -3,7 +3,7 @@ import isMore from "../../constant/IsMore";
 import LIMIT from "../../constant/Limit";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import { usePendingReport } from "../../queries/PendingReport";
-import PendingReportCard from "../PendingReportCard";
+import PendingReportCard from "../Cards/PendingReportCard";
 import * as S from "./styles";
 
 const PendingReport = () => {

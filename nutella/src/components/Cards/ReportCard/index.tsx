@@ -1,7 +1,7 @@
 import { FC } from "react";
-import useThemeContext from "../../hooks/useThemeContext";
-import { ReportStatus } from "../../interface/Report";
-import { ReportType } from "../../utils/api/User";
+import useThemeContext from "../../../hooks/useThemeContext";
+import { ReportStatus } from "../../../interface/Report";
+import { ReportType } from "../../../utils/api/User";
 import * as S from "./styles";
 
 interface PropsType {

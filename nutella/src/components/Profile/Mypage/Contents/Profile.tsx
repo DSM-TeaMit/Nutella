@@ -1,7 +1,7 @@
 import * as I from "../../styles";
 import { ArrowBlackIcons, GithubBlackIcons } from "../../../../assets/icons";
-import ReportCard from "../../../ReportCard";
-import ProjectCard from "../../../ProjectCard";
+import ReportCard from "../../../Cards/ReportCard";
+import ProjectCard from "../../../Cards/ProjectCard";
 import GithubReadme from "../../../GithubReadme";
 import { UseQueryResult } from "react-query";
 import { AxiosResponse } from "axios";

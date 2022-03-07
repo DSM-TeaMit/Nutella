@@ -1,6 +1,6 @@
 import * as S from "./styles";
 import { UpArrowIcons } from "../../../../../assets/icons";
-import ReportCard from "../../../../ReportCard";
+import ReportCard from "../../../../Cards/ReportCard";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Reports } from "../../../../../utils/api/User";
 import { ReportStatus } from "../../../../../interface/Report";

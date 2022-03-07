@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import Img from "../Img";
+import { ReportStatus } from "../../../interface/Report";
+import Img from "../../Img";
 
 export const Container = styled(Link)`
   width: 100%;

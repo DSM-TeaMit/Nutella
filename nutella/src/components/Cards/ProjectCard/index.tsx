@@ -1,9 +1,9 @@
 import * as S from "./styles";
-import { TeamIcons, PersonalIcons, ClubIcons } from "../../assets/icons";
-import { ProjectType } from "../../utils/api/User";
+import { TeamIcons, PersonalIcons, ClubIcons } from "../../../assets/icons";
+import { ProjectType } from "../../../utils/api/User";
 import { FC, useCallback } from "react";
-import ProjectTypes from "../../interface/ProjectTypes";
-import { useNavigate } from "react-router-dom";
+import ProjectTypes from "../../../interface/ProjectTypes";
+import { Link, useNavigate } from "react-router-dom";
 
 interface PropsType {
   data: ProjectType;

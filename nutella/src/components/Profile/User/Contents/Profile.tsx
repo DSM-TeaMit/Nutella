@@ -1,6 +1,6 @@
 import * as I from "../../styles";
 import { ArrowBlackIcons, GithubBlackIcons } from "../../../../assets/icons";
-import ProjectCard from "../../../ProjectCard";
+import ProjectCard from "../../../Cards/ProjectCard";
 import GithubReadme from "../../../GithubReadme";
 import { FC, useEffect } from "react";
 import { UserProfileType } from "../../../../utils/api/User";

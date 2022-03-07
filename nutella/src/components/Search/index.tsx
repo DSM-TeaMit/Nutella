@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import Project from "../Project/Project";
+import Project from "../Cards/MainProjectCard";
 
 const Search = () => {
   return (
