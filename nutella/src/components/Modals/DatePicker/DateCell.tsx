@@ -22,8 +22,8 @@ const DateCell: FC<PropsType> = ({ type, children, onClick }) => {
       StyledComponent<
         React.ClassAttributes<HTMLButtonElement> &
           React.HTMLAttributes<HTMLButtonElement>,
-        {},
-        {}
+        Record<string, unknown>,
+        Record<string, unknown>
       >
     >()
       .set("middle", S.SelectedMiddle)
