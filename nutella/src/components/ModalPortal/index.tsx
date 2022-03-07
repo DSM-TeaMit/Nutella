@@ -76,4 +76,6 @@ const ModalPortal = forwardRef<ModalPoralRef, PropsType>(
   }
 );
 
+ModalPortal.displayName = "ModalPortal";
+
 export default ModalPortal;

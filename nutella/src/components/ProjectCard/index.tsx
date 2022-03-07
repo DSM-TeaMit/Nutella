@@ -3,7 +3,7 @@ import { TeamIcons, PersonalIcons, ClubIcons } from "../../assets/icons";
 import { ProjectType } from "../../utils/api/User";
 import { FC, useCallback } from "react";
 import ProjectTypes from "../../interface/ProjectTypes";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface PropsType {
   data: ProjectType;
@@ -21,7 +21,7 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
     thumbnailUrl,
   } = data;
 
-  const iconMap = new Map<ProjectTypes, any>()
+  const iconMap = new Map<ProjectTypes, string>()
     .set("PERS", PersonalIcons)
     .set("TEAM", TeamIcons)
     .set("CLUB", ClubIcons);

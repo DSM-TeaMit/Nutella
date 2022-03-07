@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import NavigationType from "../../../interface/Navigation";
 import SideBar from "../../SideBar";
 import * as S from "../styles";

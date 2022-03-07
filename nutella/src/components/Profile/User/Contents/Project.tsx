@@ -9,7 +9,7 @@ import Error from "../../Error";
 
 const Project = () => {
   const { uuid } = useParams<{ uuid: string }>();
-  const [page, setPage] = useState<number>(1);
+  const [page] = useState<number>(1);
   const { data, isError, isLoading } = useUserProjects(uuid || "", page);
 
   useEffect(() => {

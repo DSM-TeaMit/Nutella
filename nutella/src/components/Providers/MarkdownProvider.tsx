@@ -44,12 +44,12 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
 
       setRows(copyRows);
     },
-    [findIndexById, rows]
+    [findIndexById, rows, setRows]
   );
 
   const removeRowById = useCallback(
     (id: string) => {
-      let currentIndex = findIndexById(id);
+      const currentIndex = findIndexById(id);
       const { type: currentType } = rows[currentIndex];
       if (
         currentType !== "image" &&
@@ -99,7 +99,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
         refs.current[index].focus();
       }
     },
-    [findIndexById, rows]
+    [findIndexById, rows, setRows]
   );
 
   const changeRowType = useCallback(
@@ -111,7 +111,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
 
       setRows(copyRows);
     },
-    [findIndexById, rows]
+    [findIndexById, rows, setRows]
   );
 
   const changeText = useCallback(
@@ -123,7 +123,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
 
       setRows(copyRows);
     },
-    [findIndexById, rows]
+    [findIndexById, rows, setRows]
   );
 
   const changeVerticalFocus = useCallback(
@@ -182,7 +182,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
       const copyRows = [...rows];
       const fixedStep = Math.sign(step);
       let tab = rows[index].tab + fixedStep;
-      let prevTab = rows[index - 1].tab;
+      const prevTab = rows[index - 1].tab;
 
       if (tab < 0) {
         tab = 0;
@@ -210,7 +210,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
         })
       );
     },
-    [findIndexById, rows]
+    [findIndexById, rows, setRows]
   );
 
   const addImages = useCallback(
@@ -254,7 +254,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
 
       setRows(copyRows);
     },
-    [findIndexById, rows]
+    [findIndexById, rows, setRows]
   );
 
   const value = useMemo<MarkdownContextType>(

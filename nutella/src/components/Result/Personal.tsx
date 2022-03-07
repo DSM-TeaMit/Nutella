@@ -1,7 +1,5 @@
 import BlueButton from "../Buttons/BlueButton";
 import BorderButton from "../Buttons/BorderButton";
-import Comment from "../Comment";
-import CommentInput from "../CommentInput";
 import AddPage from "./Content/AddPage";
 import ContentExample from "./Content/ContentExample";
 import Cover from "./Content/Cover";

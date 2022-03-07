@@ -4,7 +4,7 @@ import useModalRef from "../../../hooks/useModalRef";
 import BlueButton from "../../Buttons/BlueButton";
 import BorderButton from "../../Buttons/BorderButton";
 import RedButton from "../../Buttons/RedButton";
-import ModalPortal, { ModalPoralRef } from "../../ModalPortal";
+import ModalPortal from "../../ModalPortal";
 import ProjectDeleteModal from "../ProjectDelete";
 import * as S from "./styles";
 
@@ -23,7 +23,7 @@ const ProjectModifyModal = () => {
 
   useEffect(() => {
     handleResizeHeight();
-  }, []);
+  }, [handleResizeHeight]);
 
   return (
     <Fragment>

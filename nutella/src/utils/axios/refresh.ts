@@ -3,7 +3,6 @@ import { instance } from ".";
 import baseURL from "../../constant/BaseUrl";
 import storageKeys from "../../constant/StorageKeys";
 import Uri from "../../constant/Uri";
-import toast from "react-hot-toast";
 import RefreshError from "../../interface/RefreshError";
 
 export const request = axios.create({
