@@ -12,6 +12,8 @@ const SignLoadingContainer: FC = () => {
 
   const onLand = useCallback(() => {
     if (!data) {
+      navigate("/");
+      toast.error("잘못된 접근 방식입니다.");
       return;
     }
 
