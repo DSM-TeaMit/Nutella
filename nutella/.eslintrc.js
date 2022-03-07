@@ -30,5 +30,6 @@ module.exports = {
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/no-unused-expressions": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
+    "jsx-a11y/alt-text": "off",
   },
 };

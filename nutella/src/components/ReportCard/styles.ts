@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import { ReportStatus } from "../../interface/Report";
 import Img from "../Img";
 
 export const Container = styled(Link)`

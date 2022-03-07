@@ -227,7 +227,7 @@ const Row: FC<PropsType> = ({ data }) => {
       const files = Array.from(e.dataTransfer.files);
       addImages(id, files, "0ecfaf8f-62f5-4a13-ba01-76966aa98e13");
     },
-    [addImages]
+    [addImages, id]
   );
 
   const renderRow = useMemo(
@@ -244,7 +244,7 @@ const Row: FC<PropsType> = ({ data }) => {
         },
         className: rows.length <= 1 ? "first" : undefined,
       }),
-    [onInput, onKeyDown, setRef, tab, type]
+    [onInput, onKeyDown, rows.length, setRef, type]
   );
 
   const renderListRow = useMemo(
@@ -264,7 +264,7 @@ const Row: FC<PropsType> = ({ data }) => {
       refs.current[currentIndex].focus();
       refs.current[currentIndex].innerText = text;
     }
-  }, [refs, type]);
+  }, [currentIndex, refs, text, type]);
 
   return (
     <S.RowContainer

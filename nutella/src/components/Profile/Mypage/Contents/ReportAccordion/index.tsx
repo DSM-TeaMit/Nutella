@@ -2,7 +2,7 @@ import * as S from "./styles";
 import { UpArrowIcons } from "../../../../../assets/icons";
 import ReportCard from "../../../../ReportCard";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {  Reports } from "../../../../../utils/api/User";
+import { Reports } from "../../../../../utils/api/User";
 import { ReportStatus } from "../../../../../interface/Report";
 import isMore from "../../../../../constant/IsMore";
 import ReportPathType from "../../../../../interface/ReportPathType";
@@ -90,9 +90,9 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
           {reports.map((value) => (
             <ReportCard key={value.uuid} data={{ ...value, status }} />
           ))}
-          {eachData?.data[pathType].projects.map((value) => {
-            <ReportCard key={value.uuid} data={{ ...value, status }} />;
-          })}
+          {eachData?.data[pathType].projects.map((value) => (
+            <ReportCard key={value.uuid} data={{ ...value, status }} />
+          ))}
         </S.Grid>
         {isMore(LIMIT, page, count) && (
           <S.More onClick={onMore}>더 가져오기</S.More>

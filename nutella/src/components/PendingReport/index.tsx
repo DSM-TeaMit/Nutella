@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import isMore from "../../constant/IsMore";
 import LIMIT from "../../constant/Limit";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";

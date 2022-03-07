@@ -13,7 +13,7 @@ import * as S from "./styles";
 import toast from "react-hot-toast";
 
 interface PropsType {
-  data: UseQueryResult<AxiosResponse<MyProfileType, any>, unknown>;
+  data: UseQueryResult<AxiosResponse<MyProfileType, unknown>, unknown>;
 }
 
 const AccountDeleteModal: FC<PropsType> = ({ data }) => {
@@ -37,7 +37,7 @@ const AccountDeleteModal: FC<PropsType> = ({ data }) => {
       onSuccess: onDeleteSuccess,
       onError: onDeleteError,
     });
-  }, [deleteMutation, value]);
+  }, [deleteMutation, onDeleteError, onDeleteSuccess]);
 
   return (
     <S.Container>
