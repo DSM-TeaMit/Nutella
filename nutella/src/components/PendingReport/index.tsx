@@ -52,7 +52,7 @@ const PendingReport = () => {
       </div>
       <S.List>
         {data?.data.projects.map((value) => {
-          return <PendingReportCard data={value} />;
+          return <PendingReportCard data={value} key={value.uuid} />;
         })}
       </S.List>
       <div ref={ref} />
