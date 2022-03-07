@@ -241,6 +241,7 @@ const Row: FC<PropsType> = ({ data }) => {
         style: {
           outline: "none",
           cursor: "text",
+          wordBreak: "break-word",
         },
         className: rows.length <= 1 ? "first" : undefined,
       }),
@@ -264,7 +265,7 @@ const Row: FC<PropsType> = ({ data }) => {
       refs.current[currentIndex].focus();
       refs.current[currentIndex].innerText = text;
     }
-  }, [currentIndex, refs, text, type]);
+  }, [currentIndex, refs, type]);
 
   return (
     <S.RowContainer
