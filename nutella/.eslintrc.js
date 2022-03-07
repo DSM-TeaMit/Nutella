@@ -26,7 +26,7 @@ module.exports = {
     "@typescript-eslint/no-empty-function": "off",
     "prefer-const": "warn",
     "no-constant-condition": "off",
-    "react/display-name": "off",
+    "react/display-name": "warn",
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/no-unused-expressions": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
