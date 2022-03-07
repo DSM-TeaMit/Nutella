@@ -29,5 +29,6 @@ module.exports = {
     "react/display-name": "off",
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/no-unused-expressions": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
   },
 };
