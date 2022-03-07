@@ -44,7 +44,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
 
       setRows(copyRows);
     },
-    [findIndexById, rows]
+    [findIndexById, rows, setRows]
   );
 
   const removeRowById = useCallback(
@@ -99,7 +99,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
         refs.current[index].focus();
       }
     },
-    [findIndexById, rows]
+    [findIndexById, rows, setRows]
   );
 
   const changeRowType = useCallback(
@@ -111,7 +111,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
 
       setRows(copyRows);
     },
-    [findIndexById, rows]
+    [findIndexById, rows, setRows]
   );
 
   const changeText = useCallback(
@@ -123,7 +123,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
 
       setRows(copyRows);
     },
-    [findIndexById, rows]
+    [findIndexById, rows, setRows]
   );
 
   const changeVerticalFocus = useCallback(
@@ -210,7 +210,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
         })
       );
     },
-    [findIndexById, rows]
+    [findIndexById, rows, setRows]
   );
 
   const addImages = useCallback(
@@ -254,7 +254,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
 
       setRows(copyRows);
     },
-    [findIndexById, rows]
+    [findIndexById, rows, setRows]
   );
 
   const value = useMemo<MarkdownContextType>(
