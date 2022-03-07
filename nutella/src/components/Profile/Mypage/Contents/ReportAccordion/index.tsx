@@ -90,9 +90,9 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
           {reports.map((value) => (
             <ReportCard key={value.uuid} data={{ ...value, status }} />
           ))}
-          {eachData?.data[pathType].projects.map((value) => {
-            <ReportCard key={value.uuid} data={{ ...value, status }} />;
-          })}
+          {eachData?.data[pathType].projects.map((value) => (
+            <ReportCard key={value.uuid} data={{ ...value, status }} />
+          ))}
         </S.Grid>
         {isMore(LIMIT, page, count) && (
           <S.More onClick={onMore}>더 가져오기</S.More>

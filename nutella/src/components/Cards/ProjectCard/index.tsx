@@ -21,7 +21,7 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
     thumbnailUrl,
   } = data;
 
-  const iconMap = new Map<ProjectTypes, any>()
+  const iconMap = new Map<ProjectTypes, string>()
     .set("PERS", PersonalIcons)
     .set("TEAM", TeamIcons)
     .set("CLUB", ClubIcons);

@@ -177,7 +177,11 @@ interface ModifyGithubId {
 export const modifyGithubId = async (githubId: string) => {
   const uri = Uri.changeGithubId.get();
 
-  return await request.put<any, AxiosResponse<any, any>, ModifyGithubId>(uri, {
+  return await request.put<
+    unknown,
+    AxiosResponse<unknown, unknown>,
+    ModifyGithubId
+  >(uri, {
     githubId,
   });
 };

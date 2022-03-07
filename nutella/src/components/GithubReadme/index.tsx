@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useGithubReadme } from "../../queries/User";
 import MarkdownRender from "../MarkdownRender";
 import * as S from "./styles";

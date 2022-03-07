@@ -11,7 +11,7 @@ import Error from "../../Error";
 import toast from "react-hot-toast";
 
 interface PropsType {
-  data: UseQueryResult<AxiosResponse<UserProfileType, any>, unknown>;
+  data: UseQueryResult<AxiosResponse<UserProfileType, unknown>, unknown>;
 }
 
 const Profile: FC<PropsType> = ({ data: queryData }) => {

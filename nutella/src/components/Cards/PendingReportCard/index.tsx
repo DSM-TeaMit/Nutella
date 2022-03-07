@@ -9,7 +9,7 @@ interface PropsType {
 }
 
 interface ProjectLabel {
-  icon: any;
+  icon: string;
   text: string;
 }
 

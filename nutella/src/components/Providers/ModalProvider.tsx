@@ -15,22 +15,25 @@ const ModalProvider: FC = ({ children }) => {
     setModals(copyModals);
   }, [modals]);
 
-  const closeByStep = useCallback((step: number) => {
-    if (step <= 0 || !Number.isInteger(step)) {
-      throw new Error(
-        "ModalContext의 closeByStep의 매개변수로 오는 step은 양의 정수이여야 합니다."
-      );
-    }
+  const closeByStep = useCallback(
+    (step: number) => {
+      if (step <= 0 || !Number.isInteger(step)) {
+        throw new Error(
+          "ModalContext의 closeByStep의 매개변수로 오는 step은 양의 정수이여야 합니다."
+        );
+      }
 
-    const fixedStep = step > modals.length ? modals.length : step;
-    const copyModals = [...modals];
+      const fixedStep = step > modals.length ? modals.length : step;
+      const copyModals = [...modals];
 
-    new Array(fixedStep).fill(0).forEach(() => {
-      copyModals.pop();
-    });
+      new Array(fixedStep).fill(0).forEach(() => {
+        copyModals.pop();
+      });
 
-    setModals(copyModals);
-  }, []);
+      setModals(copyModals);
+    },
+    [modals]
+  );
 
   const openModal = useCallback(
     (modal: string) => {

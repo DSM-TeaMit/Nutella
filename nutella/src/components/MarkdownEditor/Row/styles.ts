@@ -1,6 +1,5 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import theme from "../../../utils/theme/theme";
 
 export const RowContainer = styled.div<{ margin: string }>`
   margin-left: ${({ margin }) => margin};

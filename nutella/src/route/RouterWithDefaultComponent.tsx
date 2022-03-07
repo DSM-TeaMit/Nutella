@@ -12,6 +12,7 @@ import {
   UserContainer,
   ManagementAccountContainer,
 } from "../container";
+import Page404 from "../container/Page404";
 
 const RouterWithDefaultComponent = () => {
   return (
@@ -29,6 +30,7 @@ const RouterWithDefaultComponent = () => {
           <Route path="result" element={<ResultContainer />} />
         </Route>
         <Route path="pending-report" element={<PendingReportContainer />} />
+        <Route path="*" element={<Page404 />} />
       </Routes>
       <Footer />
     </>

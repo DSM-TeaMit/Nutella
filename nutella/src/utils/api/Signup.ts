@@ -24,7 +24,7 @@ export interface InfoType {
   githubId: string;
 }
 
-export const postUserInfo = async (data: any) => {
+export const postUserInfo = async (data: unknown) => {
   await request.post<InfoType>(Uri.defaultInfomation.get(), data);
 };
 

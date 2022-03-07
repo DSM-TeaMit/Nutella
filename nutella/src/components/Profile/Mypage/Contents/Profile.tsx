@@ -12,7 +12,7 @@ import Loading from "../../Loading";
 import Error from "../../Error";
 
 interface PropsType {
-  data: UseQueryResult<AxiosResponse<MyProfileType, any>, unknown>;
+  data: UseQueryResult<AxiosResponse<MyProfileType, unknown>, unknown>;
 }
 
 const Profile: FC<PropsType> = ({ data: queryData }) => {

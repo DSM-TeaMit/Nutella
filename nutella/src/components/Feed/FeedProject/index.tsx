@@ -9,8 +9,8 @@ interface PropsType {
 const FeedProject: FC<PropsType> = ({ total }) => {
   return (
     <S.ProjectBox>
-      {new Array(total).fill(0).map(() => (
-        <Project />
+      {new Array(total).fill(0).map((_, index) => (
+        <Project key={index} />
       ))}
     </S.ProjectBox>
   );

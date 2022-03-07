@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useState } from "react";
+import { FC, useCallback, useMemo } from "react";
 import uniqueId from "../../constant/UniqueId";
 import State from "../../interface/State";
 import * as S from "./styles";
@@ -13,12 +13,17 @@ export interface PropsType {
   tagState: State<Tag[]>;
 }
 
-const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement> & PropsType> = (props) => {
+const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement> & PropsType> = (
+  props
+) => {
   const inputProps: React.InputHTMLAttributes<HTMLInputElement> = { ...props };
   const { value, onChange, clearValue, tagState } = props;
   const [tags, setTags] = tagState;
 
-  const renderValue = useMemo(() => value?.toString().split(" ").reverse()[0], [value]);
+  const renderValue = useMemo(
+    () => value?.toString().split(" ").reverse()[0],
+    [value]
+  );
 
   const onChangeHandler = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,13 +55,19 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement> & PropsType> = (p
   );
 
   const onFocusOut = useCallback(() => {
-    const fixedValue = renderValue?.replace(/ +/g, " ")?.replace(/^\s*/, "") || "";
+    const fixedValue =
+      renderValue?.replace(/ +/g, " ")?.replace(/^\s*/, "") || "";
 
     if (fixedValue === "") {
       return;
     }
 
-    setTags([...tags, ...fixedValue.split(" ").map((value) => ({ id: uniqueId(), value: value }))]);
+    setTags([
+      ...tags,
+      ...fixedValue
+        .split(" ")
+        .map((value) => ({ id: uniqueId(), value: value })),
+    ]);
     clearValue();
   }, [clearValue, renderValue, setTags, tags]);
 

@@ -2,7 +2,6 @@ import * as S from "./styles";
 import * as I from "../../styles";
 import ProjectCard from "../../../Cards/ProjectCard";
 import { Fragment, useCallback, useEffect, useState } from "react";
-import useModalContext from "../../../../hooks/useModalContext";
 import ProjectAddModal from "../../../Modals/ProejctAdd";
 import { useMyProjects } from "../../../../queries/User";
 import useModalRef from "../../../../hooks/useModalRef";
@@ -14,7 +13,6 @@ import Error from "../../Error";
 import LIMIT from "../../../../constant/Limit";
 
 const Project = () => {
-  const { openModal } = useModalContext();
   const modalRef = useModalRef();
   const [page, setPage] = useState<number>(1);
   const { data, isError, isLoading } = useMyProjects(page);
@@ -25,7 +23,7 @@ const Project = () => {
       e.preventDefault();
       modalRef.current?.show();
     },
-    [openModal]
+    [modalRef]
   );
 
   useEffect(() => {

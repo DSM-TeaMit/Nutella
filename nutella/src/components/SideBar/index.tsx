@@ -9,7 +9,7 @@ import { AxiosResponse } from "axios";
 interface PropsType {
   navs: NavigationType[];
   data: UseQueryResult<
-    AxiosResponse<MyProfileType | UserProfileType, any>,
+    AxiosResponse<MyProfileType | UserProfileType, unknown>,
     unknown
   >;
 }
