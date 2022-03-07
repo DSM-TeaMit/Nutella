@@ -1,5 +1,9 @@
 import * as S from "./styles";
-import { ProfileIcons, ProjectPhotoIcons, ViewIcons } from "../../assets/icons";
+import {
+  ProfileIcons,
+  ProjectPhotoIcons,
+  ViewIcons,
+} from "../../../assets/icons";
 
 const Project = () => {
   return (
