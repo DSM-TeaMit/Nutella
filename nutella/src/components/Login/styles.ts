@@ -29,7 +29,7 @@ export const Title = styled.div`
 export const OauthBtn = styled.div`
   width: 330px;
   margin: 24px 0 28px;
-  padding: 7px 16px;
+  padding: 9px 16px;
   font: ${({ theme }) => theme.fonts.body2};
   color: ${({ theme }) => theme.colors.grayscale.black};
   border-radius: 10px;
@@ -37,7 +37,7 @@ export const OauthBtn = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   img {
-    vertical-align: middle;
+    vertical-align: sub;
     margin-right: 43px;
   }
 `;
