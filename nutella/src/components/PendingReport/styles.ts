@@ -29,3 +29,7 @@ export const Message = styled.div`
   text-align: center;
   margin: 16px 0px;
 `;
+
+export const Gap = styled.div`
+  margin-top: 400px;
+`;
