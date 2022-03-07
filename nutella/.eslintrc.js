@@ -7,6 +7,7 @@ module.exports = {
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
+    "react-app",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -18,7 +19,7 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint", "react-hooks"],
   rules: {
-    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/rules-of-hooks": "warn",
     "react-hooks/exhaustive-deps": "warn",
     "react/react-in-jsx-scope": "off",
     "react/jsx-key": "off",
@@ -27,5 +28,6 @@ module.exports = {
     "no-constant-condition": "off",
     "react/display-name": "off",
     "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-unused-expressions": "off",
   },
 };
