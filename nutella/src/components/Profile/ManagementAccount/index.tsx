@@ -24,7 +24,7 @@ const ManagementAccount = () => {
     e.preventDefault();
     e.stopPropagation();
     modalRef.current?.show();
-  }, []);
+  }, [modalRef]);
 
   return (
     <Fragment>

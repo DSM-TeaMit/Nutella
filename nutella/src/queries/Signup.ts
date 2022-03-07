@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { useCallback } from "react";
-import { useMutation, useQueryClient, useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import queryKeys from "../constant/QueryKeys";
 import storageKeys from "../constant/StorageKeys";
@@ -22,7 +22,7 @@ const getDateWithAddHour = (hour: number) => {
 export const useOauthGoogle = (code: string | null) => {
   const navigate = useNavigate();
 
-  const onSuccess = useCallback((data: AxiosResponse<TokenType, any>) => {
+  const onSuccess = useCallback((data: AxiosResponse<TokenType, unknown>) => {
     const { accessToken, refreshToken } = data.data;
     localStorage.setItem(storageKeys.accessToken, accessToken);
     localStorage.setItem(storageKeys.refreshToken, refreshToken);

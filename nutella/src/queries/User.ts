@@ -1,6 +1,4 @@
-import { AxiosResponse } from "axios";
-import { useCallback } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import ReportPathType from "../interface/ReportPathType";
 import {
