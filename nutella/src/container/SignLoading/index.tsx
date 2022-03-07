@@ -11,9 +11,12 @@ const SignLoadingContainer: FC = () => {
   const { data } = useOauthGoogle(code);
 
   const onLand = useCallback(() => {
-    if (!data) {
+    if (!code) {
       navigate("/");
       toast.error("잘못된 접근 방식입니다.");
+    }
+
+    if (!data) {
       return;
     }
 
@@ -26,7 +29,7 @@ const SignLoadingContainer: FC = () => {
       navigate("/feed");
       toast.success("로그인 성공");
     }
-  }, [data, navigate]);
+  }, [code, data, navigate]);
 
   useEffect(() => {
     onLand();
