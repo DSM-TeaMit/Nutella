@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from "react";
 
 const useInfiniteScroll = <T extends HTMLElement>(
   onNextPage: () => void,
-  enabled?: boolean
+  enabled: boolean
 ) => {
   const ref = useRef<T>(null);
   const canLoadMore = useRef<boolean>(true);
@@ -10,9 +10,8 @@ const useInfiniteScroll = <T extends HTMLElement>(
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
-      const condition = enabled === undefined ? true : enabled;
 
-      if (target.isIntersecting && canLoadMore.current && condition) {
+      if (target.isIntersecting && canLoadMore.current && enabled) {
         onNextPage();
 
         canLoadMore.current = false;
@@ -22,7 +21,7 @@ const useInfiniteScroll = <T extends HTMLElement>(
         }, 50);
       }
     },
-    [onNextPage]
+    [onNextPage, enabled]
   );
 
   useEffect(() => {

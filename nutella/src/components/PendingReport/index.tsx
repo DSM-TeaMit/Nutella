@@ -8,23 +8,22 @@ import * as S from "./styles";
 
 const PendingReport = () => {
   const [page, setPage] = useState<number>(1);
-  const { data, isLoading, isError } = usePendingReport(1);
+  const { data, isLoading, isError, isFetching } = usePendingReport(page);
 
   const onNextPage = useCallback(() => {
-    console.log("qq");
     if (!data) {
       return;
     }
 
-    console.log("aa");
-    setPage((prev) => prev + 1);
+    if (isMore(LIMIT, page, data.data.count)) {
+      setPage((prev) => prev + 1);
+    }
   }, [page, data]);
 
-  useEffect(() => {
-    console.log(page);
-  }, [page]);
-
-  const ref = useInfiniteScroll<HTMLDivElement>(onNextPage);
+  const ref = useInfiniteScroll<HTMLDivElement>(
+    onNextPage,
+    !(isLoading || isError || isFetching)
+  );
 
   if (isLoading) {
     return (
@@ -55,19 +54,6 @@ const PendingReport = () => {
         {data?.data.projects.map((value) => {
           return <PendingReportCard data={value} />;
         })}
-        {new Array(page * LIMIT).fill(0).map((_, index) => (
-          <PendingReportCard
-            key={index}
-            data={{
-              projectName: "teamit",
-              projectType: "PERS",
-              reportType: "PLAN",
-              submittedAt: new Date().toString(),
-              uuid: "",
-              writer: { name: "김진근", studentNo: 3203 },
-            }}
-          />
-        ))}
       </S.List>
       <div ref={ref} />
       {data?.data.count === 0 && (
