@@ -41,8 +41,8 @@ export const useOauthGoogle = (code: string | null) => {
 
       if (err.response?.status === 403) {
         toast.error("학교 계정으로 인증해주세요.");
-        navigate("/");
       }
+      navigate("/");
     },
     [navigate]
   );
