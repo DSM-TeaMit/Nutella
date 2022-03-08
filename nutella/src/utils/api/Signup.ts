@@ -27,8 +27,3 @@ export interface InfoType {
 export const postUserInfo = async (data: unknown) => {
   await request.post<InfoType>(Uri.defaultInfomation.get(), data);
 };
-
-export const getOauthGithub = async (code: string | null) => {
-  const uri = `/auth/callback-github?code=${code}`;
-  await request.get(uri);
-};
