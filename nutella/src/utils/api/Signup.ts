@@ -19,16 +19,11 @@ export const getOauthGoogle = async (code: string | null) => {
 };
 
 export interface InfoType {
-  studentNo: string;
+  studentNo: number;
   name: string;
-  githubId: string;
+  githubId?: string;
 }
 
-export const postUserInfo = async (data: unknown) => {
-  await request.post<InfoType>(Uri.defaultInfomation.get(), data);
-};
-
-export const getOauthGithub = async (code: string | null) => {
-  const uri = `/auth/callback-github?code=${code}`;
-  await request.get(uri);
+export const postUserInfo = async (data: InfoType) => {
+  return await request.post(Uri.defaultInfomation.get(), data);
 };
