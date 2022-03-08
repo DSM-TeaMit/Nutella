@@ -58,5 +58,13 @@ export const useOauthGoogle = (code: string | null) => {
 export const useUserInfo = () =>
   useMutation((data: InfoType) => postUserInfo(data));
 
-export const useOauthGithubSignup = (code: string | null) =>
-  useQuery([queryKeys.githubOauth, code], () => getOauthGithub(code));
+export const useOauthGithubSignup = (
+  code: string | null,
+  onSuccess?: () => void,
+  onError?: () => void
+) => {
+  return useQuery([queryKeys.githubOauth, code], () => getOauthGithub(code), {
+    onSuccess,
+    onError,
+  });
+};

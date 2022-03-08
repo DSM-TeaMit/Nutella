@@ -21,7 +21,7 @@ export const getOauthGoogle = async (code: string | null) => {
 export interface InfoType {
   studentNo: string;
   name: string;
-  githubId: string;
+  githubId?: string;
 }
 
 export const postUserInfo = async (data: unknown) => {
