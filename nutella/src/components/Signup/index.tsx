@@ -42,12 +42,12 @@ const Signup = () => {
   const onClickBtn = useCallback(() => {
     if (githubId !== "") {
       //깃허브 아이디를 입력한 경우
-      window.location.href = githubOauthUrl;
+      window.location.href = `${githubOauthUrl}?redirectUri=signup/${no}/${name}/${githubId}`;
     } else {
       //깃허브 아이디를 입력하지 않은 경우
       onSubmit();
     }
-  }, [githubId, onSubmit]);
+  }, [githubId, name, no, onSubmit]);
 
   return (
     <S.SignupContent>
