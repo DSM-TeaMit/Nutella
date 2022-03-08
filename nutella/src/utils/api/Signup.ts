@@ -19,11 +19,11 @@ export const getOauthGoogle = async (code: string | null) => {
 };
 
 export interface InfoType {
-  studentNo: string;
+  studentNo: number;
   name: string;
   githubId?: string;
 }
 
-export const postUserInfo = async (data: unknown) => {
-  await request.post<InfoType>(Uri.defaultInfomation.get(), data);
+export const postUserInfo = async (data: InfoType) => {
+  return await request.post(Uri.defaultInfomation.get(), data);
 };
