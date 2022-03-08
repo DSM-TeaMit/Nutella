@@ -49,24 +49,22 @@ const GithubLoadingContainer = () => {
     }
 
     infoMutation.mutate(
-      { name, studentNo: no!, githubId },
+      { name, studentNo: Number.parseInt(no!), githubId },
       { onSuccess, onError }
     );
   }, [githubId, infoMutation, name, navigate, no, onError, onSuccess]);
 
   useEffect(() => {
     onLand();
-  }, [onLand]);
+  }, []);
 
   return (
-    <>
-      <S.Container>
-        <div>
-          <S.Title>인증중입니다...</S.Title>
-          <S.Description>잠시만 기다려주세요.</S.Description>
-        </div>
-      </S.Container>
-    </>
+    <S.Container>
+      <div>
+        <S.Title>인증중입니다...</S.Title>
+        <S.Description>잠시만 기다려주세요.</S.Description>
+      </div>
+    </S.Container>
   );
 };
 
