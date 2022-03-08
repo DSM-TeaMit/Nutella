@@ -13,7 +13,6 @@ type ImageUuid = typeof imageUuid;
 const Uri = {
   refresh: new URI(`auth/refresh`),
   googleCallback: new URI(`auth/callback-google`),
-  githubCallback: new URI(`auth/callback-github`),
   login: new URI(`auth/uidlogin`),
   register: new URI(`auth/register-admin`),
   defaultInfomation: new URI(`user/register`),

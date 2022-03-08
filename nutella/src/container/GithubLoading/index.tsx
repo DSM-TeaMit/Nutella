@@ -29,6 +29,7 @@ const GithubLoadingContainer = () => {
       }
 
       const { status } = err.response;
+
       if (status === 422) {
         toast.error("깃허브 인증되지 않은 아이디입니다.");
         toast.error("다시 회원가입해주세요.");
