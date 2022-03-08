@@ -6,7 +6,7 @@ import BlueButton from "../Buttons/BlueButton";
 import useInputs, { NameTypes } from "../../hooks/useInputs";
 import Input from "../Input";
 import toast from "react-hot-toast";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 interface InputType extends NameTypes {
   no: string;
@@ -34,7 +34,7 @@ const Signup = () => {
 
   const onSubmit = useCallback(() => {
     infoMutation.mutate(
-      { studentNo: no, name: name },
+      { studentNo: Number.parseInt(no), name: name },
       { onSuccess: onSubmitSuccess }
     );
   }, [infoMutation, name, no, onSubmitSuccess]);
@@ -48,6 +48,12 @@ const Signup = () => {
       onSubmit();
     }
   }, [githubId, name, no, onSubmit]);
+
+  const isButtonActive = useMemo(() => {
+    const studentNoRegex = /[1-3][1-4]((0(?=[1-9])|1|2(?=[0-1]))[0-9])/;
+ 
+    return name === "" || !studentNoRegex.test(no);
+  }, [name, no]);
 
   return (
     <S.SignupContent>
@@ -83,7 +89,7 @@ const Signup = () => {
             <span>로그인</span>
           </S.LoginText>
         </Link>
-        <BlueButton onClick={onClickBtn}>
+        <BlueButton onClick={onClickBtn} disabled={isButtonActive}>
           {githubId === "" ? "회원가입" : "Github 인증"}
         </BlueButton>
       </S.ClickBox>
