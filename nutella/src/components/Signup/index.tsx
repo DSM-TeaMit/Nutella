@@ -5,6 +5,8 @@ import { useUserInfo } from "../../queries/Signup";
 import BlueButton from "../Buttons/BlueButton";
 import useInputs, { NameTypes } from "../../hooks/useInputs";
 import Input from "../Input";
+import toast from "react-hot-toast";
+import { useCallback, useMemo } from "react";
 
 interface InputType extends NameTypes {
   no: string;
@@ -12,36 +14,46 @@ interface InputType extends NameTypes {
   githubId: string;
 }
 
+const githubOauthUrl = "https://spectre-psnldev.dev:8202/auth/github" as const;
+
 const Signup = () => {
   const infoMutation = useUserInfo();
   const navigate = useNavigate();
-  const [inputProps, [inputs, SetInputs]] = useInputs<InputType>({
+  const [inputProps, [inputs, setInputs]] = useInputs<InputType>({
     no: "",
     name: "",
     githubId: "",
   });
   const { no, name, githubId } = inputs;
 
-  const onClickBtn = () => {
-    if (githubId !== "") {
-      const OauthUrl = "https://spectre-psnldev.dev:8202/auth/github";
-      window.location.href = OauthUrl;
-    } else {
-      onSubmit();
-    }
-  };
+  const onSubmitSuccess = useCallback(() => {
+    setInputs({ no: "", name: "", githubId: "" });
+    toast.success("회원가입에 성공하였습니다.");
+    navigate("/");
+  }, [navigate, setInputs]);
 
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     infoMutation.mutate(
-      { studentNo: no, name: name, githubId: githubId },
+      { studentNo: Number.parseInt(no), name: name },
       { onSuccess: onSubmitSuccess }
     );
-  };
+  }, [infoMutation, name, no, onSubmitSuccess]);
 
-  const onSubmitSuccess = () => {
-    SetInputs({ no: "", name: "", githubId: "" });
-    navigate("/feed");
-  };
+  const onClickBtn = useCallback(() => {
+    if (githubId !== "") {
+      //깃허브 아이디를 입력한 경우
+      window.location.href = `${githubOauthUrl}?redirectUri=signup/${no}/${name}/${githubId}`;
+    } else {
+      //깃허브 아이디를 입력하지 않은 경우
+      onSubmit();
+    }
+  }, [githubId, name, no, onSubmit]);
+
+  const isButtonActive = useMemo(() => {
+    const studentNoRegex = /[1-3][1-4]((0(?=[1-9])|1|2(?=[0-1]))[0-9])/;
+ 
+    return name === "" || !studentNoRegex.test(no);
+  }, [name, no]);
 
   return (
     <S.SignupContent>
@@ -51,7 +63,7 @@ const Signup = () => {
         <Input
           type="text"
           placeholder="학번을 입력해 주세요..."
-          {...inputProps[no]}
+          {...inputProps["no"]}
         />
       </S.Box>
       <S.Box>
@@ -59,7 +71,7 @@ const Signup = () => {
         <Input
           type="text"
           placeholder="이름을 입력해 주세요..."
-          {...inputProps[name]}
+          {...inputProps["name"]}
         />
       </S.Box>
       <S.Box>
@@ -67,7 +79,7 @@ const Signup = () => {
         <Input
           type="text"
           placeholder="Github 아이디를 입력해 주세요..."
-          {...inputProps[githubId]}
+          {...inputProps["githubId"]}
         />
       </S.Box>
       <S.ClickBox>
@@ -77,7 +89,9 @@ const Signup = () => {
             <span>로그인</span>
           </S.LoginText>
         </Link>
-        <BlueButton onClick={onClickBtn}>회원가입</BlueButton>
+        <BlueButton onClick={onClickBtn} disabled={isButtonActive}>
+          {githubId === "" ? "회원가입" : "Github 인증"}
+        </BlueButton>
       </S.ClickBox>
     </S.SignupContent>
   );

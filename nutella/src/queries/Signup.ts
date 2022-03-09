@@ -8,7 +8,6 @@ import {
   postUserInfo,
   InfoType,
   getOauthGoogle,
-  getOauthGithub,
   TokenType,
 } from "../utils/api/Signup";
 import toast from "react-hot-toast";
@@ -42,8 +41,12 @@ export const useOauthGoogle = (code: string | null) => {
 
       if (err.response?.status === 403) {
         toast.error("학교 계정으로 인증해주세요.");
-        navigate("/");
+      } else if (err.response?.status === 422) {
+        toast.error("탈퇴한 계정으로 서비스 이용은 불가능합니다.");
+      } else {
+        toast.error("인증 오류.");
       }
+      navigate("/");
     },
     [navigate]
   );
@@ -57,6 +60,3 @@ export const useOauthGoogle = (code: string | null) => {
 
 export const useUserInfo = () =>
   useMutation((data: InfoType) => postUserInfo(data));
-
-export const useOauthGithubSignup = (code: string | null) =>
-  useQuery([queryKeys.githubOauth, code], () => getOauthGithub(code));
