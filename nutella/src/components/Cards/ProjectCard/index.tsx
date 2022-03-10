@@ -3,7 +3,7 @@ import { TeamIcons, PersonalIcons, ClubIcons } from "../../../assets/icons";
 import { ProjectType } from "../../../utils/api/User";
 import { FC, useCallback } from "react";
 import ProjectTypes from "../../../interface/ProjectTypes";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface PropsType {
   data: ProjectType;
@@ -19,6 +19,7 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
     projectName,
     projectType,
     thumbnailUrl,
+    emoji,
   } = data;
 
   const iconMap = new Map<ProjectTypes, string>()
@@ -38,7 +39,7 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
 
   return (
     <S.Container to={`/project/${uuid}`}>
-      <S.Image alt="project image" src={thumbnailUrl} />
+      <S.Image alt="project image" src={thumbnailUrl} emoji={emoji} />
       <S.InfoContainer>
         <div>
           <S.TitleContaienr>

@@ -30,6 +30,7 @@ export interface ProjectType {
   fields: string;
   members: ProjectMember[];
   thumbnailUrl?: string;
+  emoji?: string;
 }
 
 export interface MyProfileType {
