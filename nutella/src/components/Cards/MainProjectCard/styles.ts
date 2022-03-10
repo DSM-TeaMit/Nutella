@@ -1,11 +1,17 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
-export const Content = styled.div`
+export const Content = styled(Link)`
   width: 305px;
   height: 286px;
   border-radius: 10px;
   position: relative;
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
+  background-color: ${({ theme }) => theme.colors.grayscale.white};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
+  }
 `;
 
 export const ProjectPhoto = styled.img`
@@ -20,7 +26,6 @@ export const ProjectBottom = styled.div`
   border-radius: 0px 0px 10px 10px;
   position: absolute;
   bottom: 0px;
-  background-color: ${({ theme }) => theme.colors.grayscale.white};
 `;
 
 export const ProjectInfoBox = styled.div`
