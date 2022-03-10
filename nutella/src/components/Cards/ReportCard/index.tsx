@@ -23,7 +23,7 @@ const ReportCard: FC<PropsType> = ({ data }) => {
     .set("DECLINED", "승인 거부됨");
 
   return (
-    <S.Container to={`/project/${uuid}/plan`}>
+    <S.Container to={`/project/${uuid}/${type === "PLAN" ? "plan" : "result"}`}>
       <S.Image alt="project image" src={thumbnailUrl} emoji={emoji} />
       <S.InfoContainer>
         <S.TitleContaienr>
