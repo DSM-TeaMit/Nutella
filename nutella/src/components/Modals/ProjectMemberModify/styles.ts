@@ -79,22 +79,3 @@ export const Tag = styled.div`
   background: ${({ theme }) => theme.colors.primary.default};
   color: ${({ theme }) => theme.colors.grayscale.white};
 `;
-
-export const InputBox = styled.input`
-  width: 100px;
-  height: 20px;
-  margin-top: 4px;
-  margin-bottom: 28px;
-  border: none;
-  background: none;
-  outline: none;
-  font: ${({ theme }) => theme.fonts.description};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
-  ::placeholder {
-    color: ${({ theme }) => theme.colors.grayscale.gray1};
-  }
-`;
-
-export const UserAddInputBox = styled(InputBox)`
-  width: 350px;
-`;

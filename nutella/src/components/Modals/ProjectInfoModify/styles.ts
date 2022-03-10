@@ -39,18 +39,6 @@ export const SubTitle = styled.div`
   color: ${({ theme }) => theme.colors.grayscale.gray2};
 `;
 
-export const InputBox = styled.input`
-  width: 480px;
-  height: fit-content;
-  margin-top: 9px;
-  border: none;
-  outline: none;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
-  ::placeholder {
-    color: ${({ theme }) => theme.colors.grayscale.gray1};
-  }
-`;
-
 export const ExplanationBox = styled.textarea`
   width: 480px;
   height: auto;
