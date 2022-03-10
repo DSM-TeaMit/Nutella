@@ -9,7 +9,8 @@ export const Container = styled.div`
 `;
 
 export const FeedContent = styled.div`
-  margin: 0px 320px;
+  width: 1280px;
+  margin: 0px auto;
 `;
 
 export const TitleBox = styled.div`
