@@ -15,7 +15,7 @@ function App() {
         <ModalProvider>
           <Global styles={reset} />
           <RootRouter />
-          <Toaster position="bottom-right" />
+          <Toaster position="top-center" />
         </ModalProvider>
       </ThemeProvider>
     </QueryClientProvider>
