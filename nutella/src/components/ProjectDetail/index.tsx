@@ -9,24 +9,22 @@ const ProjectDetail = () => {
   const { uuid } = useParams<{ uuid: string }>();
 
   return (
-    <>
-      <S.Container>
-        <S.ProjectDetailContent>
-          <S.DetailContent>
-            <Top />
-            <SubmitContent />
-            <CommentContainer
-              styleType="project"
-              source="project"
-              uuid={uuid || ""}
-            />
-          </S.DetailContent>
-          <S.SideContent>
-            <Aside />
-          </S.SideContent>
-        </S.ProjectDetailContent>
-      </S.Container>
-    </>
+    <S.Container>
+      <S.ProjectDetailContent>
+        <S.DetailContent>
+          <Top />
+          <SubmitContent />
+          <CommentContainer
+            styleType="project"
+            source="project"
+            uuid={uuid || ""}
+          />
+        </S.DetailContent>
+        <S.SideContent>
+          <Aside />
+        </S.SideContent>
+      </S.ProjectDetailContent>
+    </S.Container>
   );
 };
 
