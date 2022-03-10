@@ -7,7 +7,8 @@ import {
 
 const Project = () => {
   return (
-    <S.Content>
+    <S.Content to={`/project/uuid`}>
+      {/* 일단 uuid는 지정을 안 했기에 저렇게 해놨습니다 */}
       <S.ProjectPhoto src={ProjectPhotoIcons} />
       <S.ProjectBottom>
         <S.ProjectInfoBox>
