@@ -1,3 +1,4 @@
+import Input from "../../Input";
 import * as S from "./styles";
 
 const ProjectMemberModifyModal = () => {
@@ -18,10 +19,10 @@ const ProjectMemberModifyModal = () => {
               <S.Tag>프론트 엔드</S.Tag>
               <S.Tag>디자인</S.Tag>
             </S.TagBox>
-            <S.InputBox placeholder="역할 입력..." />
+            <Input placeholder="역할 입력..." />
           </S.RollBox>
         </S.MemberBox>
-        <S.UserAddInputBox placeholder="추가하고 싶은 유저 이름 입력..." />
+        <Input placeholder="추가하고 싶은 유저 이름 입력..." />
         <S.MemberBox>
           <S.MemberProfile>
             <S.User>
@@ -34,7 +35,7 @@ const ProjectMemberModifyModal = () => {
             <S.TagBox>
               <S.Tag>프론트 엔드</S.Tag>
             </S.TagBox>
-            <S.InputBox placeholder="역할 입력..." />
+            <Input placeholder="역할 입력..." />
           </S.RollBox>
         </S.MemberBox>
         <S.MemberBox>
@@ -49,7 +50,7 @@ const ProjectMemberModifyModal = () => {
             <S.TagBox>
               <S.Tag>백엔드</S.Tag>
             </S.TagBox>
-            <S.InputBox placeholder="역할 입력..." />
+            <Input placeholder="역할 입력..." />
           </S.RollBox>
         </S.MemberBox>
       </S.ContentBox>

@@ -4,6 +4,7 @@ import useModalRef from "../../../hooks/useModalRef";
 import BlueButton from "../../Buttons/BlueButton";
 import BorderButton from "../../Buttons/BorderButton";
 import RedButton from "../../Buttons/RedButton";
+import Input from "../../Input";
 import ModalPortal from "../../ModalPortal";
 import ProjectDeleteModal from "../ProjectDelete";
 import * as S from "./styles";
@@ -32,7 +33,7 @@ const ProjectModifyModal = () => {
         <S.ContentBox>
           <S.Content>
             <S.SubTitle>프로젝트 이름</S.SubTitle>
-            <S.InputBox defaultValue="Teamit" />
+            <Input defaultValue="Teamit" />
           </S.Content>
           <S.Content>
             <S.SubTitle>프로젝트 설명</S.SubTitle>
@@ -50,7 +51,7 @@ const ProjectModifyModal = () => {
                 <S.Tag>웹</S.Tag>
                 <S.Tag>보안</S.Tag>
               </S.TagBox>
-              <S.InputBox placeholder="분야를 입력해 주세요." />
+              <Input placeholder="분야를 입력해 주세요." />
             </S.FiedBox>
           </S.Content>
         </S.ContentBox>
