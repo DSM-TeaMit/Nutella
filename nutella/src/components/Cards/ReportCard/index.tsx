@@ -9,7 +9,7 @@ interface PropsType {
 }
 
 const ReportCard: FC<PropsType> = ({ data }) => {
-  const { uuid, projectName, type, status, thumbnailUrl } = data;
+  const { uuid, projectName, type, status, thumbnailUrl, emoji } = data;
   const theme = useThemeContext();
 
   const colorMap = new Map<ReportStatus, string>()
@@ -23,8 +23,8 @@ const ReportCard: FC<PropsType> = ({ data }) => {
     .set("DECLINED", "승인 거부됨");
 
   return (
-    <S.Container to={`/project/${uuid}/plan`}>
-      <S.Image alt="project image" src={thumbnailUrl} />
+    <S.Container to={`/project/${uuid}/${type === "PLAN" ? "plan" : "result"}`}>
+      <S.Image alt="project image" src={thumbnailUrl} emoji={emoji} />
       <S.InfoContainer>
         <S.TitleContaienr>
           <S.Title>{projectName}</S.Title>

@@ -13,6 +13,7 @@ export interface ReportType {
   type: ReportTypes;
   status: ReportStatus;
   thumbnailUrl?: string;
+  emoji?: string;
 }
 
 export interface ProjectMember {
@@ -29,6 +30,7 @@ export interface ProjectType {
   fields: string;
   members: ProjectMember[];
   thumbnailUrl?: string;
+  emoji?: string;
 }
 
 export interface MyProfileType {
