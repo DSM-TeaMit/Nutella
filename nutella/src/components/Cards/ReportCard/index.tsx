@@ -9,7 +9,7 @@ interface PropsType {
 }
 
 const ReportCard: FC<PropsType> = ({ data }) => {
-  const { uuid, projectName, type, status, thumbnailUrl } = data;
+  const { uuid, projectName, type, status, thumbnailUrl, emoji } = data;
   const theme = useThemeContext();
 
   const colorMap = new Map<ReportStatus, string>()
@@ -24,7 +24,7 @@ const ReportCard: FC<PropsType> = ({ data }) => {
 
   return (
     <S.Container to={`/project/${uuid}/plan`}>
-      <S.Image alt="project image" src={thumbnailUrl} />
+      <S.Image alt="project image" src={thumbnailUrl} emoji={emoji} />
       <S.InfoContainer>
         <S.TitleContaienr>
           <S.Title>{projectName}</S.Title>

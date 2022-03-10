@@ -13,6 +13,7 @@ export interface ReportType {
   type: ReportTypes;
   status: ReportStatus;
   thumbnailUrl?: string;
+  emoji?: string;
 }
 
 export interface ProjectMember {
