@@ -13,7 +13,7 @@ interface PlanType {
     report: boolean;
     code: boolean;
     outcome: boolean;
-    others: boolean;
+    others: string | undefined;
   };
 }
 
@@ -30,7 +30,7 @@ export interface ParsedPlanType {
     report: boolean;
     code: boolean;
     outcome: boolean;
-    others: boolean;
+    others: string | undefined;
   };
 }
 
@@ -48,7 +48,7 @@ export const createPlanReport = async (projectUuid: string) => {
   return await request.post<Uuid, AxiosResponse<Uuid>, PlanType>(uri, {
     startDate: dateString,
     endDate: dateString,
-    includes: { report: true, code: true, outcome: true, others: false },
+    includes: { report: true, code: true, outcome: true, others: undefined },
     goal: JSON.stringify(getInitRows()),
     content: JSON.stringify(getInitRows()),
   });
@@ -68,11 +68,11 @@ export const getPlanReport = async (projectUuid: string) => {
     includes: data.includes,
   };
 
-  const responseWithoutData: Omit<AxiosResponse<PlanType, any>, "data"> = {
+  const responseWithoutData: Omit<AxiosResponse<PlanType, unknown>, "data"> = {
     ...response,
   };
 
-  const resultResponse: AxiosResponse<ParsedPlanType, any> = {
+  const resultResponse: AxiosResponse<ParsedPlanType, unknown> = {
     ...responseWithoutData,
     data: result,
   };
@@ -94,7 +94,7 @@ export const modifyPlanReport = async (
     includes: data.includes,
   };
 
-  return await request.patch<any, AxiosResponse<any, any>, PlanType>(
+  return await request.patch<unknown, AxiosResponse<unknown, unknown>, PlanType>(
     uri,
     requestData
   );
