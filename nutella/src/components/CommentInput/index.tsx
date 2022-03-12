@@ -4,7 +4,7 @@ import CommentSource from "../../interface/CommentSource";
 import CommentStyleType from "../../interface/CommentStyleType";
 import { useCommentMutation } from "../../queries/Comment";
 import { useMyProfile } from "../../queries/User";
-import BlueButton from "../Buttons/BlueButton";
+import { BlueButton } from "../Buttons";
 import * as S from "./styles";
 import toast from "react-hot-toast";
 

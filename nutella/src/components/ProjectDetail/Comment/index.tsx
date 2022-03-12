@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import BlueButton from "../../Buttons/BlueButton";
+import { BlueButton } from "../../Buttons";
 
 const Comment = () => {
   const onSubmitComment = () => {};

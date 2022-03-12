@@ -1,9 +1,7 @@
 import { Fragment, useCallback, useEffect, useRef } from "react";
 import useModalContext from "../../../hooks/useModalContext";
 import useModalRef from "../../../hooks/useModalRef";
-import BlueButton from "../../Buttons/BlueButton";
-import BorderButton from "../../Buttons/BorderButton";
-import RedButton from "../../Buttons/RedButton";
+import { BlueButton, RedButton, BorderButton } from "../../Buttons";
 import ModalPortal from "../../ModalPortal";
 import ProjectDeleteModal from "../ProjectDelete";
 import * as S from "./styles";

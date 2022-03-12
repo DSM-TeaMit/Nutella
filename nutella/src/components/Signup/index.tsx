@@ -2,7 +2,7 @@ import * as S from "./styles";
 import { LeftArrow } from "../../assets/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserInfo } from "../../queries/Signup";
-import BlueButton from "../Buttons/BlueButton";
+import { BlueButton } from "../Buttons";
 import useInputs, { NameTypes } from "../../hooks/useInputs";
 import Input from "../Input";
 import toast from "react-hot-toast";
@@ -51,7 +51,7 @@ const Signup = () => {
 
   const isButtonActive = useMemo(() => {
     const studentNoRegex = /[1-3][1-4]((0(?=[1-9])|1|2(?=[0-1]))[0-9])/;
- 
+
     return name === "" || !studentNoRegex.test(no);
   }, [name, no]);
 
