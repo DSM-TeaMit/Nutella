@@ -1,14 +1,14 @@
 import styled from "@emotion/styled";
 
 export const Container = styled.div`
-  width: 100%;
   min-height: 600px;
   margin-top: 130px;
   margin-bottom: 200px;
 `;
 
 export const ProjectDetailContent = styled.div`
-  margin: 0px 320px;
+  margin: 0px auto;
+  width: 1280px;
   display: flex;
 `;
 
