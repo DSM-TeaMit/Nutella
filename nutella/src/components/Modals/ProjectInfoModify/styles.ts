@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 
 export const ProjectModifyModalContainer = styled.div`
-  width: 547px;
-  height: 507px;
   border-radius: 10px;
   padding: 24px 32px;
   background-color: ${({ theme }) => theme.colors.grayscale.white};
@@ -14,7 +12,6 @@ export const Title = styled.div`
 `;
 
 export const ContentBox = styled.div`
-  width: 483px;
   height: 300px;
   margin: 40px auto 36px;
 `;
@@ -79,7 +76,6 @@ export const Tag = styled.div`
 
 export const BtnBox = styled.div`
   width: 483px;
-  height: 40px;
   display: flex;
   justify-content: space-between;
   div {
