@@ -1,5 +1,4 @@
-import BlueButton from "../Buttons/BlueButton";
-import BorderButton from "../Buttons/BorderButton";
+import { BlueButton, BorderButton } from "../Buttons";
 import AddPage from "./Content/AddPage";
 import ContentExample from "./Content/ContentExample";
 import Cover from "./Content/Cover";

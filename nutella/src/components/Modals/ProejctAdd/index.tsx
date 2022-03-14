@@ -5,8 +5,7 @@ import MemberInput from "../../MemberInput";
 import TagInput from "../../TagInput";
 import * as S from "./styles";
 import { ClubIcons, PersonalIcons, TeamIcons } from "../../../assets/icons";
-import BlueButton from "../../Buttons/BlueButton";
-import BorderButton from "../../Buttons/BorderButton";
+import { BlueButton, BorderButton } from "../../Buttons";
 import useModalContext from "../../../hooks/useModalContext";
 
 interface Type {

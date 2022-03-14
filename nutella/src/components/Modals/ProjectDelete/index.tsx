@@ -1,6 +1,5 @@
 import useModalContext from "../../../hooks/useModalContext";
-import BorderButton from "../../Buttons/BorderButton";
-import RedButton from "../../Buttons/RedButton";
+import { RedButton, BorderButton } from "../../Buttons";
 import Input from "../../Input";
 import * as S from "./styles";
 

@@ -1,15 +1,18 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
-export const Content = styled.div`
-  width: 305px;
+export const Content = styled(Link)`
   height: 286px;
   border-radius: 10px;
   position: relative;
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
+  background-color: ${({ theme }) => theme.colors.grayscale.white};
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
+  }
 `;
 
 export const ProjectPhoto = styled.img`
-  width: 100%;
   height: 203px;
   border-radius: 10px 10px 0px 0px;
 `;
@@ -19,18 +22,14 @@ export const ProjectBottom = styled.div`
   height: 82px;
   border-radius: 0px 0px 10px 10px;
   position: absolute;
-  bottom: 0px;
-  background-color: ${({ theme }) => theme.colors.grayscale.white};
 `;
 
 export const ProjectInfoBox = styled.div`
-  width: 273px;
   height: 60px;
   margin: 11px 16px;
 `;
 
 export const ProjectInfo = styled.div`
-  width: 273px;
   height: 23px;
   margin-bottom: 12px;
   display: flex;
