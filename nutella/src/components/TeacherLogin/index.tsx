@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import { Link } from "react-router-dom";
 import { LeftArrow } from "../../assets/icons";
-import BlueButton from "../Buttons/BlueButton";
+import { BlueButton } from "../Buttons";
 import Input from "../Input";
 
 const TeacherLogin = () => {

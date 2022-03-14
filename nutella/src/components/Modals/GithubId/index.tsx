@@ -1,7 +1,6 @@
 import { FC } from "react";
 import useModalContext from "../../../hooks/useModalContext";
-import BlueButton from "../../Buttons/BlueButton";
-import BorderButton from "../../Buttons/BorderButton";
+import { BlueButton, BorderButton } from "../../Buttons";
 import Input from "../../Input";
 import * as S from "./styles";
 
