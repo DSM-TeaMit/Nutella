@@ -10,23 +10,13 @@ import ModalPortal from "../../ModalPortal";
 import TagInput from "../../TagInput";
 import ProjectDeleteModal from "../ProjectDelete";
 import * as S from "./styles";
+import TextareaAutosize from "react-textarea-autosize";
 
 const ProjectModifyModal = () => {
   const { closeCurrentModal } = useModalContext();
   const ref = useRef<HTMLTextAreaElement>(null);
   const modalRef = useModalRef();
   const [inputProps] = useTagInput("", [], true);
-  const handleResizeHeight = useCallback(() => {
-    if (ref === null || ref.current === null) {
-      return;
-    }
-    ref.current.style.height = "28px";
-    ref.current.style.height = ref.current.scrollHeight + "px";
-  }, []);
-
-  useEffect(() => {
-    handleResizeHeight();
-  }, [handleResizeHeight]);
 
   return (
     <Fragment>
@@ -39,10 +29,9 @@ const ProjectModifyModal = () => {
           </S.Content>
           <S.Content>
             <S.SubTitle>프로젝트 설명</S.SubTitle>
-            <S.ExplanationBox
-              ref={ref}
-              rows={1}
-              onInput={handleResizeHeight}
+            <TextareaAutosize
+              minRows={1}
+              maxRows={3}
               defaultValue="사면·감형 및 복권에 관한 사항은 법률로 정한다. 모든 국민은 주거의 자유를 침해받지 아니한다. 주거에 대한 압수나 수색을 할 때에는 검사의 신청에 의하여 법관이 발부한 영장을 제시하여야 한다."
             />
           </S.Content>
