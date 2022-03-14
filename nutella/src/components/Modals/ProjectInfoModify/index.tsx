@@ -1,11 +1,13 @@
 import { Fragment, useCallback, useEffect, useRef } from "react";
 import useModalContext from "../../../hooks/useModalContext";
 import useModalRef from "../../../hooks/useModalRef";
+import useTagInput from "../../../hooks/useTagInput";
 import BlueButton from "../../Buttons/BlueButton";
 import BorderButton from "../../Buttons/BorderButton";
 import RedButton from "../../Buttons/RedButton";
 import Input from "../../Input";
 import ModalPortal from "../../ModalPortal";
+import TagInput from "../../TagInput";
 import ProjectDeleteModal from "../ProjectDelete";
 import * as S from "./styles";
 
@@ -13,7 +15,7 @@ const ProjectModifyModal = () => {
   const { closeCurrentModal } = useModalContext();
   const ref = useRef<HTMLTextAreaElement>(null);
   const modalRef = useModalRef();
-
+  const [inputProps] = useTagInput("", [], true);
   const handleResizeHeight = useCallback(() => {
     if (ref === null || ref.current === null) {
       return;
@@ -51,7 +53,7 @@ const ProjectModifyModal = () => {
                 <S.Tag>웹</S.Tag>
                 <S.Tag>보안</S.Tag>
               </S.TagBox>
-              <Input placeholder="분야를 입력해 주세요." />
+              <TagInput {...inputProps} placeholder="분야를 입력해 주세요." />
             </S.FiedBox>
           </S.Content>
         </S.ContentBox>
