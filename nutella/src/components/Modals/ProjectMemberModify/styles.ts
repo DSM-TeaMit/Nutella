@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 
 export const ProjectMemberModifyModalContainer = styled.div`
-  width: 414px;
-  height: 481px;
   border-radius: 10px;
   padding: 24px 32px;
   background-color: ${({ theme }) => theme.colors.grayscale.white};
@@ -20,15 +18,12 @@ export const ContentBox = styled.div`
 `;
 
 export const MemberBox = styled.div`
-  width: 350px;
   height: 88px;
   margin-bottom: 24px;
 `;
 
 export const MemberProfile = styled.div`
   display: flex;
-  width: 350px;
-  height: 32px;
   justify-content: space-between;
   margin-bottom: 12px;
   span {
@@ -52,10 +47,12 @@ export const User = styled.div`
     font: ${({ theme }) => theme.fonts.body3};
     color: ${({ theme }) => theme.colors.grayscale.gray2};
   }
+  :nth-child(2) {
+    margin-top: 10px;
+  }
 `;
 
 export const RollBox = styled.div`
-  width: 350px;
   height: 42px;
   display: flex;
   padding: 8px 16px;
@@ -78,23 +75,4 @@ export const Tag = styled.div`
   font: ${({ theme }) => theme.fonts.description};
   background: ${({ theme }) => theme.colors.primary.default};
   color: ${({ theme }) => theme.colors.grayscale.white};
-`;
-
-export const InputBox = styled.input`
-  width: 100px;
-  height: 20px;
-  margin-top: 4px;
-  margin-bottom: 28px;
-  border: none;
-  background: none;
-  outline: none;
-  font: ${({ theme }) => theme.fonts.description};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
-  ::placeholder {
-    color: ${({ theme }) => theme.colors.grayscale.gray1};
-  }
-`;
-
-export const UserAddInputBox = styled(InputBox)`
-  width: 350px;
 `;

@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 
 export const ProjectModifyModalContainer = styled.div`
-  width: 547px;
-  height: 507px;
   border-radius: 10px;
   padding: 24px 32px;
   background-color: ${({ theme }) => theme.colors.grayscale.white};
@@ -14,56 +12,34 @@ export const Title = styled.div`
 `;
 
 export const ContentBox = styled.div`
-  width: 483px;
-  height: 300px;
   margin: 40px auto 36px;
 `;
 
 export const Content = styled.div`
+  :nth-child(2) {
+    min-height: 115px;
+  }
   margin-bottom: 40px;
   width: 483px;
   height: fit-content;
-  :nth-child(2) {
-    height: 110px;
-  }
-  :nth-child(3) {
-    input {
-      border: none;
-      width: fit-content;
-    }
+  textarea {
+    outline: none;
+    resize: none;
+    width: 480px;
+    height: auto;
+    margin-top: 9px;
+    border: none;
+    min-height: 30px;
+    max-height: 80px;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
+    font: ${({ theme }) => theme.fonts.body3};
+    color: ${({ theme }) => theme.colors.grayscale.black};
   }
 `;
 
 export const SubTitle = styled.div`
   font: ${({ theme }) => theme.fonts.description};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
-`;
-
-export const InputBox = styled.input`
-  width: 480px;
-  height: fit-content;
-  margin-top: 9px;
-  border: none;
-  outline: none;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
-  ::placeholder {
-    color: ${({ theme }) => theme.colors.grayscale.gray1};
-  }
-`;
-
-export const ExplanationBox = styled.textarea`
-  width: 480px;
-  height: auto;
-  overflow-y: hidden;
-  margin-top: 9px;
-  border: none;
-  min-height: 30px;
-  max-height: 76px;
-  outline: none;
-  resize: none;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
-  font: ${({ theme }) => theme.fonts.body3};
-  color: ${({ theme }) => theme.colors.grayscale.black};
 `;
 
 export const FiedBox = styled.div`
@@ -90,8 +66,6 @@ export const Tag = styled.div`
 `;
 
 export const BtnBox = styled.div`
-  width: 483px;
-  height: 40px;
   display: flex;
   justify-content: space-between;
   div {
