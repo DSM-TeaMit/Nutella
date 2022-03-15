@@ -1,6 +1,5 @@
 import { Theme, ThemeContext } from "@emotion/react";
 import { FC, useCallback, useContext, useState } from "react";
-import State from "../../../interface/State";
 import DateCell, { DateCellType } from "./DateCell";
 import * as S from "./styles";
 import { ArrowIcons } from "../../../assets/icons";

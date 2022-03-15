@@ -30,13 +30,17 @@ export const getInitRows = (): RowType[] => [
   },
 ];
 
-const MarkdownEditor: FC<PropsType> = ({ setRows, rows }) => {
-  return (
-    <MarkdownProvider rows={rows} setRows={setRows}>
-      <Inner />
-    </MarkdownProvider>
-  );
-};
+const MarkdownEditor = forwardRef<MarkdownEditorRef, PropsType>(
+  ({ setRows, rows }, ref) => {
+    return (
+      <MarkdownProvider rows={rows} setRows={setRows}>
+        <Inner ref={ref} />
+      </MarkdownProvider>
+    );
+  }
+);
+
+MarkdownEditor.displayName = "MarkdownEditor";
 
 const Inner = forwardRef<MarkdownEditorRef>((_, ref) => {
   const { rows, refs } = useContext(MarkdownContext);
