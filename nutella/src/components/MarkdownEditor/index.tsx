@@ -1,14 +1,24 @@
-import { FC, useContext } from "react";
+import {
+  FC,
+  forwardRef,
+  useCallback,
+  useContext,
+  useImperativeHandle,
+} from "react";
 import uniqueId from "../../constant/UniqueId";
 import { MarkdownContext, Row as RowType } from "../../context/MarkdownCotext";
-import State from "../../interface/State";
 import MarkdownProvider from "../Providers/MarkdownProvider";
 import Image from "./Image";
 import Row from "./Row";
 import * as S from "./styles";
 
 interface PropsType {
-  rowState: State<RowType[]>;
+  rows: RowType[];
+  setRows: (rows: RowType[]) => void;
+}
+
+export interface MarkdownEditorRef {
+  matchRows: () => void;
 }
 
 export const getInitRows = (): RowType[] => [
@@ -20,9 +30,9 @@ export const getInitRows = (): RowType[] => [
   },
 ];
 
-const MarkdownEditor: FC<PropsType> = ({ rowState }) => {
+const MarkdownEditor: FC<PropsType> = ({ setRows, rows }) => {
   return (
-    <MarkdownProvider rowState={rowState}>
+    <MarkdownProvider rows={rows} setRows={setRows}>
       <Inner />
     </MarkdownProvider>
   );

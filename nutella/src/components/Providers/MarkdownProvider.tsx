@@ -7,18 +7,17 @@ import {
 import uniqueId from "../../constant/UniqueId";
 import Tag from "../../interface/Tag";
 import { postImage } from "../../utils/api/Image";
-import State from "../../interface/State";
 import { getInitRows } from "../MarkdownEditor";
 import toast from "react-hot-toast";
 
 interface PropsType {
-  rowState: State<Row[]>;
+  rows: Row[];
+  setRows: (rows: Row[]) => void;
 }
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
 
-const MarkdownProvider: FC<PropsType> = ({ children, rowState }) => {
-  const [rows, setRows] = rowState;
+const MarkdownProvider: FC<PropsType> = ({ children, rows, setRows }) => {
   const refs = useRef<HTMLDivElement[]>([]);
 
   const findIndexById = useCallback(
