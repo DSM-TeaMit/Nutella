@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useMemo, useState } from "react";
+import { Fragment, useCallback, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Row } from "../../context/MarkdownCotext";
 import useModalRef from "../../hooks/useModalRef";
@@ -8,7 +8,7 @@ import BlueButton from "../Buttons/BlueButton";
 import BorderButton from "../Buttons/BorderButton";
 import CheckBox from "../CheckBox";
 import CommentContainer from "../CommentContainer";
-import MarkdownEditor, { getInitRows } from "../MarkdownEditor";
+import MarkdownEditor, { MarkdownEditorRef } from "../MarkdownEditor";
 import ModalPortal from "../ModalPortal";
 import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
@@ -22,12 +22,22 @@ const dateToString = (date?: Date): string => {
 };
 
 const Plan = () => {
-  const [goalRows, setGoalRows] = useState<Row[]>([...getInitRows()]);
-  const [contentRows, setContentRows] = useState<Row[]>([...getInitRows()]);
   const modalRef = useModalRef();
+  const goalRef = useRef<MarkdownEditorRef>(null);
+  const contentRef = useRef<MarkdownEditorRef>(null);
   const { uuid } = useParams<{ uuid: string }>();
+
+  const onFetching = useCallback(() => {
+    if (!goalRef.current || !contentRef.current) {
+      return;
+    }
+
+    goalRef.current.matchRows();
+    contentRef.current.matchRows();
+  }, []);
+
   const [plan, setPlan] = useState<ParsedPlanType | undefined>(undefined);
-  const { isLoading, isError } = usePlan(uuid!, setPlan);
+  const { isLoading, isError } = usePlan(uuid!, setPlan, onFetching);
 
   const dates = useMemo<DateState>(
     () => ({ start: plan?.startDate, end: plan?.endDate }),
@@ -43,6 +53,16 @@ const Plan = () => {
       }
 
       plan && setPlan({ ...plan, startDate: start, endDate: end });
+    },
+    [plan]
+  );
+
+  const goalRows = useMemo(() => plan?.goal || [], [plan?.goal]);
+  const contentRows = useMemo(() => plan?.content || [], [plan?.content]);
+
+  const setRows = useCallback(
+    (name: "goal" | "content") => (rows: Row[]) => {
+      plan && setPlan({ ...plan, [name]: rows });
     },
     [plan]
   );
@@ -115,13 +135,21 @@ const Plan = () => {
               <S.RowContainer>
                 <S.RowTitle>프로젝트 목표</S.RowTitle>
                 <S.RowMutiLineContent>
-                  <MarkdownEditor rowState={[goalRows, setGoalRows]} />
+                  <MarkdownEditor
+                    rows={goalRows}
+                    setRows={setRows("goal")}
+                    ref={goalRef}
+                  />
                 </S.RowMutiLineContent>
               </S.RowContainer>
               <S.RowContainer>
                 <S.RowTitle>프로젝트 내용</S.RowTitle>
                 <S.RowMutiLineContent>
-                  <MarkdownEditor rowState={[contentRows, setContentRows]} />
+                  <MarkdownEditor
+                    ref={contentRef}
+                    rows={contentRows}
+                    setRows={setRows("content")}
+                  />
                 </S.RowMutiLineContent>
               </S.RowContainer>
               <S.RowContainer>
