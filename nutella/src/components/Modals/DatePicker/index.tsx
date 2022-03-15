@@ -13,7 +13,8 @@ export interface DateState {
 type DateName = keyof DateState;
 
 interface PropsType {
-  datesState: State<DateState | null>;
+  dates: DateState;
+  setDates: (dates: DateState) => void;
 }
 
 const compareDate = (d1: Date, d2: Date) => {
@@ -86,9 +87,8 @@ const getCellType = (
 const dateToYearMonth = (date: Date) =>
   `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
 
-export const DatePicker: FC<PropsType> = ({ datesState }) => {
+export const DatePicker: FC<PropsType> = ({ dates, setDates }) => {
   const initCalendarDate = () => {
-    const [dates] = datesState;
     let d = new Date();
     if (dates && dates.start) {
       d = new Date(dates.start);
@@ -100,13 +100,12 @@ export const DatePicker: FC<PropsType> = ({ datesState }) => {
   };
 
   const themeContext = useContext(ThemeContext) as Theme;
-  const [dates, setDates] = datesState;
-  const [displayDates, setDisplayDates] = useState<DateState | null>(dates);
+  const [displayDates, setDisplayDates] = useState<DateState>(dates);
   const [calendarDate, setCalendarDate] = useState<Date>(initCalendarDate()); //표시되는 달력의 year, month를 가지는 date
   const [selectedType, setSelectedType] = useState<DateName>("start"); //선택된, 날짜 클릭시 바뀔 날짜 이름
 
   const setDatesState = useCallback(
-    (dates: DateState | null) => {
+    (dates: DateState) => {
       setDisplayDates(dates);
       setDates(dates);
     },

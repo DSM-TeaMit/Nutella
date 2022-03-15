@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useCallback, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Row } from "../../context/MarkdownCotext";
 import useModalRef from "../../hooks/useModalRef";
@@ -13,11 +13,15 @@ import ModalPortal from "../ModalPortal";
 import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
 
-const dateToString = (date: Date): string =>
-  `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+const dateToString = (date?: Date): string => {
+  if (!date) {
+    return "";
+  }
+
+  return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+};
 
 const Plan = () => {
-  const [dates, setDates] = useState<DateState | null>(null);
   const [goalRows, setGoalRows] = useState<Row[]>([...getInitRows()]);
   const [contentRows, setContentRows] = useState<Row[]>([...getInitRows()]);
   const modalRef = useModalRef();
@@ -25,14 +29,27 @@ const Plan = () => {
   const [plan, setPlan] = useState<ParsedPlanType | undefined>(undefined);
   const { isLoading, isError } = usePlan(uuid!, setPlan);
 
+  const dates = useMemo<DateState>(
+    () => ({ start: plan?.startDate, end: plan?.endDate }),
+    [plan]
+  );
+
+  const setDates = useCallback(
+    (dates: DateState) => {
+      const { start, end } = dates;
+
+      if (!start || !end) {
+        return;
+      }
+
+      plan && setPlan({ ...plan, startDate: start, endDate: end });
+    },
+    [plan]
+  );
+
   if (isError && isLoading) {
     return <></>;
   }
-
-  const dates = useMemo<DateState>(
-    () => ({ start: plan?.startDate, end: plan?.endDate }),
-    [plan?.endDate, plan?.startDate]
-  );
 
   return (
     <Fragment>
@@ -145,7 +162,7 @@ const Plan = () => {
         <CommentContainer source="plan" uuid={uuid || ""} styleType="report" />
       </S.Container>
       <ModalPortal ref={modalRef}>
-        <DatePicker datesState={[dates, setDates]} />
+        <DatePicker dates={dates} setDates={setDates} />
       </ModalPortal>
     </Fragment>
   );
