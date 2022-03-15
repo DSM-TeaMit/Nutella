@@ -38,8 +38,20 @@ const MarkdownEditor: FC<PropsType> = ({ setRows, rows }) => {
   );
 };
 
-const Inner = () => {
-  const { rows } = useContext(MarkdownContext);
+const Inner = forwardRef<MarkdownEditorRef>((_, ref) => {
+  const { rows, refs } = useContext(MarkdownContext);
+
+  const matchRows = useCallback(() => {
+    if (refs.current) {
+      refs.current.forEach((value, index) => {
+        value.innerText = rows[index].text;
+      });
+    }
+  }, [refs, rows]);
+
+  useImperativeHandle(ref, () => ({
+    matchRows,
+  }));
 
   return (
     <S.Container>
@@ -52,6 +64,8 @@ const Inner = () => {
       })}
     </S.Container>
   );
-};
+});
+
+Inner.displayName = "Inner";
 
 export default MarkdownEditor;
