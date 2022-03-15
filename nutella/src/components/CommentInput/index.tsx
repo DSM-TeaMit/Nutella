@@ -46,7 +46,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
       <S.Image />
       <S.Input
         color={bgColorMap.get(type)}
-        borderWidth={type === "project" ? 0 : 1}
+        border={type === "project" ? 0 : 1}
         placeholder={`${data?.data.studentNo} ${data?.data.name} (으)로 댓글 달기`}
         onChange={onChange}
         value={input}

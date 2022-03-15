@@ -35,7 +35,7 @@ const Comment: FC<PropsType> = ({ type, data }) => {
       <S.Image />
       <S.ContentContainer
         color={bgColorMap.get(type)}
-        borderWidth={type === "project" ? 0 : 1}
+        border={type === "project" ? 0 : 1}
       >
         <S.NameContainer>
           <S.Name>

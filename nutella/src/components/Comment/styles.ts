@@ -16,10 +16,10 @@ export const Image = styled(Img)`
   object-position: center;
 `;
 
-export const ContentContainer = styled.div<{ borderWidth: number }>`
+export const ContentContainer = styled.div<{ border: number }>`
   padding: 16px;
   background-color: ${({ color }) => color};
-  border: ${({ borderWidth }) => borderWidth}px solid
+  border: ${({ border: borderWidth }) => borderWidth}px solid
     ${({ theme }) => theme.colors.grayscale.lightGray1};
   border-radius: 10px;
   flex: 1;
