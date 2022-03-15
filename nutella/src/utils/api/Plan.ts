@@ -17,6 +17,10 @@ export interface Member {
   name: string;
 }
 
+export interface MemberWithRole extends Member {
+  role: string;
+}
+
 export type Requestor = "USER_EDITABLE" | "USER_NON_EDITABLE" | "ADMIN";
 
 interface PlanType {
@@ -26,7 +30,7 @@ interface PlanType {
   endDate: string;
   requestorType: Requestor;
   writer: Member;
-  members: Member[];
+  members: MemberWithRole[];
   goal: string;
   content: string;
   includes: Includes;
@@ -43,7 +47,7 @@ export interface ParsedPlanType {
   endDate: Date;
   requestorType: Requestor;
   writer: Member;
-  members: Member[];
+  members: MemberWithRole[];
   goal: Row[];
   content: Row[];
   includes: Includes;
