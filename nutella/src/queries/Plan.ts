@@ -25,5 +25,20 @@ export const usePlanMutation = (projectUuid: string) => {
   );
 };
 
+export const usePlan = (
+  projectUuid: string,
+  setPlan: React.Dispatch<React.SetStateAction<ParsedPlanType | undefined>>,
+  onSuccess: () => void
+) => {
+  const queryFn = useCallback(async () => {
+    const { data } = await getPlanReport(projectUuid);
+    setPlan(data);
+
+    return data;
+  }, [projectUuid, setPlan]);
+
+  return useQuery([queryKeys.planDetail, projectUuid], queryFn, { onSuccess });
+};
+
 export const useSubmitPlanMutation = (projectUuid: string) =>
   useMutation(() => submitPlanReport(projectUuid));
