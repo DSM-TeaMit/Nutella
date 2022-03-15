@@ -1,7 +1,9 @@
-import { Fragment, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Row } from "../../context/MarkdownCotext";
 import useModalRef from "../../hooks/useModalRef";
+import { usePlan } from "../../queries/Plan";
+import { ParsedPlanType } from "../../utils/api/Plan";
 import BlueButton from "../Buttons/BlueButton";
 import BorderButton from "../Buttons/BorderButton";
 import CheckBox from "../CheckBox";
@@ -14,12 +16,23 @@ import * as S from "./styles";
 const dateToString = (date: Date): string =>
   `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 
-const Personal = () => {
+const Plan = () => {
   const [dates, setDates] = useState<DateState | null>(null);
   const [goalRows, setGoalRows] = useState<Row[]>([...getInitRows()]);
   const [contentRows, setContentRows] = useState<Row[]>([...getInitRows()]);
   const modalRef = useModalRef();
   const { uuid } = useParams<{ uuid: string }>();
+  const [plan, setPlan] = useState<ParsedPlanType | undefined>(undefined);
+  const { isLoading, isError } = usePlan(uuid!, setPlan);
+
+  if (isError && isLoading) {
+    return <></>;
+  }
+
+  const dates = useMemo<DateState>(
+    () => ({ start: plan?.startDate, end: plan?.endDate }),
+    [plan?.endDate, plan?.startDate]
+  );
 
   return (
     <Fragment>
@@ -27,10 +40,13 @@ const Personal = () => {
         <div>
           <S.ContentContainer>
             <S.ContentInner>
-              <S.Title>개인 프로젝트 계획서</S.Title>
+              <S.Title>
+                {plan?.projectType === "PERS" ? "개인" : "팀 / 동아리"} 프로젝트
+                계획서
+              </S.Title>
               <S.RowContainer>
                 <S.RowTitle>프로젝트 명</S.RowTitle>
-                <S.RowLineContent>Teamit</S.RowLineContent>
+                <S.RowLineContent>{plan?.projectName}</S.RowLineContent>
               </S.RowContainer>
               <S.RowContainer>
                 <S.RowTitle>진행 기간</S.RowTitle>
@@ -47,8 +63,38 @@ const Personal = () => {
               </S.RowContainer>
               <S.RowContainer>
                 <S.RowTitle>신청자</S.RowTitle>
-                <S.RowLineContent>2105 김진근</S.RowLineContent>
+                <S.RowLineContent>
+                  {plan?.writer.studentNo} {plan?.writer.name}
+                </S.RowLineContent>
               </S.RowContainer>
+              {plan?.projectType !== "PERS" && (
+                <S.RowContainer>
+                  <S.RowTitle>프로젝트 및 팀원 역할</S.RowTitle>
+                  <S.Members>
+                    {plan?.members.map((value, index) => {
+                      const { studentNo, name, role } = value;
+                      return (
+                        <S.MemberContainer
+                          key={`${studentNo}_${name}_${index}`}
+                        >
+                          <S.MemberName>
+                            {studentNo} {name}
+                          </S.MemberName>
+                          <S.MemberRoleContainer>
+                            {role.split(",").map((value, index) => {
+                              return (
+                                <S.Role key={`${value}_${index}`}>
+                                  {value}
+                                </S.Role>
+                              );
+                            })}
+                          </S.MemberRoleContainer>
+                        </S.MemberContainer>
+                      );
+                    })}
+                  </S.Members>
+                </S.RowContainer>
+              )}
               <S.RowContainer>
                 <S.RowTitle>프로젝트 목표</S.RowTitle>
                 <S.RowMutiLineContent>
@@ -69,12 +115,7 @@ const Personal = () => {
                 </S.RowTitle>
                 <S.RowLineContent>
                   <S.CheckBoxContianer>
-                    <CheckBox isActive={false}>결과 보고서</CheckBox>
-                    <CheckBox isActive={false}>프로그램 코드</CheckBox>
-                    <CheckBox isActive={false}>
-                      실행물 (영상 또는 사진)
-                    </CheckBox>
-                    <CheckBox isActive={false}>기타</CheckBox>
+                    <CheckBox isActive={false}>hello world</CheckBox>
                   </S.CheckBoxContianer>
                 </S.RowLineContent>
               </S.RowContainer>
@@ -110,4 +151,4 @@ const Personal = () => {
   );
 };
 
-export default Personal;
+export default Plan;

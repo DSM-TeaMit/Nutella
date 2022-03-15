@@ -1,7 +1,7 @@
-import Personal from "../components/Plan/Personal";
+import Plan from "../components/Plan";
 
 const PlanContainer = () => {
-  return <Personal />;
+  return <Plan />;
 };
 
 export default PlanContainer;
