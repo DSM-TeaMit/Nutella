@@ -2,7 +2,7 @@ import React, { FC, useCallback } from "react";
 import * as S from "./styles";
 import { CheckIcons } from "../../assets/icons";
 
-export type CheckBoxMouseEvent = React.MouseEvent<HTMLDivElement> & {
+export type CheckBoxMouseEvent = React.MouseEvent<HTMLButtonElement> & {
   name?: string;
 };
 interface PropsType {
@@ -13,7 +13,7 @@ interface PropsType {
 
 const CheckBox: FC<PropsType> = ({ children, name, onClick, isActive }) => {
   const onClickHandler = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       const params = { ...e, name };
       onClick && onClick(params);
     },
