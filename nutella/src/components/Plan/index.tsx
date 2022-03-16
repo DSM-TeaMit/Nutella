@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import { Row } from "../../context/MarkdownCotext";
 import useModalRef from "../../hooks/useModalRef";
 import { usePlan } from "../../queries/Plan";
-import { ParsedPlanType } from "../../utils/api/Plan";
+import { Includes, ParsedPlanType } from "../../utils/api/Plan";
 import BlueButton from "../Buttons/BlueButton";
 import BorderButton from "../Buttons/BorderButton";
-import CheckBox from "../CheckBox";
+import CheckBox, { CheckBoxMouseEvent } from "../CheckBox";
 import CommentContainer from "../CommentContainer";
 import MarkdownEditor, { MarkdownEditorRef } from "../MarkdownEditor";
 import ModalPortal from "../ModalPortal";
@@ -66,6 +66,28 @@ const Plan = () => {
     },
     [plan]
   );
+
+  const onIncludesClick = useCallback(
+    (e: CheckBoxMouseEvent) => {
+      const name = e.name as keyof Includes;
+      if (!plan || !name) {
+        return;
+      }
+
+      const includes = { ...plan.includes, [name]: !plan.includes[name] };
+
+      setPlan({ ...plan, includes });
+    },
+    [plan]
+  );
+
+  const onOtherClick = useCallback(() => {
+    if (!plan) {
+      return;
+    }
+
+    const value = plan.includes.others ? undefined : "";
+  }, [plan]);
 
   if (isError && isLoading) {
     return <></>;
@@ -160,7 +182,34 @@ const Plan = () => {
                 </S.RowTitle>
                 <S.RowLineContent>
                   <S.CheckBoxContianer>
-                    <CheckBox isActive={false}>hello world</CheckBox>
+                    <CheckBox
+                      isActive={plan?.includes.report || false}
+                      name="report"
+                      onClick={onIncludesClick}
+                    >
+                      결과 보고서
+                    </CheckBox>
+                    <CheckBox
+                      isActive={plan?.includes.code || false}
+                      name="code"
+                      onClick={onIncludesClick}
+                    >
+                      프로그램 코드
+                    </CheckBox>
+                    <CheckBox
+                      isActive={plan?.includes.outcome || false}
+                      name="outcome"
+                      onClick={onIncludesClick}
+                    >
+                      실행물 (영상 또는 사진)
+                    </CheckBox>
+                    <CheckBox
+                      isActive={plan?.includes.others ? true : false}
+                      name="others"
+                      onClick={onOtherClick}
+                    >
+                      기타
+                    </CheckBox>
                   </S.CheckBoxContianer>
                 </S.RowLineContent>
               </S.RowContainer>
