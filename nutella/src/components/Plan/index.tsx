@@ -86,7 +86,11 @@ const Plan = () => {
       return;
     }
 
-    const value = plan.includes.others ? undefined : "";
+    const value = plan.includes.others !== undefined ? undefined : "";
+
+    const includes = { ...plan.includes, others: value };
+
+    setPlan({ ...plan, includes });
   }, [plan]);
 
   if (isError && isLoading) {
@@ -204,7 +208,9 @@ const Plan = () => {
                       실행물 (영상 또는 사진)
                     </CheckBox>
                     <CheckBox
-                      isActive={plan?.includes.others ? true : false}
+                      isActive={
+                        plan?.includes.others !== undefined ? true : false
+                      }
                       name="others"
                       onClick={onOtherClick}
                     >
