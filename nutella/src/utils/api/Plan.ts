@@ -9,7 +9,7 @@ export interface Includes {
   report: boolean;
   code: boolean;
   outcome: boolean;
-  others: string | undefined;
+  others?: string | undefined;
 }
 
 export interface Member {
@@ -107,6 +107,9 @@ export const getPlanReport = async (projectUuid: string) => {
     content: JSON.parse(data.content) as Row[],
     includes: data.includes,
   };
+
+  result.includes.others =
+    result.includes.others === null ? undefined : result.includes.others;
 
   const responseWithoutData: Omit<AxiosResponse<PlanType, unknown>, "data"> = {
     ...response,
