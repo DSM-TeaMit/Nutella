@@ -76,6 +76,7 @@ const Plan = () => {
 
     if (autoSaveTimer.current) {
       clearTimeout(autoSaveTimer.current);
+      autoSaveTimer.current = null;
     }
 
     autoSaveTimer.current = setTimeout(save, 3000);
@@ -143,7 +144,7 @@ const Plan = () => {
     autoSave();
   }, [autoSave, plan]);
 
-  if (isError && isLoading) {
+  if (isError || isLoading) {
     return <></>;
   }
 

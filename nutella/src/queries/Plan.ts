@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import {
   createPlanReport,
@@ -12,18 +12,8 @@ import {
 export const useCreatePlanMutation = (projectUuid: string) =>
   useMutation(() => createPlanReport(projectUuid));
 
-export const usePlanMutation = (projectUuid: string) => {
-  const queryClient = useQueryClient();
-
-  const onSuccess = useCallback(() => {
-    queryClient.invalidateQueries([queryKeys.planDetail, projectUuid]);
-  }, [projectUuid, queryClient]);
-
-  return useMutation(
-    (data: ParsedPlanType) => modifyPlanReport(projectUuid, data),
-    { onSuccess }
-  );
-};
+export const usePlanMutation = (projectUuid: string) =>
+  useMutation((data: ParsedPlanType) => modifyPlanReport(projectUuid, data));
 
 export const usePlan = (
   projectUuid: string,
@@ -37,7 +27,14 @@ export const usePlan = (
     return data;
   }, [projectUuid, setPlan]);
 
-  return useQuery([queryKeys.planDetail, projectUuid], queryFn, { onSuccess });
+  return useQuery([queryKeys.planDetail, projectUuid], queryFn, {
+    onSuccess,
+    refetchInterval: false,
+    refetchIntervalInBackground: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
 };
 
 export const useSubmitPlanMutation = (projectUuid: string) =>
