@@ -1,8 +1,15 @@
-import { Fragment, useCallback, useMemo, useRef, useState } from "react";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useParams } from "react-router-dom";
 import { Row } from "../../context/MarkdownCotext";
 import useModalRef from "../../hooks/useModalRef";
-import { usePlan } from "../../queries/Plan";
+import { usePlan, usePlanMutation } from "../../queries/Plan";
 import { Includes, ParsedPlanType } from "../../utils/api/Plan";
 import BlueButton from "../Buttons/BlueButton";
 import BorderButton from "../Buttons/BorderButton";
@@ -12,6 +19,7 @@ import MarkdownEditor, { MarkdownEditorRef } from "../MarkdownEditor";
 import ModalPortal from "../ModalPortal";
 import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
+import toast from "react-hot-toast";
 
 const dateToString = (date?: Date): string => {
   if (!date) {
@@ -26,6 +34,8 @@ const Plan = () => {
   const goalRef = useRef<MarkdownEditorRef>(null);
   const contentRef = useRef<MarkdownEditorRef>(null);
   const { uuid } = useParams<{ uuid: string }>();
+  const autoSaveTimer = useRef<NodeJS.Timeout | null>(null);
+  const canSave = useRef<boolean>(false);
 
   const onFetching = useCallback(() => {
     if (!goalRef.current || !contentRef.current) {
@@ -37,7 +47,39 @@ const Plan = () => {
   }, []);
 
   const [plan, setPlan] = useState<ParsedPlanType | undefined>(undefined);
-  const { isLoading, isError } = usePlan(uuid!, setPlan, onFetching);
+  const planMutation = usePlanMutation(uuid!);
+  const { isLoading, isError, isFetched } = usePlan(uuid!, setPlan, onFetching);
+
+  const save = useCallback(() => {
+    if (!canSave.current || !plan || !isFetched) {
+      return;
+    }
+
+    planMutation.mutate(plan, {
+      onSuccess: () => {
+        toast.success("저장 성공");
+        autoSaveTimer.current = null;
+        canSave.current = false;
+      },
+      onError: () => {
+        toast.error("저장 실패");
+        autoSaveTimer.current = null;
+        canSave.current = false;
+      },
+    });
+  }, [isFetched, plan, planMutation]);
+
+  const autoSave = useCallback(() => {
+    if (!canSave.current || !plan || !isFetched) {
+      return;
+    }
+
+    if (autoSaveTimer.current) {
+      clearTimeout(autoSaveTimer.current);
+    }
+
+    autoSaveTimer.current = setTimeout(save, 3000);
+  }, [isFetched, plan, save]);
 
   const dates = useMemo<DateState>(
     () => ({ start: plan?.startDate, end: plan?.endDate }),
@@ -52,6 +94,7 @@ const Plan = () => {
         return;
       }
 
+      canSave.current = true;
       plan && setPlan({ ...plan, startDate: start, endDate: end });
     },
     [plan]
@@ -62,6 +105,7 @@ const Plan = () => {
 
   const setRows = useCallback(
     (name: "goal" | "content") => (rows: Row[]) => {
+      canSave.current = true;
       plan && setPlan({ ...plan, [name]: rows });
     },
     [plan]
@@ -76,6 +120,7 @@ const Plan = () => {
 
       const includes = { ...plan.includes, [name]: !plan.includes[name] };
 
+      canSave.current = true;
       setPlan({ ...plan, includes });
     },
     [plan]
@@ -90,8 +135,13 @@ const Plan = () => {
 
     const includes = { ...plan.includes, others: value };
 
+    canSave.current = true;
     setPlan({ ...plan, includes });
   }, [plan]);
+
+  useEffect(() => {
+    autoSave();
+  }, [autoSave, plan]);
 
   if (isError && isLoading) {
     return <></>;
