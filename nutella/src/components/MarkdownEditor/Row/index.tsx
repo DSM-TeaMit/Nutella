@@ -265,7 +265,7 @@ const Row: FC<PropsType> = ({ data }) => {
       refs.current[currentIndex].focus();
       refs.current[currentIndex].innerText = text;
     }
-  }, [currentIndex, refs, type]);
+  }, [id, refs]);
 
   return (
     <S.RowContainer
