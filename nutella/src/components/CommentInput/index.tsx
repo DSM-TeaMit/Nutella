@@ -29,17 +29,10 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
     []
   );
 
-  const onSubmitSuccess = useCallback(() => {
-    setInput("");
-    toast.success("댓글 작성 완료");
-  }, []);
-
   const onSubmitClick = useCallback(() => {
-    commentMutation.mutate(
-      { content: input, type: source },
-      { onSuccess: onSubmitSuccess }
-    );
-  }, [onSubmitSuccess, input, source, commentMutation]);
+    setInput("");
+    commentMutation.mutate({ content: input, type: source });
+  }, [commentMutation, input, source]);
 
   return (
     <S.Container>

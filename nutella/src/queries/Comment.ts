@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import CommentSource from "../interface/CommentSource";
@@ -18,11 +19,15 @@ export const useCommentMutation = (projectUuid: string) => {
 
   return useMutation((data: PostComment) => postComment(projectUuid, data), {
     onSuccess: (_, variables) => {
+      toast.success("댓글 작성 완료.");
       queryClient.invalidateQueries([
         queryKeys.comment,
         projectUuid,
         variables.type,
       ]);
+    },
+    onError: () => {
+      toast.error("댓글 작성 실패.");
     },
   });
 };
