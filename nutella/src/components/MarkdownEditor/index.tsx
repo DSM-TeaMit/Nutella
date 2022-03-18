@@ -1,5 +1,4 @@
 import {
-  FC,
   forwardRef,
   useCallback,
   useContext,
@@ -15,6 +14,7 @@ import * as S from "./styles";
 interface PropsType {
   rows: RowType[];
   setRows: (rows: RowType[]) => void;
+  disabled?: boolean;
 }
 
 export interface MarkdownEditorRef {
@@ -31,9 +31,9 @@ export const getInitRows = (): RowType[] => [
 ];
 
 const MarkdownEditor = forwardRef<MarkdownEditorRef, PropsType>(
-  ({ setRows, rows }, ref) => {
+  ({ setRows, rows, disabled }, ref) => {
     return (
-      <MarkdownProvider rows={rows} setRows={setRows}>
+      <MarkdownProvider rows={rows} setRows={setRows} disabled={disabled}>
         <Inner ref={ref} />
       </MarkdownProvider>
     );

@@ -13,11 +13,17 @@ import toast from "react-hot-toast";
 interface PropsType {
   rows: Row[];
   setRows: (rows: Row[]) => void;
+  disabled?: boolean;
 }
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
 
-const MarkdownProvider: FC<PropsType> = ({ children, rows, setRows }) => {
+const MarkdownProvider: FC<PropsType> = ({
+  children,
+  rows,
+  setRows,
+  disabled,
+}) => {
   const refs = useRef<HTMLDivElement[]>([]);
 
   const findIndexById = useCallback(
@@ -261,6 +267,7 @@ const MarkdownProvider: FC<PropsType> = ({ children, rows, setRows }) => {
       rows,
       setRows,
       refs,
+      disabled,
       addRowAfterId,
       removeRowById,
       changeRowType,
@@ -270,14 +277,15 @@ const MarkdownProvider: FC<PropsType> = ({ children, rows, setRows }) => {
       addImages,
     }),
     [
-      addRowAfterId,
+      rows,
       setRows,
+      disabled,
+      addRowAfterId,
+      removeRowById,
       changeRowType,
-      changeTab,
       changeText,
       changeVerticalFocus,
-      removeRowById,
-      rows,
+      changeTab,
       addImages,
     ]
   );
