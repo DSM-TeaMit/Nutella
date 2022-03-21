@@ -25,8 +25,8 @@ const CommentContainer: FC<PropsType> = ({ styleType, uuid, source }) => {
   return (
     <S.CommentContainer>
       <div>
-        <S.CommentTitle>댓글&nbsp;</S.CommentTitle>
-        <S.CommentTitleBlue>{data?.data.count}개</S.CommentTitleBlue>
+        <S.CommentTitle>댓글&nbsp;{isLoading && "로딩중..."}</S.CommentTitle>
+        {data && <S.CommentTitleBlue>{data?.data.count}개</S.CommentTitleBlue>}
       </div>
       <CommentInput uuid={uuid} type={styleType} source={source} />
       {data?.data.comments.map((value) => (
