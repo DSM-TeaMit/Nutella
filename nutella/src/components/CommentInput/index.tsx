@@ -1,4 +1,11 @@
-import { ChangeEvent, FC, useCallback, useMemo, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import useThemeContext from "../../hooks/useThemeContext";
 import CommentSource from "../../interface/CommentSource";
 import CommentStyleType from "../../interface/CommentStyleType";
@@ -45,6 +52,10 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
 
     return `${data?.data.studentNo} ${data?.data.name}(으)로 댓글 달기`;
   }, [data, isError, isLoading]);
+
+  useEffect(() => {
+    toast.error("댓글 유저 정보를 가져오는 중 오류가 발생했습니다.");
+  }, [isError]);
 
   return (
     <S.Container>
