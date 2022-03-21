@@ -70,7 +70,12 @@ const Plan = () => {
   }, [isFetched, plan, planMutation]);
 
   const autoSave = useCallback(() => {
-    if (!canSave.current || !plan || !isFetched) {
+    if (
+      !canSave.current ||
+      !plan ||
+      !isFetched ||
+      plan.requestorType !== "USER_EDITABLE"
+    ) {
       return;
     }
 
@@ -213,6 +218,7 @@ const Plan = () => {
                 <S.RowTitle>프로젝트 목표</S.RowTitle>
                 <S.RowMutiLineContent>
                   <MarkdownEditor
+                    disabled={plan?.requestorType !== "USER_EDITABLE"}
                     rows={goalRows}
                     setRows={setRows("goal")}
                     ref={goalRef}
@@ -223,6 +229,7 @@ const Plan = () => {
                 <S.RowTitle>프로젝트 내용</S.RowTitle>
                 <S.RowMutiLineContent>
                   <MarkdownEditor
+                    disabled={plan?.requestorType !== "USER_EDITABLE"}
                     ref={contentRef}
                     rows={contentRows}
                     setRows={setRows("content")}

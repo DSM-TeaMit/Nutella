@@ -276,7 +276,7 @@ const Row: FC<PropsType> = ({ data }) => {
       refs.current[currentIndex].innerText = text;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, refs]);
+  }, [id, refs, type]);
 
   const dragProps = useMemo(
     () =>
@@ -286,10 +286,12 @@ const Row: FC<PropsType> = ({ data }) => {
 
   return (
     <S.RowContainer margin={`calc(${tab} * 1.2rem)`} {...dragProps}>
-      <S.Handle className="handle">
-        <S.HandleIcon src={HandleSVG} />
-        <Popup id={id} />
-      </S.Handle>
+      {!isDisabled && (
+        <S.Handle className="handle">
+          <S.HandleIcon src={HandleSVG} />
+          <Popup id={id} />
+        </S.Handle>
+      )}
       {isList(type) ? renderListRow : renderRow}
       <S.DropHint active={isDragging} />
     </S.RowContainer>
