@@ -20,6 +20,7 @@ import ModalPortal from "../ModalPortal";
 import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
 import toast from "react-hot-toast";
+import RedButton from "../Buttons/RedButton";
 
 const dateToString = (date?: Date): string => {
   if (!date) {
@@ -296,7 +297,15 @@ const Plan = () => {
           </S.ContentContainer>
           <S.Buttons>
             <BorderButton>PDF로 저장</BorderButton>
-            <BlueButton>제출</BlueButton>
+            {plan?.requestorType === "USER_EDITABLE" && (
+              <BlueButton>제출</BlueButton>
+            )}
+            {plan?.requestorType === "ADMIN" && (
+              <Fragment>
+                <RedButton>거절</RedButton>
+                <BlueButton>승인</BlueButton>
+              </Fragment>
+            )}
           </S.Buttons>
         </div>
         <S.Line />
