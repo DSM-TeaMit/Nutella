@@ -1,4 +1,5 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import toast from "react-hot-toast";
 import CommentSource from "../../interface/CommentSource";
 import CommentStyleType from "../../interface/CommentStyleType";
 import { useComment } from "../../queries/Comment";
@@ -13,7 +14,11 @@ interface PropsType {
 }
 
 const CommentContainer: FC<PropsType> = ({ styleType, uuid, source }) => {
-  const { data } = useComment(uuid, source);
+  const { data, isError, isLoading } = useComment(uuid, source);
+
+  useEffect(() => {
+    toast.error("댓글을 가져오는 중 오류가 발생했습니다.");
+  }, [isError]);
 
   return (
     <S.CommentContainer>
@@ -25,6 +30,8 @@ const CommentContainer: FC<PropsType> = ({ styleType, uuid, source }) => {
       {data?.data.comments.map((value) => (
         <Comment type={styleType} key={value.uuid} data={value} />
       ))}
+      {isLoading && <S.Message>댓글을 가져오는 중...</S.Message>}
+      {isError && <S.Message>댓글을 가져오는 중 오류 발생.</S.Message>}
     </S.CommentContainer>
   );
 };

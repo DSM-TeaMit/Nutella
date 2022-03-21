@@ -14,3 +14,10 @@ export const CommentTitle = styled.span`
 export const CommentTitleBlue = styled(CommentTitle)`
   color: ${({ theme }) => theme.colors.primary.default};
 `;
+
+export const Message = styled.div`
+  font: ${({ theme }) => theme.fonts.subtitle2};
+  color: ${({ theme }) => theme.colors.grayscale.gray1};
+  text-align: center;
+  padding: 16px 0px;
+`;

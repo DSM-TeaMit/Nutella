@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useState } from "react";
+import { ChangeEvent, FC, useCallback, useMemo, useState } from "react";
 import useThemeContext from "../../hooks/useThemeContext";
 import CommentSource from "../../interface/CommentSource";
 import CommentStyleType from "../../interface/CommentStyleType";
@@ -18,7 +18,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
   const themeContext = useThemeContext();
   const commentMutation = useCommentMutation(uuid);
   const [input, setInput] = useState<string>("");
-  const { data } = useMyProfile();
+  const { data, isLoading, isError } = useMyProfile();
 
   const bgColorMap = new Map<CommentStyleType, string>()
     .set("project", themeContext.colors.grayscale.lightGray1)
@@ -34,13 +34,25 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
     commentMutation.mutate({ content: input, type: source });
   }, [commentMutation, input, source]);
 
+  const placeholder: string = useMemo(() => {
+    if (isLoading) {
+      return "유저 정보를 가져오는중...";
+    }
+
+    if (isError) {
+      return "정보 오류 발생";
+    }
+
+    return `${data?.data.studentNo} ${data?.data.name}(으)로 댓글 달기`;
+  }, [data, isError, isLoading]);
+
   return (
     <S.Container>
       <S.Image />
       <S.Input
         color={bgColorMap.get(type)}
         border={type === "project" ? 0 : 1}
-        placeholder={`${data?.data.studentNo} ${data?.data.name} (으)로 댓글 달기`}
+        placeholder={placeholder}
         onChange={onChange}
         value={input}
       />
