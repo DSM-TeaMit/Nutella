@@ -17,7 +17,9 @@ const CommentContainer: FC<PropsType> = ({ styleType, uuid, source }) => {
   const { data, isError, isLoading } = useComment(uuid, source);
 
   useEffect(() => {
-    toast.error("댓글을 가져오는 중 오류가 발생했습니다.");
+    if (isError) {
+      toast.error("댓글을 가져오는 중 오류가 발생했습니다.");
+    }
   }, [isError]);
 
   return (

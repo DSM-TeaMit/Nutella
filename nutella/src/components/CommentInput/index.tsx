@@ -54,7 +54,9 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
   }, [data, isError, isLoading]);
 
   useEffect(() => {
-    toast.error("댓글 유저 정보를 가져오는 중 오류가 발생했습니다.");
+    if (isError) {
+      toast.error("댓글 유저 정보를 가져오는 중 오류가 발생했습니다.");
+    }
   }, [isError]);
 
   return (
