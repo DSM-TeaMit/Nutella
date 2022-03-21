@@ -43,7 +43,7 @@ const Comment: FC<PropsType> = ({ type, data }) => {
           </S.Name>
           {writerId === "e973c27b-3e0e-4863-86be-b2e0dfd24908" && (
             <S.MoreContainer>
-              <S.More onClick={() => setIsMore(!isMore)}>
+              <S.More onClick={() => setIsMore(!isMore)} className="more-icon">
                 <S.Icon src={MoreIcons} alt="more" />
               </S.More>
               {isMore && (

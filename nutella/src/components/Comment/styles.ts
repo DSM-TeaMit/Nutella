@@ -5,6 +5,15 @@ export const Container = styled.div`
   width: 100%;
   display: flex;
   column-gap: 16px;
+
+  .more-icon {
+    opacity: 0;
+  }
+  &:hover {
+    .more-icon {
+      opacity: 1;
+    }
+  }
 `;
 
 export const Image = styled(Img)`
@@ -53,6 +62,7 @@ export const More = styled.button`
   background: transparent;
   border: none;
   padding: 0;
+  transition: opacity 0.1s ease;
 
   &:hover {
     filter: ${({ theme }) => theme.filters.grayscale.gray2};
