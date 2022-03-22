@@ -38,6 +38,7 @@ export const useDeleteComment = () => {
   return useMutation((commentUuid: string) => deleteComment(commentUuid), {
     onSuccess: () => {
       queryClient.invalidateQueries(queryKeys.comment);
+      toast.success("댓글 삭제 성공");
     },
   });
 };

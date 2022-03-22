@@ -63,6 +63,7 @@ export const More = styled.button`
   border: none;
   padding: 0;
   transition: opacity 0.1s ease;
+  user-select: none;
 
   &:hover {
     filter: ${({ theme }) => theme.filters.grayscale.gray2};
