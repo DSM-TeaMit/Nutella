@@ -1,7 +1,7 @@
 import Uri from "../../constant/Uri";
 import request from "../axios";
 
-export type ConfirmType = "plan" | "result";
+export type ConfirmType = "plan" | "report";
 export type ConfirmValue = "approval" | "return";
 
 export const confirmProjectReport = async (

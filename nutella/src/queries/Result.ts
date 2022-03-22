@@ -48,5 +48,12 @@ export const useResultMutation = (projectUuid: string) => {
   );
 };
 
-export const useSubmitResultMutation = (projectUuid: string) =>
-  useMutation(() => submitResultReport(projectUuid));
+export const useSubmitResultMutation = (projectUuid: string) => {
+  const queryClient = useQueryClient();
+
+  const onSuccess = useCallback(() => {
+    queryClient.invalidateQueries([queryKeys.result, projectUuid]);
+  }, [projectUuid, queryClient]);
+
+  return useMutation(() => submitResultReport(projectUuid), { onSuccess });
+};
