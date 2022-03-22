@@ -112,6 +112,23 @@ const Result = () => {
     [result]
   );
 
+  const onDeletePage = useCallback(
+    (id: string) => () => {
+      if (!result) {
+        return;
+      }
+
+      if (window.confirm("페이지를 삭제하시겠습니까?")) {
+        canSave.current = true;
+        setResult({
+          ...result,
+          content: result.content.filter((value) => value.id !== id),
+        });
+      }
+    },
+    [result]
+  );
+
   if (isLoading || isError) {
     return <></>;
   }
@@ -122,7 +139,9 @@ const Result = () => {
       <ContentExample />
       {result?.content.map((value) => (
         <S.ContentContainer key={`page_${value.id}`}>
-          <S.Delete className="delete">삭제</S.Delete>
+          <S.Delete className="delete" onClick={onDeletePage(value.id)}>
+            삭제
+          </S.Delete>
           <MarkdownEditor rows={value.value} setRows={setRows(value.id)} />
         </S.ContentContainer>
       ))}
