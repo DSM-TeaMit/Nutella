@@ -5,6 +5,10 @@ import ProjectTypes from "../../interface/ProjectTypes";
 import request from "../axios";
 import { Requestor } from "./Plan";
 
+interface Page {
+  id: string;
+  value: Row[];
+}
 interface ResultReport {
   subject: string;
   content: string;
@@ -12,7 +16,7 @@ interface ResultReport {
 
 export interface ParsedResultReport {
   subject: string;
-  content: Row[][];
+  content: Page[];
 }
 
 export interface FullResultReport {
@@ -30,7 +34,7 @@ export interface ParsedFullResultReport {
   projectType: ProjectTypes;
   requestorType: Requestor;
   subject: string;
-  content: Row[][];
+  content: Page[];
   writer: {
     studentNo: number;
     name: string;
@@ -40,7 +44,7 @@ export interface ParsedFullResultReport {
 export const createResultReport = async (projectUuid: string) => {
   const uri = Uri.result.get({ projectUuid });
 
-  const content: Row[][] = [];
+  const content: Page[] = [];
 
   return await request.post<
     unknown,
@@ -64,7 +68,7 @@ export const getResultReport = async (projectUuid: string) => {
     projectType: data.projectType,
     requestorType: data.requestorType,
     subject: data.subject,
-    content: JSON.parse(data.content) as Row[][],
+    content: JSON.parse(data.content) as Page[],
   };
 
   const responseWithoutData: Omit<

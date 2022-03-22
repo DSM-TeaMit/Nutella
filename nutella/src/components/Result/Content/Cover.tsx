@@ -1,15 +1,14 @@
-import React, { ChangeEvent, FC, useCallback, useMemo } from "react";
+import React, { ChangeEvent, FC, useMemo } from "react";
 import ProjectTypes from "../../../interface/ProjectTypes";
-import State from "../../../interface/State";
 import { ParsedFullResultReport } from "../../../utils/api/Result";
 import * as S from "../styles";
 
 interface PropsType {
-  dataState: State<ParsedFullResultReport | undefined>;
+  data: ParsedFullResultReport | undefined;
+  onSubjectChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Cover: FC<PropsType> = ({ dataState }) => {
-  const [data, setData] = dataState;
+const Cover: FC<PropsType> = ({ data, onSubjectChange }) => {
   const coverName = useMemo(() => {
     const map = new Map<ProjectTypes, string>()
       .set("TEAM", "팀")
@@ -18,13 +17,6 @@ const Cover: FC<PropsType> = ({ dataState }) => {
 
     return map.get(data?.projectType || "PERS")!;
   }, [data]);
-
-  const onSubjectChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      data && setData({ ...data, subject: e.target.value });
-    },
-    [data, setData]
-  );
 
   return (
     <S.ContentContainer>
