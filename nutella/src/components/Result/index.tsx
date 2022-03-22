@@ -25,7 +25,7 @@ const Result = () => {
 
   return (
     <S.Container>
-      <Cover data={result} />
+      <Cover dataState={[result, setResult]} />
       <ContentExample />
       <AddPage />
       <div>
