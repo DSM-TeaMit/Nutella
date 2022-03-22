@@ -5,15 +5,11 @@ const useOuterClick = <T extends HTMLElement>(callback: () => void) => {
 
   const onOuterClick = useCallback(
     (e: MouseEvent) => {
-      console.log("43");
       if (!ref.current) {
         return;
       }
 
-      console.log("123");
-
       if (!ref.current.contains(e.target as Node)) {
-        console.log("4123123");
         callback();
       }
     },
