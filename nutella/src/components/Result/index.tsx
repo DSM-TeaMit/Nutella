@@ -6,13 +6,26 @@ import * as S from "./styles";
 import SubmitResult from "./Content/SubmitResult";
 import CommentContainer from "../CommentContainer";
 import { useParams } from "react-router-dom";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useResult, useResultMutation } from "../../queries/Result";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import {
+  useResult,
+  useResultMutation,
+  useSubmitResultMutation,
+} from "../../queries/Result";
 import { ParsedFullResultReport } from "../../utils/api/Result";
 import toast from "react-hot-toast";
 import MarkdownEditor from "../MarkdownEditor";
 import { Row } from "../../context/MarkdownCotext";
 import uniqueId from "../../constant/UniqueId";
+import { useConfirmReport } from "../../queries/Project";
+import RedButton from "../Buttons/RedButton";
 
 const Result = () => {
   const { uuid } = useParams<{ uuid: string }>();
@@ -24,6 +37,8 @@ const Result = () => {
   );
   const { isLoading, isError, isFetched } = useResult(projectUuid, setResult);
   const resultMutation = useResultMutation(projectUuid);
+  const submitMutation = useSubmitResultMutation(projectUuid);
+  const confirmMutation = useConfirmReport(projectUuid, "report");
 
   const save = useCallback(() => {
     if (!canSave.current || !result || !isFetched) {
@@ -129,6 +144,15 @@ const Result = () => {
     [result]
   );
 
+  const confirmOnClick = useCallback(
+    (message: string, callback: () => void) => () => {
+      if (window.confirm(message)) {
+        callback();
+      }
+    },
+    []
+  );
+
   if (isLoading || isError) {
     return <></>;
   }
@@ -154,7 +178,36 @@ const Result = () => {
         <SubmitResult />
         <S.Buttons>
           <BorderButton>PDF로 저장</BorderButton>
-          <BlueButton>제출</BlueButton>
+          {result?.requestorType === "USER_EDITABLE" && (
+            <BlueButton
+              disabled={submitMutation.isLoading}
+              onClick={confirmOnClick("제출하시겠습니까?", () =>
+                submitMutation.mutate()
+              )}
+            >
+              제출
+            </BlueButton>
+          )}
+          {result?.requestorType === "ADMIN" && (
+            <Fragment>
+              <RedButton
+                disabled={confirmMutation.isLoading}
+                onClick={confirmOnClick("거절하시겠습니까?", () =>
+                  confirmMutation.mutate("return")
+                )}
+              >
+                거절
+              </RedButton>
+              <BlueButton
+                disabled={confirmMutation.isLoading}
+                onClick={confirmOnClick("승인하시겠습니까?", () =>
+                  confirmMutation.mutate("approval")
+                )}
+              >
+                승인
+              </BlueButton>
+            </Fragment>
+          )}
         </S.Buttons>
       </div>
       <S.Line />
