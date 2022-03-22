@@ -17,6 +17,36 @@ export const ContentContainer = styled.div`
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
   aspect-ratio: 1 / 1.414;
+  position: relative;
+
+  &:hover {
+    .delete {
+      opacity: 1;
+    }
+  }
+`;
+
+export const Delete = styled.button`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.red.default};
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  padding: none;
+  position: absolute;
+  top: 0%;
+  left: calc(100% + 16px);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.red.hover};
+  }
+
+  &:active {
+    color: ${({ theme }) => theme.colors.red.click};
+  }
 `;
 
 export const ContentInner = styled.div`
@@ -121,4 +151,3 @@ export const Line = styled.div`
   height: 1px;
   background-color: ${({ theme }) => theme.colors.grayscale.gray1};
 `;
-

@@ -122,6 +122,7 @@ const Result = () => {
       <ContentExample />
       {result?.content.map((value) => (
         <S.ContentContainer key={`page_${value.id}`}>
+          <S.Delete className="delete">삭제</S.Delete>
           <MarkdownEditor rows={value.value} setRows={setRows(value.id)} />
         </S.ContentContainer>
       ))}
