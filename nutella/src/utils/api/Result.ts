@@ -18,7 +18,11 @@ export const createResultReport = async (projectUuid: string) => {
 
   const content: Row[][] = [];
 
-  return await request.post<any, AxiosResponse<any, any>, ResultReport>(uri, {
+  return await request.post<
+    unknown,
+    AxiosResponse<unknown, unknown>,
+    ResultReport
+  >(uri, {
     subject: "",
     content: JSON.stringify(content),
   });
@@ -36,11 +40,14 @@ export const getResultReport = async (projectUuid: string) => {
     content: JSON.parse(data.content),
   };
 
-  const responseWithoutData: Omit<AxiosResponse<ResultReport, any>, "data"> = {
+  const responseWithoutData: Omit<
+    AxiosResponse<ResultReport, unknown>,
+    "data"
+  > = {
     ...response,
   };
 
-  const parsedResponse: AxiosResponse<ParsedResultReport, any> = {
+  const parsedResponse: AxiosResponse<ParsedResultReport, unknown> = {
     ...responseWithoutData,
     data: parsedData,
   };
@@ -59,10 +66,11 @@ export const modifyResultReport = async (
     content: JSON.stringify(data.content),
   };
 
-  return await request.patch<any, AxiosResponse<any, any>, ResultReport>(
-    uri,
-    requestData
-  );
+  return await request.patch<
+    unknown,
+    AxiosResponse<unknown, unknown>,
+    ResultReport
+  >(uri, requestData);
 };
 
 export const submitResultReport = async (projectUuid: string) => {
