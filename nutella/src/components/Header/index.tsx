@@ -4,9 +4,19 @@ import { ArrowIcons } from "../../assets/icons";
 import { Link } from "react-router-dom";
 import SearchInput from "./SearchInput";
 import { useHeader } from "../../queries/User";
+import { useCallback, useState } from "react";
+import useOuterClick from "../../hooks/useOuterClick";
 
 const Header = () => {
   const { data, isLoading, isError, isSuccess } = useHeader();
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const ref = useOuterClick<HTMLButtonElement>(() => setIsActive(false));
+
+  const onArrowClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsActive((prev) => !prev);
+  }, []);
 
   return (
     <S.Container>
@@ -42,10 +52,14 @@ const Header = () => {
               />
             </S.SLink>
             <S.ArrowContainer>
-              <S.Arrow>
-                <img src={ArrowIcons} alt="profile arrow" />
+              <S.Arrow ref={ref} onClick={onArrowClick}>
+                <img
+                  src={ArrowIcons}
+                  alt="profile arrow"
+                  style={{ transform: `rotate(${isActive ? 180 : 0}deg)` }}
+                />
               </S.Arrow>
-              <S.Logout>로그아웃</S.Logout>
+              {isActive && <S.Logout>로그아웃</S.Logout>}
             </S.ArrowContainer>
           </S.UserImageContainer>
         </S.ProfileContainer>
