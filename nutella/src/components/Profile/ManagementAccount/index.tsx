@@ -61,6 +61,9 @@ const ManagementAccount = () => {
         {axios.isAxiosError(error) && error.response?.status === 403 && (
           <I.Message>접근 권한이 없습니다.</I.Message>
         )}
+        {axios.isAxiosError(error) && error.response?.status !== 403 && (
+          <I.Message>다시 시도해주세요.</I.Message>
+        )}
       </I.Error>
     );
   }
