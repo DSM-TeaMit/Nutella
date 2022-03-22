@@ -9,7 +9,11 @@ import {
 import { useParams } from "react-router-dom";
 import { Row } from "../../context/MarkdownCotext";
 import useModalRef from "../../hooks/useModalRef";
-import { usePlan, usePlanMutation } from "../../queries/Plan";
+import {
+  usePlan,
+  usePlanMutation,
+  useSubmitPlanMutation,
+} from "../../queries/Plan";
 import { Includes, ParsedPlanType } from "../../utils/api/Plan";
 import BlueButton from "../Buttons/BlueButton";
 import BorderButton from "../Buttons/BorderButton";
@@ -21,6 +25,7 @@ import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
 import toast from "react-hot-toast";
 import RedButton from "../Buttons/RedButton";
+import { useConfirmReport } from "../../queries/Project";
 
 const dateToString = (date?: Date): string => {
   if (!date) {
@@ -37,6 +42,8 @@ const Plan = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const autoSaveTimer = useRef<NodeJS.Timeout | null>(null);
   const canSave = useRef<boolean>(false);
+  const confirmMutation = useConfirmReport(uuid || "", "plan");
+  const submitMutation = useSubmitPlanMutation(uuid || "");
 
   const onFetching = useCallback(() => {
     if (!goalRef.current || !contentRef.current) {
@@ -71,12 +78,7 @@ const Plan = () => {
   }, [isFetched, plan, planMutation]);
 
   const autoSave = useCallback(() => {
-    if (
-      !canSave.current ||
-      !plan ||
-      !isFetched ||
-      plan.requestorType !== "USER_EDITABLE"
-    ) {
+    if (!canSave.current || !plan || !isFetched) {
       return;
     }
 
@@ -147,7 +149,9 @@ const Plan = () => {
   }, [plan]);
 
   useEffect(() => {
-    autoSave();
+    if (plan?.requestorType === "USER_EDITABLE") {
+      autoSave();
+    }
   }, [autoSave, plan]);
 
   if (isError || isLoading) {
@@ -298,12 +302,27 @@ const Plan = () => {
           <S.Buttons>
             <BorderButton>PDF로 저장</BorderButton>
             {plan?.requestorType === "USER_EDITABLE" && (
-              <BlueButton>제출</BlueButton>
+              <BlueButton
+                disabled={submitMutation.isLoading}
+                onClick={() => submitMutation.mutate()}
+              >
+                제출
+              </BlueButton>
             )}
             {plan?.requestorType === "ADMIN" && (
               <Fragment>
-                <RedButton>거절</RedButton>
-                <BlueButton>승인</BlueButton>
+                <RedButton
+                  disabled={confirmMutation.isLoading}
+                  onClick={() => confirmMutation.mutate("return")}
+                >
+                  거절
+                </RedButton>
+                <BlueButton
+                  disabled={confirmMutation.isLoading}
+                  onClick={() => confirmMutation.mutate("approval")}
+                >
+                  승인
+                </BlueButton>
               </Fragment>
             )}
           </S.Buttons>
