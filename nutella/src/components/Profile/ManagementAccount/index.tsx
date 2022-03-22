@@ -8,6 +8,7 @@ import { Fragment, useCallback } from "react";
 import ModalPortal from "../../ModalPortal";
 import AddAdminAccountModal from "../../Modals/AddAdminAccount";
 import useModalRef from "../../../hooks/useModalRef";
+import { useCreatedAccount } from "../../../queries/Admin";
 
 const navs: NavigationType[] = [
   {
@@ -19,12 +20,20 @@ const navs: NavigationType[] = [
 
 const ManagementAccount = () => {
   const modalRef = useModalRef();
+  const { data, isLoading, isError } = useCreatedAccount();
 
-  const onAddClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    modalRef.current?.show();
-  }, [modalRef]);
+  const onAddClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      modalRef.current?.show();
+    },
+    [modalRef]
+  );
+
+  if (isLoading || isError) {
+    return <></>;
+  }
 
   return (
     <Fragment>
@@ -39,10 +48,12 @@ const ManagementAccount = () => {
                 <div>
                   <S.Title>계정 관리</S.Title>
                   <S.Container>
-                    <Account />
-                    <Account />
-                    <Account />
-                    <Account />
+                    {data?.data.accounts.map((value) => (
+                      <Account data={value} key={value.uuid} />
+                    ))}
+                    {data?.data.count === 0 && (
+                      <I.Message>생성한 계정이 없습니다.</I.Message>
+                    )}
                   </S.Container>
                   <S.AddAccount onClick={onAddClick}>
                     + 선생님 계정 추가
