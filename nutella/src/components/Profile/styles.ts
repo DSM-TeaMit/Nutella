@@ -165,3 +165,7 @@ export const More = styled.button`
     color: ${({ theme }) => theme.colors.grayscale.black};
   }
 `;
+
+export const Error = styled(Container)`
+  height: 80vh;
+`;

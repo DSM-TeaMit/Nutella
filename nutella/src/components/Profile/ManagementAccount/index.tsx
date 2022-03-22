@@ -4,11 +4,14 @@ import * as S from "./styles";
 import { SettingIcons } from "../../../assets/icons";
 import AdminSideBar from "../../SideBar/Admin";
 import Account from "./Account";
-import { Fragment, useCallback } from "react";
+import { Fragment, useCallback, useEffect } from "react";
 import ModalPortal from "../../ModalPortal";
 import AddAdminAccountModal from "../../Modals/AddAdminAccount";
 import useModalRef from "../../../hooks/useModalRef";
 import { useCreatedAccount } from "../../../queries/Admin";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const navs: NavigationType[] = [
   {
@@ -20,7 +23,8 @@ const navs: NavigationType[] = [
 
 const ManagementAccount = () => {
   const modalRef = useModalRef();
-  const { data, isLoading, isError } = useCreatedAccount();
+  const { data, isLoading, isError, error } = useCreatedAccount();
+  const navigate = useNavigate();
 
   const onAddClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -31,8 +35,34 @@ const ManagementAccount = () => {
     [modalRef]
   );
 
-  if (isLoading || isError) {
-    return <></>;
+  useEffect(() => {
+    if (
+      isError &&
+      axios.isAxiosError(error) &&
+      error.response?.status === 403
+    ) {
+      navigate("/mypage");
+      toast.error("접근 권한이 없습니다.");
+    }
+  }, [isError, error, navigate]);
+
+  if (isLoading) {
+    return (
+      <I.Error>
+        <I.Message>로딩중...</I.Message>
+      </I.Error>
+    );
+  }
+
+  if (isError) {
+    return (
+      <I.Error>
+        <I.Message>오류 발생.</I.Message>
+        {axios.isAxiosError(error) && error.response?.status === 403 && (
+          <I.Message>접근 권한이 없습니다.</I.Message>
+        )}
+      </I.Error>
+    );
   }
 
   return (
