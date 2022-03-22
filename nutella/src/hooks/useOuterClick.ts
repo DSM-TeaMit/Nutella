@@ -10,6 +10,9 @@ const useOuterClick = <T extends HTMLElement>(callback: () => void) => {
       }
 
       if (!ref.current.contains(e.target as Node)) {
+        e.stopPropagation();
+        e.preventDefault();
+
         callback();
       }
     },
