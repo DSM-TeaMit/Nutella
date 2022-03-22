@@ -183,8 +183,24 @@ const Plan = () => {
     []
   );
 
-  if (isError || isLoading) {
-    return <></>;
+  if (isLoading) {
+    return (
+      <S.Margin>
+        <S.Message>로딩중...</S.Message>
+      </S.Margin>
+    );
+  }
+
+  if (isError) {
+    return (
+      <S.Margin>
+        <S.Message>:(</S.Message>
+        <S.Message>
+          <p>오류 발생</p>
+          <p>다시 시도해주세요.</p>
+        </S.Message>
+      </S.Margin>
+    );
   }
 
   return (

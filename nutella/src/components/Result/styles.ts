@@ -151,3 +151,15 @@ export const Line = styled.div`
   height: 1px;
   background-color: ${({ theme }) => theme.colors.grayscale.gray1};
 `;
+
+export const Message = styled.div`
+  font: ${({ theme }) => theme.fonts.subtitle2};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
+  padding: 16px 0px;
+  text-align: center;
+`;
+
+export const Margin = styled.div`
+  height: 80vh;
+  padding-top: 120px;
+`;
