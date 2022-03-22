@@ -44,7 +44,7 @@ export const useSubmitPlanMutation = (projectUuid: string) => {
   }, []);
 
   const onError = useCallback(() => {
-    toast.success("제출 실패. 다시 시도해주세요.");
+    toast.error("제출 실패. 다시 시도해주세요.");
   }, []);
 
   return useMutation(() => submitPlanReport(projectUuid), {
