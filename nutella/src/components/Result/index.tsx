@@ -8,7 +8,7 @@ import SubmitResult from "./Content/SubmitResult";
 import CommentContainer from "../CommentContainer";
 import { useParams } from "react-router-dom";
 
-const Personal = () => {
+const Result = () => {
   const { uuid } = useParams<{ uuid: string }>();
 
   return (
@@ -29,4 +29,4 @@ const Personal = () => {
   );
 };
 
-export default Personal;
+export default Result;
