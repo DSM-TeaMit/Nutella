@@ -7,9 +7,11 @@ import * as S from "./styles";
 import SubmitResult from "./Content/SubmitResult";
 import CommentContainer from "../CommentContainer";
 import { useParams } from "react-router-dom";
+import { useMemo } from "react";
 
 const Result = () => {
   const { uuid } = useParams<{ uuid: string }>();
+  const projectUuid = useMemo(() => uuid || "", [uuid]);
 
   return (
     <S.Container>
@@ -24,7 +26,7 @@ const Result = () => {
         </S.Buttons>
       </div>
       <S.Line />
-      <CommentContainer source="plan" uuid={uuid || ""} styleType="report" />
+      <CommentContainer source="plan" uuid={projectUuid} styleType="report" />
     </S.Container>
   );
 };
