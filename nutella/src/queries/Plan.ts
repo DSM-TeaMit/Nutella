@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import toast from "react-hot-toast";
 import { useMutation, useQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import {
@@ -37,5 +38,17 @@ export const usePlan = (
   });
 };
 
-export const useSubmitPlanMutation = (projectUuid: string) =>
-  useMutation(() => submitPlanReport(projectUuid));
+export const useSubmitPlanMutation = (projectUuid: string) => {
+  const onSuccess = useCallback(() => {
+    toast.success("제출 완료.");
+  }, []);
+
+  const onError = useCallback(() => {
+    toast.success("제출 실패. 다시 시도해주세요.");
+  }, []);
+
+  return useMutation(() => submitPlanReport(projectUuid), {
+    onSuccess,
+    onError,
+  });
+};
