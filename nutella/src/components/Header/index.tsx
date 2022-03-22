@@ -41,10 +41,12 @@ const Header = () => {
                 emoji={data?.data.emoji}
               />
             </S.SLink>
-
-            <S.Arrow>
-              <img src={ArrowIcons} alt="profile arrow" />
-            </S.Arrow>
+            <S.ArrowContainer>
+              <S.Arrow>
+                <img src={ArrowIcons} alt="profile arrow" />
+              </S.Arrow>
+              <S.Logout>로그아웃</S.Logout>
+            </S.ArrowContainer>
           </S.UserImageContainer>
         </S.ProfileContainer>
       </S.ContentContainer>

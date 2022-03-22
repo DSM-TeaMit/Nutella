@@ -70,6 +70,33 @@ export const Arrow = styled.button`
   cursor: pointer;
 `;
 
+export const ArrowContainer = styled.div`
+  position: relative;
+`;
+
+export const Logout = styled.button`
+  position: absolute;
+  cursor: pointer;
+  border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
+  background-color: ${({ theme }) => theme.colors.grayscale.white};
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.red.default};
+  padding: 8px;
+  position: absolute;
+  white-space: nowrap;
+  border-radius: 10px;
+  top: 100%;
+  left: 0;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
+  }
+
+  &:active {
+    background-color: ${({ theme }) => theme.colors.grayscale.white};
+  }
+`;
+
 export const Line = styled.div`
   width: 100%;
   height: 1px;
