@@ -7,13 +7,17 @@ import * as S from "./styles";
 import SubmitResult from "./Content/SubmitResult";
 import CommentContainer from "../CommentContainer";
 import { useParams } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useResult } from "../../queries/Result";
+import { ParsedFullResultReport } from "../../utils/api/Result";
 
 const Result = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const projectUuid = useMemo(() => uuid || "", [uuid]);
-  const { data, isLoading, isError } = useResult(projectUuid);
+  const [result, setResult] = useState<ParsedFullResultReport | undefined>(
+    undefined
+  );
+  const { isLoading, isError } = useResult(projectUuid, setResult);
 
   if (isLoading || isError) {
     return <></>;
@@ -21,7 +25,7 @@ const Result = () => {
 
   return (
     <S.Container>
-      <Cover name={data?.data.projectType} />
+      <Cover data={result} />
       <ContentExample />
       <AddPage />
       <div>

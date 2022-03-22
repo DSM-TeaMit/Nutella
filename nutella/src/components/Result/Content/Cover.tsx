@@ -1,20 +1,22 @@
+import { AxiosResponse } from "axios";
 import { FC, useMemo } from "react";
 import ProjectTypes from "../../../interface/ProjectTypes";
+import { ParsedFullResultReport } from "../../../utils/api/Result";
 import * as S from "../styles";
 
 interface PropsType {
-  name?: ProjectTypes;
+  data: ParsedFullResultReport | undefined;
 }
 
-const Cover: FC<PropsType> = ({ name }) => {
+const Cover: FC<PropsType> = ({ data }) => {
   const coverName = useMemo(() => {
     const map = new Map<ProjectTypes, string>()
       .set("TEAM", "팀")
       .set("CLUB", "동아리")
       .set("PERS", "개인");
 
-    return map.get(name || "PERS")!;
-  }, [name]);
+    return map.get(data?.projectType || "PERS")!;
+  }, [data]);
 
   return (
     <S.ContentContainer>
