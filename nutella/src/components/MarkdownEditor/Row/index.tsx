@@ -69,6 +69,7 @@ const Row: FC<PropsType> = ({ data }) => {
     changeRowType,
     changeTab,
     addImages,
+    disabled,
   } = useContext(MarkdownContext);
   const currentIndex = rows.findIndex((value) => value.id === id);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -230,13 +231,22 @@ const Row: FC<PropsType> = ({ data }) => {
     [addImages, id]
   );
 
+  const isDisabled = useMemo(
+    () => (disabled === undefined ? false : disabled),
+    [disabled]
+  );
+
+  const inputProps = useMemo(
+    () => (isDisabled ? undefined : { onKeyDown, onInput }),
+    [isDisabled, onInput, onKeyDown]
+  );
+
   const renderRow = useMemo(
     () =>
       React.createElement(getType(type), {
         ref: setRef,
-        onKeyDown,
-        contentEditable: true,
-        onInput,
+        contentEditable: !isDisabled,
+        ...inputProps,
         placeholder: placeholderMap.get(type),
         style: {
           outline: "none",
@@ -245,7 +255,7 @@ const Row: FC<PropsType> = ({ data }) => {
         },
         className: rows.length <= 1 ? "first" : undefined,
       }),
-    [onInput, onKeyDown, rows.length, setRef, type]
+    [inputProps, isDisabled, rows.length, setRef, type]
   );
 
   const renderListRow = useMemo(
@@ -265,20 +275,23 @@ const Row: FC<PropsType> = ({ data }) => {
       refs.current[currentIndex].focus();
       refs.current[currentIndex].innerText = text;
     }
-  }, [currentIndex, refs, type]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, refs, type]);
+
+  const dragProps = useMemo(
+    () =>
+      isDisabled ? undefined : { onDragEnter, onDragLeave, onDragOver, onDrop },
+    [isDisabled, onDragEnter, onDragLeave, onDragOver, onDrop]
+  );
 
   return (
-    <S.RowContainer
-      margin={`calc(${tab} * 1.2rem)`}
-      onDragEnter={onDragEnter}
-      onDragLeave={onDragLeave}
-      onDragOver={onDragOver}
-      onDrop={onDrop}
-    >
-      <S.Handle className="handle">
-        <S.HandleIcon src={HandleSVG} />
-        <Popup id={id} />
-      </S.Handle>
+    <S.RowContainer margin={`calc(${tab} * 1.2rem)`} {...dragProps}>
+      {!isDisabled && (
+        <S.Handle className="handle">
+          <S.HandleIcon src={HandleSVG} />
+          <Popup id={id} />
+        </S.Handle>
+      )}
       {isList(type) ? renderListRow : renderRow}
       <S.DropHint active={isDragging} />
     </S.RowContainer>

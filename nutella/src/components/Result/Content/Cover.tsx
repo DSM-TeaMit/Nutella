@@ -1,22 +1,41 @@
-import { FC } from "react";
+import React, { ChangeEvent, FC, useMemo } from "react";
+import ProjectTypes from "../../../interface/ProjectTypes";
+import { ParsedFullResultReport } from "../../../utils/api/Result";
 import * as S from "../styles";
 
 interface PropsType {
-  name: "개인" | "팀 / 동아리";
+  data: ParsedFullResultReport | undefined;
+  onSubjectChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Cover: FC<PropsType> = ({ name }) => {
+const Cover: FC<PropsType> = ({ data, onSubjectChange }) => {
+  const coverName = useMemo(() => {
+    const map = new Map<ProjectTypes, string>()
+      .set("TEAM", "팀")
+      .set("CLUB", "동아리")
+      .set("PERS", "개인");
+
+    return map.get(data?.projectType || "PERS")!;
+  }, [data]);
+
   return (
     <S.ContentContainer>
       <S.ContentInner>
         <S.CoverInner>
           <div>
-            <S.CoverBig>{name} 프로젝트 보고서</S.CoverBig>
-            <S.Topic placeholder="주제" />
+            <S.CoverBig>{coverName} 프로젝트 보고서</S.CoverBig>
+            <S.Topic
+              disabled={data?.requestorType !== "USER_EDITABLE"}
+              placeholder="주제"
+              value={data?.subject}
+              onChange={onSubjectChange}
+            />
             <S.CoverInfoContainer>
               <S.CoverInfoRow>
                 <S.CoverInfoTitle>제출자</S.CoverInfoTitle>
-                <S.CoverInfoContent>2학년 1반 5번 김진근</S.CoverInfoContent>
+                <S.CoverInfoContent>
+                  {data?.writer.studentNo} {data?.writer.name}
+                </S.CoverInfoContent>
               </S.CoverInfoRow>
               <S.CoverInfoRow>
                 <S.CoverInfoTitle>담당 교사 확인</S.CoverInfoTitle>

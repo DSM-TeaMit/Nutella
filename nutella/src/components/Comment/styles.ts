@@ -5,6 +5,15 @@ export const Container = styled.div`
   width: 100%;
   display: flex;
   column-gap: 16px;
+
+  .more-icon {
+    opacity: 0;
+  }
+  &:hover {
+    .more-icon {
+      opacity: 1;
+    }
+  }
 `;
 
 export const Image = styled(Img)`
@@ -16,10 +25,10 @@ export const Image = styled(Img)`
   object-position: center;
 `;
 
-export const ContentContainer = styled.div<{ borderWidth: number }>`
+export const ContentContainer = styled.div<{ border: number }>`
   padding: 16px;
   background-color: ${({ color }) => color};
-  border: ${({ borderWidth }) => borderWidth}px solid
+  border: ${({ border: borderWidth }) => borderWidth}px solid
     ${({ theme }) => theme.colors.grayscale.lightGray1};
   border-radius: 10px;
   flex: 1;
@@ -53,6 +62,8 @@ export const More = styled.button`
   background: transparent;
   border: none;
   padding: 0;
+  transition: opacity 0.1s ease;
+  user-select: none;
 
   &:hover {
     filter: ${({ theme }) => theme.filters.grayscale.gray2};

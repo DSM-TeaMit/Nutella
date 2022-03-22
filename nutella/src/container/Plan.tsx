@@ -1,7 +1,7 @@
-import Team from "../components/Plan/Team";
+import Plan from "../components/Plan";
 
 const PlanContainer = () => {
-  return <Team />;
+  return <Plan />;
 };
 
 export default PlanContainer;

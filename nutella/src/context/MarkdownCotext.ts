@@ -11,6 +11,7 @@ export interface Row {
 export interface MarkdownContextType {
   rows: Row[];
   setRows: (rows: Row[]) => void;
+  disabled?: boolean;
   refs: React.RefObject<HTMLElement[]>;
   addRowAfterId: (id: string) => void;
   addImages: (id: string, files: File[], projectUuid: string) => Promise<void>;
