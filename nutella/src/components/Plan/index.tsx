@@ -174,6 +174,15 @@ const Plan = () => {
     [plan]
   );
 
+  const confirmOnClick = useCallback(
+    (message: string, callback: () => void) => () => {
+      if (window.confirm(message)) {
+        callback();
+      }
+    },
+    []
+  );
+
   if (isError || isLoading) {
     return <></>;
   }
@@ -302,7 +311,9 @@ const Plan = () => {
             {plan?.requestorType === "USER_EDITABLE" && (
               <BlueButton
                 disabled={submitMutation.isLoading}
-                onClick={() => submitMutation.mutate()}
+                onClick={confirmOnClick("제출하시겠습니까?", () =>
+                  submitMutation.mutate()
+                )}
               >
                 제출
               </BlueButton>
@@ -311,13 +322,17 @@ const Plan = () => {
               <Fragment>
                 <RedButton
                   disabled={confirmMutation.isLoading}
-                  onClick={() => confirmMutation.mutate("return")}
+                  onClick={confirmOnClick("거절하시겠습니까?", () =>
+                    confirmMutation.mutate("return")
+                  )}
                 >
                   거절
                 </RedButton>
                 <BlueButton
                   disabled={confirmMutation.isLoading}
-                  onClick={() => confirmMutation.mutate("approval")}
+                  onClick={confirmOnClick("승인하시겠습니까?", () =>
+                    confirmMutation.mutate("approval")
+                  )}
                 >
                   승인
                 </BlueButton>
