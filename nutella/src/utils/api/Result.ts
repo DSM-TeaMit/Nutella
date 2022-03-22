@@ -1,7 +1,9 @@
 import { AxiosResponse } from "axios";
 import Uri from "../../constant/Uri";
 import { Row } from "../../context/MarkdownCotext";
+import ProjectTypes from "../../interface/ProjectTypes";
 import request from "../axios";
+import { Requestor } from "./Plan";
 
 interface ResultReport {
   subject: string;
@@ -11,6 +13,28 @@ interface ResultReport {
 export interface ParsedResultReport {
   subject: string;
   content: Row[][];
+}
+
+export interface FullResultReport {
+  projectType: ProjectTypes;
+  requestorType: Requestor;
+  subject: string;
+  content: string;
+  writer: {
+    studentNo: number;
+    name: string;
+  };
+}
+
+export interface ParsedFullResultReport {
+  projectType: ProjectTypes;
+  requestorType: Requestor;
+  subject: string;
+  content: Row[][];
+  writer: {
+    studentNo: number;
+    name: string;
+  };
 }
 
 export const createResultReport = async (projectUuid: string) => {
@@ -31,13 +55,16 @@ export const createResultReport = async (projectUuid: string) => {
 export const getResultReport = async (projectUuid: string) => {
   const uri = Uri.result.get({ projectUuid });
 
-  const response = await request.get<ResultReport>(uri);
+  const response = await request.get<FullResultReport>(uri);
 
   const { data } = response;
 
-  const parsedData: ParsedResultReport = {
+  const parsedData: ParsedFullResultReport = {
+    writer: data.writer,
+    projectType: data.projectType,
+    requestorType: data.requestorType,
     subject: data.subject,
-    content: JSON.parse(data.content),
+    content: JSON.parse(data.content) as Row[][],
   };
 
   const responseWithoutData: Omit<
@@ -47,7 +74,7 @@ export const getResultReport = async (projectUuid: string) => {
     ...response,
   };
 
-  const parsedResponse: AxiosResponse<ParsedResultReport, unknown> = {
+  const parsedResponse: AxiosResponse<ParsedFullResultReport, unknown> = {
     ...responseWithoutData,
     data: parsedData,
   };
