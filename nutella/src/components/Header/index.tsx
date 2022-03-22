@@ -22,12 +22,14 @@ const Header = () => {
   }, []);
 
   const onLogout = useCallback(() => {
-    localStorage.removeItem(storageKeys.accessToken);
-    localStorage.removeItem(storageKeys.refreshToken);
-    localStorage.removeItem(storageKeys.expireAt);
-    navigate("/");
+    if (window.confirm("로그아웃하시겠습니까?")) {
+      localStorage.removeItem(storageKeys.accessToken);
+      localStorage.removeItem(storageKeys.refreshToken);
+      localStorage.removeItem(storageKeys.expireAt);
+      navigate("/");
 
-    toast.success("로그아웃 되었습니다.");
+      toast.success("로그아웃 되었습니다.");
+    }
   }, [navigate]);
 
   return (

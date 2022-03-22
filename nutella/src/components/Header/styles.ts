@@ -87,6 +87,7 @@ export const Logout = styled.button`
   border-radius: 10px;
   top: 100%;
   left: 0;
+  z-index: 101;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
