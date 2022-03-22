@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
+import Img from "../Img";
 
 export const Container = styled.header`
   height: 60px;
@@ -38,6 +40,11 @@ export const ProfileContainer = styled.div`
   align-items: center;
 `;
 
+export const SLink = styled(Link)`
+  text-decoration: none;
+  color: unset; ;
+`;
+
 export const UserName = styled.div`
   font: ${({ theme }) => theme.fonts.body2};
   color: ${({ theme }) => theme.colors.grayscale.black};
@@ -49,7 +56,7 @@ export const UserImageContainer = styled.div`
   column-gap: 8px;
 `;
 
-export const UserImage = styled.img`
+export const UserImage = styled(Img)`
   width: 32px;
   height: 32px;
   border-radius: 50%;
