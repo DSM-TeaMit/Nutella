@@ -46,7 +46,11 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
             <S.Title>{projectName}</S.Title>
             <S.TypeIcon alt="type icon" src={iconMap.get(projectType)!} />
           </S.TitleContaienr>
-          <S.Description>{projectDescription}</S.Description>
+          {projectDescription === null ? (
+            <S.Description>설명이 없습니다.</S.Description>
+          ) : (
+            <S.Description>{projectDescription}</S.Description>
+          )}
         </div>
         <S.BottonContainer>
           <S.UserContainer>
