@@ -11,6 +11,7 @@ const queryKeys = {
   reports: "reports",
   readme: "readme",
   pendingReport: "pending_report",
+  accounts: "accounts",
 } as const;
 
 export default queryKeys;
