@@ -154,6 +154,26 @@ const Plan = () => {
     }
   }, [autoSave, plan]);
 
+  const memberList = useMemo(
+    () =>
+      plan?.members.map((value, index) => {
+        const { studentNo, name, role } = value;
+        return (
+          <S.MemberContainer key={`${studentNo}_${name}_${index}`}>
+            <S.MemberName>
+              {studentNo} {name}
+            </S.MemberName>
+            <S.MemberRoleContainer>
+              {role.split(",").map((value, index) => {
+                return <S.Role key={`${value}_${index}`}>{value}</S.Role>;
+              })}
+            </S.MemberRoleContainer>
+          </S.MemberContainer>
+        );
+      }),
+    [plan]
+  );
+
   if (isError || isLoading) {
     return <></>;
   }
@@ -194,29 +214,7 @@ const Plan = () => {
               {plan?.projectType !== "PERS" && (
                 <S.RowContainer>
                   <S.RowTitle>프로젝트 및 팀원 역할</S.RowTitle>
-                  <S.Members>
-                    {plan?.members.map((value, index) => {
-                      const { studentNo, name, role } = value;
-                      return (
-                        <S.MemberContainer
-                          key={`${studentNo}_${name}_${index}`}
-                        >
-                          <S.MemberName>
-                            {studentNo} {name}
-                          </S.MemberName>
-                          <S.MemberRoleContainer>
-                            {role.split(",").map((value, index) => {
-                              return (
-                                <S.Role key={`${value}_${index}`}>
-                                  {value}
-                                </S.Role>
-                              );
-                            })}
-                          </S.MemberRoleContainer>
-                        </S.MemberContainer>
-                      );
-                    })}
-                  </S.Members>
+                  <S.Members>{memberList}</S.Members>
                 </S.RowContainer>
               )}
               <S.RowContainer>

@@ -5,7 +5,6 @@ import { CommentType } from "../../utils/api/Comment";
 import * as S from "./styles";
 import { MoreIcons } from "../../assets/icons";
 import { useDeleteComment } from "../../queries/Comment";
-import toast from "react-hot-toast";
 import useOuterClick from "../../hooks/useOuterClick";
 
 interface PropsType {
