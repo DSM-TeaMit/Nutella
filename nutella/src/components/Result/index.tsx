@@ -227,7 +227,7 @@ const Result = () => {
         </S.Buttons>
       </div>
       <S.Line />
-      <CommentContainer source="plan" uuid={projectUuid} styleType="report" />
+      <CommentContainer source="report" uuid={projectUuid} styleType="report" />
     </S.Container>
   );
 };
