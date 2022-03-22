@@ -25,6 +25,7 @@ const Cover: FC<PropsType> = ({ data, onSubjectChange }) => {
           <div>
             <S.CoverBig>{coverName} 프로젝트 보고서</S.CoverBig>
             <S.Topic
+              disabled={data?.requestorType !== "USER_EDITABLE"}
               placeholder="주제"
               value={data?.subject}
               onChange={onSubjectChange}

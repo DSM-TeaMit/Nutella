@@ -142,7 +142,11 @@ const Result = () => {
           <S.Delete className="delete" onClick={onDeletePage(value.id)}>
             삭제
           </S.Delete>
-          <MarkdownEditor rows={value.value} setRows={setRows(value.id)} />
+          <MarkdownEditor
+            disabled={result?.requestorType !== "USER_EDITABLE"}
+            rows={value.value}
+            setRows={setRows(value.id)}
+          />
         </S.ContentContainer>
       ))}
       <S.AddButton onClick={onAddPageClick}>+</S.AddButton>
