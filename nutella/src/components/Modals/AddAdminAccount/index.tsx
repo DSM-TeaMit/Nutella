@@ -32,9 +32,10 @@ const AddAdminAccountModal = () => {
     }
   }, [accoutMutation, name, password, uid]);
 
-  //최소 8 자, 하나 이상의 문자, 하나의 숫자 및 하나의 특수 문자
+  //숫자, 특문 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력
   const regex = useMemo(
-    () => /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/g,
+    () =>
+      /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{1,50}).{8,50}$/,
     []
   );
 
@@ -97,6 +98,7 @@ const AddAdminAccountModal = () => {
           <Input
             placeholder="비밀번호를 입력해주세요..."
             {...inputProps["password"]}
+            type="password"
           />
         </S.ContentContainer>
         <S.ContentContainer>
@@ -107,6 +109,7 @@ const AddAdminAccountModal = () => {
           <Input
             placeholder="비밀번호를 입력해주세요..."
             {...inputProps["passwordCheck"]}
+            type="password"
           />
         </S.ContentContainer>
       </S.Inner>
