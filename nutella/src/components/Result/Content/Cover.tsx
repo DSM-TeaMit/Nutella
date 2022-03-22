@@ -1,17 +1,27 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
+import ProjectTypes from "../../../interface/ProjectTypes";
 import * as S from "../styles";
 
 interface PropsType {
-  name: "개인" | "팀 / 동아리";
+  name?: ProjectTypes;
 }
 
 const Cover: FC<PropsType> = ({ name }) => {
+  const coverName = useMemo(() => {
+    const map = new Map<ProjectTypes, string>()
+      .set("TEAM", "팀")
+      .set("CLUB", "동아리")
+      .set("PERS", "개인");
+
+    return map.get(name || "PERS")!;
+  }, [name]);
+
   return (
     <S.ContentContainer>
       <S.ContentInner>
         <S.CoverInner>
           <div>
-            <S.CoverBig>{name} 프로젝트 보고서</S.CoverBig>
+            <S.CoverBig>{coverName} 프로젝트 보고서</S.CoverBig>
             <S.Topic placeholder="주제" />
             <S.CoverInfoContainer>
               <S.CoverInfoRow>

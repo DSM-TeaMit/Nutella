@@ -8,14 +8,20 @@ import SubmitResult from "./Content/SubmitResult";
 import CommentContainer from "../CommentContainer";
 import { useParams } from "react-router-dom";
 import { useMemo } from "react";
+import { useResult } from "../../queries/Result";
 
 const Result = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const projectUuid = useMemo(() => uuid || "", [uuid]);
+  const { data, isLoading, isError } = useResult(projectUuid);
+
+  if (isLoading || isError) {
+    return <></>;
+  }
 
   return (
     <S.Container>
-      <Cover name="개인" />
+      <Cover name={data?.data.projectType} />
       <ContentExample />
       <AddPage />
       <div>
