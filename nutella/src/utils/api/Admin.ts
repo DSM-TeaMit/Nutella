@@ -18,3 +18,15 @@ export const getCreatedAccount = async () => {
 
   return await request.get<Accounts>(uri);
 };
+
+export interface AccountData {
+  id: string;
+  password: string;
+  name: string;
+}
+
+export const postAccount = async (data: AccountData) => {
+  const uri = Uri.register.get();
+
+  return await request.post(uri, data);
+};
