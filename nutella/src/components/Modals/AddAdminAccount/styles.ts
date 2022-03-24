@@ -36,7 +36,18 @@ export const ContentContainer = styled.div`
   width: 100%;
 `;
 
+export const SubtitleContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const Subtitle = styled.div`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
+`;
+
+export const Error = styled.div`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.red.default};
 `;

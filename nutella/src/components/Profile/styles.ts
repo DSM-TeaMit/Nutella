@@ -167,6 +167,9 @@ export const More = styled.button`
   }
 `;
 
+export const Error = styled(Container)`
+  height: 80vh;
+
 export const NotFoundContainer = styled.div`
   display: flex;
   justify-content: center;
