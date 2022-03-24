@@ -187,3 +187,17 @@ export const modifyGithubId = async (githubId: string) => {
     githubId,
   });
 };
+
+interface HeaderType {
+  thumbnailUrl?: string;
+  emoji?: string;
+  studentNo: number;
+  name: string;
+  type: "user" | "admin";
+}
+
+export const getHeader = async () => {
+  const uri = Uri.header.get();
+
+  return await request.get<HeaderType>(uri);
+};
