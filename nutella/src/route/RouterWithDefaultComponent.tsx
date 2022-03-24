@@ -28,6 +28,7 @@ const RouterWithDefaultComponent = () => {
           <Route path="" element={<ProjectDetailContainer />} />
           <Route path="plan" element={<PlanContainer />} />
           <Route path="result" element={<ResultContainer />} />
+          <Route path="*" element={<Page404 />} />
         </Route>
         <Route path="pending-report" element={<PendingReportContainer />} />
         <Route path="*" element={<Page404 />} />
