@@ -65,6 +65,7 @@ export const Button = styled.div`
   column-gap: 4px;
   align-items: center;
   color: black;
+  font: ${({ theme }) => theme.fonts.body3};
 `;
 
 export const SettingTitleRed = styled(SettingTitle)`

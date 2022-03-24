@@ -16,6 +16,7 @@ import { useMyProfile } from "../../../queries/User";
 import { useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import NotFound from "../NotFound";
 
 const navs: NavigationType[] = [
   {
@@ -69,6 +70,10 @@ const MyPage = () => {
             <Route path="/project" element={<Project />} />
             <Route path="/report" element={<Report />} />
             <Route path="/setting" element={<Setting />} />
+            <Route
+              path="*"
+              element={<NotFound message="프로필로 돌아가기" to="/mypage" />}
+            />
           </Routes>
         </S.ContentContainer>
       </S.Inner>

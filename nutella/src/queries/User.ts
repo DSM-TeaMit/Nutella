@@ -12,6 +12,7 @@ import {
   getMyProjects,
   getMyReports,
   getEachReports,
+  getHeader,
 } from "../utils/api/User";
 
 export const useMyProfile = () =>
@@ -80,3 +81,5 @@ export const useDeleteAccount = () => useMutation(() => deleteUser());
 
 export const useModifyGithubId = () =>
   useMutation((githubId: string) => modifyGithubId(githubId));
+
+export const useHeader = () => useQuery([queryKeys.header], () => getHeader());
