@@ -41,7 +41,7 @@ const Result = () => {
   const submitMutation = useSubmitResultMutation(projectUuid);
   const confirmMutation = useConfirmReport(projectUuid, "report");
 
-  useTitle(`${result?.projectName || ""} 결과 보고서`);
+  useTitle(isError ? "오류 발생" : `${result?.projectName || ""} 결과 보고서`);
 
   const save = useCallback(() => {
     if (!canSave.current || !result || !isFetched) {

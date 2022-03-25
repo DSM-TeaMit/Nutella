@@ -59,7 +59,7 @@ const Plan = () => {
   const planMutation = usePlanMutation(uuid!);
   const { isLoading, isError, isFetched } = usePlan(uuid!, setPlan, onFetching);
 
-  useTitle(`${plan?.projectName || ""} 계획서`);
+  useTitle(isError ? "오류 발생" : `${plan?.projectName || ""} 계획서`);
 
   const save = useCallback(() => {
     if (!canSave.current || !plan || !isFetched) {
