@@ -26,6 +26,7 @@ import { Row } from "../../context/MarkdownCotext";
 import uniqueId from "../../constant/UniqueId";
 import { useConfirmReport } from "../../queries/Project";
 import RedButton from "../Buttons/RedButton";
+import useTitle from "../../hooks/useTitle";
 
 const Result = () => {
   const { uuid } = useParams<{ uuid: string }>();
@@ -39,6 +40,8 @@ const Result = () => {
   const resultMutation = useResultMutation(projectUuid);
   const submitMutation = useSubmitResultMutation(projectUuid);
   const confirmMutation = useConfirmReport(projectUuid, "report");
+
+  useTitle(`${result?.projectName || ""} 결과 보고서`);
 
   const save = useCallback(() => {
     if (!canSave.current || !result || !isFetched) {
