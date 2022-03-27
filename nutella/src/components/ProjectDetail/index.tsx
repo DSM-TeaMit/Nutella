@@ -4,9 +4,12 @@ import Top from "./Top";
 import SubmitContent from "./SubmitContent";
 import CommentContainer from "../CommentContainer";
 import { useParams } from "react-router-dom";
+import useTitle from "../../hooks/useTitle";
 
 const ProjectDetail = () => {
   const { uuid } = useParams<{ uuid: string }>();
+
+  useTitle(`${"여기에 프로젝트 이름을 넣어주세요"}`);
 
   return (
     <S.Container>

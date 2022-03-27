@@ -106,3 +106,31 @@ export const Line = styled.div`
   top: 100%;
   left: 0;
 `;
+
+export const RightContainer = styled.div`
+  display: flex;
+`;
+
+export const Nav = styled(Link)`
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  color: black;
+  font: ${({ theme }) => theme.fonts.body3};
+  filter: ${({ theme }) => theme.filters.grayscale.gray2};
+  text-decoration: none;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    filter: ${({ theme }) => theme.filters.grayscale.black};
+  }
+
+  &:active {
+    filter: ${({ theme }) => theme.filters.grayscale.gray2};
+  }
+`;

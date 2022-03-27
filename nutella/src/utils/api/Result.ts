@@ -20,6 +20,7 @@ export interface ParsedResultReport {
 }
 
 export interface FullResultReport {
+  projectName: string;
   projectType: ProjectTypes;
   requestorType: Requestor;
   subject: string;
@@ -31,6 +32,7 @@ export interface FullResultReport {
 }
 
 export interface ParsedFullResultReport {
+  projectName: string;
   projectType: ProjectTypes;
   requestorType: Requestor;
   subject: string;
@@ -64,10 +66,7 @@ export const getResultReport = async (projectUuid: string) => {
   const { data } = response;
 
   const parsedData: ParsedFullResultReport = {
-    writer: data.writer,
-    projectType: data.projectType,
-    requestorType: data.requestorType,
-    subject: data.subject,
+    ...data,
     content: JSON.parse(data.content) as Page[],
   };
 

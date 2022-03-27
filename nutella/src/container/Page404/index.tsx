@@ -2,11 +2,14 @@ import { useEffect } from "react";
 import Twemoji from "react-twemoji";
 import * as S from "./styles";
 import toast from "react-hot-toast";
+import useTitle from "../../hooks/useTitle";
 
 const Page404 = () => {
   useEffect(() => {
     toast.error("페이지를 찾을 수 없습니다.");
   }, []);
+
+  useTitle("페이지를 찾을 수 없습니다.");
 
   return (
     <S.Container>

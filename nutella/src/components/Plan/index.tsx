@@ -26,6 +26,7 @@ import * as S from "./styles";
 import toast from "react-hot-toast";
 import RedButton from "../Buttons/RedButton";
 import { useConfirmReport } from "../../queries/Project";
+import useTitle from "../../hooks/useTitle";
 
 const dateToString = (date?: Date): string => {
   if (!date) {
@@ -57,6 +58,8 @@ const Plan = () => {
   const [plan, setPlan] = useState<ParsedPlanType | undefined>(undefined);
   const planMutation = usePlanMutation(uuid!);
   const { isLoading, isError, isFetched } = usePlan(uuid!, setPlan, onFetching);
+
+  useTitle(isError ? "오류 발생" : `${plan?.projectName || ""} 계획서`);
 
   const save = useCallback(() => {
     if (!canSave.current || !plan || !isFetched) {

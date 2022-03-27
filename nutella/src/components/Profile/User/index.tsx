@@ -7,6 +7,7 @@ import Profile from "./Contents/Profile";
 import Project from "./Contents/Project";
 import { useUserProfile } from "../../../queries/User";
 import NotFound from "../NotFound";
+import useTitle from "../../../hooks/useTitle";
 
 const navs: NavigationType[] = [
   {
@@ -24,6 +25,14 @@ const navs: NavigationType[] = [
 const User = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const profileQuery = useUserProfile(uuid || "");
+
+  useTitle(
+    profileQuery.isError
+      ? "오류 발생"
+      : `${profileQuery.data?.data.studentNo || ""} ${
+          profileQuery.data?.data.name || ""
+        }${!profileQuery.isLoading && !profileQuery.isError ? "의" : ""} 프로필`
+  );
 
   return (
     <S.Container>
