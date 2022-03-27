@@ -7,6 +7,7 @@ import useInputs, { NameTypes } from "../../hooks/useInputs";
 import Input from "../Input";
 import toast from "react-hot-toast";
 import { useCallback, useMemo } from "react";
+import useTitle from "../../hooks/useTitle";
 
 interface InputType extends NameTypes {
   no: string;
@@ -25,6 +26,8 @@ const Signup = () => {
     githubId: "",
   });
   const { no, name, githubId } = inputs;
+
+  useTitle("회원가입");
 
   const onSubmitSuccess = useCallback(() => {
     setInputs({ no: "", name: "", githubId: "" });

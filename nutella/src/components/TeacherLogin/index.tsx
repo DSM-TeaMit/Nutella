@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { LeftArrow } from "../../assets/icons";
 import { BlueButton } from "../Buttons";
 import Input from "../Input";
+import useTitle from "../../hooks/useTitle";
 
 const TeacherLogin = () => {
   const onLogin = () => {};
+
+  useTitle("선생님으로 로그인");
 
   return (
     <S.TeacherLoginContent>

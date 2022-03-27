@@ -1,7 +1,10 @@
 import * as S from "./styles";
 import Project from "../Cards/MainProjectCard";
+import useTitle from "../../hooks/useTitle";
 
 const Search = () => {
+  useTitle(`${"여기에 검색어를 넣어주세요."}의 검색결과`);
+
   return (
     <S.Container>
       <S.SearchContent>
