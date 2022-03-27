@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import NavigationType from "../../../interface/Navigation";
 import SideBar from "../../SideBar";
 import * as S from "../styles";
@@ -13,6 +13,10 @@ import Project from "./Contents/Project";
 import Report from "./Contents/Report";
 import Setting from "./Contents/Setting";
 import { useMyProfile } from "../../../queries/User";
+import { useEffect } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import NotFound from "../NotFound";
 
 const navs: NavigationType[] = [
   {
@@ -40,6 +44,20 @@ const navs: NavigationType[] = [
 const MyPage = () => {
   const myPageQuery = useMyProfile();
 
+  const { isError, error } = myPageQuery;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (
+      isError &&
+      axios.isAxiosError(error) &&
+      error.response?.status === 403
+    ) {
+      navigate("/admin-mypage");
+      toast.error("접근 권한이 없습니다.");
+    }
+  }, [error, isError, navigate]);
+
   return (
     <S.Container>
       <S.Inner>
@@ -52,6 +70,10 @@ const MyPage = () => {
             <Route path="/project" element={<Project />} />
             <Route path="/report" element={<Report />} />
             <Route path="/setting" element={<Setting />} />
+            <Route
+              path="*"
+              element={<NotFound message="프로필로 돌아가기" to="/mypage" />}
+            />
           </Routes>
         </S.ContentContainer>
       </S.Inner>

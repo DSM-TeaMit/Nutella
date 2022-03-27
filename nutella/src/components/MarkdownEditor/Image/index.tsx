@@ -17,13 +17,14 @@ const Image: FC<PropsType> = ({ item }) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
   const { id } = item;
-  const { removeRowById, addRowAfterId } = useContext(MarkdownContext);
+  const { removeRowById, addRowAfterId, disabled } =
+    useContext(MarkdownContext);
 
-  const onClick = (e: MouseEvent) => {
+  const onClick = useCallback((e: MouseEvent) => {
     setIsSelected(
       (ref.current && ref.current.contains(e.target as Node)) || false
     );
-  };
+  }, []);
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -48,18 +49,20 @@ const Image: FC<PropsType> = ({ item }) => {
   );
 
   useEffect(() => {
-    document.addEventListener("click", onClick);
-    document.addEventListener("keydown", onKeyDown);
+    if (!disabled) {
+      document.addEventListener("click", onClick);
+      document.addEventListener("keydown", onKeyDown);
+    }
 
     return () => {
       document.removeEventListener("click", onClick);
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [onKeyDown]);
+  }, [disabled, onClick, onKeyDown]);
 
   return (
     <S.Container>
-      <S.ImgContainer ref={ref} onKeyDown={() => console.log("keydown")}>
+      <S.ImgContainer ref={ref}>
         <S.Image src={item.text} />
         {isSelected && <S.Overlay />}
       </S.ImgContainer>

@@ -17,8 +17,8 @@ export const Image = styled(Img)`
   background-color: ${({ theme }) => theme.colors.grayscale.gray1};
 `;
 
-export const Input = styled(TextareaAutosize)<{ borderWidth: number }>`
-  border: ${({ borderWidth }) => borderWidth}px solid
+export const Input = styled(TextareaAutosize)<{ border: number }>`
+  border: ${({ border: borderWidth }) => borderWidth}px solid
     ${({ theme }) => theme.colors.grayscale.lightGray1};
   background-color: ${({ color }) => color};
   border-radius: 10px;

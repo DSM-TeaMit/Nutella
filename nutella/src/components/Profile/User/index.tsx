@@ -6,6 +6,8 @@ import { DocumentIcons, PersonalIcons } from "../../../assets/icons";
 import Profile from "./Contents/Profile";
 import Project from "./Contents/Project";
 import { useUserProfile } from "../../../queries/User";
+import NotFound from "../NotFound";
+import useTitle from "../../../hooks/useTitle";
 
 const navs: NavigationType[] = [
   {
@@ -24,6 +26,14 @@ const User = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const profileQuery = useUserProfile(uuid || "");
 
+  useTitle(
+    profileQuery.isError
+      ? "오류 발생"
+      : `${profileQuery.data?.data.studentNo || ""} ${
+          profileQuery.data?.data.name || ""
+        }${!profileQuery.isLoading && !profileQuery.isError ? "의" : ""} 프로필`
+  );
+
   return (
     <S.Container>
       <S.Inner>
@@ -34,6 +44,12 @@ const User = () => {
           <Routes>
             <Route path="/" element={<Profile data={profileQuery} />} />
             <Route path="/project" element={<Project />} />
+            <Route
+              path="*"
+              element={
+                <NotFound message="프로필로 돌아가기" to={`/user/${uuid}`} />
+              }
+            />
           </Routes>
         </S.ContentContainer>
       </S.Inner>

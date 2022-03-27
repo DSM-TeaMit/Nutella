@@ -9,6 +9,8 @@ import toast from "react-hot-toast";
 import storageKeys from "../../constant/StorageKeys";
 import { AxiosResponse } from "axios";
 import { TokenType } from "../../utils/api/Signup";
+import useTitle from "../../hooks/useTitle";
+        
 interface InputType extends NameTypes {
   id: string;
   password: string;
@@ -52,6 +54,8 @@ const TeacherLogin = () => {
       { onSuccess: onSubmitSuccess, onError: onSubmitError }
     );
   };
+
+  useTitle("선생님으로 로그인");
 
   return (
     <S.TeacherLoginContent>

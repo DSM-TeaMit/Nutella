@@ -1,14 +1,24 @@
-import { FC, useContext } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useContext,
+  useImperativeHandle,
+} from "react";
 import uniqueId from "../../constant/UniqueId";
 import { MarkdownContext, Row as RowType } from "../../context/MarkdownCotext";
-import State from "../../interface/State";
 import MarkdownProvider from "../Providers/MarkdownProvider";
 import Image from "./Image";
 import Row from "./Row";
 import * as S from "./styles";
 
 interface PropsType {
-  rowState: State<RowType[]>;
+  rows: RowType[];
+  setRows: (rows: RowType[]) => void;
+  disabled?: boolean;
+}
+
+export interface MarkdownEditorRef {
+  matchRows: () => void;
 }
 
 export const getInitRows = (): RowType[] => [
@@ -20,16 +30,32 @@ export const getInitRows = (): RowType[] => [
   },
 ];
 
-const MarkdownEditor: FC<PropsType> = ({ rowState }) => {
-  return (
-    <MarkdownProvider rowState={rowState}>
-      <Inner />
-    </MarkdownProvider>
-  );
-};
+const MarkdownEditor = forwardRef<MarkdownEditorRef, PropsType>(
+  ({ setRows, rows, disabled }, ref) => {
+    return (
+      <MarkdownProvider rows={rows} setRows={setRows} disabled={disabled}>
+        <Inner ref={ref} />
+      </MarkdownProvider>
+    );
+  }
+);
 
-const Inner = () => {
-  const { rows } = useContext(MarkdownContext);
+MarkdownEditor.displayName = "MarkdownEditor";
+
+const Inner = forwardRef<MarkdownEditorRef>((_, ref) => {
+  const { rows, refs } = useContext(MarkdownContext);
+
+  const matchRows = useCallback(() => {
+    if (refs.current) {
+      refs.current.forEach((value, index) => {
+        value.innerText = rows[index].text;
+      });
+    }
+  }, [refs, rows]);
+
+  useImperativeHandle(ref, () => ({
+    matchRows,
+  }));
 
   return (
     <S.Container>
@@ -42,6 +68,8 @@ const Inner = () => {
       })}
     </S.Container>
   );
-};
+});
+
+Inner.displayName = "Inner";
 
 export default MarkdownEditor;

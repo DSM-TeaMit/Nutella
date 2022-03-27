@@ -27,6 +27,5 @@ export const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  mix-blend-mode: multiply;
   background-color: ${({ theme }) => theme.colors.primary.default}50;
 `;

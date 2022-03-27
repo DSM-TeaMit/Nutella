@@ -1,7 +1,7 @@
-import Personal from "../components/Result/Personal";
+import Result from "../components/Result";
 
 const ResultContainer = () => {
-  return <Personal />;
+  return <Result />;
 };
 
 export default ResultContainer;
