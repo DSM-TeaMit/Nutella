@@ -32,7 +32,7 @@ const Signup = () => {
   const onSubmitSuccess = useCallback(() => {
     setInputs({ no: "", name: "", githubId: "" });
     toast.success("회원가입에 성공하였습니다.");
-    navigate("/");
+    navigate("/feed");
   }, [navigate, setInputs]);
 
   const onSubmit = useCallback(() => {
