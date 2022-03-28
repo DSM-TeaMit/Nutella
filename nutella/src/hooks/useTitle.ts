@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useLayoutEffect } from "react";
 
 const useTitle = (title: string) => {
   const updateTitle = useCallback(() => {
@@ -11,7 +11,7 @@ const useTitle = (title: string) => {
     htmlTitle.innerHTML = `${title} - Teamit`;
   }, [title]);
 
-  useEffect(updateTitle, [updateTitle]);
+  useLayoutEffect(updateTitle, [updateTitle]);
 };
 
 export default useTitle;
