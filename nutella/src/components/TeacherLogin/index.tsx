@@ -4,13 +4,13 @@ import { LeftArrow } from "../../assets/icons";
 import { BlueButton } from "../Buttons";
 import Input from "../Input";
 import useInputs, { NameTypes } from "../../hooks/useInputs";
-import { useAdminLogin } from "../../queries/Login";
+import { useAdminLogin } from "../../queries/Admin";
 import toast from "react-hot-toast";
 import storageKeys from "../../constant/StorageKeys";
 import { AxiosResponse } from "axios";
 import { TokenType } from "../../utils/api/Signup";
 import useTitle from "../../hooks/useTitle";
-        
+
 interface InputType extends NameTypes {
   id: string;
   password: string;

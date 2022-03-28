@@ -6,7 +6,12 @@ import {
   AccountData,
   getCreatedAccount,
   postAccount,
+  LoginType,
+  postAdminLogin,
 } from "../utils/api/Admin";
+
+export const useAdminLogin = () =>
+  useMutation((data: LoginType) => postAdminLogin(data), {});
 
 export const useCreatedAccount = () =>
   useQuery([queryKeys.accounts], () => getCreatedAccount());
