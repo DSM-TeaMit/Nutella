@@ -59,7 +59,7 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
                 <S.UserImageOuter key={value.uuid}>
                   <S.UserImage
                     src={value.thumbnailUrl}
-                    onClick={onMemberClick(uuid)}
+                    onClick={onMemberClick(value.uuid)}
                   />
                 </S.UserImageOuter>
               ))}
