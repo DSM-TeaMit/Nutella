@@ -36,7 +36,7 @@ const Signup = () => {
 
   const onSubmit = useCallback(() => {
     infoMutation.mutate(
-      { studentNo: Number.parseInt(no), name: name },
+      { data: { studentNo: Number.parseInt(no), name: name } },
       { onSuccess: onSubmitSuccess }
     );
   }, [infoMutation, name, no, onSubmitSuccess]);
