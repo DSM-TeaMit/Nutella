@@ -2,8 +2,8 @@ import axios from "axios";
 import { useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import { useUserInfo } from "../../queries/Signup";
-import * as S from "./styles";
+import Loading from "../components/Loading";
+import { useUserInfo } from "../queries/Signup";
 
 const GithubLoadingContainer = () => {
   const { no, githubId, name } = useParams<{
@@ -56,16 +56,10 @@ const GithubLoadingContainer = () => {
 
   useEffect(() => {
     onLand();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <S.Container>
-      <div>
-        <S.Title>인증중입니다...</S.Title>
-        <S.Description>잠시만 기다려주세요.</S.Description>
-      </div>
-    </S.Container>
-  );
+  return <Loading />;
 };
 
 export default GithubLoadingContainer;

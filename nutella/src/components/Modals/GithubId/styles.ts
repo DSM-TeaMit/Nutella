@@ -24,7 +24,7 @@ export const Form = styled.div`
 `;
 
 export const FormTitle = styled.div`
-  font: ${({ theme }) => theme.fonts.description};
+  font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
 `;
 
