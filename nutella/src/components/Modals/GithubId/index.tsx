@@ -1,4 +1,5 @@
-import { FC, useMemo } from "react";
+import { FC, useCallback, useMemo } from "react";
+import githubOauthUrl from "../../../constant/GithubOAuth";
 import useInput from "../../../hooks/useInput";
 import useModalContext from "../../../hooks/useModalContext";
 import { BlueButton, BorderButton } from "../../Buttons";
@@ -19,6 +20,10 @@ const GithubIdModal: FC<PropsType> = ({ githubId }) => {
     [githubId, input]
   );
 
+  const onClick = useCallback(() => {
+    window.location.href = `${githubOauthUrl}?redirectUri=github-id/${input}`;
+  }, [input]);
+
   return (
     <S.Container>
       <S.Title>Github 아이디 변경</S.Title>
@@ -28,7 +33,9 @@ const GithubIdModal: FC<PropsType> = ({ githubId }) => {
       </S.Form>
       <S.ButtonContainer>
         <BorderButton onClick={closeCurrentModal}>취소</BorderButton>
-        <BlueButton disabled={disabled}>인증</BlueButton>
+        <BlueButton disabled={disabled} onClick={onClick}>
+          인증
+        </BlueButton>
       </S.ButtonContainer>
     </S.Container>
   );

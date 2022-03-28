@@ -50,6 +50,10 @@ const SubRouter = () => {
         path="auth/callback-github/signup/:no/:name/:githubId"
         element={<GithubLoadingContainer />}
       />
+      <Route
+        path="auth/callback-github/github-id/:githubId"
+        element={<GithubLoadingContainer />}
+      />
       <Route path="signup" element={<SignupContainer />} />
       <Route path="teacherlogin" element={<TeacherLoginContainer />} />
       <Route path="*" element={<RouterWithDefaultComponent />} />
