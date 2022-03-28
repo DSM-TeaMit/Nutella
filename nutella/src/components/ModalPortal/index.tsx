@@ -32,25 +32,6 @@ const ModalPortal = forwardRef<ModalPoralRef, PropsType>(
 
     useImperativeHandle(ref, () => ({ show: showModal }));
 
-    const onOutsideClick = useCallback(
-      (e: MouseEvent) => {
-        if (!modalRef.current) return;
-
-        if (!modalRef.current.contains(e.target as Node)) {
-          closeCurrentModal();
-        }
-      },
-      [closeCurrentModal]
-    );
-
-    useEffect(() => {
-      if (modals.length > 0) {
-        window.addEventListener("click", onOutsideClick);
-      } else {
-        window.removeEventListener("click", onOutsideClick);
-      }
-    }, [modals, onOutsideClick]);
-
     useEffect(() => {
       if (modals.length > 0) {
         document.body.style.overflow = "hidden";
@@ -64,8 +45,16 @@ const ModalPortal = forwardRef<ModalPoralRef, PropsType>(
 
       if (currentModal === id) {
         return ReactDOM.createPortal(
-          <S.Background>
-            <S.Container ref={modalRef}>{children}</S.Container>
+          <S.Background onClick={() => closeCurrentModal()}>
+            <S.Container
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+              ref={modalRef}
+            >
+              {children}
+            </S.Container>
           </S.Background>,
           el
         );
