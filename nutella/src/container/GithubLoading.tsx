@@ -33,7 +33,7 @@ const GithubLoadingContainer = () => {
       if (status === 422) {
         toast.error("깃허브 인증되지 않은 아이디입니다.");
       } else if (status === 403) {
-        toast.error("깃허브 인증한 아이디와 입력한 아이디가 다릅니다.");
+        toast.error("다른 사용자가 인증한 아이디입니다.");
       }
       toast.error("다시 회원가입해주세요.");
       navigate("/");
