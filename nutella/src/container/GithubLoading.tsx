@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import { useUserInfo } from "../queries/Signup";
 
@@ -11,6 +11,7 @@ const GithubLoadingContainer = () => {
     name: string;
     githubId: string;
   }>();
+  const [searchParams] = useSearchParams();
 
   const navigate = useNavigate();
   const infoMutation = useUserInfo();
@@ -49,10 +50,22 @@ const GithubLoadingContainer = () => {
     }
 
     infoMutation.mutate(
-      { name, studentNo: Number.parseInt(no!), githubId },
+      {
+        data: { name, studentNo: Number.parseInt(no!), githubId },
+        code: searchParams.get("code") || "",
+      },
       { onSuccess, onError }
     );
-  }, [githubId, infoMutation, name, navigate, no, onError, onSuccess]);
+  }, [
+    githubId,
+    infoMutation,
+    name,
+    navigate,
+    no,
+    onError,
+    onSuccess,
+    searchParams,
+  ]);
 
   useEffect(() => {
     onLand();

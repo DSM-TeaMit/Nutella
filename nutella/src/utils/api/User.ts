@@ -178,9 +178,8 @@ interface ModifyGithubId {
 
 export const modifyGithubId = async (githubId: string, code: string) => {
   const changeUri = Uri.changeGithubId.get();
-  const callbackUrl = Uri.githubCallback.get();
 
-  await request.get(callbackUrl, { params: { code } });
+  await authGithubCode(code);
 
   return await request.put<
     unknown,
@@ -189,6 +188,12 @@ export const modifyGithubId = async (githubId: string, code: string) => {
   >(changeUri, {
     githubId,
   });
+};
+
+export const authGithubCode = async (code: string) => {
+  const url = Uri.githubCallback.get();
+
+  return await request.get(url, { params: { code } });
 };
 
 interface HeaderType {
