@@ -49,6 +49,7 @@ export const SettingTitle = styled.div`
 `;
 
 export const GrayButton = styled.button`
+  user-select: none;
   filter: ${({ theme }) => theme.filters.grayscale.gray2};
   padding: none;
   border: none;
@@ -73,6 +74,7 @@ export const SettingTitleRed = styled(SettingTitle)`
 `;
 
 export const RedButton = styled(GrayButton)`
+  user-select: none;
   filter: ${({ theme }) => theme.filters.red.default};
 
   &:hover {
