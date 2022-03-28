@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import { TeamIcons, PersonalIcons, ClubIcons } from "../../../assets/icons";
 import { ProjectType } from "../../../utils/api/User";
-import { FC, useCallback } from "react";
+import { FC, useCallback, useMemo } from "react";
 import ProjectTypes from "../../../interface/ProjectTypes";
 import { useNavigate } from "react-router-dom";
 
@@ -37,6 +37,11 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
     [navigate]
   );
 
+  const fieldList = useMemo(
+    () => fields.replace(/\s/g, "").split(","),
+    [fields]
+  );
+
   return (
     <S.Container to={`/project/${uuid}`}>
       <S.Image alt="project image" src={thumbnailUrl} emoji={emoji} />
@@ -69,8 +74,11 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
             )}
           </S.UserContainer>
           <div>
-            <S.Type>{fields.split(",").slice(0, 3).join(" · ")}&nbsp;</S.Type>
-            {fields.length > 3 && (
+            <S.Type>
+              {fieldList.slice(0, 3).join(" · ")}
+              &nbsp;
+            </S.Type>
+            {fieldList.length > 3 && (
               <S.TypeAdditional>+{fields.length - 3}</S.TypeAdditional>
             )}
           </div>
