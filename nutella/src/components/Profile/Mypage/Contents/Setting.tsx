@@ -78,7 +78,7 @@ const Setting = () => {
         </S.SettingContaienr>
       </ContentInner>
       <ModalPortal ref={githubModalRef}>
-        <GithubIdModal />
+        <GithubIdModal githubId={githubId} />
       </ModalPortal>
       <ModalPortal ref={deleteUserModalRef}>
         <AccountDeleteModal data={myProfileQuery} />
