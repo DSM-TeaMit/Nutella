@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import { useModifyGithubId } from "../queries/User";
 
@@ -11,6 +11,7 @@ const ChangeGithubIdLoadingContainer = () => {
   }>();
   const navigate = useNavigate();
   const mutation = useModifyGithubId();
+  const [searchParams] = useSearchParams();
 
   const onSuccess = useCallback(() => {
     toast.success("깃허브 아이디 변경 성공");
@@ -45,8 +46,11 @@ const ChangeGithubIdLoadingContainer = () => {
       return;
     }
 
-    mutation.mutate(githubId, { onSuccess, onError });
-  }, [githubId, mutation, navigate, onError, onSuccess]);
+    mutation.mutate(
+      { githubId, code: searchParams.get("code") || "" },
+      { onSuccess, onError }
+    );
+  }, [githubId, mutation, navigate, onError, onSuccess, searchParams]);
 
   useEffect(() => {
     onLand();

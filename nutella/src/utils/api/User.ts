@@ -176,14 +176,17 @@ interface ModifyGithubId {
   githubId: string;
 }
 
-export const modifyGithubId = async (githubId: string) => {
-  const uri = Uri.changeGithubId.get();
+export const modifyGithubId = async (githubId: string, code: string) => {
+  const changeUri = Uri.changeGithubId.get();
+  const callbackUrl = Uri.githubCallback.get();
+
+  await request.get(callbackUrl, { params: { code } });
 
   return await request.put<
     unknown,
     AxiosResponse<unknown, unknown>,
     ModifyGithubId
-  >(uri, {
+  >(changeUri, {
     githubId,
   });
 };
