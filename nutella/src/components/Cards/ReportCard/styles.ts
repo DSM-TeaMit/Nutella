@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import { ReportStatus } from "../../../interface/Report";
 import Img from "../../Img";
 
 export const Container = styled(Link)`
+  user-select: none;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};

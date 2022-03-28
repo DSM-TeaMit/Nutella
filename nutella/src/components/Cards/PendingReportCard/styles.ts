@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 
 export const Container = styled(Link)`
+  user-select: none;
   column-gap: 20px;
   display: grid;
   text-decoration: none;
