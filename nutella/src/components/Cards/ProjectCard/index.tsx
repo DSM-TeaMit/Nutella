@@ -51,7 +51,7 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
             <S.Title>{projectName}</S.Title>
             <S.TypeIcon alt="type icon" src={iconMap.get(projectType)!} />
           </S.TitleContaienr>
-          {projectDescription === null ? (
+          {projectDescription === null || projectDescription.length <= 0 ? (
             <S.Description>설명이 없습니다.</S.Description>
           ) : (
             <S.Description>{projectDescription}</S.Description>
