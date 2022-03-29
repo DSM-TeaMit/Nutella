@@ -35,7 +35,7 @@ const Feed = () => {
           })}
         </S.TitleBox>
         <S.ElementBox>
-          <div>{menuArr[currentTab].content}</div>
+          <S.ProjectBox>{menuArr[currentTab].content}</S.ProjectBox>
         </S.ElementBox>
       </S.FeedContent>
     </S.Container>

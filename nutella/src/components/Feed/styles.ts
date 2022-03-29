@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { colors } from "../../utils/theme/theme";
 
 export const Container = styled.div`
   width: 100%;
@@ -33,4 +32,13 @@ export const Title = styled.div`
 
 export const ElementBox = styled.div`
   margin: 48px 0px 96px 0px;
+`;
+
+export const ProjectBox = styled.div`
+  margin-top: 36px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 20px;
+  row-gap: 50px;
 `;
