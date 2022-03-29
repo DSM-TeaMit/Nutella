@@ -52,12 +52,12 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
                 </I.ProfileDescription>
                 {githubId && (
                   <I.Github
-                    href={`https://github.com/${githubId}`}
-                    target="_blank"
-                    rel="noreferrer"
+                    onClick={() =>
+                      window.open(`https://github.com/${githubId}`, "_blank")
+                    }
                   >
                     <img alt="github" src={GithubBlackIcons} />
-                    {githubId}
+                    <div>{githubId}</div>
                     <img alt="arrow" src={ArrowBlackIcons} />
                   </I.Github>
                 )}

@@ -8,14 +8,13 @@ import Input from "../Input";
 import toast from "react-hot-toast";
 import { useCallback, useMemo } from "react";
 import useTitle from "../../hooks/useTitle";
+import githubOauthUrl from "../../constant/GithubOAuth";
 
 interface InputType extends NameTypes {
   no: string;
   name: string;
   githubId: string;
 }
-
-const githubOauthUrl = "https://spectre-psnldev.dev:8202/auth/github" as const;
 
 const Signup = () => {
   const infoMutation = useUserInfo();
@@ -37,7 +36,7 @@ const Signup = () => {
 
   const onSubmit = useCallback(() => {
     infoMutation.mutate(
-      { studentNo: Number.parseInt(no), name: name },
+      { data: { studentNo: Number.parseInt(no), name: name } },
       { onSuccess: onSubmitSuccess }
     );
   }, [infoMutation, name, no, onSubmitSuccess]);

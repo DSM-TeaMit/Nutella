@@ -7,6 +7,7 @@ import {
   TeacherLoginContainer,
   SignLoadingContainer,
   GithubLoadingContainer,
+  ChangeGithubIdLoadingContainer,
 } from "../container";
 import RefreshError from "../interface/RefreshError";
 import RouterWithDefaultComponent from "./RouterWithDefaultComponent";
@@ -49,6 +50,10 @@ const SubRouter = () => {
       <Route
         path="auth/callback-github/signup/:no/:name/:githubId"
         element={<GithubLoadingContainer />}
+      />
+      <Route
+        path="auth/callback-github/github-id/:githubId"
+        element={<ChangeGithubIdLoadingContainer />}
       />
       <Route path="signup" element={<SignupContainer />} />
       <Route path="teacherlogin" element={<TeacherLoginContainer />} />

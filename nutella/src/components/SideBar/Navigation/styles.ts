@@ -16,6 +16,7 @@ export const Container = styled(NavLink)`
 
   img {
     filter: ${({ theme }) => theme.filters.grayscale.gray1};
+    user-select: none;
   }
 
   &:hover {

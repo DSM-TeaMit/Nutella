@@ -59,4 +59,6 @@ export const useOauthGoogle = (code: string | null) => {
 };
 
 export const useUserInfo = () =>
-  useMutation((data: InfoType) => postUserInfo(data));
+  useMutation(({ data, code }: { data: InfoType; code?: string }) =>
+    postUserInfo(data, code)
+  );

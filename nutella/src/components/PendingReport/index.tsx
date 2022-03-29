@@ -1,4 +1,7 @@
-import { useCallback, useState } from "react";
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import isMore from "../../constant/IsMore";
 import LIMIT from "../../constant/Limit";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
@@ -8,7 +11,9 @@ import * as S from "./styles";
 
 const PendingReport = () => {
   const [page, setPage] = useState<number>(1);
-  const { data, isLoading, isError, isFetching } = usePendingReport(page);
+  const { data, isLoading, isError, isFetching, error } =
+    usePendingReport(page);
+  const navigate = useNavigate();
 
   const onNextPage = useCallback(() => {
     if (!data) {
@@ -24,6 +29,21 @@ const PendingReport = () => {
     onNextPage,
     !(isLoading || isError || isFetching)
   );
+
+  useEffect(() => {
+    if (
+      isError &&
+      (!axios.isAxiosError(error) || error.response?.status !== 403)
+    ) {
+      toast.error("오류 발생. 다시 시도해주세요.");
+      return;
+    }
+
+    if (isError) {
+      toast.error("접근 권한이 없습니다.");
+      navigate("/feed");
+    }
+  }, [error, isError, navigate]);
 
   if (isLoading) {
     return (

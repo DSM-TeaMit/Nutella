@@ -1,5 +1,6 @@
 import Uri from "../../constant/Uri";
 import request, { instance } from "../axios";
+import { authGithubCode } from "./User";
 
 export interface TokenType {
   type: "login" | "registration" | undefined;
@@ -24,6 +25,10 @@ export interface InfoType {
   githubId?: string;
 }
 
-export const postUserInfo = async (data: InfoType) => {
+export const postUserInfo = async (data: InfoType, code?: string) => {
+  if (code) {
+    await authGithubCode(code);
+  }
+
   return await request.post(Uri.defaultInfomation.get(), data);
 };

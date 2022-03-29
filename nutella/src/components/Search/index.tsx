@@ -1,14 +1,19 @@
 import * as S from "./styles";
 import Project from "../Cards/MainProjectCard";
 import useTitle from "../../hooks/useTitle";
+import { useSearchParams } from "react-router-dom";
+import { useMemo } from "react";
 
 const Search = () => {
-  useTitle(`${"여기에 검색어를 넣어주세요."}의 검색결과`);
+  const [searchParams] = useSearchParams();
+  const searchWord = useMemo(() => searchParams.get("q") || "", [searchParams]);
+
+  useTitle(`${searchWord}의 검색결과`);
 
   return (
     <S.Container>
       <S.SearchContent>
-        <S.SearchTitle>Tea(으)로 검색한 결과</S.SearchTitle>
+        <S.SearchTitle>{searchWord}(으)로 검색한 결과</S.SearchTitle>
         <S.ElementBox>
           <S.Title>
             프로젝트 <span>12개</span>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Img from "../../Img";
 
 export const Container = styled(Link)`
+  user-select: none;
   width: 100%;
   min-width: 0;
   display: flex;

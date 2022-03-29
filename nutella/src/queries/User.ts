@@ -80,6 +80,8 @@ export const useGithubReadme = (githubId: string) =>
 export const useDeleteAccount = () => useMutation(() => deleteUser());
 
 export const useModifyGithubId = () =>
-  useMutation((githubId: string) => modifyGithubId(githubId));
+  useMutation(({ githubId, code }: { githubId: string; code: string }) =>
+    modifyGithubId(githubId, code)
+  );
 
 export const useHeader = () => useQuery([queryKeys.header], () => getHeader());

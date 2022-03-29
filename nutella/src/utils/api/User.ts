@@ -176,16 +176,24 @@ interface ModifyGithubId {
   githubId: string;
 }
 
-export const modifyGithubId = async (githubId: string) => {
-  const uri = Uri.changeGithubId.get();
+export const modifyGithubId = async (githubId: string, code: string) => {
+  const changeUri = Uri.changeGithubId.get();
+
+  await authGithubCode(code);
 
   return await request.put<
     unknown,
     AxiosResponse<unknown, unknown>,
     ModifyGithubId
-  >(uri, {
+  >(changeUri, {
     githubId,
   });
+};
+
+export const authGithubCode = async (code: string) => {
+  const url = Uri.githubCallback.get();
+
+  return await request.get(url, { params: { code } });
 };
 
 interface HeaderType {

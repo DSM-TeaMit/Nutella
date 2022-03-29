@@ -109,6 +109,7 @@ export const Line = styled.div`
 
 export const RightContainer = styled.div`
   display: flex;
+  user-select: none;
 `;
 
 export const Nav = styled(Link)`

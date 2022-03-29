@@ -93,7 +93,7 @@ export const ProfileDescription = styled.div`
   font: ${({ theme }) => theme.fonts.body3};
 `;
 
-export const Github = styled.a`
+export const Github = styled.button`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.grayscale.gray2};
   font: ${({ theme }) => theme.fonts.body3};
@@ -101,6 +101,14 @@ export const Github = styled.a`
   display: flex;
   column-gap: 8px;
   align-items: center;
+  user-select: none;
+  padding: none;
+  border: none;
+  background-color: transparent;
+
+  div {
+    font: ${({ theme }) => theme.fonts.body3};
+  }
 
   img {
     filter: ${({ theme }) => theme.filters.grayscale.gray2};
