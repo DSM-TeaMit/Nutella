@@ -17,13 +17,18 @@ export const TitleBox = styled.div`
   display: flex;
 `;
 
-export const Title = styled.div<{ click: boolean }>`
+export const Title = styled.div`
   font: ${({ theme }) => theme.fonts.h2};
-  color: ${(props) =>
-    props.click ? colors.grayscale.black : colors.grayscale.gray1};
   margin-right: 24px;
   cursor: pointer;
   display: flex;
+  cursor: pointer;
+  &.submenu {
+    color: ${({ theme }) => theme.colors.grayscale.gray1};
+  }
+  &.focused {
+    color: ${({ theme }) => theme.colors.grayscale.black};
+  }
 `;
 
 export const ElementBox = styled.div`
