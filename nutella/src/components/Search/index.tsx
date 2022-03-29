@@ -14,9 +14,7 @@ const Search = () => {
             프로젝트 <span>12개</span>
           </S.Title>
           <S.ProjectBox>
-            {new Array(12).fill(0).map((_, index) => (
-              <Project key={index} />
-            ))}
+            <Project />
           </S.ProjectBox>
         </S.ElementBox>
         <S.ElementBox>
@@ -24,9 +22,7 @@ const Search = () => {
             이름에 Tea(을)를 포함한 유저가 참여한 프로젝트 <span>12개</span>
           </S.Title>
           <S.ProjectBox>
-            {new Array(8).fill(0).map((_, index) => (
-              <Project key={index} />
-            ))}
+            <Project />
           </S.ProjectBox>
         </S.ElementBox>
       </S.SearchContent>
