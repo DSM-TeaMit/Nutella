@@ -13,7 +13,7 @@ export interface FeedList {
 
 export interface Feed {
   count: number;
-  projects: FeedList;
+  projects: FeedList[];
 }
 
 export const getFeed = async (order: string, page: number) => {
