@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import Img from "../../Img";
 
 export const Content = styled(Link)`
   height: 286px;
@@ -12,9 +13,12 @@ export const Content = styled(Link)`
   }
 `;
 
-export const ProjectPhoto = styled.img`
+export const ProjectPhoto = styled(Img)`
   height: 203px;
   border-radius: 10px 10px 0px 0px;
+  object-fit: cover;
+  object-position: center;
+  background-color: ${({ theme }) => theme.colors.grayscale.gray1};
 `;
 
 export const ProjectBottom = styled.div`
