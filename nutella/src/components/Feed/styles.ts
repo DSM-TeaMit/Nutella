@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const Container = styled.div`
   width: 100%;
-  min-height: 600px;
+  min-height: 540px;
   margin-top: 130px;
   margin-bottom: 200px;
 `;
@@ -41,4 +41,13 @@ export const ProjectBox = styled.div`
   grid-template-columns: repeat(4, 1fr);
   column-gap: 20px;
   row-gap: 50px;
+`;
+
+export const Message = styled.div`
+  font: ${({ theme }) => theme.fonts.subtitle2};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
+`;
+
+export const Gap = styled.div`
+  margin-top: 400px;
 `;
