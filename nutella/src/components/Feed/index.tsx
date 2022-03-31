@@ -1,11 +1,12 @@
 import * as S from "./styles";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { useFeed } from "../../queries/Feed";
 import Project from "../Cards/MainProjectCard";
 import toast from "react-hot-toast";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import isMore from "../../constant/IsMore";
+import { FeedList } from "../../utils/api/Feed";
 
 const Feed = () => {
   const [currentTab, setCurrentTab] = useState(0);
@@ -22,12 +23,10 @@ const Feed = () => {
     {
       name: "인기있는 프로젝트",
       key: "popularity",
-      content: <Project data={data?.data?.projects} />,
     },
     {
       name: "최신 프로젝트",
       key: "recently",
-      content: <Project data={data?.data?.projects} />,
     },
   ];
 
@@ -72,8 +71,8 @@ const Feed = () => {
         </S.TitleBox>
         <S.ElementBox>
           <S.ProjectBox>
-            {new Array(data?.data.count).fill(0).map((_, index) => (
-              <>{menuArr[currentTab].content}</>
+            {data?.data?.projects.map((item: FeedList) => (
+              <Project key={item.uuid} data={item} />
             ))}
           </S.ProjectBox>
           <div ref={ref} />
