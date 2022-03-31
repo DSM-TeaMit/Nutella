@@ -17,19 +17,17 @@ const Project: FC<PropsType> = ({ data }) => {
           emoji={data?.emoji}
         />
         <S.ProjectBottom>
-          <S.ProjectInfoBox>
-            <S.ProjectInfo>
-              <S.ProjectTitle>{data?.projectName}</S.ProjectTitle>
-              <img src={PersonalIcons} />
-            </S.ProjectInfo>
-            <S.ProjectInfo>
-              <S.Field>{data?.projectField}</S.Field>
-              <div>
-                <img src={ViewIcons} />
-                <S.Number>{data?.viewCount}</S.Number>
-              </div>
-            </S.ProjectInfo>
-          </S.ProjectInfoBox>
+          <S.InfoContainer>
+            <S.ProjectTitle>{data?.projectName}</S.ProjectTitle>
+            <img src={PersonalIcons} />
+          </S.InfoContainer>
+          <S.ProjectInfo>
+            <S.Field>{data?.projectField}</S.Field>
+            <div>
+              <img src={ViewIcons} />
+              <S.Number>{data?.viewCount}</S.Number>
+            </div>
+          </S.ProjectInfo>
         </S.ProjectBottom>
       </S.Content>
     </>
