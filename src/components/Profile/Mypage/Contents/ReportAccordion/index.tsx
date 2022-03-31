@@ -36,7 +36,7 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
 
   const { count, projects: reports } = data;
 
-  const { data: eachData } = useEachReports(
+  const { data: eachData, isFetching } = useEachReports(
     pathType,
     page,
     queryEnabled,
@@ -105,7 +105,9 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
             <ReportCard key={value.uuid} data={{ ...value, status }} />
           ))}
         </S.Grid>
-        {isMorePage && <S.More onClick={onMore}>더 가져오기</S.More>}
+        {!isFetching && isMorePage && (
+          <S.More onClick={onMore}>더 가져오기</S.More>
+        )}
       </S.ContentContainer>
     </S.Container>
   );

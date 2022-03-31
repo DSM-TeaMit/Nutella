@@ -15,7 +15,7 @@ import LIMIT from "../../../../constant/Limit";
 const Project = () => {
   const modalRef = useModalRef();
   const [page, setPage] = useState<number>(1);
-  const { data, isError, isLoading } = useMyProjects(page);
+  const { data, isError, isLoading, isFetching } = useMyProjects(page);
 
   const onProjectAddClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -65,7 +65,7 @@ const Project = () => {
             {projects.length === 0 && (
               <I.Message>프로젝트가 존재하지 않습니다.</I.Message>
             )}
-            {isMore(LIMIT, page, count) && (
+            {!isFetching && isMore(LIMIT, page, count) && (
               <I.More onClick={() => setPage((prev) => prev + 1)}>
                 더 가져오기...
               </I.More>
