@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
-import { colors } from "../../utils/theme/theme";
 
 export const Container = styled.div`
   width: 100%;
-  min-height: 600px;
+  min-height: 540px;
   margin-top: 130px;
   margin-bottom: 200px;
 `;
@@ -17,15 +16,38 @@ export const TitleBox = styled.div`
   display: flex;
 `;
 
-export const Title = styled.div<{ click: boolean }>`
+export const Title = styled.div`
   font: ${({ theme }) => theme.fonts.h2};
-  color: ${(props) =>
-    props.click ? colors.grayscale.black : colors.grayscale.gray1};
   margin-right: 24px;
   cursor: pointer;
   display: flex;
+  cursor: pointer;
+  &.submenu {
+    color: ${({ theme }) => theme.colors.grayscale.gray1};
+  }
+  &.focused {
+    color: ${({ theme }) => theme.colors.grayscale.black};
+  }
 `;
 
 export const ElementBox = styled.div`
   margin: 48px 0px 96px 0px;
+`;
+
+export const ProjectBox = styled.div`
+  margin-top: 36px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 20px;
+  row-gap: 50px;
+`;
+
+export const Message = styled.div`
+  font: ${({ theme }) => theme.fonts.subtitle2};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
+`;
+
+export const Gap = styled.div`
+  margin-top: 400px;
 `;

@@ -1,65 +1,87 @@
 import * as S from "./styles";
-import FeedTitleType from "../../interface/FeedTitle";
-import FeedProject from "./FeedProject";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
-
-interface PropsType {
-  total: number;
-}
+import { useFeed } from "../../queries/Feed";
+import Project from "../Cards/MainProjectCard";
+import toast from "react-hot-toast";
+import useInfiniteScroll from "../../hooks/useInfiniteScroll";
+import isMore from "../../constant/IsMore";
+import { FeedList } from "../../utils/api/Feed";
 
 const Feed = () => {
-  const PopularFeed = 1;
-  const NewFeed = 2;
-  const [contentState, setContentState] = useState(PopularFeed);
+  const [currentTab, setCurrentTab] = useState(0);
+  const [page, setPage] = useState<number>(1);
+  const [orderName, setOrderName] = useState<string>("popularity");
+  const { data, isError, isLoading, isFetching } = useFeed(orderName, page);
 
-  const onPopularFeedClick = () => {
-    setContentState(PopularFeed);
+  const menuHandler = (index: React.SetStateAction<number>, name: string) => {
+    setCurrentTab(index);
+    setOrderName(name);
   };
 
-  const onNewFeedClick = () => {
-    setContentState(NewFeed);
-  };
-
-  const title: FeedTitleType[] = [
+  const menuArr = [
     {
-      title: "인기있는 프로젝트",
-      onClick: onPopularFeedClick,
+      name: "인기있는 프로젝트",
+      key: "popularity",
     },
     {
-      title: "최근 프로젝트",
-      onClick: onNewFeedClick,
+      name: "최신 프로젝트",
+      key: "recently",
     },
   ];
 
-  const renderContent = (): JSX.Element => {
-    const contentMap = new Map<number, React.FC<PropsType>>()
-      .set(PopularFeed, FeedProject)
-      .set(NewFeed, FeedProject);
-    const content = React.createElement(contentMap.get(contentState)!, {
-      total: 8,
-    });
-    return <>{content}</>;
+  const onNextPage = () => {
+    if (!data) {
+      return;
+    }
+
+    if (isMore(12, page, data.data.count)) {
+      setPage((prev) => prev + 1);
+    }
   };
+
+  const ref = useInfiniteScroll<HTMLDivElement>(
+    onNextPage,
+    !(isLoading || isError || isFetching)
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("가져온 프로젝트가 없습니다.");
+    }
+  }, [isError, orderName]);
 
   return (
     <S.Container>
       <S.FeedContent>
         <S.TitleBox>
-          {title.map((value, index) => {
+          {menuArr.map((str, index) => {
             return (
               <S.Title
-                onClick={value.onClick}
+                className={`${
+                  index === currentTab ? "submenu focused" : "submenu"
+                }`}
                 key={index}
-                click={contentState === index + 1}
+                onClick={() => menuHandler(index, str.key)}
               >
-                <span>{value.title}</span>
+                {str.name}
               </S.Title>
             );
           })}
         </S.TitleBox>
         <S.ElementBox>
-          <div>{renderContent()}</div>
+          <S.ProjectBox>
+            {data?.data?.projects.map((item: FeedList) => (
+              <Project key={item.uuid} data={item} />
+            ))}
+          </S.ProjectBox>
+          <div ref={ref} />
+          {data?.data.count === 0 && (
+            <>
+              <S.Message>프로젝트가 없습니다.</S.Message>
+              <S.Gap />
+            </>
+          )}
         </S.ElementBox>
       </S.FeedContent>
     </S.Container>

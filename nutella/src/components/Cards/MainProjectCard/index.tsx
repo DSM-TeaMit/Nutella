@@ -1,31 +1,38 @@
 import * as S from "./styles";
-import {
-  ProfileIcons,
-  ProjectPhotoIcons,
-  ViewIcons,
-} from "../../../assets/icons";
+import { ViewIcons, PersonalIcons } from "../../../assets/icons";
+import { FeedList } from "../../../utils/api/Feed";
+import { FC } from "react";
 
-const Project = () => {
+interface PropsType {
+  data: FeedList;
+}
+
+const Project: FC<PropsType> = ({ data }) => {
   return (
-    <S.Content to={`/project/uuid`}>
-      {/* 일단 uuid는 지정을 안 했기에 저렇게 해놨습니다 */}
-      <S.ProjectPhoto src={ProjectPhotoIcons} />
-      <S.ProjectBottom>
-        <S.ProjectInfoBox>
-          <S.ProjectInfo>
-            <S.ProjectTitle>Teamit</S.ProjectTitle>
-            <img src={ProfileIcons} />
-          </S.ProjectInfo>
-          <S.ProjectInfo>
-            <S.Field>웹</S.Field>
-            <div>
-              <img src={ViewIcons} />
-              <S.Number>123</S.Number>
-            </div>
-          </S.ProjectInfo>
-        </S.ProjectInfoBox>
-      </S.ProjectBottom>
-    </S.Content>
+    <>
+      <S.Content to={`/project/${data?.uuid}`}>
+        <S.ProjectPhoto
+          alt="project image"
+          src={data?.thumbnailUrl}
+          emoji={data?.emoji}
+        />
+        <S.ProjectBottom>
+          <S.ProjectInfoBox>
+            <S.ProjectInfo>
+              <S.ProjectTitle>{data?.projectName}</S.ProjectTitle>
+              <img src={PersonalIcons} />
+            </S.ProjectInfo>
+            <S.ProjectInfo>
+              <S.Field>{data?.projectField}</S.Field>
+              <div>
+                <img src={ViewIcons} />
+                <S.Number>{data?.viewCount}</S.Number>
+              </div>
+            </S.ProjectInfo>
+          </S.ProjectInfoBox>
+        </S.ProjectBottom>
+      </S.Content>
+    </>
   );
 };
 

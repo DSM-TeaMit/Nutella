@@ -13,6 +13,7 @@ const queryKeys = {
   pendingReport: "pending_report",
   accounts: "accounts",
   header: "header",
+  feed: "feed",
 } as const;
 
 export default queryKeys;
