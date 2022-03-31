@@ -21,6 +21,7 @@ export const Container = styled(Link)`
 export const Image = styled(Img)`
   border-radius: 10px;
   width: 180px;
+  max-height: 100px;
   object-fit: cover;
   object-position: center;
   background-color: ${({ theme }) => theme.colors.grayscale.gray1};
