@@ -107,6 +107,7 @@ export interface Reports {
 }
 
 export interface UserReports {
+  writing: Reports;
   accepted: Reports;
   rejected: Reports;
   pending: Reports;

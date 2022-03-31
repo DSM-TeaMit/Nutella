@@ -22,7 +22,8 @@ const gap = 16 as const;
 const pathMap = new Map<ReportStatus, ReportPathType>()
   .set("PENDING", "pending")
   .set("ACCEPTED", "accepted")
-  .set("DECLINED", "rejected");
+  .set("DECLINED", "rejected")
+  .set("WRITING", "writing");
 
 const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
   const [isActive, setIsActive] = useState<boolean>(false);
