@@ -14,6 +14,7 @@ interface PropsType {
   data: Reports;
   status: ReportStatus;
   userUuid?: string;
+  value?: boolean;
 }
 
 const padding = 12 as const;
@@ -25,8 +26,14 @@ const pathMap = new Map<ReportStatus, ReportPathType>()
   .set("DECLINED", "rejected")
   .set("WRITING", "writing");
 
-const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
-  const [isActive, setIsActive] = useState<boolean>(false);
+const ReportAccordion: FC<PropsType> = ({
+  title,
+  data,
+  status,
+  userUuid,
+  value,
+}) => {
+  const [isActive, setIsActive] = useState<boolean>(value || false);
   const container = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);

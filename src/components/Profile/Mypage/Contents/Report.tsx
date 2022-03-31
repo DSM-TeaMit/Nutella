@@ -29,11 +29,20 @@ const Report = () => {
   return (
     <I.ContentInner>
       <I.FlexContainer>
+        {writing.count > 0 && (
+          <ReportAccordion
+            value={true}
+            title="작성 중인"
+            data={writing}
+            status="WRITING"
+          />
+        )}
         {pending.count > 0 && (
           <ReportAccordion
+            value={true}
             title="승인 대기중인"
             data={pending}
-            status="ACCEPTED"
+            status="PENDING"
           />
         )}
         {rejected.count > 0 && (
@@ -44,10 +53,7 @@ const Report = () => {
           />
         )}
         {accepted.count > 0 && (
-          <ReportAccordion title="승인 된" data={accepted} status="PENDING" />
-        )}
-        {writing.count > 0 && (
-          <ReportAccordion title="작성 중인" data={writing} status="WRITING" />
+          <ReportAccordion title="승인 된" data={accepted} status="ACCEPTED" />
         )}
         {accepted.count + rejected.count + pending.count + writing.count ===
           0 && <I.Message>보고서가 존재하지 않습니다.</I.Message>}
