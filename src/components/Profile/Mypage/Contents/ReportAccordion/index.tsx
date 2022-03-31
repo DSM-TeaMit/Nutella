@@ -69,6 +69,16 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
     setPage((prev) => prev + 1);
   }, [queryEnabled]);
 
+  const isMorePage = useMemo(() => {
+    console.log("===");
+    console.log(LIMIT * page);
+    if (page === 2 && LIMIT * page <= count && !queryEnabled) {
+      return true;
+    }
+
+    return isMore(LIMIT, page, count);
+  }, [count, page, queryEnabled]);
+
   return (
     <S.Container ref={container}>
       <div ref={header}>
@@ -95,9 +105,7 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
             <ReportCard key={value.uuid} data={{ ...value, status }} />
           ))}
         </S.Grid>
-        {isMore(LIMIT, page, count) && (
-          <S.More onClick={onMore}>더 가져오기</S.More>
-        )}
+        {isMorePage && <S.More onClick={onMore}>더 가져오기</S.More>}
       </S.ContentContainer>
     </S.Container>
   );

@@ -41,7 +41,6 @@ const Project = () => {
       <Error message="오류 발생. 프로젝트를 가져올 수 없습니다. 다시 시도해주세요." />
     );
   }
-
   const { count, projects } = data!.data;
 
   return (
