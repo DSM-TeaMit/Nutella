@@ -39,3 +39,9 @@ export const postAccount = async (data: AccountData) => {
 
   return await request.post(uri, data);
 };
+
+export const deleteAdminAccount = async (adminUuid: string) => {
+  const uri = Uri.admin.get();
+
+  return await request.delete(uri, { params: { uuid: adminUuid } });
+};

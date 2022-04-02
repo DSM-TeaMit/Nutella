@@ -46,6 +46,7 @@ const Uri = {
   pendingReport: new URI(`project/feed/pending`),
   createdAccount: new URI(`admin/createdByRequestor`),
   header: new URI(`user/header`),
+  admin: new URI(`admin`),
 } as const;
 
 export default Uri;
