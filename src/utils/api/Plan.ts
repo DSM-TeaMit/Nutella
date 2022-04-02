@@ -4,6 +4,7 @@ import Uri from "../../constant/Uri";
 import { Row } from "../../context/MarkdownCotext";
 import ProjectTypes from "../../interface/ProjectTypes";
 import ReportStatus from "../../interface/ReportStatus";
+import RequestorType from "../../interface/RequestorType";
 import request from "../axios";
 
 export interface Includes {
@@ -22,14 +23,12 @@ export interface MemberWithRole extends Member {
   role: string;
 }
 
-export type Requestor = "USER_EDITABLE" | "USER_NON_EDITABLE" | "ADMIN";
-
 interface PlanType {
   projectName: string;
   projectType: ProjectTypes;
   startDate: string;
   endDate: string;
-  requestorType: Requestor;
+  requestorType: RequestorType;
   writer: Member;
   members: MemberWithRole[];
   goal: string;
@@ -47,7 +46,7 @@ export interface ParsedPlanType {
   projectType: ProjectTypes;
   startDate: Date;
   endDate: Date;
-  requestorType: Requestor;
+  requestorType: RequestorType;
   writer: Member;
   members: MemberWithRole[];
   goal: Row[];
