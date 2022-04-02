@@ -20,7 +20,6 @@ import {
   useSubmitResultMutation,
 } from "../../queries/Result";
 import { ParsedFullResultReport } from "../../utils/api/Result";
-import toast from "react-hot-toast";
 import MarkdownEditor from "../MarkdownEditor";
 import { Row } from "../../context/MarkdownCotext";
 import uniqueId from "../../constant/UniqueId";
@@ -52,12 +51,10 @@ const Result = () => {
 
     resultMutation.mutate(result, {
       onSuccess: () => {
-        toast.success("저장 성공");
         autoSaveTimer.current = null;
         canSave.current = false;
       },
       onError: () => {
-        toast.error("저장 실패");
         autoSaveTimer.current = null;
         canSave.current = false;
       },

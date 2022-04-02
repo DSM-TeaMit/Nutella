@@ -38,13 +38,13 @@ export const useResult = (
 export const useResultMutation = (projectUuid: string) => {
   const queryClient = useQueryClient();
 
-  const onSuccess = useCallback(() => {
+  const onMutateEnd = useCallback(() => {
     queryClient.invalidateQueries([queryKeys.result, projectUuid]);
   }, [projectUuid, queryClient]);
 
   return useMutation(
     (data: ParsedResultReport) => modifyResultReport(projectUuid, data),
-    { onSuccess }
+    { onSettled: onMutateEnd }
   );
 };
 

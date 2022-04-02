@@ -23,7 +23,6 @@ import MarkdownEditor, { MarkdownEditorRef } from "../MarkdownEditor";
 import ModalPortal from "../ModalPortal";
 import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
-import toast from "react-hot-toast";
 import RedButton from "../Buttons/RedButton";
 import { useConfirmReport } from "../../queries/Project";
 import useTitle from "../../hooks/useTitle";
@@ -70,12 +69,10 @@ const Plan = () => {
 
     planMutation.mutate(plan, {
       onSuccess: () => {
-        toast.success("저장 성공");
         autoSaveTimer.current = null;
         canSave.current = false;
       },
       onError: () => {
-        toast.error("저장 실패");
         autoSaveTimer.current = null;
         canSave.current = false;
       },

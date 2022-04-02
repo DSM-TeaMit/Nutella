@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import toast from "react-hot-toast";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import {
   createPlanReport,
@@ -13,8 +13,23 @@ import {
 export const useCreatePlanMutation = (projectUuid: string) =>
   useMutation(() => createPlanReport(projectUuid));
 
-export const usePlanMutation = (projectUuid: string) =>
-  useMutation((data: ParsedPlanType) => modifyPlanReport(projectUuid, data));
+export const usePlanMutation = (projectUuid: string) => {
+  const queryClient = useQueryClient();
+
+  const onMutateEnd = useCallback(() => {
+    queryClient.invalidateQueries([queryKeys.planDetail, projectUuid]);
+  }, [projectUuid, queryClient]);
+
+  return useMutation(
+    (data: ParsedPlanType) =>
+      toast.promise(modifyPlanReport(projectUuid, data), {
+        loading: "저장 중",
+        success: "저장 성공",
+        error: "저장 실패",
+      }),
+    { onSettled: onMutateEnd }
+  );
+};
 
 export const usePlan = (
   projectUuid: string,
