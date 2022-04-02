@@ -1,4 +1,5 @@
 import { FC, useCallback } from "react";
+import { useDeleteAdminMutation } from "../../../../queries/Admin";
 import { AccountType } from "../../../../utils/api/Admin";
 import * as S from "./styles";
 
@@ -7,13 +8,14 @@ interface PropsType {
 }
 
 const Account: FC<PropsType> = ({ data }) => {
-  const { emoji, name, uid } = data;
+  const { emoji, name, uid, uuid } = data;
+  const deleteMutation = useDeleteAdminMutation();
 
   const onDelete = useCallback(() => {
     if (window.confirm("삭제하시겠습니까?")) {
-      //계정 삭제
+      deleteMutation.mutate(uuid);
     }
-  }, []);
+  }, [deleteMutation, uuid]);
 
   return (
     <S.Container>
