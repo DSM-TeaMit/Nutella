@@ -14,6 +14,7 @@ const queryKeys = {
   accounts: "accounts",
   header: "header",
   feed: "feed",
+  search: "search",
 } as const;
 
 export default queryKeys;
