@@ -8,7 +8,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.span`
-  font: ${({ theme }) => theme.fonts.h1};
+  font: ${({ theme }) => theme.fonts.h2};
   color: ${({ theme }) => theme.colors.grayscale.black};
 `;
 

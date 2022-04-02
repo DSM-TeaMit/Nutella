@@ -48,6 +48,7 @@ const PendingReport = () => {
   if (isLoading) {
     return (
       <S.Container>
+        <S.Title>승인 요청 보고서&nbsp;</S.Title>
         <S.Message>승인 요청 보고서 가져오는 중...</S.Message>
         <S.Gap />
       </S.Container>

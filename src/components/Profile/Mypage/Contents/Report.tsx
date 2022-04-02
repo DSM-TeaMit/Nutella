@@ -24,16 +24,25 @@ const Report = () => {
       <Error message="오류 발생. 보고서를 가져올 수 없습니다. 다시 시도해주세요." />
     );
   }
-  const { accepted, pending, rejected } = data!.data;
+  const { accepted, pending, rejected, writing } = data!.data;
 
   return (
     <I.ContentInner>
       <I.FlexContainer>
+        {writing.count > 0 && (
+          <ReportAccordion
+            value={true}
+            title="작성 중인"
+            data={writing}
+            status="WRITING"
+          />
+        )}
         {pending.count > 0 && (
           <ReportAccordion
+            value={true}
             title="승인 대기중인"
             data={pending}
-            status="ACCEPTED"
+            status="PENDING"
           />
         )}
         {rejected.count > 0 && (
@@ -44,11 +53,10 @@ const Report = () => {
           />
         )}
         {accepted.count > 0 && (
-          <ReportAccordion title="승인 된" data={accepted} status="PENDING" />
+          <ReportAccordion title="승인 된" data={accepted} status="ACCEPTED" />
         )}
-        {accepted.count + rejected.count + pending.count === 0 && (
-          <I.Message>보고서가 존재하지 않습니다.</I.Message>
-        )}
+        {accepted.count + rejected.count + pending.count + writing.count ===
+          0 && <I.Message>보고서가 존재하지 않습니다.</I.Message>}
       </I.FlexContainer>
     </I.ContentInner>
   );

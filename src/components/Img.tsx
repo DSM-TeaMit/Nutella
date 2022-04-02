@@ -70,7 +70,7 @@ const Img: FC<PropsType> = (props) => {
   );
 
   useEffect(() => {
-    if (isError && !emoji && !src) {
+    if (isError && !emoji && src) {
       toast.error("이미지를 가져올 수 없습니다.");
     }
   }, [emoji, isError, src]);

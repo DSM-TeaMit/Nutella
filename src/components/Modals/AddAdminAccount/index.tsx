@@ -28,9 +28,12 @@ const AddAdminAccountModal = () => {
 
   const onAddClick = useCallback(() => {
     if (window.confirm("추가하시겠습니까?")) {
-      accoutMutation.mutate({ id: uid, name, password });
+      accoutMutation.mutate(
+        { id: uid, name, password },
+        { onSuccess: closeCurrentModal }
+      );
     }
-  }, [accoutMutation, name, password, uid]);
+  }, [accoutMutation, closeCurrentModal, name, password, uid]);
 
   //숫자, 특문 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력
   const regex = useMemo(
@@ -45,8 +48,9 @@ const AddAdminAccountModal = () => {
         (value) => value.length === 0
       ) ||
       password !== passwordCheck ||
-      !regex.test(password),
-    [name, password, passwordCheck, regex, uid]
+      !regex.test(password) ||
+      accoutMutation.isLoading,
+    [accoutMutation.isLoading, name, password, passwordCheck, regex, uid]
   );
 
   const passwordErrorMessage = useMemo(() => {

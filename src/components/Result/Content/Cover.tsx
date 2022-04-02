@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FC, useMemo } from "react";
 import ProjectTypes from "../../../interface/ProjectTypes";
+import ReportStatus from "../../../interface/ReportStatus";
 import { ParsedFullResultReport } from "../../../utils/api/Result";
 import * as S from "../styles";
 
@@ -18,6 +19,13 @@ const Cover: FC<PropsType> = ({ data, onSubjectChange }) => {
     return map.get(data?.projectType || "PERS")!;
   }, [data]);
 
+  const cantEdit = useMemo(
+    () =>
+      data?.requestorType !== "USER_EDITABLE" ||
+      (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(data.status),
+    [data]
+  );
+
   return (
     <S.ContentContainer>
       <S.ContentInner>
@@ -25,10 +33,10 @@ const Cover: FC<PropsType> = ({ data, onSubjectChange }) => {
           <div>
             <S.CoverBig>{coverName} 프로젝트 보고서</S.CoverBig>
             <S.Topic
-              disabled={data?.requestorType !== "USER_EDITABLE"}
+              disabled={cantEdit}
               placeholder="주제"
               value={data?.subject}
-              onChange={onSubjectChange}
+              onChange={!cantEdit ? onSubjectChange : undefined}
             />
             <S.CoverInfoContainer>
               <S.CoverInfoRow>

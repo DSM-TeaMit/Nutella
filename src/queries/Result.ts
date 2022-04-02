@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import toast from "react-hot-toast";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import {
@@ -38,13 +39,18 @@ export const useResult = (
 export const useResultMutation = (projectUuid: string) => {
   const queryClient = useQueryClient();
 
-  const onSuccess = useCallback(() => {
+  const onMutateEnd = useCallback(() => {
     queryClient.invalidateQueries([queryKeys.result, projectUuid]);
   }, [projectUuid, queryClient]);
 
   return useMutation(
-    (data: ParsedResultReport) => modifyResultReport(projectUuid, data),
-    { onSuccess }
+    (data: ParsedResultReport) =>
+      toast.promise(modifyResultReport(projectUuid, data), {
+        loading: "저장 중",
+        success: "저장 성공",
+        error: "저장 실패",
+      }),
+    { onSettled: onMutateEnd }
   );
 };
 
