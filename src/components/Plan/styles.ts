@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import ReportStatus from "../../interface/ReportStatus";
 
 export const Container = styled.div`
   display: flex;
@@ -148,6 +149,7 @@ export const Buttons = styled.div`
   margin-top: 24px;
   width: 100%;
   justify-content: right;
+  align-items: center;
 `;
 
 export const Message = styled.div`
@@ -160,4 +162,19 @@ export const Message = styled.div`
 export const Margin = styled.div`
   height: 80vh;
   padding-top: 120px;
+`;
+
+export const Status = styled.div<{ status: ReportStatus }>`
+  font: ${({ theme }) => theme.fonts.body2};
+  align-self: center;
+  color: ${({ status, theme }) => {
+    if (status === "ACCEPTED") {
+      return theme.colors.green.default;
+    }
+    if (status === "REJECTED") {
+      return theme.colors.red.default;
+    }
+
+    return theme.colors.grayscale.gray2;
+  }};
 `;

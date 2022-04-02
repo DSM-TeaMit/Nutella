@@ -27,6 +27,7 @@ import toast from "react-hot-toast";
 import RedButton from "../Buttons/RedButton";
 import { useConfirmReport } from "../../queries/Project";
 import useTitle from "../../hooks/useTitle";
+import reportStatusMessage from "../../constant/ReportStatusMessage";
 
 const dateToString = (date?: Date): string => {
   if (!date) {
@@ -326,6 +327,11 @@ const Plan = () => {
             </S.ContentInner>
           </S.ContentContainer>
           <S.Buttons>
+            {plan && (
+              <S.Status status={plan.status}>
+                {reportStatusMessage.get(plan.status)}
+              </S.Status>
+            )}
             <BorderButton>PDF로 저장</BorderButton>
             {plan?.requestorType === "USER_EDITABLE" && (
               <BlueButton
