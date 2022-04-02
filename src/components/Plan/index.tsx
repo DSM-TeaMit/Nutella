@@ -15,15 +15,13 @@ import {
   useSubmitPlanMutation,
 } from "../../queries/Plan";
 import { Includes, ParsedPlanType } from "../../utils/api/Plan";
-import BlueButton from "../Buttons/BlueButton";
-import BorderButton from "../Buttons/BorderButton";
+import { BlueButton, BorderButton, RedButton } from "../Buttons";
 import CheckBox, { CheckBoxMouseEvent } from "../CheckBox";
 import CommentContainer from "../CommentContainer";
 import MarkdownEditor, { MarkdownEditorRef } from "../MarkdownEditor";
 import ModalPortal from "../ModalPortal";
 import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
-import RedButton from "../Buttons/RedButton";
 import { useConfirmReport } from "../../queries/Project";
 import useTitle from "../../hooks/useTitle";
 import reportStatusMessage from "../../constant/ReportStatusMessage";
