@@ -14,6 +14,7 @@ import * as S from "./styles";
 import HandleSVG from "../../../assets/icons/handle.svg";
 import Tag from "../../../interface/Tag";
 import Popup from "../Popup";
+import { useParams } from "react-router-dom";
 interface PropsType {
   data: RowType;
 }
@@ -73,6 +74,7 @@ const Row: FC<PropsType> = ({ data }) => {
   } = useContext(MarkdownContext);
   const currentIndex = rows.findIndex((value) => value.id === id);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const { uuid } = useParams<{ uuid: string }>();
 
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLElement>) => {
@@ -226,9 +228,9 @@ const Row: FC<PropsType> = ({ data }) => {
       setIsDragging(false);
 
       const files = Array.from(e.dataTransfer.files);
-      addImages(id, files, "0ecfaf8f-62f5-4a13-ba01-76966aa98e13");
+      addImages(id, files, uuid || "");
     },
-    [addImages, id]
+    [addImages, id, uuid]
   );
 
   const isDisabled = useMemo(
