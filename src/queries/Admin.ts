@@ -21,15 +21,17 @@ export const useAccountMutation = () => {
 
   const onSuccess = useCallback(() => {
     queryClient.invalidateQueries([queryKeys.accounts]);
-    toast.success("계정 추가 성공.");
   }, [queryClient]);
 
-  const onError = useCallback(() => {
-    toast.error("계정 추가 실패. 다시 시도해주세요.");
-  }, []);
-
-  return useMutation((data: AccountData) => postAccount(data), {
-    onSuccess,
-    onError,
-  });
+  return useMutation(
+    (data: AccountData) =>
+      toast.promise(postAccount(data), {
+        loading: "계정 추가 중",
+        success: "계정 추가 성공",
+        error: "계정 추가 실패. 다시 시도해주세요.",
+      }),
+    {
+      onSuccess,
+    }
+  );
 };
