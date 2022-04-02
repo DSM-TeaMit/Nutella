@@ -28,6 +28,7 @@ import RedButton from "../Buttons/RedButton";
 import { useConfirmReport } from "../../queries/Project";
 import useTitle from "../../hooks/useTitle";
 import reportStatusMessage from "../../constant/ReportStatusMessage";
+import ReportStatus from "../../interface/ReportStatus";
 
 const dateToString = (date?: Date): string => {
   if (!date) {
@@ -335,7 +336,12 @@ const Plan = () => {
             <BorderButton>PDF로 저장</BorderButton>
             {plan?.requestorType === "USER_EDITABLE" && (
               <BlueButton
-                disabled={submitMutation.isLoading}
+                disabled={
+                  submitMutation.isLoading ||
+                  (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(
+                    plan.status
+                  )
+                }
                 onClick={confirmOnClick("제출하시겠습니까?", () =>
                   submitMutation.mutate()
                 )}
@@ -343,7 +349,7 @@ const Plan = () => {
                 제출
               </BlueButton>
             )}
-            {plan?.requestorType === "ADMIN" && (
+            {plan?.requestorType === "ADMIN" && plan.status === "PENDING" && (
               <Fragment>
                 <RedButton
                   disabled={confirmMutation.isLoading}
