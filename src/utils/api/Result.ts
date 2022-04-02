@@ -3,8 +3,8 @@ import Uri from "../../constant/Uri";
 import { Row } from "../../context/MarkdownCotext";
 import ProjectTypes from "../../interface/ProjectTypes";
 import ReportStatus from "../../interface/ReportStatus";
+import RequestorType from "../../interface/RequestorType";
 import request from "../axios";
-import { Requestor } from "./Plan";
 
 interface Page {
   id: string;
@@ -23,7 +23,7 @@ export interface ParsedResultReport {
 export interface FullResultReport {
   projectName: string;
   projectType: ProjectTypes;
-  requestorType: Requestor;
+  requestorType: RequestorType;
   subject: string;
   content: string;
   status: ReportStatus;
@@ -36,7 +36,7 @@ export interface FullResultReport {
 export interface ParsedFullResultReport {
   projectName: string;
   projectType: ProjectTypes;
-  requestorType: Requestor;
+  requestorType: RequestorType;
   subject: string;
   content: Page[];
   status: ReportStatus;
