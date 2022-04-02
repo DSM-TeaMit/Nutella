@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import Uri from "../../constant/Uri";
 import { Row } from "../../context/MarkdownCotext";
 import ProjectTypes from "../../interface/ProjectTypes";
+import ReportStatus from "../../interface/ReportStatus";
 import request from "../axios";
 import { Requestor } from "./Plan";
 
@@ -25,6 +26,7 @@ export interface FullResultReport {
   requestorType: Requestor;
   subject: string;
   content: string;
+  status: ReportStatus;
   writer: {
     studentNo: number;
     name: string;
@@ -37,6 +39,7 @@ export interface ParsedFullResultReport {
   requestorType: Requestor;
   subject: string;
   content: Page[];
+  status: ReportStatus;
   writer: {
     studentNo: number;
     name: string;
@@ -96,7 +99,7 @@ export const modifyResultReport = async (
     content: JSON.stringify(data.content),
   };
 
-  return await request.patch<
+  return await request.post<
     unknown,
     AxiosResponse<unknown, unknown>,
     ResultReport

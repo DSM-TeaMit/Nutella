@@ -137,4 +137,8 @@ export const reset = css`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  button,
+  a {
+    user-select: none;
+  }
 `;

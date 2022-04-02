@@ -20,13 +20,14 @@ import {
   useSubmitResultMutation,
 } from "../../queries/Result";
 import { ParsedFullResultReport } from "../../utils/api/Result";
-import toast from "react-hot-toast";
 import MarkdownEditor from "../MarkdownEditor";
 import { Row } from "../../context/MarkdownCotext";
 import uniqueId from "../../constant/UniqueId";
 import { useConfirmReport } from "../../queries/Project";
 import RedButton from "../Buttons/RedButton";
 import useTitle from "../../hooks/useTitle";
+import reportStatusMessage from "../../constant/ReportStatusMessage";
+import ReportStatus from "../../interface/ReportStatus";
 
 const Result = () => {
   const { uuid } = useParams<{ uuid: string }>();
@@ -50,12 +51,10 @@ const Result = () => {
 
     resultMutation.mutate(result, {
       onSuccess: () => {
-        toast.success("저장 성공");
         autoSaveTimer.current = null;
         canSave.current = false;
       },
       onError: () => {
-        toast.error("저장 실패");
         autoSaveTimer.current = null;
         canSave.current = false;
       },
@@ -75,11 +74,18 @@ const Result = () => {
     autoSaveTimer.current = setTimeout(save, 3000);
   }, [isFetched, result, save]);
 
+  const cantEdit = useMemo(
+    () =>
+      result?.requestorType !== "USER_EDITABLE" ||
+      (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(result.status),
+    [result]
+  );
+
   useEffect(() => {
-    if (result?.requestorType === "USER_EDITABLE") {
+    if (!cantEdit) {
       autoSave();
     }
-  }, [autoSave, result]);
+  }, [autoSave, cantEdit, result]);
 
   const setRows = useCallback(
     (id: string) => (rows: Row[]) => {
@@ -179,14 +185,14 @@ const Result = () => {
   return (
     <S.Container>
       <Cover onSubjectChange={onSubjectChange} data={result} />
-      <ContentExample />
+      {!cantEdit && <ContentExample />}
       {result?.content.map((value) => (
         <S.ContentContainer key={`page_${value.id}`}>
           <S.Delete className="delete" onClick={onDeletePage(value.id)}>
             삭제
           </S.Delete>
           <MarkdownEditor
-            disabled={result?.requestorType !== "USER_EDITABLE"}
+            disabled={cantEdit}
             rows={value.value}
             setRows={setRows(value.id)}
           />
@@ -196,10 +202,20 @@ const Result = () => {
       <div>
         <SubmitResult />
         <S.Buttons>
+          {result && (
+            <S.Status status={result.status}>
+              {reportStatusMessage.get(result.status)}
+            </S.Status>
+          )}
           <BorderButton>PDF로 저장</BorderButton>
           {result?.requestorType === "USER_EDITABLE" && (
             <BlueButton
-              disabled={submitMutation.isLoading}
+              disabled={
+                submitMutation.isLoading ||
+                (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(
+                  result.status
+                )
+              }
               onClick={confirmOnClick("제출하시겠습니까?", () =>
                 submitMutation.mutate()
               )}
@@ -207,7 +223,7 @@ const Result = () => {
               제출
             </BlueButton>
           )}
-          {result?.requestorType === "ADMIN" && (
+          {result?.requestorType === "ADMIN" && result.status === "PENDING" && (
             <Fragment>
               <RedButton
                 disabled={confirmMutation.isLoading}
