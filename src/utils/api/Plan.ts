@@ -3,6 +3,7 @@ import { getInitRows } from "../../components/MarkdownEditor";
 import Uri from "../../constant/Uri";
 import { Row } from "../../context/MarkdownCotext";
 import ProjectTypes from "../../interface/ProjectTypes";
+import ReportStatus from "../../interface/ReportStatus";
 import request from "../axios";
 
 export interface Includes {
@@ -34,6 +35,7 @@ interface PlanType {
   goal: string;
   content: string;
   includes: Includes;
+  status: ReportStatus;
 }
 
 interface Uuid {
@@ -51,6 +53,7 @@ export interface ParsedPlanType {
   goal: Row[];
   content: Row[];
   includes: Includes;
+  status: ReportStatus;
 }
 
 export interface ModifyPlan {
@@ -98,16 +101,11 @@ export const getPlanReport = async (projectUuid: string) => {
   const { data } = response;
 
   const result: ParsedPlanType = {
-    projectName: data.projectName,
-    projectType: data.projectType,
-    members: data.members,
-    writer: data.writer,
-    requestorType: data.requestorType,
+    ...data,
     startDate: new Date(data.startDate),
     endDate: new Date(data.endDate),
     goal: JSON.parse(data.goal) as Row[],
     content: JSON.parse(data.content) as Row[],
-    includes: data.includes,
   };
 
   result.includes.others =
