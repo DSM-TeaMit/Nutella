@@ -8,7 +8,8 @@ export const Container = styled.div`
 `;
 
 export const SearchContent = styled.div`
-  margin: 0px 320px;
+  width: 1280px;
+  margin: 0px auto;
 `;
 
 export const SearchTitle = styled.p`
@@ -35,4 +36,9 @@ export const ProjectBox = styled.div`
   grid-template-columns: repeat(4, 1fr);
   column-gap: 20px;
   row-gap: 50px;
+`;
+
+export const Message = styled.div`
+  font: ${({ theme }) => theme.fonts.subtitle2};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
 `;
