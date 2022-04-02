@@ -27,6 +27,8 @@ import uniqueId from "../../constant/UniqueId";
 import { useConfirmReport } from "../../queries/Project";
 import RedButton from "../Buttons/RedButton";
 import useTitle from "../../hooks/useTitle";
+import reportStatusMessage from "../../constant/ReportStatusMessage";
+import ReportStatus from "../../interface/ReportStatus";
 
 const Result = () => {
   const { uuid } = useParams<{ uuid: string }>();
@@ -196,10 +198,20 @@ const Result = () => {
       <div>
         <SubmitResult />
         <S.Buttons>
+          {result && (
+            <S.Status status={result.status}>
+              {reportStatusMessage.get(result.status)}
+            </S.Status>
+          )}
           <BorderButton>PDF로 저장</BorderButton>
           {result?.requestorType === "USER_EDITABLE" && (
             <BlueButton
-              disabled={submitMutation.isLoading}
+              disabled={
+                submitMutation.isLoading ||
+                (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(
+                  result.status
+                )
+              }
               onClick={confirmOnClick("제출하시겠습니까?", () =>
                 submitMutation.mutate()
               )}
@@ -207,7 +219,7 @@ const Result = () => {
               제출
             </BlueButton>
           )}
-          {result?.requestorType === "ADMIN" && (
+          {result?.requestorType === "ADMIN" && result.status === "PENDING" && (
             <Fragment>
               <RedButton
                 disabled={confirmMutation.isLoading}
