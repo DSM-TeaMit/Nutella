@@ -1,10 +1,10 @@
 import * as S from "./styles";
 import { ViewIcons, PersonalIcons } from "../../../assets/icons";
-import { FeedList } from "../../../utils/api/Feed";
+import { project } from "../../../utils/api/Feed";
 import { FC } from "react";
 
 interface PropsType {
-  data: FeedList;
+  data: project;
 }
 
 const Project: FC<PropsType> = ({ data }) => {

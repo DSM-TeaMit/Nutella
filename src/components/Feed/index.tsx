@@ -6,7 +6,7 @@ import Project from "../Cards/MainProjectCard";
 import toast from "react-hot-toast";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import isMore from "../../constant/IsMore";
-import { FeedList } from "../../utils/api/Feed";
+import { project } from "../../utils/api/Feed";
 
 const Feed = () => {
   const [currentTab, setCurrentTab] = useState(0);
@@ -71,7 +71,7 @@ const Feed = () => {
         </S.TitleBox>
         <S.ElementBox>
           <S.ProjectBox>
-            {data?.data?.projects.map((item: FeedList) => (
+            {data?.data?.projects.map((item: project) => (
               <Project key={item.uuid} data={item} />
             ))}
           </S.ProjectBox>

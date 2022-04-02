@@ -1,7 +1,7 @@
 import Uri from "../../constant/Uri";
 import ProjectTypes from "../../interface/ProjectTypes";
 import request from "../axios";
-export interface FeedList {
+export interface project {
   thumbnailUrl: string;
   emoji?: string;
   projectName: string;
@@ -13,7 +13,7 @@ export interface FeedList {
 
 export interface Feed {
   count: number;
-  projects: FeedList[];
+  projects: project[];
 }
 
 export const getFeed = async (order: string, page: number) => {
