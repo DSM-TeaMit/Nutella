@@ -185,7 +185,7 @@ const Result = () => {
   return (
     <S.Container>
       <Cover onSubjectChange={onSubjectChange} data={result} />
-      <ContentExample />
+      {!cantEdit && <ContentExample />}
       {result?.content.map((value) => (
         <S.ContentContainer key={`page_${value.id}`}>
           <S.Delete className="delete" onClick={onDeletePage(value.id)}>
