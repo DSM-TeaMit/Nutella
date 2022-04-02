@@ -39,7 +39,7 @@ export const useResult = (
 export const useResultMutation = (projectUuid: string) => {
   const queryClient = useQueryClient();
 
-  const onMutateEnd = useCallback(() => {
+  const onError = useCallback(() => {
     queryClient.invalidateQueries([queryKeys.result, projectUuid]);
   }, [projectUuid, queryClient]);
 
@@ -50,7 +50,7 @@ export const useResultMutation = (projectUuid: string) => {
         success: "저장 성공",
         error: "저장 실패",
       }),
-    { onSettled: onMutateEnd }
+    { onError }
   );
 };
 

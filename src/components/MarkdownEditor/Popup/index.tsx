@@ -1,4 +1,6 @@
 import { FC, useCallback, useContext, useMemo, useRef } from "react";
+import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 import { MarkdownContext } from "../../../context/MarkdownCotext";
 import { postImage } from "../../../utils/api/Image";
 import * as S from "./styles";
@@ -16,6 +18,7 @@ interface PropsType {
 const Popup: FC<PropsType> = ({ id }) => {
   const { changeRowType, setRows, rows } = useContext(MarkdownContext);
   const fileSelecterRef = useRef<HTMLInputElement>(null);
+  const { uuid } = useParams<{ uuid: string }>();
 
   const popupItems = useMemo<PopupItem[]>(
     () => [
@@ -101,10 +104,11 @@ const Popup: FC<PropsType> = ({ id }) => {
 
       const file = e.target.files[0];
 
-      const { data: url } = await postImage(
-        file,
-        "0ecfaf8f-62f5-4a13-ba01-76966aa98e13"
-      );
+      const { data: url } = await toast.promise(postImage(file, uuid || ""), {
+        loading: "이미지 업로드 중",
+        success: "이미지 업로드 성공",
+        error: "이미지 업로드 실패",
+      });
 
       const index = rows.findIndex((value) => value.id === id);
       const copyRows = [...rows];
@@ -114,7 +118,7 @@ const Popup: FC<PropsType> = ({ id }) => {
 
       setRows(copyRows);
     },
-    [id, setRows, rows]
+    [uuid, rows, setRows, id]
   );
 
   return (

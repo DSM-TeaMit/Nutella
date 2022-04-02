@@ -4,11 +4,13 @@ const projectUuid = "projectUuid";
 const userUuid = "userUuid";
 const commentUuid = "commentUuid";
 const imageUuid = "imageUuid";
+const adminUuid = "adminUuid";
 
 type ProjectUuid = typeof projectUuid;
 type UserUuid = typeof userUuid;
 type CommentUuid = typeof commentUuid;
 type ImageUuid = typeof imageUuid;
+type AdminUuid = typeof adminUuid;
 
 const Uri = {
   refresh: new URI(`auth/refresh`),
@@ -46,7 +48,7 @@ const Uri = {
   pendingReport: new URI(`project/feed/pending`),
   createdAccount: new URI(`admin/createdByRequestor`),
   header: new URI(`user/header`),
-  admin: new URI(`admin`),
+  admin: new URI<AdminUuid>(`admin/{${adminUuid}}`),
 } as const;
 
 export default Uri;
