@@ -14,6 +14,7 @@ interface PropsType {
   data: Reports;
   status: ReportStatus;
   userUuid?: string;
+  value?: boolean;
 }
 
 const padding = 12 as const;
@@ -22,10 +23,17 @@ const gap = 16 as const;
 const pathMap = new Map<ReportStatus, ReportPathType>()
   .set("PENDING", "pending")
   .set("ACCEPTED", "accepted")
-  .set("DECLINED", "rejected");
+  .set("DECLINED", "rejected")
+  .set("WRITING", "writing");
 
-const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
-  const [isActive, setIsActive] = useState<boolean>(false);
+const ReportAccordion: FC<PropsType> = ({
+  title,
+  data,
+  status,
+  userUuid,
+  value,
+}) => {
+  const [isActive, setIsActive] = useState<boolean>(value || false);
   const container = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
@@ -35,7 +43,7 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
 
   const { count, projects: reports } = data;
 
-  const { data: eachData } = useEachReports(
+  const { data: eachData, isFetching } = useEachReports(
     pathType,
     page,
     queryEnabled,
@@ -68,6 +76,16 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
     setPage((prev) => prev + 1);
   }, [queryEnabled]);
 
+  const isMorePage = useMemo(() => {
+    console.log("===");
+    console.log(LIMIT * page);
+    if (page === 2 && LIMIT * page <= count && !queryEnabled) {
+      return true;
+    }
+
+    return isMore(LIMIT, page, count);
+  }, [count, page, queryEnabled]);
+
   return (
     <S.Container ref={container}>
       <div ref={header}>
@@ -94,7 +112,7 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
             <ReportCard key={value.uuid} data={{ ...value, status }} />
           ))}
         </S.Grid>
-        {isMore(LIMIT, page, count) && (
+        {!isFetching && isMorePage && (
           <S.More onClick={onMore}>더 가져오기</S.More>
         )}
       </S.ContentContainer>
