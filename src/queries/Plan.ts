@@ -16,7 +16,7 @@ export const useCreatePlanMutation = (projectUuid: string) =>
 export const usePlanMutation = (projectUuid: string) => {
   const queryClient = useQueryClient();
 
-  const onMutateEnd = useCallback(() => {
+  const onError = useCallback(() => {
     queryClient.invalidateQueries([queryKeys.planDetail, projectUuid]);
   }, [projectUuid, queryClient]);
 
@@ -27,7 +27,7 @@ export const usePlanMutation = (projectUuid: string) => {
         success: "저장 성공",
         error: "저장 실패",
       }),
-    { onSettled: onMutateEnd }
+    { onError }
   );
 };
 
