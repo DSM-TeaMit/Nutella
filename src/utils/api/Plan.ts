@@ -137,6 +137,10 @@ export const modifyPlanReport = async (
     includes: data.includes,
   };
 
+  if (requestData.includes.others === "") {
+    requestData.includes.others = undefined;
+  }
+
   return await request.post<
     unknown,
     AxiosResponse<unknown, unknown>,

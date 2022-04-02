@@ -178,3 +178,21 @@ export const Status = styled.div<{ status: ReportStatus }>`
     return theme.colors.grayscale.gray2;
   }};
 `;
+
+export const OtherContainer = styled.div`
+  display: flex;
+  column-gap: 8px;
+  align-items: center;
+  margin-top: 16px;
+`;
+
+export const OtherLabel = styled.div`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.black};
+`;
+
+export const OtherLength = styled.div<{ length: number }>`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme, length }) =>
+    length >= 15 ? theme.colors.red.default : theme.colors.grayscale.gray2};
+`;

@@ -1,4 +1,4 @@
-import {
+import React, {
   Fragment,
   useCallback,
   useEffect,
@@ -28,6 +28,7 @@ import { useConfirmReport } from "../../queries/Project";
 import useTitle from "../../hooks/useTitle";
 import reportStatusMessage from "../../constant/ReportStatusMessage";
 import ReportStatus from "../../interface/ReportStatus";
+import Input from "../Input";
 
 const dateToString = (date?: Date): string => {
   if (!date) {
@@ -192,6 +193,20 @@ const Plan = () => {
     []
   );
 
+  const onOthersChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!plan || e.target.value.length > 15) {
+        return;
+      }
+
+      const includes = { ...plan.includes, others: e.target.value };
+
+      canSave.current = true;
+      setPlan({ ...plan, includes });
+    },
+    [plan]
+  );
+
   if (isLoading) {
     return (
       <S.Margin>
@@ -291,42 +306,59 @@ const Plan = () => {
                   (해당사항 체크)
                 </S.RowTitle>
                 <S.RowLineContent>
-                  <S.CheckBoxContianer>
-                    <CheckBox
-                      isActive={plan?.includes.report || false}
-                      name="report"
-                      onClick={onIncludesClick}
-                      disabled={cantEdit}
-                    >
-                      결과 보고서
-                    </CheckBox>
-                    <CheckBox
-                      isActive={plan?.includes.code || false}
-                      name="code"
-                      onClick={onIncludesClick}
-                      disabled={cantEdit}
-                    >
-                      프로그램 코드
-                    </CheckBox>
-                    <CheckBox
-                      isActive={plan?.includes.outcome || false}
-                      name="outcome"
-                      onClick={onIncludesClick}
-                      disabled={cantEdit}
-                    >
-                      실행물 (영상 또는 사진)
-                    </CheckBox>
-                    <CheckBox
-                      isActive={
-                        plan?.includes.others !== undefined ? true : false
-                      }
-                      name="others"
-                      onClick={onOtherClick}
-                      disabled={cantEdit}
-                    >
-                      기타
-                    </CheckBox>
-                  </S.CheckBoxContianer>
+                  <div>
+                    <S.CheckBoxContianer>
+                      <CheckBox
+                        isActive={plan?.includes.report || false}
+                        name="report"
+                        onClick={onIncludesClick}
+                        disabled={cantEdit}
+                      >
+                        결과 보고서
+                      </CheckBox>
+                      <CheckBox
+                        isActive={plan?.includes.code || false}
+                        name="code"
+                        onClick={onIncludesClick}
+                        disabled={cantEdit}
+                      >
+                        프로그램 코드
+                      </CheckBox>
+                      <CheckBox
+                        isActive={plan?.includes.outcome || false}
+                        name="outcome"
+                        onClick={onIncludesClick}
+                        disabled={cantEdit}
+                      >
+                        실행물 (영상 또는 사진)
+                      </CheckBox>
+                      <CheckBox
+                        isActive={
+                          plan?.includes.others !== undefined ? true : false
+                        }
+                        name="others"
+                        onClick={onOtherClick}
+                        disabled={cantEdit}
+                      >
+                        기타
+                      </CheckBox>
+                    </S.CheckBoxContianer>
+                    {plan?.includes.others !== undefined && (
+                      <S.OtherContainer>
+                        <S.OtherLabel>기타 :&nbsp;</S.OtherLabel>
+                        <Input
+                          value={plan?.includes.others}
+                          onChange={onOthersChange}
+                          disabled={cantEdit}
+                        />
+                        {!cantEdit && (
+                          <S.OtherLength length={plan.includes.others.length}>
+                            {plan.includes.others.length} / 15
+                          </S.OtherLength>
+                        )}
+                      </S.OtherContainer>
+                    )}
+                  </div>
                 </S.RowLineContent>
               </S.RowContainer>
               <S.RowContainer>
