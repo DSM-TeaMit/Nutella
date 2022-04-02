@@ -77,11 +77,18 @@ const Result = () => {
     autoSaveTimer.current = setTimeout(save, 3000);
   }, [isFetched, result, save]);
 
+  const cantEdit = useMemo(
+    () =>
+      result?.requestorType !== "USER_EDITABLE" ||
+      (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(result.status),
+    [result]
+  );
+
   useEffect(() => {
-    if (result?.requestorType === "USER_EDITABLE") {
+    if (!cantEdit) {
       autoSave();
     }
-  }, [autoSave, result]);
+  }, [autoSave, cantEdit, result]);
 
   const setRows = useCallback(
     (id: string) => (rows: Row[]) => {
@@ -188,7 +195,7 @@ const Result = () => {
             삭제
           </S.Delete>
           <MarkdownEditor
-            disabled={result?.requestorType !== "USER_EDITABLE"}
+            disabled={cantEdit}
             rows={value.value}
             setRows={setRows(value.id)}
           />

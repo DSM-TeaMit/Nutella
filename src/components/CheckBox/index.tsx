@@ -9,15 +9,26 @@ interface PropsType {
   name?: string;
   onClick?: (e: CheckBoxMouseEvent) => void;
   isActive: boolean;
+  disabled?: boolean;
 }
 
-const CheckBox: FC<PropsType> = ({ children, name, onClick, isActive }) => {
+const CheckBox: FC<PropsType> = ({
+  children,
+  name,
+  onClick,
+  isActive,
+  disabled,
+}) => {
   const onClickHandler = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (disabled) {
+        return;
+      }
+
       const params = { ...e, name };
       onClick && onClick(params);
     },
-    [name, onClick]
+    [disabled, name, onClick]
   );
 
   return (

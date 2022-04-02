@@ -153,11 +153,18 @@ const Plan = () => {
     setPlan({ ...plan, includes });
   }, [plan]);
 
+  const cantEdit = useMemo(
+    () =>
+      plan?.requestorType !== "USER_EDITABLE" ||
+      (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(plan.status),
+    [plan]
+  );
+
   useEffect(() => {
-    if (plan?.requestorType === "USER_EDITABLE") {
+    if (!cantEdit) {
       autoSave();
     }
-  }, [autoSave, plan]);
+  }, [autoSave, cantEdit, plan]);
 
   const memberList = useMemo(
     () =>
@@ -224,16 +231,27 @@ const Plan = () => {
               </S.RowContainer>
               <S.RowContainer>
                 <S.RowTitle>진행 기간</S.RowTitle>
-                <S.Time
-                  placeholder="시간을 선택해주세요..."
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    modalRef.current?.show();
-                  }}
-                >
-                  {dates &&
-                    `${dateToString(dates.start)} ~ ${dateToString(dates.end)}`}
-                </S.Time>
+                {cantEdit ? (
+                  <S.RowLineContent>
+                    {dates &&
+                      `${dateToString(dates.start)} ~ ${dateToString(
+                        dates.end
+                      )}`}
+                  </S.RowLineContent>
+                ) : (
+                  <S.Time
+                    placeholder="시간을 선택해주세요..."
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      modalRef.current?.show();
+                    }}
+                  >
+                    {dates &&
+                      `${dateToString(dates.start)} ~ ${dateToString(
+                        dates.end
+                      )}`}
+                  </S.Time>
+                )}
               </S.RowContainer>
               <S.RowContainer>
                 <S.RowTitle>신청자</S.RowTitle>
@@ -251,7 +269,7 @@ const Plan = () => {
                 <S.RowTitle>프로젝트 목표</S.RowTitle>
                 <S.RowMutiLineContent>
                   <MarkdownEditor
-                    disabled={plan?.requestorType !== "USER_EDITABLE"}
+                    disabled={cantEdit}
                     rows={goalRows}
                     setRows={setRows("goal")}
                     ref={goalRef}
@@ -262,7 +280,7 @@ const Plan = () => {
                 <S.RowTitle>프로젝트 내용</S.RowTitle>
                 <S.RowMutiLineContent>
                   <MarkdownEditor
-                    disabled={plan?.requestorType !== "USER_EDITABLE"}
+                    disabled={cantEdit}
                     ref={contentRef}
                     rows={contentRows}
                     setRows={setRows("content")}
@@ -281,6 +299,7 @@ const Plan = () => {
                       isActive={plan?.includes.report || false}
                       name="report"
                       onClick={onIncludesClick}
+                      disabled={cantEdit}
                     >
                       결과 보고서
                     </CheckBox>
@@ -288,6 +307,7 @@ const Plan = () => {
                       isActive={plan?.includes.code || false}
                       name="code"
                       onClick={onIncludesClick}
+                      disabled={cantEdit}
                     >
                       프로그램 코드
                     </CheckBox>
@@ -295,6 +315,7 @@ const Plan = () => {
                       isActive={plan?.includes.outcome || false}
                       name="outcome"
                       onClick={onIncludesClick}
+                      disabled={cantEdit}
                     >
                       실행물 (영상 또는 사진)
                     </CheckBox>
@@ -304,6 +325,7 @@ const Plan = () => {
                       }
                       name="others"
                       onClick={onOtherClick}
+                      disabled={cantEdit}
                     >
                       기타
                     </CheckBox>
