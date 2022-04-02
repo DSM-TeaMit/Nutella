@@ -15,6 +15,7 @@ const queryKeys = {
   header: "header",
   feed: "feed",
   search: "search",
+  searchType: "search_type",
 } as const;
 
 export default queryKeys;
