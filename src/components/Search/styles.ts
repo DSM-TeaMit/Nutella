@@ -4,7 +4,7 @@ export const Container = styled.div`
   width: 100%;
   min-height: 600px;
   margin-top: 130px;
-  margin-bottom: 200px;
+  margin-bottom: 141px;
 `;
 
 export const SearchContent = styled.div`
