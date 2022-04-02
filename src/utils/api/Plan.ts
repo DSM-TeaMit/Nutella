@@ -137,7 +137,7 @@ export const modifyPlanReport = async (
     includes: data.includes,
   };
 
-  return await request.patch<
+  return await request.post<
     unknown,
     AxiosResponse<unknown, unknown>,
     ModifyPlan

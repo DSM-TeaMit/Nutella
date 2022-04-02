@@ -99,7 +99,7 @@ export const modifyResultReport = async (
     content: JSON.stringify(data.content),
   };
 
-  return await request.patch<
+  return await request.post<
     unknown,
     AxiosResponse<unknown, unknown>,
     ResultReport
