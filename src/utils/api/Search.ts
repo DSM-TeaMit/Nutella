@@ -24,5 +24,22 @@ export const getSearch = async (keyword: string) => {
     limit: 8,
     keyword: keyword,
   };
+
   return await request.get<SearchList>(Uri.projectSearch.get(), { params });
+};
+
+export const getSearchType = async (
+  page: number,
+  keyword: string,
+  searchType: string
+) => {
+  const params = {
+    order: "popularity",
+    page: page,
+    limit: 8,
+    keyword: keyword,
+    searchBy: searchType,
+  };
+
+  return await request.get<SearchList>(Uri.projectSearchType.get(), { params });
 };
