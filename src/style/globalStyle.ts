@@ -141,4 +141,9 @@ export const reset = css`
   a {
     user-select: none;
   }
+  @media print {
+    @page {
+      size: landscape;
+    }
+  }
 `;
