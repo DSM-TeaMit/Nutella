@@ -143,7 +143,7 @@ export const reset = css`
   }
   @media print {
     @page {
-      size: landscape;
+      size: A4;
     }
   }
 `;
