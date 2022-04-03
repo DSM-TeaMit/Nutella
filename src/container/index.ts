@@ -13,4 +13,3 @@ export { default as GithubLoadingContainer } from "./GithubLoading";
 export { default as PendingReportContainer } from "./PendingReport";
 export { default as ManagementAccountContainer } from "./ManagementAccount";
 export { default as ChangeGithubIdLoadingContainer } from "./ChangeGithubIdLoading";
-export { default as DownloadPlanPDFContainer } from "./DownloadPlanPDF";

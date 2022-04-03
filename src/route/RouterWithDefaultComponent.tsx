@@ -11,7 +11,6 @@ import {
   SearchContainer,
   UserContainer,
   ManagementAccountContainer,
-  DownloadPlanPDFContainer,
 } from "../container";
 import Page404 from "../container/Page404";
 
@@ -27,10 +26,7 @@ const RouterWithDefaultComponent = () => {
         <Route path="user/:uuid/*" element={<UserContainer />} />
         <Route path="project/:uuid/*">
           <Route path="" element={<ProjectDetailContainer />} />
-          <Route path="plan/*">
-            <Route path="" element={<PlanContainer />} />
-            <Route path="download" element={<DownloadPlanPDFContainer />} />
-          </Route>
+          <Route path="plan" element={<PlanContainer />} />
           <Route path="result" element={<ResultContainer />} />
           <Route path="*" element={<Page404 />} />
         </Route>
