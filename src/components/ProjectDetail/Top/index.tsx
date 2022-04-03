@@ -1,11 +1,16 @@
 import * as S from "./styles";
 import { ProfileIcons, ViewIcons } from "../../../assets/icons";
 import ProjectModifyModal from "../../Modals/ProjectInfoModify";
-import { Fragment } from "react";
+import { FC, Fragment } from "react";
 import ModalPortal from "../../ModalPortal";
 import useModalRef from "../../../hooks/useModalRef";
+import { Project } from "../../../utils/api/ProjectDetails";
 
-const Top = () => {
+interface PropsType {
+  data: Project | undefined;
+}
+
+const Top: FC<PropsType> = ({ data }) => {
   const Field = ["웹", "보안", "임베디드", "대마고"];
   const modalRef = useModalRef();
 
@@ -16,13 +21,13 @@ const Top = () => {
           <S.ProjectImg alt="" src="" />
           <div>
             <S.ProjectTop>
-              <S.ProjectName>Teamit</S.ProjectName>
+              <S.ProjectName>{data?.projectName}</S.ProjectName>
               <S.ProjectRincian>
                 <div>
                   <img src={ViewIcons} />
-                  <S.Font>123</S.Font>
+                  <S.Font>{data?.projectView}</S.Font>
                   <img src={ProfileIcons} />
-                  <S.Font>팀 프로젝트</S.Font>
+                  <S.Font>{data?.projectType}</S.Font>
                 </div>
                 <S.Modify
                   onClick={(e) => {
@@ -35,17 +40,19 @@ const Top = () => {
               </S.ProjectRincian>
             </S.ProjectTop>
             <S.ProjectContent>
-              사면·감형 및 복권에 관한 사항은 법률로 정한다. 모든 국민은 주거의
-              자유를 침해받지 아니한다. 주거에 대한 압수나 수색을 할 때에는
-              검사의 신청에 의하여 법관이 발부한 영장을 제시하여야 한다.
+              {data?.projectDescription === null ? (
+                <div>프로젝트 소개가 없습니다.</div>
+              ) : (
+                data?.projectDescription
+              )}
             </S.ProjectContent>
             <S.ProjectBottom>
               <div>
-                {Field.map((data, index) => {
-                  return <S.Field key={index}>{data}</S.Field>;
+                {data?.projectField.split(",").map((item, index) => {
+                  return <S.Field key={index}>{item}</S.Field>;
                 })}
               </div>
-              <S.Step>계획중...</S.Step>
+              <S.Step>{data?.projectStatus}</S.Step>
             </S.ProjectBottom>
           </div>
         </S.TopContent>
