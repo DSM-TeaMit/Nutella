@@ -5,18 +5,21 @@ import SubmitContent from "./SubmitContent";
 import CommentContainer from "../CommentContainer";
 import { useParams } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
+import { useProjectDetails } from "../../queries/ProjectDetails";
 
 const ProjectDetail = () => {
   const { uuid } = useParams<{ uuid: string }>();
+  const { data, isError, isLoading, isFetching } = useProjectDetails(uuid);
 
-  useTitle(`${"여기에 프로젝트 이름을 넣어주세요"}`);
+  useTitle(`${data?.data.projectName}`);
+  console.log(data?.data);
 
   return (
     <S.Container>
       <S.ProjectDetailContent>
         <S.DetailContent>
-          <Top />
-          <SubmitContent />
+          <Top data={data?.data} />
+          <SubmitContent data={data?.data} />
           <CommentContainer
             styleType="project"
             source="project"
@@ -24,7 +27,7 @@ const ProjectDetail = () => {
           />
         </S.DetailContent>
         <S.SideContent>
-          <Aside />
+          <Aside data={data?.data.members} />
         </S.SideContent>
       </S.ProjectDetailContent>
     </S.Container>
