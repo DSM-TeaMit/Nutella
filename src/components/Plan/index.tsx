@@ -27,6 +27,7 @@ import useTitle from "../../hooks/useTitle";
 import reportStatusMessage from "../../constant/ReportStatusMessage";
 import { PlanStatus } from "../../interface";
 import Input from "../Input";
+import { useReactToPrint } from "react-to-print";
 
 const dateToString = (date?: Date): string => {
   if (!date) {
@@ -58,6 +59,12 @@ const Plan = () => {
   const [plan, setPlan] = useState<ParsedPlanType | undefined>(undefined);
   const planMutation = usePlanMutation(uuid!);
   const { isLoading, isError, isFetched } = usePlan(uuid!, setPlan, onFetching);
+
+  const planReportRef = useRef<HTMLDivElement>(null);
+  const handlePrint = useReactToPrint({
+    content: () => planReportRef.current,
+    documentTitle: `${plan?.projectName} 계획서`,
+  });
 
   useTitle(isError ? "오류 발생" : `${plan?.projectName || ""} 계획서`);
 
@@ -229,7 +236,7 @@ const Plan = () => {
     <Fragment>
       <S.Container>
         <div>
-          <S.ContentContainer>
+          <S.ContentContainer ref={planReportRef}>
             <S.ContentInner>
               <S.Title>
                 {plan?.projectType === "PERS" ? "개인" : "팀 / 동아리"} 프로젝트
@@ -382,7 +389,7 @@ const Plan = () => {
                 {reportStatusMessage.get(plan.status)}
               </S.Status>
             )}
-            <BorderButton>PDF로 저장</BorderButton>
+            <BorderButton onClick={handlePrint}>PDF로 저장</BorderButton>
             {plan?.requestorType === "USER_EDITABLE" && (
               <BlueButton
                 disabled={
