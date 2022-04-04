@@ -25,7 +25,7 @@ import * as S from "./styles";
 import { useConfirmReport } from "../../queries/Project";
 import useTitle from "../../hooks/useTitle";
 import reportStatusMessage from "../../constant/ReportStatusMessage";
-import ReportStatus from "../../interface/ReportStatus";
+import { PlanStatus } from "../../interface";
 import Input from "../Input";
 
 const dateToString = (date?: Date): string => {
@@ -152,7 +152,7 @@ const Plan = () => {
   const cantEdit = useMemo(
     () =>
       plan?.requestorType !== "USER_EDITABLE" ||
-      (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(plan.status),
+      (["ACCEPTED", "PENDING"] as PlanStatus[]).includes(plan.status),
     [plan]
   );
 
@@ -387,7 +387,7 @@ const Plan = () => {
               <BlueButton
                 disabled={
                   submitMutation.isLoading ||
-                  (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(
+                  (["ACCEPTED", "PENDING"] as PlanStatus[]).includes(
                     plan.status
                   )
                 }

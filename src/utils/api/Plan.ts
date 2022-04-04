@@ -2,8 +2,7 @@ import { AxiosResponse } from "axios";
 import { getInitRows } from "../../components/MarkdownEditor";
 import Uri from "../../constant/Uri";
 import { Row } from "../../context/MarkdownCotext";
-import ProjectTypes from "../../interface/ProjectTypes";
-import ReportStatus from "../../interface/ReportStatus";
+import { ProjectTypes, PlanStatus } from "../../interface";
 import request from "../axios";
 
 export interface Includes {
@@ -35,7 +34,7 @@ interface PlanType {
   goal: string;
   content: string;
   includes: Includes;
-  status: ReportStatus;
+  status: PlanStatus;
 }
 
 interface Uuid {
@@ -53,7 +52,7 @@ export interface ParsedPlanType {
   goal: Row[];
   content: Row[];
   includes: Includes;
-  status: ReportStatus;
+  status: PlanStatus;
 }
 
 export interface ModifyPlan {

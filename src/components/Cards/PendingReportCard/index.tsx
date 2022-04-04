@@ -2,7 +2,7 @@ import { FC, useMemo } from "react";
 import { PendingReport } from "../../../utils/api/PendingReport";
 import * as S from "./styles";
 import { PersonalIcons, TeamIcons, ClubIcons } from "../../../assets/icons";
-import ProjectTypes from "../../../interface/ProjectTypes";
+import { ProjectTypes } from "../../../interface";
 
 interface PropsType {
   data: PendingReport;

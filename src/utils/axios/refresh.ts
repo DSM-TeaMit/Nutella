@@ -3,7 +3,7 @@ import { instance } from ".";
 import baseURL from "../../constant/BaseUrl";
 import storageKeys from "../../constant/StorageKeys";
 import Uri from "../../constant/Uri";
-import RefreshError from "../../interface/RefreshError";
+import { RefreshError } from "../../interface";
 
 export const request = axios.create({
   baseURL,

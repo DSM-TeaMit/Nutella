@@ -12,7 +12,7 @@ import {
 } from "../../../context/MarkdownCotext";
 import * as S from "./styles";
 import HandleSVG from "../../../assets/icons/handle.svg";
-import Tag from "../../../interface/Tag";
+import { Tag } from "../../../interface";
 import Popup from "../Popup";
 import { useParams } from "react-router-dom";
 interface PropsType {

@@ -1,6 +1,5 @@
 import React, { ChangeEvent, FC, useMemo } from "react";
-import ProjectTypes from "../../../interface/ProjectTypes";
-import ReportStatus from "../../../interface/ReportStatus";
+import { ProjectTypes, PlanStatus } from "../../../interface";
 import { ParsedFullResultReport } from "../../../utils/api/Result";
 import * as S from "../styles";
 
@@ -22,7 +21,7 @@ const Cover: FC<PropsType> = ({ data, onSubjectChange }) => {
   const cantEdit = useMemo(
     () =>
       data?.requestorType !== "USER_EDITABLE" ||
-      (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(data.status),
+      (["ACCEPTED", "PENDING"] as PlanStatus[]).includes(data.status),
     [data]
   );
 
