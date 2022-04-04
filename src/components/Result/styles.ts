@@ -11,6 +11,14 @@ export const Container = styled.div`
   margin-bottom: 200px;
 `;
 
+export const PDFContainer = styled.div`
+  display: flex;
+  row-gap: 40px;
+  flex-direction: column;
+  width: 100%;
+  margin: 0px auto;
+`;
+
 export const ContentContainer = styled.div`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.grayscale.white};
