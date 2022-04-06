@@ -1,5 +1,5 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
-import NavigationType from "../../../interface/Navigation";
+import { NavigationType } from "../../../interface";
 import SideBar from "../../SideBar";
 import * as S from "../styles";
 import {

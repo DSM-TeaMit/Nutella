@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import State from "../interface/State";
+import { State } from "../interface";
 
 type Value = string | number;
 

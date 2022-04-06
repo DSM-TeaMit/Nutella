@@ -5,7 +5,7 @@ import {
   Row,
 } from "../../context/MarkdownCotext";
 import uniqueId from "../../constant/UniqueId";
-import Tag from "../../interface/Tag";
+import { Tag } from "../../interface";
 import { postImage } from "../../utils/api/Image";
 import { getInitRows } from "../MarkdownEditor";
 import toast from "react-hot-toast";

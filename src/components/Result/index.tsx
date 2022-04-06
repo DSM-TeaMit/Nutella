@@ -1,5 +1,4 @@
-import BlueButton from "../Buttons/BlueButton";
-import BorderButton from "../Buttons/BorderButton";
+import { BlueButton, BorderButton, RedButton } from "../Buttons";
 import ContentExample from "./Content/ContentExample";
 import Cover from "./Content/Cover";
 import * as S from "./styles";
@@ -24,11 +23,11 @@ import MarkdownEditor from "../MarkdownEditor";
 import { Row } from "../../context/MarkdownCotext";
 import uniqueId from "../../constant/UniqueId";
 import { useConfirmReport } from "../../queries/Project";
-import RedButton from "../Buttons/RedButton";
 import useTitle from "../../hooks/useTitle";
 import reportStatusMessage from "../../constant/ReportStatusMessage";
-import ReportStatus from "../../interface/ReportStatus";
+import { PlanStatus } from "../../interface";
 import { useReactToPrint } from "react-to-print";
+
 
 const Result = () => {
   const { uuid } = useParams<{ uuid: string }>();
@@ -85,7 +84,7 @@ const Result = () => {
   const cantEdit = useMemo(
     () =>
       result?.requestorType !== "USER_EDITABLE" ||
-      (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(result.status),
+      (["ACCEPTED", "PENDING"] as PlanStatus[]).includes(result.status),
     [result]
   );
 

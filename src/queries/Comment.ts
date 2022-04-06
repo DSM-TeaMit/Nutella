@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import queryKeys from "../constant/QueryKeys";
-import CommentSource from "../interface/CommentSource";
+import { CommentSource } from "../interface";
 import {
   deleteComment,
   getComment,

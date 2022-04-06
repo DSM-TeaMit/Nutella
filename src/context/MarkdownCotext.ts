@@ -1,5 +1,5 @@
 import { createContext, createRef } from "react";
-import Tag from "../interface/Tag";
+import { Tag } from "../interface";
 
 export interface Row {
   id: string;

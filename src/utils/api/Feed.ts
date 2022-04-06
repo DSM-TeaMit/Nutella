@@ -1,5 +1,5 @@
 import Uri from "../../constant/Uri";
-import ProjectTypes from "../../interface/ProjectTypes";
+import { ProjectTypes } from "../../interface";
 import request from "../axios";
 export interface FeedList {
   thumbnailUrl: string;
