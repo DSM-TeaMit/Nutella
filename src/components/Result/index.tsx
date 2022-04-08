@@ -68,7 +68,7 @@ const Result = () => {
   }, [isFetched, result, resultMutation]);
 
   const autoSave = useCallback(() => {
-    if (!canSave.current || !result || !isFetched) {
+    if (!canSave.current || !result || !isFetched || resultMutation.isLoading) {
       return;
     }
 
@@ -78,7 +78,7 @@ const Result = () => {
     }
 
     autoSaveTimer.current = setTimeout(save, 3000);
-  }, [isFetched, result, save]);
+  }, [isFetched, result, resultMutation.isLoading, save]);
 
   const cantEdit = useMemo(
     () =>

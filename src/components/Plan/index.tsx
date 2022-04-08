@@ -86,7 +86,7 @@ const Plan = () => {
   }, [isFetched, plan, planMutation]);
 
   const autoSave = useCallback(() => {
-    if (!canSave.current || !plan || !isFetched) {
+    if (!canSave.current || !plan || !isFetched || planMutation.isLoading) {
       return;
     }
 
@@ -96,7 +96,7 @@ const Plan = () => {
     }
 
     autoSaveTimer.current = setTimeout(save, 3000);
-  }, [isFetched, plan, save]);
+  }, [isFetched, plan, planMutation.isLoading, save]);
 
   const dates = useMemo<DateState>(
     () => ({ start: plan?.startDate, end: plan?.endDate }),
