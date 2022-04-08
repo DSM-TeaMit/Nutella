@@ -5,5 +5,5 @@ export const Loading = styled.div`
   background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
   font: ${({ theme }) => theme.fonts.body3};
   text-align: center;
-  padding: 12px 0px;
+  aspect-ratio: 1 / 0.4;
 `;

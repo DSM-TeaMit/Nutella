@@ -52,17 +52,7 @@ emojiUnicode.raw = function (input: string) {
 };
 
 const Img: FC<PropsType> = (props) => {
-  const propsWithoutSomething: Omit<
-    PropsType,
-    "src" | "emoji" | "displayLoading"
-  > = useMemo(
-    () => ({
-      ...props,
-    }),
-    [props]
-  );
-
-  const { src, emoji, displayLoading } = props;
+  const { src, emoji, displayLoading, ...rest } = props;
 
   const { data, isError, isLoading } = useImage(src || "");
   const unicode = useMemo(
@@ -81,16 +71,16 @@ const Img: FC<PropsType> = (props) => {
 
   if (isLoading) {
     if (displayLoading) {
-      return <S.Loading>이미지 로딩 중</S.Loading>;
+      return <S.Loading />;
     }
 
-    return <img {...propsWithoutSomething} alt={undefined} />;
+    return <img {...rest} alt={undefined} />;
   }
 
   if (emoji) {
     return (
       <img
-        {...propsWithoutSomething}
+        {...rest}
         alt={undefined}
         src={`https://twitter.github.io/twemoji/v/13.1.0/svg/${unicode}.svg`}
       />
@@ -98,10 +88,10 @@ const Img: FC<PropsType> = (props) => {
   }
 
   if (isError) {
-    return <img {...propsWithoutSomething} alt={undefined} />;
+    return <img {...rest} alt={undefined} />;
   }
 
-  return <img {...propsWithoutSomething} src={data} />;
+  return <img {...rest} src={data} />;
 };
 
 export default Img;
