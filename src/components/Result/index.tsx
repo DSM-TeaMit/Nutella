@@ -28,7 +28,6 @@ import reportStatusMessage from "../../constant/ReportStatusMessage";
 import { PlanStatus } from "../../interface";
 import { useReactToPrint } from "react-to-print";
 
-
 const Result = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const projectUuid = useMemo(() => uuid || "", [uuid]);
@@ -224,7 +223,7 @@ const Result = () => {
               <BlueButton
                 disabled={
                   submitMutation.isLoading ||
-                  (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(
+                  (["ACCEPTED", "PENDING"] as PlanStatus[]).includes(
                     result.status
                   )
                 }
