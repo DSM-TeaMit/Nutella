@@ -1,6 +1,6 @@
 import { FC } from "react";
 import useThemeContext from "../../../hooks/useThemeContext";
-import { ReportStatus } from "../../../interface/Report";
+import { ReportStatus } from "../../../interface";
 import { ReportType } from "../../../utils/api/User";
 import * as S from "./styles";
 

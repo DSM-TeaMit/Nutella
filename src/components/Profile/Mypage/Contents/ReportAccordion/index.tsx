@@ -3,9 +3,8 @@ import { UpArrowIcons } from "../../../../../assets/icons";
 import ReportCard from "../../../../Cards/ReportCard";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Reports } from "../../../../../utils/api/User";
-import { ReportStatus } from "../../../../../interface/Report";
+import { ReportStatus, ReportPathType } from "../../../../../interface";
 import isMore from "../../../../../constant/IsMore";
-import ReportPathType from "../../../../../interface/ReportPathType";
 import { useEachReports } from "../../../../../queries/User";
 import LIMIT from "../../../../../constant/Limit";
 

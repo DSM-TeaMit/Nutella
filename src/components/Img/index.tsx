@@ -1,8 +1,9 @@
 import { FC, useEffect, useMemo } from "react";
-import { useImage } from "../queries/Image";
+import { useImage } from "../../queries/Image";
 import toast from "react-hot-toast";
+import * as S from "./styles";
 
-type PropsType = ImageProps & { emoji?: string };
+type PropsType = ImageProps & { emoji?: string; displayLoading?: boolean };
 
 type ImageProps = React.DetailedHTMLProps<
   React.ImgHTMLAttributes<HTMLImageElement>,
@@ -51,14 +52,17 @@ emojiUnicode.raw = function (input: string) {
 };
 
 const Img: FC<PropsType> = (props) => {
-  const propsWithoutSomething: Omit<PropsType, "src" | "emoji"> = useMemo(
+  const propsWithoutSomething: Omit<
+    PropsType,
+    "src" | "emoji" | "displayLoading"
+  > = useMemo(
     () => ({
       ...props,
     }),
     [props]
   );
 
-  const { src, emoji } = props;
+  const { src, emoji, displayLoading } = props;
 
   const { data, isError, isLoading } = useImage(src || "");
   const unicode = useMemo(
@@ -76,6 +80,10 @@ const Img: FC<PropsType> = (props) => {
   }, [emoji, isError, src]);
 
   if (isLoading) {
+    if (displayLoading) {
+      return <S.Loading>이미지 로딩 중</S.Loading>;
+    }
+
     return <img {...propsWithoutSomething} alt={undefined} />;
   }
 

@@ -1,4 +1,4 @@
-export type ErrorType = "NO_TOKEN" | "EXPIRED_TOKEN" | "NETWORK_ERROR";
+type ErrorType = "NO_TOKEN" | "EXPIRED_TOKEN" | "NETWORK_ERROR";
 
 const messageMap = new Map<ErrorType, string>()
   .set("NO_TOKEN", "로그인이 필요합니다.")

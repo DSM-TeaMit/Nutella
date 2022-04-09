@@ -1,4 +1,4 @@
-import NavigationType from "../../../interface/Navigation";
+import { NavigationType } from "../../../interface";
 import * as I from "../styles";
 import * as S from "./styles";
 import { SettingIcons } from "../../../assets/icons";

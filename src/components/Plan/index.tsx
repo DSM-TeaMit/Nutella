@@ -15,20 +15,19 @@ import {
   useSubmitPlanMutation,
 } from "../../queries/Plan";
 import { Includes, ParsedPlanType } from "../../utils/api/Plan";
-import BlueButton from "../Buttons/BlueButton";
-import BorderButton from "../Buttons/BorderButton";
+import { BlueButton, BorderButton, RedButton } from "../Buttons";
 import CheckBox, { CheckBoxMouseEvent } from "../CheckBox";
 import CommentContainer from "../CommentContainer";
 import MarkdownEditor, { MarkdownEditorRef } from "../MarkdownEditor";
 import ModalPortal from "../ModalPortal";
 import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
-import RedButton from "../Buttons/RedButton";
 import { useConfirmReport } from "../../queries/Project";
 import useTitle from "../../hooks/useTitle";
 import reportStatusMessage from "../../constant/ReportStatusMessage";
-import ReportStatus from "../../interface/ReportStatus";
+import { PlanStatus } from "../../interface";
 import Input from "../Input";
+import { useReactToPrint } from "react-to-print";
 
 const dateToString = (date?: Date): string => {
   if (!date) {
@@ -60,6 +59,12 @@ const Plan = () => {
   const [plan, setPlan] = useState<ParsedPlanType | undefined>(undefined);
   const planMutation = usePlanMutation(uuid!);
   const { isLoading, isError, isFetched } = usePlan(uuid!, setPlan, onFetching);
+
+  const planReportRef = useRef<HTMLDivElement>(null);
+  const handlePrint = useReactToPrint({
+    content: () => planReportRef.current,
+    documentTitle: `${plan?.projectName} 계획서`,
+  });
 
   useTitle(isError ? "오류 발생" : `${plan?.projectName || ""} 계획서`);
 
@@ -154,7 +159,7 @@ const Plan = () => {
   const cantEdit = useMemo(
     () =>
       plan?.requestorType !== "USER_EDITABLE" ||
-      (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(plan.status),
+      (["ACCEPTED", "PENDING"] as PlanStatus[]).includes(plan.status),
     [plan]
   );
 
@@ -231,7 +236,7 @@ const Plan = () => {
     <Fragment>
       <S.Container>
         <div>
-          <S.ContentContainer>
+          <S.ContentContainer ref={planReportRef}>
             <S.ContentInner>
               <S.Title>
                 {plan?.projectType === "PERS" ? "개인" : "팀 / 동아리"} 프로젝트
@@ -384,12 +389,12 @@ const Plan = () => {
                 {reportStatusMessage.get(plan.status)}
               </S.Status>
             )}
-            <BorderButton>PDF로 저장</BorderButton>
+            <BorderButton onClick={handlePrint}>PDF로 저장</BorderButton>
             {plan?.requestorType === "USER_EDITABLE" && (
               <BlueButton
                 disabled={
                   submitMutation.isLoading ||
-                  (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(
+                  (["ACCEPTED", "PENDING"] as PlanStatus[]).includes(
                     plan.status
                   )
                 }

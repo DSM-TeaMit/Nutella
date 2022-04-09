@@ -1,10 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 import LIMIT from "../../constant/Limit";
 import Uri from "../../constant/Uri";
-import Pagination from "../../interface/Pagination";
-import ProjectTypes from "../../interface/ProjectTypes";
-import { ReportStatus, ReportTypes } from "../../interface/Report";
-import ReportPathType from "../../interface/ReportPathType";
+import { Pagination, ProjectTypes, ReportPathType } from "../../interface";
+import { ReportStatus, ReportTypes } from "../../interface";
 import request from "../axios";
 
 export interface ReportType {

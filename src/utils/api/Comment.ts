@@ -1,5 +1,5 @@
 import Uri from "../../constant/Uri";
-import CommentSource from "../../interface/CommentSource";
+import { CommentSource } from "../../interface";
 import request from "../axios";
 
 export interface CommentType {

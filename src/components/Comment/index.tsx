@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from "react";
 import useThemeContext from "../../hooks/useThemeContext";
-import CommentStyleType from "../../interface/CommentStyleType";
+import { CommentStyleType } from "../../interface";
 import { CommentType } from "../../utils/api/Comment";
 import * as S from "./styles";
 import { MoreIcons } from "../../assets/icons";
