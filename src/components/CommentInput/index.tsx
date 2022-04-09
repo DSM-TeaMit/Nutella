@@ -7,8 +7,7 @@ import {
   useState,
 } from "react";
 import useThemeContext from "../../hooks/useThemeContext";
-import CommentSource from "../../interface/CommentSource";
-import CommentStyleType from "../../interface/CommentStyleType";
+import { CommentSource, CommentStyleType } from "../../interface";
 import { useCommentMutation } from "../../queries/Comment";
 import { useMyProfile } from "../../queries/User";
 import { BlueButton } from "../Buttons";

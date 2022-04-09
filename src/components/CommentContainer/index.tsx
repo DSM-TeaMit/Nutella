@@ -1,7 +1,6 @@
 import { FC, useEffect } from "react";
 import toast from "react-hot-toast";
-import CommentSource from "../../interface/CommentSource";
-import CommentStyleType from "../../interface/CommentStyleType";
+import { CommentSource, CommentStyleType } from "../../interface";
 import { useComment } from "../../queries/Comment";
 import Comment from "../Comment";
 import CommentInput from "../CommentInput";

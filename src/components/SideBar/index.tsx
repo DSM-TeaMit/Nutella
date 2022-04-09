@@ -1,6 +1,6 @@
 import Navigation from "./Navigation";
 import * as S from "./styles";
-import NavigationType from "../../interface/Navigation";
+import { NavigationType } from "../../interface";
 import { FC } from "react";
 import { UseQueryResult } from "react-query";
 import { MyProfileType, UserProfileType } from "../../utils/api/User";

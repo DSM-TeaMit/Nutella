@@ -1,5 +1,5 @@
 import { FC } from "react";
-import NavigationType from "../../interface/Navigation";
+import { NavigationType } from "../../interface";
 import Navigation from "./Navigation";
 import * as S from "./styles";
 

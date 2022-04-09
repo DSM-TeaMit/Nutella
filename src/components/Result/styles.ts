@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import ReportStatus from "../../interface/ReportStatus";
+import { PlanStatus } from "../../interface";
 
 export const Container = styled.div`
   display: flex;
@@ -9,6 +9,14 @@ export const Container = styled.div`
   margin: 0px auto;
   margin-top: 120px;
   margin-bottom: 200px;
+`;
+
+export const PDFContainer = styled.div`
+  display: flex;
+  row-gap: 40px;
+  flex-direction: column;
+  width: 100%;
+  margin: 0px auto;
 `;
 
 export const ContentContainer = styled.div`
@@ -165,7 +173,7 @@ export const Margin = styled.div`
   padding-top: 120px;
 `;
 
-export const Status = styled.div<{ status: ReportStatus }>`
+export const Status = styled.div<{ status: PlanStatus }>`
   font: ${({ theme }) => theme.fonts.body2};
   align-self: center;
   color: ${({ status, theme }) => {

@@ -1,9 +1,7 @@
 import { AxiosResponse } from "axios";
 import Uri from "../../constant/Uri";
 import { Row } from "../../context/MarkdownCotext";
-import ProjectTypes from "../../interface/ProjectTypes";
-import ReportStatus from "../../interface/ReportStatus";
-import RequestorType from "../../interface/RequestorType";
+import { ProjectTypes, PlanStatus } from "../../interface";
 import request from "../axios";
 
 interface Page {
@@ -26,7 +24,7 @@ export interface FullResultReport {
   requestorType: RequestorType;
   subject: string;
   content: string;
-  status: ReportStatus;
+  status: PlanStatus;
   writer: {
     studentNo: number;
     name: string;
@@ -39,7 +37,7 @@ export interface ParsedFullResultReport {
   requestorType: RequestorType;
   subject: string;
   content: Page[];
-  status: ReportStatus;
+  status: PlanStatus;
   writer: {
     studentNo: number;
     name: string;

@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
-import ReportPathType from "../interface/ReportPathType";
+import { ReportPathType } from "../interface";
 import {
   getProfile,
   getUserGithub as getGithubReadme,

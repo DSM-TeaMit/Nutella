@@ -1,5 +1,4 @@
-import BlueButton from "../Buttons/BlueButton";
-import BorderButton from "../Buttons/BorderButton";
+import { BlueButton, BorderButton, RedButton } from "../Buttons";
 import ContentExample from "./Content/ContentExample";
 import Cover from "./Content/Cover";
 import * as S from "./styles";
@@ -24,10 +23,11 @@ import MarkdownEditor from "../MarkdownEditor";
 import { Row } from "../../context/MarkdownCotext";
 import uniqueId from "../../constant/UniqueId";
 import { useConfirmReport } from "../../queries/Project";
-import RedButton from "../Buttons/RedButton";
 import useTitle from "../../hooks/useTitle";
 import reportStatusMessage from "../../constant/ReportStatusMessage";
-import ReportStatus from "../../interface/ReportStatus";
+import { PlanStatus } from "../../interface";
+import { useReactToPrint } from "react-to-print";
+
 
 const Result = () => {
   const { uuid } = useParams<{ uuid: string }>();
@@ -41,6 +41,13 @@ const Result = () => {
   const resultMutation = useResultMutation(projectUuid);
   const submitMutation = useSubmitResultMutation(projectUuid);
   const confirmMutation = useConfirmReport(projectUuid, "report");
+  const [key, setKey] = useState<string>(uniqueId());
+
+  const resultReportRef = useRef<HTMLDivElement>(null);
+  const handlePrint = useReactToPrint({
+    content: () => resultReportRef.current,
+    documentTitle: `${result?.projectName} 결과 보고서`,
+  });
 
   useTitle(isError ? "오류 발생" : `${result?.projectName || ""} 결과 보고서`);
 
@@ -77,7 +84,7 @@ const Result = () => {
   const cantEdit = useMemo(
     () =>
       result?.requestorType !== "USER_EDITABLE" ||
-      (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(result.status),
+      (["ACCEPTED", "PENDING"] as PlanStatus[]).includes(result.status),
     [result]
   );
 
@@ -86,6 +93,10 @@ const Result = () => {
       autoSave();
     }
   }, [autoSave, cantEdit, result]);
+
+  useEffect(() => {
+    setKey(uniqueId());
+  }, [result]);
 
   const setRows = useCallback(
     (id: string) => (rows: Row[]) => {
@@ -183,71 +194,98 @@ const Result = () => {
   }
 
   return (
-    <S.Container>
-      <Cover onSubjectChange={onSubjectChange} data={result} />
-      {!cantEdit && <ContentExample />}
-      {result?.content.map((value) => (
-        <S.ContentContainer key={`page_${value.id}`}>
-          <S.Delete className="delete" onClick={onDeletePage(value.id)}>
-            삭제
-          </S.Delete>
-          <MarkdownEditor
-            disabled={cantEdit}
-            rows={value.value}
-            setRows={setRows(value.id)}
-          />
-        </S.ContentContainer>
-      ))}
-      <S.AddButton onClick={onAddPageClick}>+</S.AddButton>
-      <div>
-        <SubmitResult />
-        <S.Buttons>
-          {result && (
-            <S.Status status={result.status}>
-              {reportStatusMessage.get(result.status)}
-            </S.Status>
-          )}
-          <BorderButton>PDF로 저장</BorderButton>
-          {result?.requestorType === "USER_EDITABLE" && (
-            <BlueButton
-              disabled={
-                submitMutation.isLoading ||
-                (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(
-                  result.status
-                )
-              }
-              onClick={confirmOnClick("제출하시겠습니까?", () =>
-                submitMutation.mutate()
-              )}
-            >
-              제출
-            </BlueButton>
-          )}
-          {result?.requestorType === "ADMIN" && result.status === "PENDING" && (
-            <Fragment>
-              <RedButton
-                disabled={confirmMutation.isLoading}
-                onClick={confirmOnClick("거절하시겠습니까?", () =>
-                  confirmMutation.mutate("return")
-                )}
-              >
-                거절
-              </RedButton>
+    <Fragment>
+      <S.Container>
+        <Cover onSubjectChange={onSubjectChange} data={result} />
+        {!cantEdit && <ContentExample />}
+        {result?.content.map((value) => (
+          <S.ContentContainer key={`page_${value.id}`}>
+            <S.Delete className="delete" onClick={onDeletePage(value.id)}>
+              삭제
+            </S.Delete>
+            <MarkdownEditor
+              disabled={cantEdit}
+              rows={value.value}
+              setRows={setRows(value.id)}
+            />
+          </S.ContentContainer>
+        ))}
+        <S.AddButton onClick={onAddPageClick}>+</S.AddButton>
+        <div>
+          <SubmitResult />
+          <S.Buttons>
+            {result && (
+              <S.Status status={result.status}>
+                {reportStatusMessage.get(result.status)}
+              </S.Status>
+            )}
+            <BorderButton onClick={handlePrint}>PDF로 저장</BorderButton>
+            {result?.requestorType === "USER_EDITABLE" && (
               <BlueButton
-                disabled={confirmMutation.isLoading}
-                onClick={confirmOnClick("승인하시겠습니까?", () =>
-                  confirmMutation.mutate("approval")
+                disabled={
+                  submitMutation.isLoading ||
+                  (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(
+                    result.status
+                  )
+                }
+                onClick={confirmOnClick("제출하시겠습니까?", () =>
+                  submitMutation.mutate()
                 )}
               >
-                승인
+                제출
               </BlueButton>
-            </Fragment>
-          )}
-        </S.Buttons>
+            )}
+            {result?.requestorType === "ADMIN" && result.status === "PENDING" && (
+              <Fragment>
+                <RedButton
+                  disabled={confirmMutation.isLoading}
+                  onClick={confirmOnClick("거절하시겠습니까?", () =>
+                    confirmMutation.mutate("return")
+                  )}
+                >
+                  거절
+                </RedButton>
+                <BlueButton
+                  disabled={confirmMutation.isLoading}
+                  onClick={confirmOnClick("승인하시겠습니까?", () =>
+                    confirmMutation.mutate("approval")
+                  )}
+                >
+                  승인
+                </BlueButton>
+              </Fragment>
+            )}
+          </S.Buttons>
+        </div>
+        <S.Line />
+        <CommentContainer
+          source="report"
+          uuid={projectUuid}
+          styleType="report"
+        />
+      </S.Container>
+
+      {/* PDF로 저장할 컴포넌트 */}
+      <div style={{ display: "none" }} key={key}>
+        <S.Container>
+          <S.PDFContainer ref={resultReportRef}>
+            <Cover onSubjectChange={onSubjectChange} data={result} />
+            {result?.content.map((value) => (
+              <S.ContentContainer key={`page_${value.id}`}>
+                <S.Delete className="delete" onClick={onDeletePage(value.id)}>
+                  삭제
+                </S.Delete>
+                <MarkdownEditor
+                  disabled={true}
+                  rows={value.value}
+                  setRows={setRows(value.id)}
+                />
+              </S.ContentContainer>
+            ))}
+          </S.PDFContainer>
+        </S.Container>
       </div>
-      <S.Line />
-      <CommentContainer source="report" uuid={projectUuid} styleType="report" />
-    </S.Container>
+    </Fragment>
   );
 };
 

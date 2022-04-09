@@ -9,7 +9,7 @@ import {
   GithubLoadingContainer,
   ChangeGithubIdLoadingContainer,
 } from "../container";
-import RefreshError from "../interface/RefreshError";
+import { RefreshError } from "../interface";
 import RouterWithDefaultComponent from "./RouterWithDefaultComponent";
 import toast from "react-hot-toast";
 import storageKeys from "../constant/StorageKeys";

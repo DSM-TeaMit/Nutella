@@ -1,8 +1,7 @@
 import LIMIT from "../../constant/Limit";
 import Uri from "../../constant/Uri";
-import Pagination from "../../interface/Pagination";
-import ProjectTypes from "../../interface/ProjectTypes";
-import { ReportTypes } from "../../interface/Report";
+import { Pagination, ProjectTypes } from "../../interface";
+import { ReportTypes } from "../../interface";
 import request from "../axios";
 
 export interface PendingReport {
