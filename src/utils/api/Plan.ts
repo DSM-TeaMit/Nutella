@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { getInitRows } from "../../components/MarkdownEditor";
 import Uri from "../../constant/Uri";
 import { Row } from "../../context/MarkdownCotext";
-import { ProjectTypes, PlanStatus } from "../../interface";
+import { ProjectTypes, PlanStatus, RequestorType } from "../../interface";
 import request from "../axios";
 
 export interface Includes {

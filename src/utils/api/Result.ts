@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import Uri from "../../constant/Uri";
 import { Row } from "../../context/MarkdownCotext";
-import { ProjectTypes, PlanStatus } from "../../interface";
+import { ProjectTypes, PlanStatus, RequestorType } from "../../interface";
 import request from "../axios";
 
 interface Page {
