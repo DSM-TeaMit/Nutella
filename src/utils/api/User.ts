@@ -212,6 +212,7 @@ export const getHeader = async () => {
 interface SearchedUser {
   studentNo: number;
   name: string;
+  uuid: string;
 }
 
 interface SearchedUsers {

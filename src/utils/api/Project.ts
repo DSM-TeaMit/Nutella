@@ -20,7 +20,7 @@ export const confirmProjectReport = async (
   return await request.get(uri, { params });
 };
 
-interface Member {
+export interface Member {
   uuid: string;
   role: string;
 }
