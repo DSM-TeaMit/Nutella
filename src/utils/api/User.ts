@@ -208,3 +208,22 @@ export const getHeader = async () => {
 
   return await request.get<HeaderType>(uri);
 };
+
+interface SearchedUser {
+  studentNo: number;
+  name: string;
+}
+
+interface SearchedUsers {
+  students: SearchedUser[];
+}
+
+export const searchUser = async (name: string) => {
+  const uri = Uri.searchUser.get();
+
+  const params = {
+    name,
+  };
+
+  return await request.get<SearchedUsers>(uri, { params });
+};
