@@ -12,7 +12,6 @@ const ProjectDetail = () => {
   const { data, isError, isLoading, isFetching } = useProjectDetails(uuid);
 
   useTitle(`${data?.data.projectName}`);
-  console.log(data?.data);
 
   return (
     <S.Container>
