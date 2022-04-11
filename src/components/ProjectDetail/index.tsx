@@ -6,12 +6,20 @@ import CommentContainer from "../CommentContainer";
 import { useParams } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
 import { useProjectDetails } from "../../queries/ProjectDetails";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const ProjectDetail = () => {
   const { uuid } = useParams<{ uuid: string }>();
-  const { data, isError, isLoading, isFetching } = useProjectDetails(uuid);
+  const { data, isError, isLoading } = useProjectDetails(uuid);
 
-  useTitle(`${data?.data.projectName}`);
+  useTitle(isError ? "오류 발생" : `${data?.data.projectName}`);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("오류가 발생했습니다, 다시 시도해 주세요.");
+    }
+  }, [isError]);
 
   return (
     <S.Container>
