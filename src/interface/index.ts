@@ -11,3 +11,4 @@ export type { default as State } from "./State";
 export type { default as ReportTypes } from "./Report";
 export type { default as PlanStatus } from "./PlanStatus";
 export type { default as RequestorType } from "./RequestorType";
+export type { default as ProjectLabel } from "./ProjectLabel";
