@@ -213,6 +213,7 @@ export interface SearchedUser {
   studentNo: number;
   name: string;
   uuid: string;
+  thumbnailUrl?: string;
 }
 
 interface SearchedUsers {

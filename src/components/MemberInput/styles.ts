@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Img from "../Img";
 
 export const InputStyle = styled.input`
   border: 0;
@@ -75,7 +76,7 @@ export const MemberContainer = styled.div`
   }
 `;
 
-export const ProfileImage = styled.img`
+export const ProfileImage = styled(Img)`
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -107,4 +108,27 @@ export const MemberButton = styled.button`
   border: none;
   background-color: transparent;
   padding: none;
+`;
+
+export const SelectedMember = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  width: 100%;
+`;
+
+export const Tags = styled.div`
+  flex: 1;
+  overflow-x: hidden;
+  & div {
+    flex: 1;
+  }
+`;
+
+export const Remove = styled.button`
+  border: none;
+  background-color: transparent;
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.red.default};
+  cursor: pointer;
 `;

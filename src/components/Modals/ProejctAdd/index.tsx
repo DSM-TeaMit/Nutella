@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useTagInput from "../../../hooks/useTagInput";
 import Input from "../../Input";
 import MemberInput from "../../MemberInput";
@@ -8,6 +8,7 @@ import { ClubIcons, PersonalIcons, TeamIcons } from "../../../assets/icons";
 import { BlueButton, BorderButton } from "../../Buttons";
 import useModalContext from "../../../hooks/useModalContext";
 import { SearchedUser } from "../../../utils/api/User";
+import MemberWithRole from "../../MemberInput/MemberWithRole";
 
 type Types = "personal" | "team" | "club";
 
@@ -38,7 +39,7 @@ const types: Type[] = [
 const ProjectAddModal = () => {
   const { closeCurrentModal } = useModalContext();
 
-  const [inputProps] = useTagInput("", [], true);
+  const [inputProps] = useTagInput("", []);
   const [type, setType] = useState<Types>(types[0].type);
   const [name, setName] = useState<string>("");
   const [members, setMembers] = useState<SearchedUser[]>([]);
@@ -46,6 +47,12 @@ const ProjectAddModal = () => {
   const onTypeClick = useCallback((type: Type) => {
     setType(type.type);
   }, []);
+
+  useEffect(() => {
+    if (type === "personal") {
+      setMembers([]);
+    }
+  }, [type]);
 
   return (
     <S.Container>
@@ -84,12 +91,17 @@ const ProjectAddModal = () => {
           </S.TypeContainer>
         </S.ContentContainer>
         {type !== "personal" && (
-          <S.ContentContainer>
-            <S.Subtitle>멤버</S.Subtitle>
-            <MemberInput
-              onUserClick={(user) => setMembers((prev) => [...prev, user])}
-            />
-          </S.ContentContainer>
+          <S.MemberContainer>
+            <S.ContentContainer>
+              <S.Subtitle>멤버</S.Subtitle>
+              <MemberInput
+                onUserClick={(user) => setMembers((prev) => [...prev, user])}
+              />
+            </S.ContentContainer>
+            {members.map((value) => (
+              <MemberWithRole {...value} key={value.uuid} />
+            ))}
+          </S.MemberContainer>
         )}
       </S.Inner>
       <S.ButtonContainer>
