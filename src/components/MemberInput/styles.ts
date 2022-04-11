@@ -56,6 +56,11 @@ export const Description = styled.div`
   margin-bottom: 12px;
 `;
 
+export const Enter = styled.span`
+  font: ${({ theme }) => theme.fonts.description};
+  color: ${({ theme }) => theme.colors.grayscale.gray1};
+`;
+
 export const MemberContainer = styled.div`
   display: flex;
   column-gap: 12px;
@@ -93,4 +98,13 @@ export const UserInner = styled.div`
 export const Message = styled.div`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
+  text-align: center;
+`;
+
+export const MemberButton = styled.button`
+  display: block;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  padding: none;
 `;
