@@ -63,7 +63,12 @@ const Project = () => {
               ))}
             </I.Grid>
             {projects.length === 0 && (
-              <I.Message>프로젝트가 존재하지 않습니다.</I.Message>
+              <Fragment>
+                <I.Message>프로젝트가 존재하지 않습니다.</I.Message>
+                <I.Margin>
+                  <I.Add onClick={onProjectAddClick}>추가하기</I.Add>
+                </I.Margin>
+              </Fragment>
             )}
             {!isFetching && isMore(LIMIT, page, count) && (
               <I.More onClick={() => setPage((prev) => prev + 1)}>

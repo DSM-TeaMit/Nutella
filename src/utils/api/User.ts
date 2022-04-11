@@ -209,7 +209,7 @@ export const getHeader = async () => {
   return await request.get<HeaderType>(uri);
 };
 
-interface SearchedUser {
+export interface SearchedUser {
   studentNo: number;
   name: string;
   uuid: string;

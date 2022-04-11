@@ -7,11 +7,14 @@ import * as S from "./styles";
 import { ClubIcons, PersonalIcons, TeamIcons } from "../../../assets/icons";
 import { BlueButton, BorderButton } from "../../Buttons";
 import useModalContext from "../../../hooks/useModalContext";
+import { SearchedUser } from "../../../utils/api/User";
+
+type Types = "personal" | "team" | "club";
 
 interface Type {
   img: string;
   name: string;
-  type: string;
+  type: Types;
 }
 
 const types: Type[] = [
@@ -36,7 +39,9 @@ const ProjectAddModal = () => {
   const { closeCurrentModal } = useModalContext();
 
   const [inputProps] = useTagInput("", [], true);
-  const [type, setType] = useState<string>(types[0].type);
+  const [type, setType] = useState<Types>(types[0].type);
+  const [name, setName] = useState<string>("");
+  const [members, setMembers] = useState<SearchedUser[]>([]);
 
   const onTypeClick = useCallback((type: Type) => {
     setType(type.type);
@@ -48,12 +53,18 @@ const ProjectAddModal = () => {
         <S.Title>프로젝트 생성</S.Title>
         <S.ContentContainer>
           <S.Subtitle>프로젝트 이름</S.Subtitle>
-          <Input placeholder="프로젝트 이름을 입력해주세요..." />
+          <Input
+            placeholder="프로젝트 이름을 입력해주세요..."
+            value={name}
+            onChange={(e) =>
+              setName(e.target.value.trim().replaceAll(/\s/g, ""))
+            }
+          />
         </S.ContentContainer>
         <S.ContentContainer>
           <S.Subtitle>프로젝트 분야</S.Subtitle>
           <TagInput
-            placeholder="프로젝트 분야를 입력해주세요..."
+            placeholder="공백으로 분야를 구분할 수 있습니다..."
             {...inputProps}
           />
         </S.ContentContainer>
@@ -72,10 +83,14 @@ const ProjectAddModal = () => {
             ))}
           </S.TypeContainer>
         </S.ContentContainer>
-        <S.ContentContainer>
-          <S.Subtitle>멤버</S.Subtitle>
-          <MemberInput />
-        </S.ContentContainer>
+        {type !== "personal" && (
+          <S.ContentContainer>
+            <S.Subtitle>멤버</S.Subtitle>
+            <MemberInput
+              onUserClick={(user) => setMembers((prev) => [...prev, user])}
+            />
+          </S.ContentContainer>
+        )}
       </S.Inner>
       <S.ButtonContainer>
         <BorderButton onClick={closeCurrentModal}>취소</BorderButton>

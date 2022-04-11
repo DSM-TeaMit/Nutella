@@ -33,10 +33,9 @@ export const UserContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   width: 100%;
   border-radius: 0px 0px 10px 10px;
-  max-height: 200px;
+  max-height: 230px;
   min-height: 0px;
   overflow-y: auto;
-  overflow-x: hidden;
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -89,4 +88,9 @@ export const UserInner = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 8px;
+`;
+
+export const Message = styled.div`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
 `;

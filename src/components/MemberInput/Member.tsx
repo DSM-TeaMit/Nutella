@@ -1,14 +1,18 @@
+import { FC, Fragment } from "react";
+import { SearchedUser } from "../../utils/api/User";
 import * as S from "./styles";
 
-const Member = () => {
+const Member: FC<SearchedUser> = ({ name, studentNo, uuid }) => {
   return (
-    <div>
+    <Fragment>
       <S.MemberContainer>
         <S.ProfileImage />
-        <S.Name>2105 김진근</S.Name>
+        <S.Name>
+          {studentNo} {name}
+        </S.Name>
       </S.MemberContainer>
       <S.Line />
-    </div>
+    </Fragment>
   );
 };
 
