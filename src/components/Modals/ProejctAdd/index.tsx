@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import useTagInput from "../../../hooks/useTagInput";
 import Input from "../../Input";
 import MemberInput from "../../MemberInput";
-import TagInput from "../../TagInput";
+import TagInput, { Tag } from "../../TagInput";
 import * as S from "./styles";
 import { ClubIcons, PersonalIcons, TeamIcons } from "../../../assets/icons";
 import { BlueButton, BorderButton } from "../../Buttons";
@@ -36,13 +36,17 @@ const types: Type[] = [
   },
 ];
 
+export interface UserWithRole {
+  tags: Tag[];
+}
+
 const ProjectAddModal = () => {
   const { closeCurrentModal } = useModalContext();
 
   const [inputProps] = useTagInput("", []);
   const [type, setType] = useState<Types>(types[0].type);
   const [name, setName] = useState<string>("");
-  const [members, setMembers] = useState<SearchedUser[]>([]);
+  const [members, setMembers] = useState<(SearchedUser & UserWithRole)[]>([]);
 
   const onTypeClick = useCallback((type: Type) => {
     setType(type.type);
@@ -53,6 +57,14 @@ const ProjectAddModal = () => {
       setMembers([]);
     }
   }, [type]);
+
+  const onRemoveClick = useCallback((uuid: string) => {
+    setMembers((prev) => prev.filter((value) => value.uuid !== uuid));
+  }, []);
+
+  useEffect(() => {
+    console.log(members);
+  }, [members]);
 
   return (
     <S.Container>
@@ -95,11 +107,23 @@ const ProjectAddModal = () => {
             <S.ContentContainer>
               <S.Subtitle>멤버</S.Subtitle>
               <MemberInput
-                onUserClick={(user) => setMembers((prev) => [...prev, user])}
+                onUserClick={(user) =>
+                  setMembers((prev) => [...prev, { ...user, tags: [] }])
+                }
               />
             </S.ContentContainer>
-            {members.map((value) => (
-              <MemberWithRole {...value} key={value.uuid} />
+            {members.map((value, index) => (
+              <MemberWithRole
+                onRemoveClick={() => onRemoveClick(value.uuid)}
+                {...value}
+                setTag={(tags: Tag[]) => {
+                  const copy = [...members];
+                  copy[index].tags = tags;
+
+                  setMembers(copy);
+                }}
+                key={value.uuid}
+              />
             ))}
           </S.MemberContainer>
         )}

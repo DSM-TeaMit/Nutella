@@ -1,15 +1,23 @@
-import { FC } from "react";
-import useTagInput from "../../hooks/useTagInput";
+import { FC, useState } from "react";
 import { SearchedUser } from "../../utils/api/User";
-import TagInput from "../TagInput";
+import { UserWithRole } from "../Modals/ProejctAdd";
+import TagInput, { Tag } from "../TagInput";
 import * as S from "./styles";
 
-const MemberWithRole: FC<SearchedUser> = ({
+interface PropsType {
+  onRemoveClick: () => void;
+  setTag: (tags: Tag[]) => void;
+}
+
+const MemberWithRole: FC<SearchedUser & UserWithRole & PropsType> = ({
   name,
   studentNo,
   thumbnailUrl,
+  onRemoveClick,
+  setTag,
+  tags,
 }) => {
-  const [inputProps] = useTagInput("", []);
+  const [value, setValue] = useState<string>("");
 
   return (
     <S.SelectedMember>
@@ -18,9 +26,17 @@ const MemberWithRole: FC<SearchedUser> = ({
         {studentNo} {name}
       </S.Name>
       <S.Tags>
-        <TagInput placeholder="역할 입력..." {...inputProps} />
+        <TagInput
+          placeholder="역할 입력..."
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value);
+          }}
+          clearValue={() => setValue("")}
+          tagState={[tags, setTag]}
+        />
       </S.Tags>
-      <S.Remove>삭제</S.Remove>
+      <S.Remove onClick={onRemoveClick}>삭제</S.Remove>
     </S.SelectedMember>
   );
 };
