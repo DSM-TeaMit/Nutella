@@ -28,7 +28,6 @@ import reportStatusMessage from "../../constant/ReportStatusMessage";
 import { PlanStatus } from "../../interface";
 import { useReactToPrint } from "react-to-print";
 
-
 const Result = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const projectUuid = useMemo(() => uuid || "", [uuid]);
@@ -69,7 +68,7 @@ const Result = () => {
   }, [isFetched, result, resultMutation]);
 
   const autoSave = useCallback(() => {
-    if (!canSave.current || !result || !isFetched) {
+    if (!canSave.current || !result || !isFetched || resultMutation.isLoading) {
       return;
     }
 
@@ -79,7 +78,7 @@ const Result = () => {
     }
 
     autoSaveTimer.current = setTimeout(save, 3000);
-  }, [isFetched, result, save]);
+  }, [isFetched, result, resultMutation.isLoading, save]);
 
   const cantEdit = useMemo(
     () =>
@@ -224,7 +223,7 @@ const Result = () => {
               <BlueButton
                 disabled={
                   submitMutation.isLoading ||
-                  (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(
+                  (["ACCEPTED", "PENDING"] as PlanStatus[]).includes(
                     result.status
                   )
                 }
