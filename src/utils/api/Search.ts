@@ -19,7 +19,6 @@ export interface SearchList {
 
 export const getSearch = async (keyword: string) => {
   const params = {
-    order: "popularity",
     page: 1,
     limit: 8,
     keyword: keyword,
@@ -34,7 +33,6 @@ export const getSearchType = async (
   searchType: string
 ) => {
   const params = {
-    order: "popularity",
     page: page,
     limit: 8,
     keyword: keyword,
