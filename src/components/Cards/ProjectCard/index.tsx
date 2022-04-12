@@ -65,6 +65,7 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
                   <S.UserImage
                     src={value.thumbnailUrl}
                     onClick={onMemberClick(value.uuid)}
+                    isProfile
                   />
                 </S.UserImageOuter>
               ))}

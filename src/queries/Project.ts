@@ -12,18 +12,20 @@ import {
 
 export const useConfirmReport = (projectUuid: string, type: ConfirmType) => {
   const queryClient = useQueryClient();
+  
 
   const onSuccess = useCallback(() => {
-    queryClient.invalidateQueries([projectUuid]);
+    queryClient.invalidateQueries(projectUuid);
   }, [projectUuid, queryClient]);
 
-  const onError = useCallback((_, variables: ConfirmValue) => {
-    toast.error(`보고서 ${variables === "approval" ? "승인" : "거절"} 실패`);
-  }, []);
-
   return useMutation(
-    (value: ConfirmValue) => confirmProjectReport(projectUuid, type, value),
-    { onSuccess, onError }
+    (value: ConfirmValue) =>
+      toast.promise(confirmProjectReport(projectUuid, type, value), {
+        success: "승인 성공",
+        error: "승인 중 오류 발생",
+        loading: "승인 중...",
+      }),
+    { onSuccess }
   );
 };
 

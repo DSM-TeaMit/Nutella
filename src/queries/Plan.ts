@@ -47,7 +47,6 @@ export const usePlan = (
     onSuccess,
     refetchInterval: false,
     refetchIntervalInBackground: false,
-    refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
   });
@@ -57,17 +56,18 @@ export const useSubmitPlanMutation = (projectUuid: string) => {
   const queryClient = useQueryClient();
 
   const onSuccess = useCallback(() => {
-    toast.success("제출 완료.");
+    queryClient.invalidateQueries(queryKeys.planDetail);
+  }, [queryClient]);
 
-    queryClient.invalidateQueries([projectUuid]);
-  }, [projectUuid, queryClient]);
-
-  const onError = useCallback(() => {
-    toast.error("제출 실패. 다시 시도해주세요.");
-  }, []);
-
-  return useMutation(() => submitPlanReport(projectUuid), {
-    onSuccess,
-    onError,
-  });
+  return useMutation(
+    () =>
+      toast.promise(submitPlanReport(projectUuid), {
+        success: "제출 완료.",
+        error: "제출 실패. 다시 시도해주세요.",
+        loading: "제출 중...",
+      }),
+    {
+      onSuccess,
+    }
+  );
 };
