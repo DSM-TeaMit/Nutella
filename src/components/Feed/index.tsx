@@ -1,6 +1,5 @@
 import * as S from "./styles";
-import { useEffect, useState } from "react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFeed } from "../../queries/Feed";
 import Project from "../Cards/MainProjectCard";
 import toast from "react-hot-toast";
