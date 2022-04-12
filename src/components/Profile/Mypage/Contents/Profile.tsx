@@ -50,7 +50,7 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
       <I.FlexContainer>
         <I.ProfileContainerOuter>
           <I.ProfileContainer>
-            <I.ProfileImage alt="profile image" src={thumbnailUrl} />
+            <I.ProfileImage alt="profile image" src={thumbnailUrl} isProfile />
             <I.ProfileInfoContainer>
               <I.Name>
                 {studentNo} {name}
