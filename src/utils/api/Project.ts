@@ -33,7 +33,8 @@ export const createProject = async (
   name: string,
   field: string,
   type: ProjectTypes,
-  members: Member
+  members: Member[],
+  role: string
 ) => {
   const uri = Uri.newProject.get();
 
@@ -42,5 +43,6 @@ export const createProject = async (
     field,
     type,
     members,
+    role,
   });
 };

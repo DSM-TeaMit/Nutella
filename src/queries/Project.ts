@@ -31,14 +31,15 @@ export const useConfirmReport = (projectUuid: string, type: ConfirmType) => {
 interface CreateProject {
   name: string;
   field: string;
+  role: string;
   type: ProjectTypes;
-  members: Member;
+  members: Member[];
 }
 
 export const useCreateProject = () =>
   useMutation((data: CreateProject) =>
     toast.promise(
-      createProject(data.name, data.field, data.type, data.members),
+      createProject(data.name, data.field, data.type, data.members, data.role),
       {
         error: "프로젝트 생성 중 오류 발생",
         loading: "프로젝트 생성 중",
