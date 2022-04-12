@@ -10,11 +10,15 @@ import { FC, Fragment, Key } from "react";
 import ModalPortal from "../../ModalPortal";
 import useModalRef from "../../../hooks/useModalRef";
 import { Project } from "../../../utils/api/ProjectDetails";
-import { ProjectTypes, ProjectLabel } from "../../../interface";
+import { ProjectTypes, ProjectLabel, ProjectStatus } from "../../../interface";
 
 interface PropsType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Project | any;
+}
+
+interface ProjectStatusText {
+  text: string;
 }
 
 const Top: FC<PropsType> = ({ data }) => {
@@ -35,6 +39,25 @@ const Top: FC<PropsType> = ({ data }) => {
     });
 
   const projectTypeData = projectType.get(data?.projectType);
+
+  const projectStatus = new Map<ProjectStatus, ProjectStatusText>()
+    .set("PLANNING", {
+      text: "계획중...",
+    })
+    .set("PENDING(PLAN)", {
+      text: "계획 승인 대기중...",
+    })
+    .set("REPORTING", {
+      text: "보고서 작성중...",
+    })
+    .set("PENDING(REPORT)", {
+      text: "보고서 승인 대기중...",
+    })
+    .set("DONE", {
+      text: "완성된 프로젝트입니다.",
+    });
+
+  const projectStatusData = projectStatus.get(data?.projectStatus);
 
   return (
     <Fragment>
@@ -80,7 +103,7 @@ const Top: FC<PropsType> = ({ data }) => {
                     return <S.Field key={index}>{item}</S.Field>;
                   })}
               </div>
-              <S.Step>{data?.projectStatus}</S.Step>
+              <S.Step>{projectStatusData?.text}</S.Step>
             </S.ProjectBottom>
           </div>
         </S.TopContent>
