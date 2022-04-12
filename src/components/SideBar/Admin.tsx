@@ -18,7 +18,7 @@ const AdminSideBar: FC<PropsType> = ({ navs }) => {
         <S.TextContainer>
           {isLoading && <S.Name>로딩 중...</S.Name>}
           {isError && <S.Name>오류 발생</S.Name>}
-          {isSuccess && <S.Name>{data.data.name} 선생님</S.Name>}
+          {isSuccess && <S.Name>{data?.data.name} 선생님</S.Name>}
         </S.TextContainer>
       </S.InfoContainer>
       <S.Line />
