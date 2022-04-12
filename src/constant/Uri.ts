@@ -50,6 +50,7 @@ const Uri = {
   createdAccount: new URI(`admin/createdByRequestor`),
   header: new URI(`user/header`),
   admin: new URI<AdminUuid>(`admin/{${adminUuid}}`),
+  searchUser: new URI(`user/search`),
 } as const;
 
 export default Uri;

@@ -4,7 +4,7 @@ import Cover from "./Content/Cover";
 import * as S from "./styles";
 import SubmitResult from "./Content/SubmitResult";
 import CommentContainer from "../CommentContainer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Fragment,
   useCallback,
@@ -27,6 +27,7 @@ import useTitle from "../../hooks/useTitle";
 import reportStatusMessage from "../../constant/ReportStatusMessage";
 import { PlanStatus } from "../../interface";
 import { useReactToPrint } from "react-to-print";
+import axios from "axios";
 
 const Result = () => {
   const { uuid } = useParams<{ uuid: string }>();
@@ -36,7 +37,10 @@ const Result = () => {
   const [result, setResult] = useState<ParsedFullResultReport | undefined>(
     undefined
   );
-  const { isLoading, isError, isFetched } = useResult(projectUuid, setResult);
+  const { isLoading, isError, isFetched, error } = useResult(
+    projectUuid,
+    setResult
+  );
   const resultMutation = useResultMutation(projectUuid);
   const submitMutation = useSubmitResultMutation(projectUuid);
   const confirmMutation = useConfirmReport(projectUuid, "report");
@@ -171,6 +175,18 @@ const Result = () => {
     },
     []
   );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (
+      isError &&
+      axios.isAxiosError(error) &&
+      error.response?.status === 404
+    ) {
+      navigate("/404");
+    }
+  }, [error, isError, navigate]);
 
   if (isLoading) {
     return (

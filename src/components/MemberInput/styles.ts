@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Img from "../Img";
 
 export const InputStyle = styled.input`
   border: 0;
@@ -33,10 +34,9 @@ export const UserContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   width: 100%;
   border-radius: 0px 0px 10px 10px;
-  max-height: 200px;
+  max-height: 230px;
   min-height: 0px;
   overflow-y: auto;
-  overflow-x: hidden;
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -57,6 +57,11 @@ export const Description = styled.div`
   margin-bottom: 12px;
 `;
 
+export const Enter = styled.span`
+  font: ${({ theme }) => theme.fonts.description};
+  color: ${({ theme }) => theme.colors.grayscale.gray1};
+`;
+
 export const MemberContainer = styled.div`
   display: flex;
   column-gap: 12px;
@@ -71,7 +76,7 @@ export const MemberContainer = styled.div`
   }
 `;
 
-export const ProfileImage = styled.img`
+export const ProfileImage = styled(Img)`
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -89,4 +94,41 @@ export const UserInner = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 8px;
+`;
+
+export const Message = styled.div`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
+  text-align: center;
+`;
+
+export const MemberButton = styled.button`
+  display: block;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  padding: none;
+`;
+
+export const SelectedMember = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  width: 100%;
+`;
+
+export const Tags = styled.div`
+  flex: 1;
+  overflow-x: hidden;
+  & div {
+    flex: 1;
+  }
+`;
+
+export const Remove = styled.button`
+  border: none;
+  background-color: transparent;
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.red.default};
+  cursor: pointer;
 `;
