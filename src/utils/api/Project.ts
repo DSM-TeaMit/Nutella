@@ -1,4 +1,5 @@
 import Uri from "../../constant/Uri";
+import { ProjectTypes } from "../../interface";
 import request from "../axios";
 
 export type ConfirmType = "plan" | "report";
@@ -17,4 +18,31 @@ export const confirmProjectReport = async (
   };
 
   return await request.patch(uri, {}, { params });
+};
+
+export interface Member {
+  uuid: string;
+  role: string;
+}
+
+interface CreateProjectResponse {
+  uuid: string;
+}
+
+export const createProject = async (
+  name: string,
+  field: string,
+  type: ProjectTypes,
+  members: Member[],
+  role: string
+) => {
+  const uri = Uri.newProject.get();
+
+  return await request.post<CreateProjectResponse>(uri, {
+    name,
+    field,
+    type,
+    members,
+    role,
+  });
 };

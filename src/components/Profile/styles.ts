@@ -158,6 +158,25 @@ export const Message = styled.div`
   margin: 16px 0px;
 `;
 
+export const Margin = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const Add = styled.button`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
+  cursor: pointer;
+  padding: 0px;
+  border: none;
+  background-color: transparent;
+
+  &:hover {
+    text-decoration: underline;
+    color: ${({ theme }) => theme.colors.grayscale.black};
+  }
+`;
+
 export const More = styled.button`
   padding: 0px;
   border: none;

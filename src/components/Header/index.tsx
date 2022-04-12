@@ -68,6 +68,7 @@ const Header = () => {
                 to={data?.data.type === "admin" ? "/admin-mypage" : "/mypage"}
               >
                 <S.UserImage
+                  isProfile
                   src={data?.data.thumbnailUrl}
                   emoji={data?.data.emoji}
                 />
