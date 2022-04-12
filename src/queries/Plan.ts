@@ -54,9 +54,13 @@ export const usePlan = (
 };
 
 export const useSubmitPlanMutation = (projectUuid: string) => {
+  const queryClient = useQueryClient();
+
   const onSuccess = useCallback(() => {
     toast.success("제출 완료.");
-  }, []);
+
+    queryClient.invalidateQueries([projectUuid]);
+  }, [projectUuid, queryClient]);
 
   const onError = useCallback(() => {
     toast.error("제출 실패. 다시 시도해주세요.");

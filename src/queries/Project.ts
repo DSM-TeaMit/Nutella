@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
-import queryKeys from "../constant/QueryKeys";
 import { ProjectTypes } from "../interface";
 import {
   confirmProjectReport,
@@ -15,7 +14,7 @@ export const useConfirmReport = (projectUuid: string, type: ConfirmType) => {
   const queryClient = useQueryClient();
 
   const onSuccess = useCallback(() => {
-    queryClient.invalidateQueries([queryKeys.planDetail, projectUuid]);
+    queryClient.invalidateQueries([projectUuid]);
   }, [projectUuid, queryClient]);
 
   const onError = useCallback((_, variables: ConfirmValue) => {

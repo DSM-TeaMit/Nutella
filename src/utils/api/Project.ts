@@ -17,7 +17,7 @@ export const confirmProjectReport = async (
     value: value === "approval",
   };
 
-  return await request.get(uri, { params });
+  return await request.patch(uri, {}, { params });
 };
 
 export interface Member {

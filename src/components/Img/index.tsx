@@ -70,14 +70,6 @@ const Img: FC<PropsType> = (props) => {
     console.log(src);
   }, [src]);
 
-  if (isLoading) {
-    if (displayLoading) {
-      return <S.Loading />;
-    }
-
-    return <img {...rest} alt={undefined} />;
-  }
-
   if (emoji) {
     return (
       <img
@@ -90,6 +82,14 @@ const Img: FC<PropsType> = (props) => {
 
   if (isProfile) {
     return <img {...rest} src={src} alt={undefined} />;
+  }
+
+  if (isLoading) {
+    if (displayLoading) {
+      return <S.Loading />;
+    }
+
+    return <img {...rest} alt={undefined} />;
   }
 
   if (isError) {
