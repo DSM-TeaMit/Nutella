@@ -20,10 +20,12 @@ const GithubReadme: FC<PropsType> = ({ githubId }) => {
 
   return (
     <>
-      <S.Description>Github 에서 가져온 README</S.Description>
-      <S.ReadMe>
-        <MarkdownRender>{data!.data}</MarkdownRender>
-      </S.ReadMe>
+      <div>
+        <S.Description>Github 에서 가져온 README</S.Description>
+        <S.ReadMe>
+          <MarkdownRender>{data!.data}</MarkdownRender>
+        </S.ReadMe>
+      </div>
     </>
   );
 };

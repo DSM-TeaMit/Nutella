@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Row } from "../../context/MarkdownCotext";
 import useModalRef from "../../hooks/useModalRef";
 import {
@@ -28,6 +28,7 @@ import reportStatusMessage from "../../constant/ReportStatusMessage";
 import { PlanStatus } from "../../interface";
 import Input from "../Input";
 import { useReactToPrint } from "react-to-print";
+import axios from "axios";
 
 const dateToString = (date?: Date): string => {
   if (!date) {
@@ -58,7 +59,11 @@ const Plan = () => {
 
   const [plan, setPlan] = useState<ParsedPlanType | undefined>(undefined);
   const planMutation = usePlanMutation(uuid!);
-  const { isLoading, isError, isFetched } = usePlan(uuid!, setPlan, onFetching);
+  const { isLoading, isError, isFetched, error } = usePlan(
+    uuid!,
+    setPlan,
+    onFetching
+  );
 
   const planReportRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
@@ -211,6 +216,18 @@ const Plan = () => {
     },
     [plan]
   );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (
+      isError &&
+      axios.isAxiosError(error) &&
+      error.response?.status === 404
+    ) {
+      navigate("/404");
+    }
+  }, [error, isError, navigate]);
 
   if (isLoading) {
     return (

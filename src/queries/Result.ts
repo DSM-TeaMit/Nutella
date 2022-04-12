@@ -30,7 +30,6 @@ export const useResult = (
     {
       refetchInterval: false,
       refetchIntervalInBackground: false,
-      refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
     }
@@ -58,8 +57,18 @@ export const useSubmitResultMutation = (projectUuid: string) => {
   const queryClient = useQueryClient();
 
   const onSuccess = useCallback(() => {
-    queryClient.invalidateQueries([queryKeys.result, projectUuid]);
-  }, [projectUuid, queryClient]);
+    queryClient.invalidateQueries(queryKeys.result);
+  }, [queryClient]);
 
-  return useMutation(() => submitResultReport(projectUuid), { onSuccess });
+  return useMutation(
+    () =>
+      toast.promise(submitResultReport(projectUuid), {
+        success: "제출 성공.",
+        error: "제출 실패. 다시 시도해주세요.",
+        loading: "제출 중...",
+      }),
+    {
+      onSuccess,
+    }
+  );
 };
