@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Row } from "../../context/MarkdownCotext";
+import { Row } from "../../context/MarkdownContext";
 import useModalRef from "../../hooks/useModalRef";
 import {
   usePlan,

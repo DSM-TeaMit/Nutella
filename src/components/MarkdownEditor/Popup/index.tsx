@@ -1,7 +1,7 @@
 import { FC, useCallback, useContext, useMemo, useRef } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
-import { MarkdownContext } from "../../../context/MarkdownCotext";
+import { MarkdownContext } from "../../../context/MarkdownContext";
 import { postImage } from "../../../utils/api/Image";
 import * as S from "./styles";
 

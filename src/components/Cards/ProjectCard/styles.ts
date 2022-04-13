@@ -47,6 +47,9 @@ export const Title = styled.div`
   flex: 1;
   font: ${({ theme }) => theme.fonts.subtitle2};
   color: ${({ theme }) => theme.colors.grayscale.black};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const TypeIcon = styled.img`

@@ -9,7 +9,7 @@ import React, {
 import {
   MarkdownContext,
   Row as RowType,
-} from "../../../context/MarkdownCotext";
+} from "../../../context/MarkdownContext";
 import * as S from "./styles";
 import HandleSVG from "../../../assets/icons/handle.svg";
 import { Tag } from "../../../interface";
