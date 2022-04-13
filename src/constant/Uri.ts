@@ -49,6 +49,7 @@ const Uri = {
   createdAccount: new URI(`admin/createdByRequestor`),
   header: new URI(`user/header`),
   admin: new URI<AdminUuid>(`admin/{${adminUuid}}`),
+  searchUser: new URI(`user/search`),
   modifyProjectMember: new URI<ProjectUuid>(`project/{${projectUuid}}/member`),
 } as const;
 

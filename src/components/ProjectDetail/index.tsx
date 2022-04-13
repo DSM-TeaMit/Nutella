@@ -5,18 +5,28 @@ import SubmitContent from "./SubmitContent";
 import CommentContainer from "../CommentContainer";
 import { useParams } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
+import { useProjectDetails } from "../../queries/ProjectDetails";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const ProjectDetail = () => {
   const { uuid } = useParams<{ uuid: string }>();
+  const { data, isError, isLoading } = useProjectDetails(uuid);
 
-  useTitle(`${"여기에 프로젝트 이름을 넣어주세요"}`);
+  useTitle(isError ? "오류 발생" : `${data?.data.projectName}`);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("오류가 발생했습니다, 다시 시도해 주세요.");
+    }
+  }, [isError]);
 
   return (
     <S.Container>
       <S.ProjectDetailContent>
         <S.DetailContent>
-          <Top />
-          <SubmitContent />
+          <Top data={data?.data} />
+          <SubmitContent data={data?.data} />
           <CommentContainer
             styleType="project"
             source="project"
@@ -24,7 +34,7 @@ const ProjectDetail = () => {
           />
         </S.DetailContent>
         <S.SideContent>
-          <Aside />
+          <Aside data={data?.data.members} />
         </S.SideContent>
       </S.ProjectDetailContent>
     </S.Container>

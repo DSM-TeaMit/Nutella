@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Img from "../../Img";
 
 export const TopContainer = styled.div`
   width: 859px;
@@ -12,7 +13,7 @@ export const TopContent = styled.div`
   display: flex;
 `;
 
-export const ProjectImg = styled.img`
+export const ProjectImg = styled(Img)`
   width: 200px;
   height: 200px;
   object-fit: cover;

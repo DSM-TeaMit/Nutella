@@ -76,8 +76,6 @@ const ReportAccordion: FC<PropsType> = ({
   }, [queryEnabled]);
 
   const isMorePage = useMemo(() => {
-    console.log("===");
-    console.log(LIMIT * page);
     if (page === 2 && LIMIT * page <= count && !queryEnabled) {
       return true;
     }
@@ -105,10 +103,16 @@ const ReportAccordion: FC<PropsType> = ({
       <S.ContentContainer isActive={isActive} ref={content}>
         <S.Grid>
           {reports.map((value) => (
-            <ReportCard key={value.uuid} data={{ ...value, status }} />
+            <ReportCard
+              key={`${value.uuid}_${value.type}`}
+              data={{ ...value, status }}
+            />
           ))}
           {eachData?.data[pathType].projects.map((value) => (
-            <ReportCard key={value.uuid} data={{ ...value, status }} />
+            <ReportCard
+              key={`${value.uuid}_${value.type}`}
+              data={{ ...value, status }}
+            />
           ))}
         </S.Grid>
         {!isFetching && isMorePage && (

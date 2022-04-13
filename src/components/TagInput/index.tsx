@@ -10,7 +10,7 @@ export interface Tag {
 
 export interface PropsType {
   clearValue: () => void;
-  tagState: State<Tag[]>;
+  tagState: State<Tag[]> | [Tag[], (tags: Tag[]) => void];
 }
 
 const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement> & PropsType> = (
