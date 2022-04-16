@@ -78,7 +78,12 @@ const TeacherLogin = () => {
             <span>학생 로그인</span>
           </S.LoginText>
         </Link>
-        <BlueButton onClick={onLogin}>로그인</BlueButton>
+        <BlueButton
+          disabled={inputs.id === "" || inputs.password === ""}
+          onClick={onLogin}
+        >
+          로그인
+        </BlueButton>
       </S.ClickBox>
     </S.TeacherLoginContent>
   );
