@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Tag } from "../components/TagInput";
-import State from "../interface/State";
+import { State } from "../interface";
 
 type Value = string | number;
 
@@ -13,7 +13,11 @@ interface InputProps {
 
 type Dispatch = [InputProps, State<Tag[]>];
 
-const useTagInput = (initValue?: Value, initTagValue?: Tag[], debug?: boolean): Dispatch => {
+const useTagInput = (
+  initValue?: Value,
+  initTagValue?: Tag[],
+  debug?: boolean
+): Dispatch => {
   const [value, setValue] = useState<Value>(initValue || "");
   const [tags, setTags] = useState<Tag[]>(initTagValue || []);
 
@@ -31,7 +35,10 @@ const useTagInput = (initValue?: Value, initTagValue?: Tag[], debug?: boolean): 
     setValue("");
   }, []);
 
-  return [{ onChange, value, clearValue, tagState: [tags, setTags] }, [tags, setTags]];
+  return [
+    { onChange, value, clearValue, tagState: [tags, setTags] },
+    [tags, setTags],
+  ];
 };
 
 export default useTagInput;

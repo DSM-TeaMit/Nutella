@@ -1,6 +1,6 @@
 import { FC } from "react";
 import useThemeContext from "../../../hooks/useThemeContext";
-import { ReportStatus } from "../../../interface/Report";
+import { ReportStatus } from "../../../interface";
 import { ReportType } from "../../../utils/api/User";
 import * as S from "./styles";
 
@@ -15,12 +15,14 @@ const ReportCard: FC<PropsType> = ({ data }) => {
   const colorMap = new Map<ReportStatus, string>()
     .set("ACCEPTED", theme.colors.green.default)
     .set("PENDING", theme.colors.grayscale.gray2)
-    .set("DECLINED", theme.colors.red.default);
+    .set("DECLINED", theme.colors.red.default)
+    .set("WRITING", theme.colors.grayscale.gray2);
 
   const messageMap = new Map<ReportStatus, string>()
     .set("ACCEPTED", "승인 됨")
     .set("PENDING", "승인 대기중")
-    .set("DECLINED", "승인 거부됨");
+    .set("DECLINED", "승인 거부됨")
+    .set("WRITING", "작성 중");
 
   return (
     <S.Container to={`/project/${uuid}/${type === "PLAN" ? "plan" : "result"}`}>

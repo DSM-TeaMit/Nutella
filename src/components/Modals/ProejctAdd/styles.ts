@@ -59,3 +59,9 @@ export const ButtonContainer = styled.div`
   justify-content: right;
   column-gap: 16px;
 `;
+
+export const MemberContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+`;

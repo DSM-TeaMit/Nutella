@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { PlanStatus } from "../../interface";
 
 export const Container = styled.div`
   display: flex;
@@ -148,6 +149,7 @@ export const Buttons = styled.div`
   margin-top: 24px;
   width: 100%;
   justify-content: right;
+  align-items: center;
 `;
 
 export const Message = styled.div`
@@ -160,4 +162,37 @@ export const Message = styled.div`
 export const Margin = styled.div`
   height: 80vh;
   padding-top: 120px;
+`;
+
+export const Status = styled.div<{ status: PlanStatus }>`
+  font: ${({ theme }) => theme.fonts.body2};
+  align-self: center;
+  color: ${({ status, theme }) => {
+    if (status === "ACCEPTED") {
+      return theme.colors.green.default;
+    }
+    if (status === "REJECTED") {
+      return theme.colors.red.default;
+    }
+
+    return theme.colors.grayscale.gray2;
+  }};
+`;
+
+export const OtherContainer = styled.div`
+  display: flex;
+  column-gap: 8px;
+  align-items: center;
+  margin-top: 16px;
+`;
+
+export const OtherLabel = styled.div`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.black};
+`;
+
+export const OtherLength = styled.div<{ length: number }>`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme, length }) =>
+    length >= 15 ? theme.colors.red.default : theme.colors.grayscale.gray2};
 `;

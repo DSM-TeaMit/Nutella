@@ -1,8 +1,12 @@
 import { FC, useEffect, useMemo } from "react";
-import { useImage } from "../queries/Image";
-import toast from "react-hot-toast";
+import { useImage } from "../../queries/Image";
+import * as S from "./styles";
 
-type PropsType = ImageProps & { emoji?: string };
+type PropsType = ImageProps & {
+  emoji?: string;
+  displayLoading?: boolean;
+  isProfile?: boolean;
+};
 
 type ImageProps = React.DetailedHTMLProps<
   React.ImgHTMLAttributes<HTMLImageElement>,
@@ -51,14 +55,7 @@ emojiUnicode.raw = function (input: string) {
 };
 
 const Img: FC<PropsType> = (props) => {
-  const propsWithoutSomething: Omit<PropsType, "src" | "emoji"> = useMemo(
-    () => ({
-      ...props,
-    }),
-    [props]
-  );
-
-  const { src, emoji } = props;
+  const { src, emoji, displayLoading, isProfile, ...rest } = props;
 
   const { data, isError, isLoading } = useImage(src || "");
   const unicode = useMemo(
@@ -70,30 +67,36 @@ const Img: FC<PropsType> = (props) => {
   );
 
   useEffect(() => {
-    if (isError && !emoji && !src) {
-      toast.error("이미지를 가져올 수 없습니다.");
-    }
-  }, [emoji, isError, src]);
-
-  if (isLoading) {
-    return <img {...propsWithoutSomething} alt={undefined} />;
-  }
+    console.log(src);
+  }, [src]);
 
   if (emoji) {
     return (
       <img
-        {...propsWithoutSomething}
+        {...rest}
         alt={undefined}
         src={`https://twitter.github.io/twemoji/v/13.1.0/svg/${unicode}.svg`}
       />
     );
   }
 
-  if (isError) {
-    return <img {...propsWithoutSomething} alt={undefined} />;
+  if (isProfile) {
+    return <img {...rest} src={src} alt={undefined} />;
   }
 
-  return <img {...propsWithoutSomething} src={data} />;
+  if (isLoading) {
+    if (displayLoading) {
+      return <S.Loading />;
+    }
+
+    return <img {...rest} alt={undefined} />;
+  }
+
+  if (isError) {
+    return <img {...rest} alt={undefined} />;
+  }
+
+  return <img {...rest} src={data} />;
 };
 
 export default Img;

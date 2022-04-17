@@ -15,7 +15,7 @@ import LIMIT from "../../../../constant/Limit";
 const Project = () => {
   const modalRef = useModalRef();
   const [page, setPage] = useState<number>(1);
-  const { data, isError, isLoading } = useMyProjects(page);
+  const { data, isError, isLoading, isFetching } = useMyProjects(page);
 
   const onProjectAddClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,7 +41,6 @@ const Project = () => {
       <Error message="오류 발생. 프로젝트를 가져올 수 없습니다. 다시 시도해주세요." />
     );
   }
-
   const { count, projects } = data!.data;
 
   return (
@@ -64,9 +63,14 @@ const Project = () => {
               ))}
             </I.Grid>
             {projects.length === 0 && (
-              <I.Message>프로젝트가 존재하지 않습니다.</I.Message>
+              <Fragment>
+                <I.Message>프로젝트가 존재하지 않습니다.</I.Message>
+                <I.Margin>
+                  <I.Add onClick={onProjectAddClick}>추가하기</I.Add>
+                </I.Margin>
+              </Fragment>
             )}
-            {isMore(LIMIT, page, count) && (
+            {!isFetching && isMore(LIMIT, page, count) && (
               <I.More onClick={() => setPage((prev) => prev + 1)}>
                 더 가져오기...
               </I.More>

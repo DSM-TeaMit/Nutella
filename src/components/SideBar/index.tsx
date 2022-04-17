@@ -1,6 +1,6 @@
 import Navigation from "./Navigation";
 import * as S from "./styles";
-import NavigationType from "../../interface/Navigation";
+import { NavigationType } from "../../interface";
 import { FC } from "react";
 import { UseQueryResult } from "react-query";
 import { MyProfileType, UserProfileType } from "../../utils/api/User";
@@ -20,7 +20,7 @@ const SideBar: FC<PropsType> = ({ navs, data: queryData }) => {
   return (
     <S.Container>
       <S.InfoContainer>
-        <S.ProfileImage alt="image" src={data?.data.thumbnailUrl} />
+        <S.ProfileImage alt="image" src={data?.data.thumbnailUrl} isProfile />
         {isError ? (
           <S.TextContainer>
             <S.Name>오류 발생</S.Name>

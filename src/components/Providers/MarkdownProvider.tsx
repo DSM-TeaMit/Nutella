@@ -5,7 +5,7 @@ import {
   Row,
 } from "../../context/MarkdownCotext";
 import uniqueId from "../../constant/UniqueId";
-import Tag from "../../interface/Tag";
+import { Tag } from "../../interface";
 import { postImage } from "../../utils/api/Image";
 import { getInitRows } from "../MarkdownEditor";
 import toast from "react-hot-toast";
@@ -228,11 +228,18 @@ const MarkdownProvider: FC<PropsType> = ({
           return;
         }
         try {
-          const { data: url } = await postImage(files[idx], projectUuid);
+          const { data: url } = await toast.promise(
+            postImage(files[idx], projectUuid),
+            {
+              loading: "이미지 업로드 중",
+              success: "이미지 업로드 성공",
+              error: "이미지 업로드 실패",
+            }
+          );
 
           urls.push(url);
         } catch (error) {
-          toast.error(`사진 ${files[idx].name} 업로드 실패`);
+          console.log(error);
         }
 
         idx++;

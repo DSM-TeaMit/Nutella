@@ -2,7 +2,7 @@ import * as S from "./styles";
 import { TeamIcons, PersonalIcons, ClubIcons } from "../../../assets/icons";
 import { ProjectType } from "../../../utils/api/User";
 import { FC, useCallback, useMemo } from "react";
-import ProjectTypes from "../../../interface/ProjectTypes";
+import { ProjectTypes } from "../../../interface";
 import { useNavigate } from "react-router-dom";
 
 interface PropsType {
@@ -65,6 +65,7 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
                   <S.UserImage
                     src={value.thumbnailUrl}
                     onClick={onMemberClick(value.uuid)}
+                    isProfile
                   />
                 </S.UserImageOuter>
               ))}

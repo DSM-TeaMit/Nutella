@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
-import ReportPathType from "../interface/ReportPathType";
+import { ReportPathType } from "../interface";
 import {
   getProfile,
   getUserGithub as getGithubReadme,
@@ -13,6 +13,7 @@ import {
   getMyReports,
   getEachReports,
   getHeader,
+  searchUser,
 } from "../utils/api/User";
 
 export const useMyProfile = () =>
@@ -85,3 +86,6 @@ export const useModifyGithubId = () =>
   );
 
 export const useHeader = () => useQuery([queryKeys.header], () => getHeader());
+
+export const useSeachUser = () =>
+  useMutation((name: string) => searchUser(name));

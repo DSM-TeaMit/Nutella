@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from "react";
 import uniqueId from "../../constant/UniqueId";
-import State from "../../interface/State";
+import { State } from "../../interface";
 import * as S from "./styles";
 
 export interface Tag {
@@ -10,7 +10,7 @@ export interface Tag {
 
 export interface PropsType {
   clearValue: () => void;
-  tagState: State<Tag[]>;
+  tagState: State<Tag[]> | [Tag[], (tags: Tag[]) => void];
 }
 
 const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement> & PropsType> = (

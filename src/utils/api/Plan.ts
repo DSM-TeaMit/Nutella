@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { getInitRows } from "../../components/MarkdownEditor";
 import Uri from "../../constant/Uri";
 import { Row } from "../../context/MarkdownCotext";
-import ProjectTypes from "../../interface/ProjectTypes";
+import { ProjectTypes, PlanStatus, RequestorType } from "../../interface";
 import request from "../axios";
 
 export interface Includes {
@@ -21,19 +21,18 @@ export interface MemberWithRole extends Member {
   role: string;
 }
 
-export type Requestor = "USER_EDITABLE" | "USER_NON_EDITABLE" | "ADMIN";
-
 interface PlanType {
   projectName: string;
   projectType: ProjectTypes;
   startDate: string;
   endDate: string;
-  requestorType: Requestor;
+  requestorType: RequestorType;
   writer: Member;
   members: MemberWithRole[];
   goal: string;
   content: string;
   includes: Includes;
+  status: PlanStatus;
 }
 
 interface Uuid {
@@ -45,12 +44,13 @@ export interface ParsedPlanType {
   projectType: ProjectTypes;
   startDate: Date;
   endDate: Date;
-  requestorType: Requestor;
+  requestorType: RequestorType;
   writer: Member;
   members: MemberWithRole[];
   goal: Row[];
   content: Row[];
   includes: Includes;
+  status: PlanStatus;
 }
 
 export interface ModifyPlan {
@@ -98,16 +98,11 @@ export const getPlanReport = async (projectUuid: string) => {
   const { data } = response;
 
   const result: ParsedPlanType = {
-    projectName: data.projectName,
-    projectType: data.projectType,
-    members: data.members,
-    writer: data.writer,
-    requestorType: data.requestorType,
+    ...data,
     startDate: new Date(data.startDate),
     endDate: new Date(data.endDate),
     goal: JSON.parse(data.goal) as Row[],
     content: JSON.parse(data.content) as Row[],
-    includes: data.includes,
   };
 
   result.includes.others =
@@ -139,7 +134,11 @@ export const modifyPlanReport = async (
     includes: data.includes,
   };
 
-  return await request.patch<
+  if (requestData.includes.others === "") {
+    requestData.includes.others = undefined;
+  }
+
+  return await request.post<
     unknown,
     AxiosResponse<unknown, unknown>,
     ModifyPlan

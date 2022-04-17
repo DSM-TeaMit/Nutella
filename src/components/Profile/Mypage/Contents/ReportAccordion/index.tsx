@@ -3,9 +3,8 @@ import { UpArrowIcons } from "../../../../../assets/icons";
 import ReportCard from "../../../../Cards/ReportCard";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Reports } from "../../../../../utils/api/User";
-import { ReportStatus } from "../../../../../interface/Report";
+import { ReportStatus, ReportPathType } from "../../../../../interface";
 import isMore from "../../../../../constant/IsMore";
-import ReportPathType from "../../../../../interface/ReportPathType";
 import { useEachReports } from "../../../../../queries/User";
 import LIMIT from "../../../../../constant/Limit";
 
@@ -14,6 +13,7 @@ interface PropsType {
   data: Reports;
   status: ReportStatus;
   userUuid?: string;
+  value?: boolean;
 }
 
 const padding = 12 as const;
@@ -22,10 +22,17 @@ const gap = 16 as const;
 const pathMap = new Map<ReportStatus, ReportPathType>()
   .set("PENDING", "pending")
   .set("ACCEPTED", "accepted")
-  .set("DECLINED", "rejected");
+  .set("DECLINED", "rejected")
+  .set("WRITING", "writing");
 
-const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
-  const [isActive, setIsActive] = useState<boolean>(false);
+const ReportAccordion: FC<PropsType> = ({
+  title,
+  data,
+  status,
+  userUuid,
+  value,
+}) => {
+  const [isActive, setIsActive] = useState<boolean>(value || false);
   const container = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
@@ -35,7 +42,7 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
 
   const { count, projects: reports } = data;
 
-  const { data: eachData } = useEachReports(
+  const { data: eachData, isFetching } = useEachReports(
     pathType,
     page,
     queryEnabled,
@@ -68,6 +75,14 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
     setPage((prev) => prev + 1);
   }, [queryEnabled]);
 
+  const isMorePage = useMemo(() => {
+    if (page === 2 && LIMIT * page <= count && !queryEnabled) {
+      return true;
+    }
+
+    return isMore(LIMIT, page, count);
+  }, [count, page, queryEnabled]);
+
   return (
     <S.Container ref={container}>
       <div ref={header}>
@@ -88,13 +103,19 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid }) => {
       <S.ContentContainer isActive={isActive} ref={content}>
         <S.Grid>
           {reports.map((value) => (
-            <ReportCard key={value.uuid} data={{ ...value, status }} />
+            <ReportCard
+              key={`${value.uuid}_${value.type}`}
+              data={{ ...value, status }}
+            />
           ))}
           {eachData?.data[pathType].projects.map((value) => (
-            <ReportCard key={value.uuid} data={{ ...value, status }} />
+            <ReportCard
+              key={`${value.uuid}_${value.type}`}
+              data={{ ...value, status }}
+            />
           ))}
         </S.Grid>
-        {isMore(LIMIT, page, count) && (
+        {!isFetching && isMorePage && (
           <S.More onClick={onMore}>더 가져오기</S.More>
         )}
       </S.ContentContainer>

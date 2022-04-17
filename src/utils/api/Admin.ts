@@ -1,5 +1,5 @@
 import Uri from "../../constant/Uri";
-import request from "../axios";
+import request, { instance } from "../axios";
 
 export interface LoginType {
   id: string;
@@ -7,7 +7,7 @@ export interface LoginType {
 }
 
 export const postAdminLogin = async (data: LoginType) => {
-  return await request.post(Uri.login.get(), data);
+  return await instance.post(Uri.login.get(), data);
 };
 
 export interface Accounts {
@@ -38,4 +38,10 @@ export const postAccount = async (data: AccountData) => {
   const uri = Uri.register.get();
 
   return await request.post(uri, data);
+};
+
+export const deleteAdminAccount = async (adminUuid: string) => {
+  const uri = Uri.admin.get({ adminUuid });
+
+  return await request.delete(uri);
 };

@@ -63,7 +63,7 @@ const Image: FC<PropsType> = ({ item }) => {
   return (
     <S.Container>
       <S.ImgContainer ref={ref}>
-        <S.Image src={item.text} />
+        <S.Image src={item.text} displayLoading />
         {isSelected && <S.Overlay />}
       </S.ImgContainer>
     </S.Container>

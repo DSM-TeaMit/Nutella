@@ -1,10 +1,15 @@
-import { Fragment } from "react";
+import { FC, Fragment } from "react";
 import useModalRef from "../../../hooks/useModalRef";
+import { Members } from "../../../utils/api/ProjectDetails";
 import ModalPortal from "../../ModalPortal";
 import ProjectMemberModifyModal from "../../Modals/ProjectMemberModify";
 import * as S from "./styles";
 
-const Aside = () => {
+interface PropsType {
+  data: Members[] | undefined;
+}
+
+const Aside: FC<PropsType> = ({ data }) => {
   const modalRef = useModalRef();
 
   return (
@@ -12,7 +17,7 @@ const Aside = () => {
       <S.AsideContainer>
         <S.AsideTop>
           <S.Title>
-            멤버 <span>3</span>
+            멤버 <span>{data?.length}</span>
           </S.Title>
           <S.SubTitle
             onClick={(e) => {
@@ -24,31 +29,21 @@ const Aside = () => {
           </S.SubTitle>
         </S.AsideTop>
         <S.AsideContent>
-          <S.RoleBox>
-            <S.RoleTitle>프론트 엔드</S.RoleTitle>
-            <S.User>
-              <img src=""></img>
-              <span>2105 김진근</span>
-            </S.User>
-            <S.User>
-              <img src=""></img>
-              <span>2107 김해교</span>
-            </S.User>
-          </S.RoleBox>
-          <S.RoleBox>
-            <S.RoleTitle>백 엔드</S.RoleTitle>
-            <S.User>
-              <img src=""></img>
-              <span>2405 박준형</span>
-            </S.User>
-          </S.RoleBox>
-          <S.RoleBox>
-            <S.RoleTitle>디자인</S.RoleTitle>
-            <S.User>
-              <img src=""></img>
-              <span>2105 김진근</span>
-            </S.User>
-          </S.RoleBox>
+          {data?.map((item) => {
+            return (
+              <>
+                <S.RoleBox>
+                  <S.RoleTitle>{item.role}</S.RoleTitle>
+                  <S.User to={`/user/${item.uuid}`}>
+                    <img src={item.thumbnailUrl}></img>
+                    <span>
+                      {item.studentNo} {item.name}
+                    </span>
+                  </S.User>
+                </S.RoleBox>
+              </>
+            );
+          })}
         </S.AsideContent>
       </S.AsideContainer>
       <ModalPortal ref={modalRef}>

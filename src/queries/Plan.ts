@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import toast from "react-hot-toast";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import {
   createPlanReport,
@@ -13,8 +13,23 @@ import {
 export const useCreatePlanMutation = (projectUuid: string) =>
   useMutation(() => createPlanReport(projectUuid));
 
-export const usePlanMutation = (projectUuid: string) =>
-  useMutation((data: ParsedPlanType) => modifyPlanReport(projectUuid, data));
+export const usePlanMutation = (projectUuid: string) => {
+  const queryClient = useQueryClient();
+
+  const onError = useCallback(() => {
+    queryClient.invalidateQueries([queryKeys.planDetail, projectUuid]);
+  }, [projectUuid, queryClient]);
+
+  return useMutation(
+    (data: ParsedPlanType) =>
+      toast.promise(modifyPlanReport(projectUuid, data), {
+        loading: "저장 중",
+        success: "저장 성공",
+        error: "저장 실패",
+      }),
+    { onError }
+  );
+};
 
 export const usePlan = (
   projectUuid: string,
@@ -32,23 +47,27 @@ export const usePlan = (
     onSuccess,
     refetchInterval: false,
     refetchIntervalInBackground: false,
-    refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
   });
 };
 
 export const useSubmitPlanMutation = (projectUuid: string) => {
+  const queryClient = useQueryClient();
+
   const onSuccess = useCallback(() => {
-    toast.success("제출 완료.");
-  }, []);
+    queryClient.invalidateQueries(queryKeys.planDetail);
+  }, [queryClient]);
 
-  const onError = useCallback(() => {
-    toast.error("제출 실패. 다시 시도해주세요.");
-  }, []);
-
-  return useMutation(() => submitPlanReport(projectUuid), {
-    onSuccess,
-    onError,
-  });
+  return useMutation(
+    () =>
+      toast.promise(submitPlanReport(projectUuid), {
+        success: "제출 완료.",
+        error: "제출 실패. 다시 시도해주세요.",
+        loading: "제출 중...",
+      }),
+    {
+      onSuccess,
+    }
+  );
 };

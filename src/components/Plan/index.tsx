@@ -1,4 +1,4 @@
-import {
+import React, {
   Fragment,
   useCallback,
   useEffect,
@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Row } from "../../context/MarkdownCotext";
 import useModalRef from "../../hooks/useModalRef";
 import {
@@ -15,18 +15,20 @@ import {
   useSubmitPlanMutation,
 } from "../../queries/Plan";
 import { Includes, ParsedPlanType } from "../../utils/api/Plan";
-import BlueButton from "../Buttons/BlueButton";
-import BorderButton from "../Buttons/BorderButton";
+import { BlueButton, BorderButton, RedButton } from "../Buttons";
 import CheckBox, { CheckBoxMouseEvent } from "../CheckBox";
 import CommentContainer from "../CommentContainer";
 import MarkdownEditor, { MarkdownEditorRef } from "../MarkdownEditor";
 import ModalPortal from "../ModalPortal";
 import DatePicker, { DateState } from "../Modals/DatePicker";
 import * as S from "./styles";
-import toast from "react-hot-toast";
-import RedButton from "../Buttons/RedButton";
 import { useConfirmReport } from "../../queries/Project";
 import useTitle from "../../hooks/useTitle";
+import reportStatusMessage from "../../constant/ReportStatusMessage";
+import { PlanStatus } from "../../interface";
+import Input from "../Input";
+import { useReactToPrint } from "react-to-print";
+import axios from "axios";
 
 const dateToString = (date?: Date): string => {
   if (!date) {
@@ -57,7 +59,17 @@ const Plan = () => {
 
   const [plan, setPlan] = useState<ParsedPlanType | undefined>(undefined);
   const planMutation = usePlanMutation(uuid!);
-  const { isLoading, isError, isFetched } = usePlan(uuid!, setPlan, onFetching);
+  const { isLoading, isError, isFetched, error } = usePlan(
+    uuid!,
+    setPlan,
+    onFetching
+  );
+
+  const planReportRef = useRef<HTMLDivElement>(null);
+  const handlePrint = useReactToPrint({
+    content: () => planReportRef.current,
+    documentTitle: `${plan?.projectName} 계획서`,
+  });
 
   useTitle(isError ? "오류 발생" : `${plan?.projectName || ""} 계획서`);
 
@@ -68,12 +80,10 @@ const Plan = () => {
 
     planMutation.mutate(plan, {
       onSuccess: () => {
-        toast.success("저장 성공");
         autoSaveTimer.current = null;
         canSave.current = false;
       },
       onError: () => {
-        toast.error("저장 실패");
         autoSaveTimer.current = null;
         canSave.current = false;
       },
@@ -81,7 +91,7 @@ const Plan = () => {
   }, [isFetched, plan, planMutation]);
 
   const autoSave = useCallback(() => {
-    if (!canSave.current || !plan || !isFetched) {
+    if (!canSave.current || !plan || !isFetched || planMutation.isLoading) {
       return;
     }
 
@@ -91,7 +101,7 @@ const Plan = () => {
     }
 
     autoSaveTimer.current = setTimeout(save, 3000);
-  }, [isFetched, plan, save]);
+  }, [isFetched, plan, planMutation.isLoading, save]);
 
   const dates = useMemo<DateState>(
     () => ({ start: plan?.startDate, end: plan?.endDate }),
@@ -151,11 +161,18 @@ const Plan = () => {
     setPlan({ ...plan, includes });
   }, [plan]);
 
+  const cantEdit = useMemo(
+    () =>
+      plan?.requestorType !== "USER_EDITABLE" ||
+      (["ACCEPTED", "PENDING"] as PlanStatus[]).includes(plan.status),
+    [plan]
+  );
+
   useEffect(() => {
-    if (plan?.requestorType === "USER_EDITABLE") {
+    if (!cantEdit) {
       autoSave();
     }
-  }, [autoSave, plan]);
+  }, [autoSave, cantEdit, plan]);
 
   const memberList = useMemo(
     () =>
@@ -186,6 +203,32 @@ const Plan = () => {
     []
   );
 
+  const onOthersChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!plan || e.target.value.length > 15) {
+        return;
+      }
+
+      const includes = { ...plan.includes, others: e.target.value };
+
+      canSave.current = true;
+      setPlan({ ...plan, includes });
+    },
+    [plan]
+  );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (
+      isError &&
+      axios.isAxiosError(error) &&
+      error.response?.status === 404
+    ) {
+      navigate("/404");
+    }
+  }, [error, isError, navigate]);
+
   if (isLoading) {
     return (
       <S.Margin>
@@ -210,7 +253,7 @@ const Plan = () => {
     <Fragment>
       <S.Container>
         <div>
-          <S.ContentContainer>
+          <S.ContentContainer ref={planReportRef}>
             <S.ContentInner>
               <S.Title>
                 {plan?.projectType === "PERS" ? "개인" : "팀 / 동아리"} 프로젝트
@@ -222,16 +265,27 @@ const Plan = () => {
               </S.RowContainer>
               <S.RowContainer>
                 <S.RowTitle>진행 기간</S.RowTitle>
-                <S.Time
-                  placeholder="시간을 선택해주세요..."
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    modalRef.current?.show();
-                  }}
-                >
-                  {dates &&
-                    `${dateToString(dates.start)} ~ ${dateToString(dates.end)}`}
-                </S.Time>
+                {cantEdit ? (
+                  <S.RowLineContent>
+                    {dates &&
+                      `${dateToString(dates.start)} ~ ${dateToString(
+                        dates.end
+                      )}`}
+                  </S.RowLineContent>
+                ) : (
+                  <S.Time
+                    placeholder="시간을 선택해주세요..."
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      modalRef.current?.show();
+                    }}
+                  >
+                    {dates &&
+                      `${dateToString(dates.start)} ~ ${dateToString(
+                        dates.end
+                      )}`}
+                  </S.Time>
+                )}
               </S.RowContainer>
               <S.RowContainer>
                 <S.RowTitle>신청자</S.RowTitle>
@@ -241,7 +295,7 @@ const Plan = () => {
               </S.RowContainer>
               {plan?.projectType !== "PERS" && (
                 <S.RowContainer>
-                  <S.RowTitle>프로젝트 및 팀원 역할</S.RowTitle>
+                  <S.RowTitle>팀원 역할</S.RowTitle>
                   <S.Members>{memberList}</S.Members>
                 </S.RowContainer>
               )}
@@ -249,7 +303,7 @@ const Plan = () => {
                 <S.RowTitle>프로젝트 목표</S.RowTitle>
                 <S.RowMutiLineContent>
                   <MarkdownEditor
-                    disabled={plan?.requestorType !== "USER_EDITABLE"}
+                    disabled={cantEdit}
                     rows={goalRows}
                     setRows={setRows("goal")}
                     ref={goalRef}
@@ -260,7 +314,7 @@ const Plan = () => {
                 <S.RowTitle>프로젝트 내용</S.RowTitle>
                 <S.RowMutiLineContent>
                   <MarkdownEditor
-                    disabled={plan?.requestorType !== "USER_EDITABLE"}
+                    disabled={cantEdit}
                     ref={contentRef}
                     rows={contentRows}
                     setRows={setRows("content")}
@@ -274,38 +328,59 @@ const Plan = () => {
                   (해당사항 체크)
                 </S.RowTitle>
                 <S.RowLineContent>
-                  <S.CheckBoxContianer>
-                    <CheckBox
-                      isActive={plan?.includes.report || false}
-                      name="report"
-                      onClick={onIncludesClick}
-                    >
-                      결과 보고서
-                    </CheckBox>
-                    <CheckBox
-                      isActive={plan?.includes.code || false}
-                      name="code"
-                      onClick={onIncludesClick}
-                    >
-                      프로그램 코드
-                    </CheckBox>
-                    <CheckBox
-                      isActive={plan?.includes.outcome || false}
-                      name="outcome"
-                      onClick={onIncludesClick}
-                    >
-                      실행물 (영상 또는 사진)
-                    </CheckBox>
-                    <CheckBox
-                      isActive={
-                        plan?.includes.others !== undefined ? true : false
-                      }
-                      name="others"
-                      onClick={onOtherClick}
-                    >
-                      기타
-                    </CheckBox>
-                  </S.CheckBoxContianer>
+                  <div>
+                    <S.CheckBoxContianer>
+                      <CheckBox
+                        isActive={plan?.includes.report || false}
+                        name="report"
+                        onClick={onIncludesClick}
+                        disabled={cantEdit}
+                      >
+                        결과 보고서
+                      </CheckBox>
+                      <CheckBox
+                        isActive={plan?.includes.code || false}
+                        name="code"
+                        onClick={onIncludesClick}
+                        disabled={cantEdit}
+                      >
+                        프로그램 코드
+                      </CheckBox>
+                      <CheckBox
+                        isActive={plan?.includes.outcome || false}
+                        name="outcome"
+                        onClick={onIncludesClick}
+                        disabled={cantEdit}
+                      >
+                        실행물 (영상 또는 사진)
+                      </CheckBox>
+                      <CheckBox
+                        isActive={
+                          plan?.includes.others !== undefined ? true : false
+                        }
+                        name="others"
+                        onClick={onOtherClick}
+                        disabled={cantEdit}
+                      >
+                        기타
+                      </CheckBox>
+                    </S.CheckBoxContianer>
+                    {plan?.includes.others !== undefined && (
+                      <S.OtherContainer>
+                        <S.OtherLabel>기타 :&nbsp;</S.OtherLabel>
+                        <Input
+                          value={plan?.includes.others}
+                          onChange={onOthersChange}
+                          disabled={cantEdit}
+                        />
+                        {!cantEdit && (
+                          <S.OtherLength length={plan.includes.others.length}>
+                            {plan.includes.others.length} / 15
+                          </S.OtherLength>
+                        )}
+                      </S.OtherContainer>
+                    )}
+                  </div>
                 </S.RowLineContent>
               </S.RowContainer>
               <S.RowContainer>
@@ -326,10 +401,20 @@ const Plan = () => {
             </S.ContentInner>
           </S.ContentContainer>
           <S.Buttons>
-            <BorderButton>PDF로 저장</BorderButton>
+            {plan && (
+              <S.Status status={plan.status}>
+                {reportStatusMessage.get(plan.status)}
+              </S.Status>
+            )}
+            <BorderButton onClick={handlePrint}>PDF로 저장</BorderButton>
             {plan?.requestorType === "USER_EDITABLE" && (
               <BlueButton
-                disabled={submitMutation.isLoading}
+                disabled={
+                  submitMutation.isLoading ||
+                  (["ACCEPTED", "PENDING"] as PlanStatus[]).includes(
+                    plan.status
+                  )
+                }
                 onClick={confirmOnClick("제출하시겠습니까?", () =>
                   submitMutation.mutate()
                 )}
@@ -337,7 +422,7 @@ const Plan = () => {
                 제출
               </BlueButton>
             )}
-            {plan?.requestorType === "ADMIN" && (
+            {plan?.requestorType === "ADMIN" && plan.status === "PENDING" && (
               <Fragment>
                 <RedButton
                   disabled={confirmMutation.isLoading}
