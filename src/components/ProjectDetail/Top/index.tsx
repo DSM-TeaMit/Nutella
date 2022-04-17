@@ -1,28 +1,82 @@
 import * as S from "./styles";
-import { ProfileIcons, ViewIcons } from "../../../assets/icons";
+import {
+  ClubIcons,
+  PersonalIcons,
+  TeamIcons,
+  ViewIcons,
+} from "../../../assets/icons";
 import ProjectModifyModal from "../../Modals/ProjectInfoModify";
-import { Fragment } from "react";
+import { FC, Fragment, Key } from "react";
 import ModalPortal from "../../ModalPortal";
 import useModalRef from "../../../hooks/useModalRef";
+import { Project } from "../../../utils/api/ProjectDetails";
+import { ProjectTypes, ProjectLabel, ProjectStatus } from "../../../interface";
 
-const Top = () => {
-  const Field = ["웹", "보안", "임베디드", "대마고"];
+interface PropsType {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: Project | any;
+}
+
+interface ProjectStatusText {
+  text: string;
+}
+
+const Top: FC<PropsType> = ({ data }) => {
   const modalRef = useModalRef();
+
+  const projectType = new Map<ProjectTypes, ProjectLabel>()
+    .set("PERS", {
+      icon: PersonalIcons,
+      text: "개인 프로젝트",
+    })
+    .set("CLUB", {
+      icon: ClubIcons,
+      text: "동아리 프로젝트",
+    })
+    .set("TEAM", {
+      icon: TeamIcons,
+      text: "팀 프로젝트",
+    });
+
+  const projectTypeData = projectType.get(data?.projectType);
+
+  const projectStatus = new Map<ProjectStatus, ProjectStatusText>()
+    .set("PLANNING", {
+      text: "계획중...",
+    })
+    .set("PENDING(PLAN)", {
+      text: "계획 승인 대기중...",
+    })
+    .set("REPORTING", {
+      text: "보고서 작성중...",
+    })
+    .set("PENDING(REPORT)", {
+      text: "보고서 승인 대기중...",
+    })
+    .set("DONE", {
+      text: "완성된 프로젝트입니다.",
+    });
+
+  const projectStatusData = projectStatus.get(data?.projectStatus);
 
   return (
     <Fragment>
       <S.TopContainer>
         <S.TopContent>
-          <S.ProjectImg alt="" src="" />
+          <S.ProjectImg
+            alt="프로젝트 이미지"
+            src={data?.thumbnailUrl}
+            emoji={data?.emoji}
+          />
           <div>
             <S.ProjectTop>
-              <S.ProjectName>Teamit</S.ProjectName>
+              <S.ProjectName>{data?.projectName}</S.ProjectName>
               <S.ProjectRincian>
                 <div>
                   <img src={ViewIcons} />
-                  <S.Font>123</S.Font>
-                  <img src={ProfileIcons} />
-                  <S.Font>팀 프로젝트</S.Font>
+                  <S.Font>{data?.projectView}</S.Font>
+                  <img alt="프로젝트 아이콘" src={projectTypeData?.icon} />
+                  <S.Font>{projectTypeData?.text}</S.Font>
                 </div>
                 <S.Modify
                   onClick={(e) => {
@@ -35,17 +89,21 @@ const Top = () => {
               </S.ProjectRincian>
             </S.ProjectTop>
             <S.ProjectContent>
-              사면·감형 및 복권에 관한 사항은 법률로 정한다. 모든 국민은 주거의
-              자유를 침해받지 아니한다. 주거에 대한 압수나 수색을 할 때에는
-              검사의 신청에 의하여 법관이 발부한 영장을 제시하여야 한다.
+              {data?.projectDescription === null ? (
+                <div>프로젝트 소개가 없습니다.</div>
+              ) : (
+                data?.projectDescription
+              )}
             </S.ProjectContent>
             <S.ProjectBottom>
               <div>
-                {Field.map((data, index) => {
-                  return <S.Field key={index}>{data}</S.Field>;
-                })}
+                {data?.projectField
+                  .split(",")
+                  .map((item: string, index: Key | null | undefined) => {
+                    return <S.Field key={index}>{item}</S.Field>;
+                  })}
               </div>
-              <S.Step>계획중...</S.Step>
+              <S.Step>{projectStatusData?.text}</S.Step>
             </S.ProjectBottom>
           </div>
         </S.TopContent>

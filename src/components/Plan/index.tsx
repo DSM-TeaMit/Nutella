@@ -295,7 +295,7 @@ const Plan = () => {
               </S.RowContainer>
               {plan?.projectType !== "PERS" && (
                 <S.RowContainer>
-                  <S.RowTitle>프로젝트 및 팀원 역할</S.RowTitle>
+                  <S.RowTitle>팀원 역할</S.RowTitle>
                   <S.Members>{memberList}</S.Members>
                 </S.RowContainer>
               )}

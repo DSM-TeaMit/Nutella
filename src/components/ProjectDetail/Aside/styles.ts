@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
 export const AsideContainer = styled.div`
   width: 302px;
@@ -46,10 +47,12 @@ export const RoleTitle = styled.div`
   margin-bottom: 12px;
 `;
 
-export const User = styled.div`
+export const User = styled(Link)`
   display: fixed;
   height: 40px;
   padding: 4px;
+  text-decoration: none;
+  user-select: none;
   img {
     width: 32px;
     height: 32px;
