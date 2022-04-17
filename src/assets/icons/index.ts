@@ -15,3 +15,5 @@ export { default as CheckIcons } from "./check.svg";
 export { default as LeftArrow } from "./leftArrow.svg";
 export { default as PlusIcons } from "./plus.svg";
 export { default as MoreIcons } from "./more.svg";
+export { default as EyeOffIcons } from "./eye_off.svg";
+export { default as EyeOnIcons } from "./eye_on.svg";
