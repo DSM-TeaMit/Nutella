@@ -1,6 +1,6 @@
 import * as S from "./styles";
 import { Link, useNavigate } from "react-router-dom";
-import { LeftArrow } from "../../assets/icons";
+import { LeftArrow, EyeOffIcons, EyeOnIcons } from "../../assets/icons";
 import { BlueButton } from "../Buttons";
 import Input from "../Input";
 import useInputs, { NameTypes } from "../../hooks/useInputs";
@@ -10,7 +10,7 @@ import storageKeys from "../../constant/StorageKeys";
 import { AxiosResponse } from "axios";
 import { TokenType } from "../../utils/api/Signup";
 import useTitle from "../../hooks/useTitle";
-
+import { useState } from "react";
 interface InputType extends NameTypes {
   id: string;
   password: string;
@@ -18,6 +18,7 @@ interface InputType extends NameTypes {
 
 const TeacherLogin = () => {
   const navigate = useNavigate();
+  const [passwordView, setPasswordView] = useState<boolean>(false);
   const adminLoginMutation = useAdminLogin();
   const [inputProps, [inputs, setInputs]] = useInputs<InputType>({
     id: "",
@@ -66,10 +67,17 @@ const TeacherLogin = () => {
       </S.Box>
       <S.Box>
         <S.SubTitle>비밀번호</S.SubTitle>
-        <Input
-          placeholder="비밀번호를 입력해 주세요..."
-          {...inputProps["password"]}
-        />
+        <S.InputBox>
+          <Input
+            type={passwordView ? "text" : "password"}
+            placeholder="비밀번호를 입력해 주세요..."
+            {...inputProps["password"]}
+          />
+          <img
+            src={passwordView ? EyeOnIcons : EyeOffIcons}
+            onClick={() => setPasswordView(!passwordView)}
+          />
+        </S.InputBox>
       </S.Box>
       <S.ClickBox>
         <Link to="/">
@@ -78,7 +86,12 @@ const TeacherLogin = () => {
             <span>학생 로그인</span>
           </S.LoginText>
         </Link>
-        <BlueButton onClick={onLogin}>로그인</BlueButton>
+        <BlueButton
+          disabled={inputs.id === "" || inputs.password === ""}
+          onClick={onLogin}
+        >
+          로그인
+        </BlueButton>
       </S.ClickBox>
     </S.TeacherLoginContent>
   );

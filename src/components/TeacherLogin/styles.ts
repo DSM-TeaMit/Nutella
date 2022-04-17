@@ -24,6 +24,20 @@ export const SubTitle = styled.div`
   margin-bottom: 12px;
 `;
 
+export const InputBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  img {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    bottom: 9px;
+    opacity: 0.2;
+  }
+`;
+
 export const ClickBox = styled(Box)`
   display: flex;
   a {
