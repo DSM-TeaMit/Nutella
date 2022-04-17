@@ -6,7 +6,6 @@ export { default as DocumentIcons } from "./document.svg";
 export { default as GithubBlackIcons } from "./github_black.svg";
 export { default as GithubIcons } from "./github.svg";
 export { default as PersonalIcons } from "./personal.svg";
-export { default as ProfileIcons } from "./profile.svg";
 export { default as RightArrowIcons } from "./rightArrow.svg";
 export { default as SettingIcons } from "./setting.svg";
 export { default as TeamIcons } from "./team.svg";
