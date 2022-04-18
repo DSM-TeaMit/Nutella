@@ -21,13 +21,20 @@ const Feed = () => {
     fetchNextPage,
     isFetchingNextPage,
   } = useFeed(orderName, initPage);
-  const [page, setPage] = useState<number>(
-    Number(
-      data && data.pageParams.length > 0
-        ? data.pageParams[data.pageParams.length - 1]
-        : initPage
-    )
-  );
+
+  const prevPage: number = useMemo(() => {
+    if (
+      !data ||
+      data.pageParams.length <= 0 ||
+      data.pageParams[data.pageParams.length - 1] === undefined
+    ) {
+      return initPage;
+    }
+
+    return Number(data.pageParams[data.pageParams.length - 1]);
+  }, [data]);
+
+  const [page, setPage] = useState<number>(prevPage);
 
   const list = useMemo(() => {
     if (!data) {

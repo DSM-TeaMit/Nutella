@@ -46,13 +46,20 @@ const ReportAccordion: FC<PropsType> = ({
     isFetching,
     fetchNextPage,
   } = useEachReports(pathType, initPage, userUuid);
-  const [page, setPage] = useState<number>(
-    Number(
-      eachData && eachData.pageParams.length > 0
-        ? eachData.pageParams[eachData.pageParams.length - 1]
-        : initPage
-    )
-  );
+
+  const prevPage: number = useMemo(() => {
+    if (
+      !eachData ||
+      eachData.pageParams.length <= 0 ||
+      eachData.pageParams[eachData.pageParams.length - 1] === undefined
+    ) {
+      return initPage;
+    }
+
+    return Number(eachData.pageParams[eachData.pageParams.length - 1]);
+  }, [eachData]);
+
+  const [page, setPage] = useState<number>(prevPage);
 
   useEffect(() => {
     if (container.current && header.current && content.current) {
