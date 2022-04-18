@@ -77,7 +77,7 @@ const Img: FC<PropsType> = (props) => {
   }
 
   if (isProfile) {
-    return <img {...rest} src={src} alt={undefined} />;
+    return <img {...rest} src={src} crossOrigin="anonymous" alt={undefined} />;
   }
 
   if (isLoading) {
