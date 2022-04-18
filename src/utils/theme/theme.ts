@@ -69,15 +69,15 @@ export const colors: Color = {
 };
 
 export const fonts: Font = {
-  h1: `bold 2.25rem 'Noto Sans KR', 'sans-serif'`,
-  h2: `bold 1.75rem 'Noto Sans KR', 'sans-serif'`,
-  h3: `bold 1.5rem 'Noto Sans KR', 'sans-serif'`,
-  subtitle1: `500 1.25rem 'Noto Sans KR', 'sans-serif'`,
-  subtitle2: `500 1.125rem 'Noto Sans KR', 'sans-serif'`,
-  body1: `bold 1rem 'Noto Sans KR', 'sans-serif'`,
-  body2: `500 1rem 'Noto Sans KR', 'sans-serif'`,
-  body3: `400 1rem 'Noto Sans KR', 'sans-serif'`,
-  description: `400 0.75rem 'Noto Sans KR', 'sans-serif'`,
+  h1: `bold 2.25rem 'Noto Sans KR', 'Apple SD Gothic Neo', 'sans-serif'`,
+  h2: `bold 1.75rem 'Noto Sans KR', 'Apple SD Gothic Neo', 'sans-serif'`,
+  h3: `bold 1.5rem 'Noto Sans KR', 'Apple SD Gothic Neo', 'sans-serif'`,
+  subtitle1: `500 1.25rem 'Noto Sans KR', 'Apple SD Gothic Neo', 'sans-serif'`,
+  subtitle2: `500 1.125rem 'Noto Sans KR', 'Apple SD Gothic Neo', 'sans-serif'`,
+  body1: `bold 1rem 'Noto Sans KR', 'Apple SD Gothic Neo', 'sans-serif'`,
+  body2: `500 1rem 'Noto Sans KR', 'Apple SD Gothic Neo', 'sans-serif'`,
+  body3: `400 1rem 'Noto Sans KR', 'Apple SD Gothic Neo', 'sans-serif'`,
+  description: `400 0.75rem 'Noto Sans KR', 'Apple SD Gothic Neo', 'sans-serif'`,
 };
 
 const filters: Color = {
@@ -108,11 +108,14 @@ const filters: Color = {
       "invert(100%) sepia(1%) saturate(4453%) hue-rotate(172deg) brightness(98%) contrast(97%)",
     lightGray2:
       "invert(95%) sepia(4%) saturate(689%) hue-rotate(184deg) brightness(102%) contrast(85%)",
-    gray1: "invert(95%) sepia(4%) saturate(784%) hue-rotate(175deg) brightness(81%) contrast(88%)",
-    gray2: "invert(48%) sepia(16%) saturate(218%) hue-rotate(164deg) brightness(94%) contrast(88%)",
+    gray1:
+      "invert(95%) sepia(4%) saturate(784%) hue-rotate(175deg) brightness(81%) contrast(88%)",
+    gray2:
+      "invert(48%) sepia(16%) saturate(218%) hue-rotate(164deg) brightness(94%) contrast(88%)",
     darkGray:
       "invert(30%) sepia(17%) saturate(186%) hue-rotate(164deg) brightness(92%) contrast(91%)",
-    black: "invert(6%) sepia(6%) saturate(1212%) hue-rotate(169deg) brightness(91%) contrast(86%)",
+    black:
+      "invert(6%) sepia(6%) saturate(1212%) hue-rotate(169deg) brightness(91%) contrast(86%)",
   },
   background:
     "invert(100%) sepia(3%) saturate(3901%) hue-rotate(173deg) brightness(100%) contrast(99%)",

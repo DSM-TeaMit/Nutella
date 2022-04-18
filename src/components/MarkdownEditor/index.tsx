@@ -5,7 +5,7 @@ import {
   useImperativeHandle,
 } from "react";
 import uniqueId from "../../constant/UniqueId";
-import { MarkdownContext, Row as RowType } from "../../context/MarkdownCotext";
+import { MarkdownContext, Row as RowType } from "../../context/MarkdownContext";
 import MarkdownProvider from "../Providers/MarkdownProvider";
 import Image from "./Image";
 import Row from "./Row";
