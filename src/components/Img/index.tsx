@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { useImage } from "../../queries/Image";
 import * as S from "./styles";
 
@@ -65,10 +65,6 @@ const Img: FC<PropsType> = (props) => {
         .join("-"),
     [emoji]
   );
-
-  useEffect(() => {
-    console.log(src);
-  }, [src]);
 
   if (emoji) {
     return (
