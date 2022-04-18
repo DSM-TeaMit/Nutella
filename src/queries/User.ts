@@ -100,16 +100,26 @@ export const useMyReports = (initPage: number) =>
 
 export const useEachReports = (
   type: ReportPathType,
-  page: number,
+  initPage: number,
   enabled: boolean,
   userUuid?: string
 ) => {
-  return useQuery(
-    [queryKeys.reports, userUuid, type, page],
-    () => getEachReports(type, page, userUuid),
+  return useInfiniteQuery(
+    [queryKeys.reports, userUuid, type],
+    async ({ pageParam = initPage }) => {
+      const data = await getEachReports(type, pageParam, userUuid);
+
+      const d: Page<UserReports> = {
+        page: pageParam,
+        data: data.data,
+      };
+
+      return d;
+    },
     {
       keepPreviousData: true,
       enabled: enabled,
+      getNextPageParam: (lastPage) => lastPage.page + 1,
     }
   );
 };

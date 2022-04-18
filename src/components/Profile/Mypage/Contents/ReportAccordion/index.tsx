@@ -2,7 +2,7 @@ import * as S from "./styles";
 import { UpArrowIcons } from "../../../../../assets/icons";
 import ReportCard from "../../../../Cards/ReportCard";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Reports } from "../../../../../utils/api/User";
+import { Reports, UserReports } from "../../../../../utils/api/User";
 import { ReportStatus, ReportPathType } from "../../../../../interface";
 import isMore from "../../../../../constant/IsMore";
 import { useEachReports } from "../../../../../queries/User";
@@ -36,7 +36,8 @@ const ReportAccordion: FC<PropsType> = ({
   const container = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
-  const [page, setPage] = useState<number>(2);
+  const initPage = 2;
+  const [page, setPage] = useState<number>(initPage);
   const [queryEnabled, setQueryEnabled] = useState<boolean>(false);
   const pathType = useMemo(() => pathMap.get(status)!, [status]);
 
@@ -44,7 +45,7 @@ const ReportAccordion: FC<PropsType> = ({
 
   const { data: eachData, isFetching } = useEachReports(
     pathType,
-    page,
+    initPage,
     queryEnabled,
     userUuid
   );
@@ -82,6 +83,28 @@ const ReportAccordion: FC<PropsType> = ({
 
     return isMore(LIMIT, page, count);
   }, [count, page, queryEnabled]);
+  const list = useMemo(() => {
+    if (!eachData) {
+      return undefined;
+    }
+
+    const l: UserReports = {
+      writing: { projects: [], count: 0 },
+      accepted: { projects: [], count: 0 },
+      pending: { projects: [], count: 0 },
+      rejected: { projects: [], count: 0 },
+    };
+
+    eachData.pages.forEach((value) => {
+      for (const key in value.data) {
+        const k = key as keyof UserReports;
+        l[k].projects.push(...value.data[k].projects);
+        l[k].count = value.data[k].count;
+      }
+    });
+
+    return l;
+  }, [eachData]);
 
   return (
     <S.Container ref={container}>
@@ -108,12 +131,13 @@ const ReportAccordion: FC<PropsType> = ({
               data={{ ...value, status }}
             />
           ))}
-          {eachData?.data[pathType].projects.map((value) => (
-            <ReportCard
-              key={`${value.uuid}_${value.type}`}
-              data={{ ...value, status }}
-            />
-          ))}
+          {list &&
+            list[pathType].projects.map((value) => (
+              <ReportCard
+                key={`${value.uuid}_${value.type}`}
+                data={{ ...value, status }}
+              />
+            ))}
         </S.Grid>
         {!isFetching && isMorePage && (
           <S.More onClick={onMore}>더 가져오기</S.More>
