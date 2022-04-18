@@ -16,7 +16,7 @@ export interface PendingReport {
   };
 }
 
-interface PendingReportList {
+export interface PendingReportList {
   count: number;
   projects: PendingReport[];
 }
