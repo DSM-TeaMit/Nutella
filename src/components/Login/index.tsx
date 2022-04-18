@@ -2,9 +2,10 @@ import * as S from "./styles";
 import { GoogleLogo, LoginLogo } from "../../assets/logo";
 import { RightArrowIcons } from "../../assets/icons";
 import { Link } from "react-router-dom";
+import baseURL from "../../constant/BaseUrl";
 
 const Login = () => {
-  const OauthUrl = "https://spectre-psnldev.dev:8202/auth/google";
+  const OauthUrl = `${baseURL}auth/google`;
   const oauthBtnClickHandler = () => {
     window.location.href = OauthUrl;
   };
