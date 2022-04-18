@@ -3,7 +3,7 @@ import {
   MarkdownContext,
   MarkdownContextType,
   Row,
-} from "../../context/MarkdownCotext";
+} from "../../context/MarkdownContext";
 import uniqueId from "../../constant/UniqueId";
 import { Tag } from "../../interface";
 import { postImage } from "../../utils/api/Image";

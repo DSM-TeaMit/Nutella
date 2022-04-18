@@ -20,7 +20,7 @@ import {
 } from "../../queries/Result";
 import { ParsedFullResultReport } from "../../utils/api/Result";
 import MarkdownEditor from "../MarkdownEditor";
-import { Row } from "../../context/MarkdownCotext";
+import { Row } from "../../context/MarkdownContext";
 import uniqueId from "../../constant/UniqueId";
 import { useConfirmReport } from "../../queries/Project";
 import useTitle from "../../hooks/useTitle";
