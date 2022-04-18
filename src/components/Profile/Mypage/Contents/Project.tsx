@@ -130,9 +130,11 @@ const Project = () => {
                 </I.Margin>
               </Fragment>
             )}
-            {!isFetching && count && isMore(LIMIT, page, count) && (
-              <I.More onClick={onNextPage}>더 가져오기...</I.More>
-            )}
+            {!isFetching &&
+              count !== undefined &&
+              isMore(LIMIT, page, count) && (
+                <I.More onClick={onNextPage}>더 가져오기...</I.More>
+              )}
           </div>
         </I.FlexContainer>
       </I.ContentInner>

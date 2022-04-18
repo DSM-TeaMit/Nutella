@@ -80,7 +80,7 @@ const Project = () => {
               <ProjectCard key={value.uuid} data={value} />
             ))}
           </I.Grid>
-          {!isFetching && count && isMore(LIMIT, page, count) && (
+          {!isFetching && count !== undefined && isMore(LIMIT, page, count) && (
             <I.More onClick={onNextPage}>더 가져오기...</I.More>
           )}
           {count === 0 && <I.Message>프로젝트가 존재하지 않습니다.</I.Message>}
