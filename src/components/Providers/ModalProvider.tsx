@@ -42,9 +42,17 @@ const ModalProvider: FC = ({ children }) => {
     [modals]
   );
 
+  const currentModal = useMemo(() => {
+    if (modals.length <= 0) {
+      return undefined;
+    }
+
+    return modals[modals.length - 1];
+  }, [modals]);
+
   const value = useMemo<ModalContextType>(
-    () => ({ modals, closeCurrentModal, openModal, closeByStep }),
-    [closeByStep, closeCurrentModal, modals, openModal]
+    () => ({ modals, closeCurrentModal, openModal, closeByStep, currentModal }),
+    [closeByStep, closeCurrentModal, currentModal, modals, openModal]
   );
 
   return (
