@@ -98,16 +98,27 @@ export const UserImageContainer = styled.div`
 `;
 
 export const UserAdditional = styled.div`
-  font: ${({ theme }) => theme.fonts.description};
+  font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
 `;
 
 export const Type = styled.span`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.primary.default};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const TypeAdditional = styled.span`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
+`;
+
+export const TypeContainer = styled.div`
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  justify-content: right;
+  margin-left: 16px;
 `;
