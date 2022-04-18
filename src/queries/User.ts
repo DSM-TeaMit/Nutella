@@ -16,6 +16,7 @@ import {
   getHeader,
   searchUser,
   UserProjects,
+  UserReports,
 } from "../utils/api/User";
 
 export const useMyProfile = () =>
@@ -59,19 +60,43 @@ export const useMyProjects = (initPage: number) =>
     }
   );
 
-export const useUserReports = (userUuid: string, page: number) =>
-  useQuery(
-    [queryKeys.reports, userUuid, page],
-    () => getUserReports(userUuid, page),
+export const useUserReports = (userUuid: string, initPage: number) =>
+  useInfiniteQuery(
+    [queryKeys.reports, userUuid],
+    async ({ pageParam = initPage }) => {
+      const data = await getUserReports(userUuid, pageParam);
+
+      const d: Page<UserReports> = {
+        page: pageParam,
+        data: data.data,
+      };
+
+      return d;
+    },
     {
       keepPreviousData: true,
+      getNextPageParam: (lastPage) => lastPage.page + 1,
     }
   );
 
-export const useMyReports = (page: number) =>
-  useQuery([queryKeys.reports, queryKeys.my, page], () => getMyReports(page), {
-    keepPreviousData: true,
-  });
+export const useMyReports = (initPage: number) =>
+  useInfiniteQuery(
+    [queryKeys.reports, queryKeys.my],
+    async ({ pageParam = initPage }) => {
+      const data = await getMyReports(pageParam);
+
+      const d: Page<UserReports> = {
+        page: pageParam,
+        data: data.data,
+      };
+
+      return d;
+    },
+    {
+      keepPreviousData: true,
+      getNextPageParam: (lastPage) => lastPage.page + 1,
+    }
+  );
 
 export const useEachReports = (
   type: ReportPathType,
