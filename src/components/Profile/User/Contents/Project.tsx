@@ -45,6 +45,7 @@ const Project = () => {
               <ProjectCard key={value.uuid} data={value} />
             ))}
           </I.Grid>
+          {count === 0 && <I.Message>프로젝트가 존재하지 않습니다.</I.Message>}
         </div>
       </I.FlexContainer>
     </I.ContentInner>
