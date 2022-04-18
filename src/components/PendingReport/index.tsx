@@ -12,9 +12,11 @@ import * as S from "./styles";
 
 const PendingReport = () => {
   const initPage = 1;
-  const [page, setPage] = useState<number>(initPage);
   const { data, isLoading, isError, isFetching, error, fetchNextPage } =
     usePendingReport(initPage);
+  const [page, setPage] = useState<number>(
+    Number(data?.pageParams || initPage)
+  );
   const navigate = useNavigate();
   const list = useMemo(() => {
     if (!data) {

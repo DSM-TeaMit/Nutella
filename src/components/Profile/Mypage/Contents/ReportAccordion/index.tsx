@@ -37,7 +37,6 @@ const ReportAccordion: FC<PropsType> = ({
   const header = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const initPage = 2;
-  const [page, setPage] = useState<number>(initPage);
   const [queryEnabled, setQueryEnabled] = useState<boolean>(false);
   const pathType = useMemo(() => pathMap.get(status)!, [status]);
 
@@ -48,6 +47,9 @@ const ReportAccordion: FC<PropsType> = ({
     isFetching,
     fetchNextPage,
   } = useEachReports(pathType, initPage, queryEnabled, userUuid);
+  const [page, setPage] = useState<number>(
+    Number(eachData?.pageParams || initPage)
+  );
 
   useEffect(() => {
     if (container.current && header.current && content.current) {

@@ -12,7 +12,6 @@ import MainProjectSkeleton from "../Cards/MainProjectSkeleton";
 const Feed = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const initPage = 1;
-  const [page, setPage] = useState<number>(initPage);
   const [orderName, setOrderName] = useState<string>("popularity");
   const {
     data,
@@ -22,6 +21,9 @@ const Feed = () => {
     fetchNextPage,
     isFetchingNextPage,
   } = useFeed(orderName, initPage);
+  const [page, setPage] = useState<number>(
+    Number(data?.pageParams || initPage)
+  );
 
   const list = useMemo(() => {
     if (!data) {

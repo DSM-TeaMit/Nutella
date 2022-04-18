@@ -8,17 +8,25 @@ import useModalRef from "../../../../hooks/useModalRef";
 import ModalPortal from "../../../ModalPortal";
 import isMore from "../../../../constant/IsMore";
 import toast from "react-hot-toast";
-import Loading from "../../Loading";
 import Error from "../../Error";
 import LIMIT from "../../../../constant/Limit";
 import { ProjectType } from "../../../../utils/api/User";
+import ProjectSkeleton from "../../../Cards/ProjectSkeleton";
 
 const Project = () => {
   const modalRef = useModalRef();
   const initPage = 1;
-  const [page, setPage] = useState<number>(initPage);
-  const { data, isError, isLoading, isFetching, fetchNextPage } =
-    useMyProjects(initPage);
+  const {
+    data,
+    isError,
+    isLoading,
+    isFetching,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useMyProjects(initPage);
+  const [page, setPage] = useState<number>(
+    Number(data?.pageParams || initPage)
+  );
   const list = useMemo(() => {
     if (!data) {
       return undefined;
@@ -61,15 +69,19 @@ const Project = () => {
     [modalRef]
   );
 
+  const skeleton = useMemo(
+    () =>
+      Array(3)
+        .fill(0)
+        .map((_, index) => <ProjectSkeleton key={index} />),
+    []
+  );
+
   useEffect(() => {
     if (isError) {
       toast.error("유저 프로젝트를 가져올 수 없습니다.");
     }
   }, [isError]);
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   if (isError) {
     return (
@@ -92,9 +104,11 @@ const Project = () => {
               </S.AddProject>
             </I.ProjectTitle>
             <I.Grid>
+              {isLoading && skeleton}
               {list?.map((value) => (
                 <ProjectCard key={value.uuid} data={value} />
               ))}
+              {isFetchingNextPage && skeleton}
             </I.Grid>
             {list?.length === 0 && (
               <Fragment>
