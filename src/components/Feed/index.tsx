@@ -22,7 +22,11 @@ const Feed = () => {
     isFetchingNextPage,
   } = useFeed(orderName, initPage);
   const [page, setPage] = useState<number>(
-    Number(data?.pageParams || initPage)
+    Number(
+      data && data.pageParams.length > 0
+        ? data.pageParams[data.pageParams.length - 1]
+        : initPage
+    )
   );
 
   const list = useMemo(() => {

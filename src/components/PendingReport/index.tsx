@@ -15,7 +15,11 @@ const PendingReport = () => {
   const { data, isLoading, isError, isFetching, error, fetchNextPage } =
     usePendingReport(initPage);
   const [page, setPage] = useState<number>(
-    Number(data?.pageParams || initPage)
+    Number(
+      data && data.pageParams.length > 0
+        ? data.pageParams[data.pageParams.length - 1]
+        : initPage
+    )
   );
   const navigate = useNavigate();
   const list = useMemo(() => {

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useInfiniteQuery, useMutation, useQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import { ReportPathType } from "../interface";
@@ -101,13 +102,15 @@ export const useMyReports = (initPage: number) =>
 export const useEachReports = (
   type: ReportPathType,
   initPage: number,
-  enabled: boolean,
   userUuid?: string
 ) => {
+  const [enabled, setEnabled] = useState(false);
+
   return useInfiniteQuery(
     [queryKeys.reports, userUuid, type],
     async ({ pageParam = initPage }) => {
       const data = await getEachReports(type, pageParam, userUuid);
+      setEnabled(pageParam > 1);
 
       const d: Page<UserReports> = {
         page: pageParam,
@@ -118,7 +121,7 @@ export const useEachReports = (
     },
     {
       keepPreviousData: true,
-      enabled: enabled,
+      enabled,
       getNextPageParam: (lastPage) => lastPage.page + 1,
     }
   );

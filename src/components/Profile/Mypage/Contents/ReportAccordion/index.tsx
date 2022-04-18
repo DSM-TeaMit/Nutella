@@ -36,8 +36,7 @@ const ReportAccordion: FC<PropsType> = ({
   const container = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
-  const initPage = 2;
-  const [queryEnabled, setQueryEnabled] = useState<boolean>(false);
+  const initPage = 1;
   const pathType = useMemo(() => pathMap.get(status)!, [status]);
 
   const { count, projects: reports } = data;
@@ -46,9 +45,13 @@ const ReportAccordion: FC<PropsType> = ({
     data: eachData,
     isFetching,
     fetchNextPage,
-  } = useEachReports(pathType, initPage, queryEnabled, userUuid);
+  } = useEachReports(pathType, initPage, userUuid);
   const [page, setPage] = useState<number>(
-    Number(eachData?.pageParams || initPage)
+    Number(
+      eachData && eachData.pageParams.length > 0
+        ? eachData.pageParams[eachData.pageParams.length - 1]
+        : initPage
+    )
   );
 
   useEffect(() => {
@@ -69,22 +72,10 @@ const ReportAccordion: FC<PropsType> = ({
   }, [isActive]);
 
   const onMore = useCallback(() => {
-    if (!queryEnabled) {
-      setQueryEnabled(true);
-      return;
-    }
-
     setPage((prev) => prev + 1);
     fetchNextPage();
-  }, [fetchNextPage, queryEnabled]);
+  }, [fetchNextPage]);
 
-  const isMorePage = useMemo(() => {
-    if (page === 2 && LIMIT * page <= count && !queryEnabled) {
-      return true;
-    }
-
-    return isMore(LIMIT, page, count);
-  }, [count, page, queryEnabled]);
   const list = useMemo(() => {
     if (!eachData) {
       return undefined;
@@ -141,7 +132,7 @@ const ReportAccordion: FC<PropsType> = ({
               />
             ))}
         </S.Grid>
-        {!isFetching && isMorePage && (
+        {!isFetching && isMore(LIMIT, page, count) && (
           <S.More onClick={onMore}>더 가져오기</S.More>
         )}
       </S.ContentContainer>
