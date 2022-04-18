@@ -11,9 +11,10 @@ import PendingReportCard from "../Cards/PendingReportCard";
 import * as S from "./styles";
 
 const PendingReport = () => {
-  const [page, setPage] = useState<number>(1);
-  const { data, isLoading, isError, isFetching, error } =
-    usePendingReport(page);
+  const initPage = 1;
+  const [page, setPage] = useState<number>(initPage);
+  const { data, isLoading, isError, isFetching, error, fetchNextPage } =
+    usePendingReport(initPage);
   const navigate = useNavigate();
   const list = useMemo(() => {
     if (!data) {
@@ -26,7 +27,7 @@ const PendingReport = () => {
       l.concat([...value.data.projects]);
     });
 
-    return l;
+    return [...l];
   }, [data]);
 
   const count = useMemo(() => {
@@ -44,8 +45,9 @@ const PendingReport = () => {
 
     if (isMore(LIMIT, page, count)) {
       setPage((prev) => prev + 1);
+      fetchNextPage();
     }
-  }, [page, count]);
+  }, [count, page, fetchNextPage]);
 
   const ref = useInfiniteScroll<HTMLDivElement>(
     onNextPage,

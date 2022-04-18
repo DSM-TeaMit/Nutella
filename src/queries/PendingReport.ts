@@ -6,11 +6,11 @@ import {
   PendingReportList,
 } from "../utils/api/PendingReport";
 
-export const usePendingReport = (page: number) =>
+export const usePendingReport = (initPage: number) =>
   useInfiniteQuery(
     [queryKeys.pendingReport],
-    async ({ pageParam = 0 }) => {
-      const data = await getPendingReports(page);
+    async ({ pageParam = initPage }) => {
+      const data = await getPendingReports(pageParam);
 
       const p: Page<PendingReportList> = {
         page: pageParam,
@@ -21,6 +21,6 @@ export const usePendingReport = (page: number) =>
     },
     {
       keepPreviousData: true,
-      getNextPageParam: () => {},
+      getNextPageParam: (lastPage) => lastPage.page + 1,
     }
   );
