@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { MarkdownContext, Row } from "../../../context/MarkdownCotext";
+import { MarkdownContext, Row } from "../../../context/MarkdownContext";
 import * as S from "./styles";
 
 interface PropsType {
