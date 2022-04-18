@@ -43,12 +43,11 @@ const ReportAccordion: FC<PropsType> = ({
 
   const { count, projects: reports } = data;
 
-  const { data: eachData, isFetching } = useEachReports(
-    pathType,
-    initPage,
-    queryEnabled,
-    userUuid
-  );
+  const {
+    data: eachData,
+    isFetching,
+    fetchNextPage,
+  } = useEachReports(pathType, initPage, queryEnabled, userUuid);
 
   useEffect(() => {
     if (container.current && header.current && content.current) {
@@ -74,7 +73,8 @@ const ReportAccordion: FC<PropsType> = ({
     }
 
     setPage((prev) => prev + 1);
-  }, [queryEnabled]);
+    fetchNextPage();
+  }, [fetchNextPage, queryEnabled]);
 
   const isMorePage = useMemo(() => {
     if (page === 2 && LIMIT * page <= count && !queryEnabled) {

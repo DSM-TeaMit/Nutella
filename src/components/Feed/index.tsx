@@ -1,17 +1,44 @@
 import * as S from "./styles";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useFeed } from "../../queries/Feed";
 import Project from "../Cards/MainProjectCard";
 import toast from "react-hot-toast";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import isMore from "../../constant/IsMore";
 import { FeedList } from "../../utils/api/Feed";
+import LIMIT from "../../constant/Limit";
 
 const Feed = () => {
   const [currentTab, setCurrentTab] = useState(0);
-  const [page, setPage] = useState<number>(1);
+  const initPage = 1;
+  const [page, setPage] = useState<number>(initPage);
   const [orderName, setOrderName] = useState<string>("popularity");
-  const { data, isError, isLoading, isFetching } = useFeed(orderName, page);
+  const { data, isError, isLoading, isFetching, fetchNextPage } = useFeed(
+    orderName,
+    initPage
+  );
+
+  const list = useMemo(() => {
+    if (!data) {
+      return undefined;
+    }
+
+    const d: FeedList[] = [];
+
+    data.pages.forEach((value) => {
+      d.push(...value.data.projects);
+    });
+
+    return d;
+  }, [data]);
+
+  const count = useMemo(() => {
+    if (!data || data.pages.length <= 0) {
+      return undefined;
+    }
+
+    return data.pages[0].data.count;
+  }, [data]);
 
   const menuHandler = (index: React.SetStateAction<number>, name: string) => {
     setCurrentTab(index);
@@ -30,12 +57,13 @@ const Feed = () => {
   ];
 
   const onNextPage = () => {
-    if (!data) {
+    if (!data || !count) {
       return;
     }
 
-    if (isMore(12, page, data.data.count)) {
+    if (isMore(LIMIT, page, count)) {
       setPage((prev) => prev + 1);
+      fetchNextPage();
     }
   };
 
@@ -70,12 +98,12 @@ const Feed = () => {
         </S.TitleBox>
         <S.ElementBox>
           <S.ProjectBox>
-            {data?.data?.projects.map((item: FeedList) => (
+            {list?.map((item: FeedList) => (
               <Project key={item.uuid} data={item} />
             ))}
           </S.ProjectBox>
           <div ref={ref} />
-          {data?.data.count === 0 && (
+          {count === 0 && (
             <>
               <S.Message>프로젝트가 없습니다.</S.Message>
               <S.Gap />
