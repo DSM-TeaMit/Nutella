@@ -1,22 +1,27 @@
 import * as S from "./styles";
 import React, { useEffect, useMemo, useState } from "react";
 import { useFeed } from "../../queries/Feed";
-import Project from "../Cards/MainProjectCard";
+import MainProjectCard from "../Cards/MainProjectCard";
 import toast from "react-hot-toast";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import isMore from "../../constant/IsMore";
 import { FeedList } from "../../utils/api/Feed";
 import LIMIT from "../../constant/Limit";
+import MainProjectSkeleton from "../Cards/MainProjectSkeleton";
 
 const Feed = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const initPage = 1;
   const [page, setPage] = useState<number>(initPage);
   const [orderName, setOrderName] = useState<string>("popularity");
-  const { data, isError, isLoading, isFetching, fetchNextPage } = useFeed(
-    orderName,
-    initPage
-  );
+  const {
+    data,
+    isError,
+    isLoading,
+    isFetching,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useFeed(orderName, initPage);
 
   const list = useMemo(() => {
     if (!data) {
@@ -78,6 +83,14 @@ const Feed = () => {
     }
   }, [isError, orderName]);
 
+  const skeletons = useMemo(
+    () =>
+      Array(5)
+        .fill(0)
+        .map((_, index) => <MainProjectSkeleton key={index} />),
+    []
+  );
+
   return (
     <S.Container>
       <S.FeedContent>
@@ -98,9 +111,12 @@ const Feed = () => {
         </S.TitleBox>
         <S.ElementBox>
           <S.ProjectBox>
-            {list?.map((item: FeedList) => (
-              <Project key={item.uuid} data={item} />
-            ))}
+            {isLoading
+              ? skeletons
+              : list?.map((item: FeedList) => (
+                  <MainProjectCard key={item.uuid} data={item} />
+                ))}
+            {!isLoading && isFetchingNextPage && skeletons}
           </S.ProjectBox>
           <div ref={ref} />
           {count === 0 && (
