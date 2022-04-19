@@ -17,6 +17,13 @@ export const SearchTitle = styled.p`
   color: ${({ theme }) => theme.colors.grayscale.black};
 `;
 
+export const BigMessage = styled.div`
+  font: ${({ theme }) => theme.fonts.subtitle2};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
+  text-align: center;
+  margin: 16px 0px;
+`;
+
 export const ElementBox = styled.div`
   margin: 48px 0px 96px 0px;
 `;
