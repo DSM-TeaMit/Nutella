@@ -91,6 +91,11 @@ export const UserImage = styled(Img)`
 export const UserImageOuter = styled.div`
   width: 12px;
   height: 24px;
+  transition: width 0.2s ease-in-out;
+
+  &:hover {
+    width: 24px;
+  }
 `;
 
 export const UserImageContainer = styled.div`
