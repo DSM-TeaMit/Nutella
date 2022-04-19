@@ -42,6 +42,9 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
     [fields]
   );
 
+  const maxFieldCount = useMemo(() => 3, []);
+  const maxMemberCount = useMemo(() => 3, []);
+
   return (
     <S.Container to={`/project/${uuid}`}>
       <S.Image alt="project image" src={thumbnailUrl} emoji={emoji} />
@@ -60,7 +63,7 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
         <S.BottonContainer>
           <S.UserContainer>
             <S.UserImageContainer>
-              {members.slice(0, 3).map((value) => (
+              {members.slice(0, maxMemberCount).map((value) => (
                 <S.UserImageOuter key={value.uuid}>
                   <S.UserImage
                     src={value.thumbnailUrl}
@@ -70,19 +73,23 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
                 </S.UserImageOuter>
               ))}
             </S.UserImageContainer>
-            {members.length > 3 && (
-              <S.UserAdditional>+{members.length - 3}</S.UserAdditional>
+            {members.length > maxMemberCount && (
+              <S.UserAdditional>
+                +{members.length - maxMemberCount}
+              </S.UserAdditional>
             )}
           </S.UserContainer>
-          <div>
+          <S.TypeContainer>
             <S.Type>
-              {fieldList.slice(0, 3).join(" · ")}
+              {fieldList.slice(0, maxFieldCount).join(" · ")}
               &nbsp;
             </S.Type>
-            {fieldList.length > 3 && (
-              <S.TypeAdditional>+{fields.length - 3}</S.TypeAdditional>
+            {fieldList.length > maxFieldCount && (
+              <S.TypeAdditional>
+                +{fieldList.length - maxFieldCount}
+              </S.TypeAdditional>
             )}
-          </div>
+          </S.TypeContainer>
         </S.BottonContainer>
       </S.InfoContainer>
     </S.Container>

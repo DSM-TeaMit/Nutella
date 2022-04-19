@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
-import Img from "../../Img";
 
-export const Container = styled(Link)`
+export const Container = styled.div`
   user-select: none;
   width: 100%;
   min-width: 0;
@@ -12,19 +10,15 @@ export const Container = styled(Link)`
   color: ${({ theme }) => theme.colors.grayscale.black};
   border-radius: 10px;
   text-decoration: none;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
-  }
 `;
 
-export const Image = styled(Img)`
+export const Image = styled.div`
   width: 180px;
   height: 180px;
   border-radius: 10px;
   object-fit: cover;
   object-position: center;
-  background-color: ${({ theme }) => theme.colors.grayscale.gray1};
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
 `;
 
 export const InfoContainer = styled.div`
@@ -41,15 +35,25 @@ export const TitleContaienr = styled.div`
   display: flex;
   align-items: flex-end;
   margin-bottom: 8px;
+  justify-content: space-between;
 `;
 
 export const Title = styled.div`
-  flex: 1;
   font: ${({ theme }) => theme.fonts.subtitle2};
-  color: ${({ theme }) => theme.colors.grayscale.black};
+  color: transparent;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 70%;
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
+  border-radius: 5px;
+`;
+
+export const Icon = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
 `;
 
 export const TypeIcon = styled.img`
@@ -57,16 +61,17 @@ export const TypeIcon = styled.img`
   height: 20px;
 `;
 
-export const Description = styled.div`
-  display: -webkit-box;
-  height: calc(1.2rem * 2);
-  line-height: 1rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: ${({ theme }) => theme.colors.grayscale.gray2};
+export const DescriptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+`;
+
+export const Description = styled.span`
+  color: transparent;
   font: ${({ theme }) => theme.fonts.body3};
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
+  border-radius: 5px;
 `;
 
 export const BottonContainer = styled.div`
@@ -81,21 +86,16 @@ export const UserContainer = styled.div`
   column-gap: 16px;
 `;
 
-export const UserImage = styled(Img)`
+export const UserImage = styled.div`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.grayscale.gray1};
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
 `;
 
 export const UserImageOuter = styled.div`
   width: 12px;
   height: 24px;
-  transition: width 0.2s ease-in-out;
-
-  &:hover {
-    width: 24px;
-  }
 `;
 
 export const UserImageContainer = styled.div`
@@ -103,27 +103,16 @@ export const UserImageContainer = styled.div`
 `;
 
 export const UserAdditional = styled.div`
-  font: ${({ theme }) => theme.fonts.body3};
+  font: ${({ theme }) => theme.fonts.description};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
 `;
 
 export const Type = styled.span`
+  color: transparent;
   font: ${({ theme }) => theme.fonts.body3};
-  color: ${({ theme }) => theme.colors.primary.default};
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `;
 
 export const TypeAdditional = styled.span`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
-`;
-
-export const TypeContainer = styled.div`
-  overflow: hidden;
-  flex: 1;
-  display: flex;
-  justify-content: right;
-  margin-left: 16px;
 `;
