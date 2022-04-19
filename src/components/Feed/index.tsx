@@ -1,17 +1,62 @@
 import * as S from "./styles";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useFeed } from "../../queries/Feed";
-import Project from "../Cards/MainProjectCard";
+import MainProjectCard from "../Cards/MainProjectCard";
 import toast from "react-hot-toast";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import isMore from "../../constant/IsMore";
 import { FeedList } from "../../utils/api/Feed";
+import LIMIT from "../../constant/Limit";
+import MainProjectSkeleton from "../Cards/MainProjectSkeleton";
 
 const Feed = () => {
   const [currentTab, setCurrentTab] = useState(0);
-  const [page, setPage] = useState<number>(1);
+  const initPage = 1;
   const [orderName, setOrderName] = useState<string>("popularity");
-  const { data, isError, isLoading, isFetching } = useFeed(orderName, page);
+  const {
+    data,
+    isError,
+    isLoading,
+    isFetching,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useFeed(orderName, initPage);
+
+  const prevPage: number = useMemo(() => {
+    if (
+      !data ||
+      data.pageParams.length <= 0 ||
+      data.pageParams[data.pageParams.length - 1] === undefined
+    ) {
+      return initPage;
+    }
+
+    return Number(data.pageParams[data.pageParams.length - 1]);
+  }, [data]);
+
+  const [page, setPage] = useState<number>(prevPage);
+
+  const list = useMemo(() => {
+    if (!data) {
+      return undefined;
+    }
+
+    const d: FeedList[] = [];
+
+    data.pages.forEach((value) => {
+      d.push(...value.data.projects);
+    });
+
+    return d;
+  }, [data]);
+
+  const count = useMemo(() => {
+    if (!data || data.pages.length <= 0) {
+      return undefined;
+    }
+
+    return data.pages[0].data.count;
+  }, [data]);
 
   const menuHandler = (index: React.SetStateAction<number>, name: string) => {
     setCurrentTab(index);
@@ -30,12 +75,13 @@ const Feed = () => {
   ];
 
   const onNextPage = () => {
-    if (!data) {
+    if (!data || !count) {
       return;
     }
 
-    if (isMore(12, page, data.data.count)) {
+    if (isMore(LIMIT, page, count)) {
       setPage((prev) => prev + 1);
+      fetchNextPage();
     }
   };
 
@@ -49,6 +95,14 @@ const Feed = () => {
       toast.error("가져온 프로젝트가 없습니다.");
     }
   }, [isError, orderName]);
+
+  const skeletons = useMemo(
+    () =>
+      Array(5)
+        .fill(0)
+        .map((_, index) => <MainProjectSkeleton key={index} />),
+    []
+  );
 
   return (
     <S.Container>
@@ -70,12 +124,15 @@ const Feed = () => {
         </S.TitleBox>
         <S.ElementBox>
           <S.ProjectBox>
-            {data?.data?.projects.map((item: FeedList) => (
-              <Project key={item.uuid} data={item} />
-            ))}
+            {isLoading
+              ? skeletons
+              : list?.map((item: FeedList) => (
+                  <MainProjectCard key={item.uuid} data={item} />
+                ))}
+            {!isLoading && isFetchingNextPage && skeletons}
           </S.ProjectBox>
           <div ref={ref} />
-          {data?.data.count === 0 && (
+          {count === 0 && (
             <>
               <S.Message>프로젝트가 없습니다.</S.Message>
               <S.Gap />

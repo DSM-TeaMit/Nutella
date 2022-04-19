@@ -1,21 +1,76 @@
 import * as S from "./styles";
 import * as I from "../../styles";
 import ProjectCard from "../../../Cards/ProjectCard";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import ProjectAddModal from "../../../Modals/ProejctAdd";
 import { useMyProjects } from "../../../../queries/User";
 import useModalRef from "../../../../hooks/useModalRef";
 import ModalPortal from "../../../ModalPortal";
 import isMore from "../../../../constant/IsMore";
 import toast from "react-hot-toast";
-import Loading from "../../Loading";
 import Error from "../../Error";
 import LIMIT from "../../../../constant/Limit";
+import { ProjectType } from "../../../../utils/api/User";
+import ProjectSkeleton from "../../../Cards/ProjectSkeleton";
 
 const Project = () => {
   const modalRef = useModalRef();
-  const [page, setPage] = useState<number>(1);
-  const { data, isError, isLoading, isFetching } = useMyProjects(page);
+  const initPage = 1;
+  const {
+    data,
+    isError,
+    isLoading,
+    isFetching,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useMyProjects(initPage);
+
+  const prevPage: number = useMemo(() => {
+    if (
+      !data ||
+      data.pageParams.length <= 0 ||
+      data.pageParams[data.pageParams.length - 1] === undefined
+    ) {
+      return initPage;
+    }
+
+    return Number(data.pageParams[data.pageParams.length - 1]);
+  }, [data]);
+
+  const [page, setPage] = useState<number>(prevPage);
+
+  const list = useMemo(() => {
+    if (!data) {
+      return undefined;
+    }
+
+    const l: ProjectType[] = [];
+
+    data.pages.forEach((value) => {
+      l.push(...value.data.projects);
+    });
+
+    return l;
+  }, [data]);
+
+  const count = useMemo(() => {
+    if (!data || data.pages.length <= 0) {
+      return undefined;
+    }
+
+    return data.pages[0].data.count;
+  }, [data]);
+
+  const onNextPage = useCallback(() => {
+    if (!count) {
+      return;
+    }
+
+    if (isMore(LIMIT, page, count)) {
+      setPage((prev) => prev + 1);
+      fetchNextPage();
+    }
+  }, [count, fetchNextPage, page]);
 
   const onProjectAddClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -26,22 +81,25 @@ const Project = () => {
     [modalRef]
   );
 
+  const skeleton = useMemo(
+    () =>
+      Array(3)
+        .fill(0)
+        .map((_, index) => <ProjectSkeleton key={index} />),
+    []
+  );
+
   useEffect(() => {
     if (isError) {
       toast.error("유저 프로젝트를 가져올 수 없습니다.");
     }
   }, [isError]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   if (isError) {
     return (
       <Error message="오류 발생. 프로젝트를 가져올 수 없습니다. 다시 시도해주세요." />
     );
   }
-  const { count, projects } = data!.data;
 
   return (
     <Fragment>
@@ -58,11 +116,13 @@ const Project = () => {
               </S.AddProject>
             </I.ProjectTitle>
             <I.Grid>
-              {projects.map((value) => (
+              {isLoading && skeleton}
+              {list?.map((value) => (
                 <ProjectCard key={value.uuid} data={value} />
               ))}
+              {isFetchingNextPage && skeleton}
             </I.Grid>
-            {projects.length === 0 && (
+            {list?.length === 0 && (
               <Fragment>
                 <I.Message>프로젝트가 존재하지 않습니다.</I.Message>
                 <I.Margin>
@@ -70,11 +130,11 @@ const Project = () => {
                 </I.Margin>
               </Fragment>
             )}
-            {!isFetching && isMore(LIMIT, page, count) && (
-              <I.More onClick={() => setPage((prev) => prev + 1)}>
-                더 가져오기...
-              </I.More>
-            )}
+            {!isFetching &&
+              count !== undefined &&
+              isMore(LIMIT, page, count) && (
+                <I.More onClick={onNextPage}>더 가져오기...</I.More>
+              )}
           </div>
         </I.FlexContainer>
       </I.ContentInner>

@@ -16,6 +16,25 @@ export const HeaderContainer = styled.button`
   cursor: pointer;
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   width: 100%;
+  position: relative;
+
+  &:hover {
+    & div {
+      transform: translate(0%, 0%);
+    }
+
+    &::before {
+      content: "";
+      width: 100%;
+      height: calc(100% + 16px);
+      position: absolute;
+      background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
+      border-radius: 10px;
+      top: -8px;
+      left: 0px;
+      display: block;
+    }
+  }
 `;
 
 export const Title = styled.span`

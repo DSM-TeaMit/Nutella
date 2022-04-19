@@ -1,6 +1,8 @@
-import { useMutation, useQuery } from "react-query";
+import { useState } from "react";
+import { useInfiniteQuery, useMutation, useQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import { ReportPathType } from "../interface";
+import Page from "../interface/Page";
 import {
   getProfile,
   getUserGithub as getGithubReadme,
@@ -14,6 +16,8 @@ import {
   getEachReports,
   getHeader,
   searchUser,
+  UserProjects,
+  UserReports,
 } from "../utils/api/User";
 
 export const useMyProfile = () =>
@@ -22,48 +26,103 @@ export const useMyProfile = () =>
 export const useUserProfile = (userUuid: string) =>
   useQuery([queryKeys.profile, userUuid], () => getProfile(userUuid));
 
-export const useUserProjects = (userUuid: string, page: number) =>
-  useQuery(
-    [queryKeys.projects, userUuid, page],
-    () => getUserProjects(userUuid, page),
-    { keepPreviousData: true }
-  );
+export const useUserProjects = (userUuid: string, initPage: number) =>
+  useInfiniteQuery(
+    [queryKeys.projects, userUuid],
+    async ({ pageParam = initPage }) => {
+      const data = await getUserProjects(userUuid, pageParam);
 
-export const useMyProjects = (page: number) =>
-  useQuery(
-    [queryKeys.projects, queryKeys.my, page],
-    () => getMyProjects(page),
+      const d: Page<UserProjects> = { page: pageParam, data: data.data };
+
+      return d;
+    },
     {
       keepPreviousData: true,
+      getNextPageParam: (lastPage) => lastPage.page + 1,
     }
   );
 
-export const useUserReports = (userUuid: string, page: number) =>
-  useQuery(
-    [queryKeys.reports, userUuid, page],
-    () => getUserReports(userUuid, page),
+export const useMyProjects = (initPage: number) =>
+  useInfiniteQuery(
+    [queryKeys.projects, queryKeys.my],
+    async ({ pageParam = initPage }) => {
+      const data = await getMyProjects(pageParam);
+
+      const d: Page<UserProjects> = {
+        page: pageParam,
+        data: data.data,
+      };
+
+      return d;
+    },
     {
       keepPreviousData: true,
+      getNextPageParam: (lastPage) => lastPage.page + 1,
     }
   );
 
-export const useMyReports = (page: number) =>
-  useQuery([queryKeys.reports, queryKeys.my, page], () => getMyReports(page), {
-    keepPreviousData: true,
-  });
+export const useUserReports = (userUuid: string, initPage: number) =>
+  useInfiniteQuery(
+    [queryKeys.reports, userUuid],
+    async ({ pageParam = initPage }) => {
+      const data = await getUserReports(userUuid, pageParam);
+
+      const d: Page<UserReports> = {
+        page: pageParam,
+        data: data.data,
+      };
+
+      return d;
+    },
+    {
+      keepPreviousData: true,
+      getNextPageParam: (lastPage) => lastPage.page + 1,
+    }
+  );
+
+export const useMyReports = (initPage: number) =>
+  useInfiniteQuery(
+    [queryKeys.reports, queryKeys.my],
+    async ({ pageParam = initPage }) => {
+      const data = await getMyReports(pageParam);
+
+      const d: Page<UserReports> = {
+        page: pageParam,
+        data: data.data,
+      };
+
+      return d;
+    },
+    {
+      keepPreviousData: true,
+      getNextPageParam: (lastPage) => lastPage.page + 1,
+    }
+  );
 
 export const useEachReports = (
   type: ReportPathType,
-  page: number,
-  enabled: boolean,
+  initPage: number,
   userUuid?: string
 ) => {
-  return useQuery(
-    [queryKeys.reports, userUuid, type, page],
-    () => getEachReports(type, page, userUuid),
+  const [enabled, setEnabled] = useState(false);
+
+  return useInfiniteQuery(
+    [queryKeys.reports, userUuid, type],
+    async ({ pageParam = initPage }) => {
+      const data = await getEachReports(type, pageParam, userUuid);
+      setEnabled(pageParam > 1);
+
+      const d: Page<UserReports> = {
+        page: pageParam,
+        data: data.data,
+      };
+
+      return d;
+    },
     {
       keepPreviousData: true,
-      enabled: enabled,
+      enabled,
+      getNextPageParam: (lastPage) => lastPage.page + 1,
     }
   );
 };
