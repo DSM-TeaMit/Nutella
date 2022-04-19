@@ -5,7 +5,7 @@ import MainProjectCard from "../Cards/MainProjectCard";
 import toast from "react-hot-toast";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import isMore from "../../constant/IsMore";
-import { FeedList } from "../../utils/api/Feed";
+import { project } from "../../utils/api/Feed";
 import LIMIT from "../../constant/Limit";
 import MainProjectSkeleton from "../Cards/MainProjectSkeleton";
 
@@ -41,7 +41,7 @@ const Feed = () => {
       return undefined;
     }
 
-    const d: FeedList[] = [];
+    const d: project[] = [];
 
     data.pages.forEach((value) => {
       d.push(...value.data.projects);
@@ -124,9 +124,12 @@ const Feed = () => {
         </S.TitleBox>
         <S.ElementBox>
           <S.ProjectBox>
-            {data?.data?.projects.map((item: FeedList) => (
-              <Project key={item.uuid} data={item} />
-            ))}
+            {isLoading
+              ? skeletons
+              : list?.map((item: project) => (
+                  <MainProjectCard key={item.uuid} data={item} />
+                ))}
+            {!isLoading && isFetchingNextPage && skeletons}
           </S.ProjectBox>
           <div ref={ref} />
           {count === 0 && (
