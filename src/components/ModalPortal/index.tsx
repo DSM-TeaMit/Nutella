@@ -1,5 +1,6 @@
 import {
   forwardRef,
+  Fragment,
   useCallback,
   useEffect,
   useImperativeHandle,
@@ -22,7 +23,8 @@ export interface ModalPoralRef {
 const ModalPortal = forwardRef<ModalPoralRef, PropsType>(
   ({ children }, ref) => {
     const id = useMemo(() => uniqueId(), []);
-    const { modals, openModal, closeCurrentModal } = useModalContext();
+    const { modals, openModal, closeCurrentModal, currentModal } =
+      useModalContext();
     const modalRef = useRef<HTMLDivElement>(null);
     const el = useMemo(() => document.getElementById("modal")!, []);
 
@@ -40,28 +42,24 @@ const ModalPortal = forwardRef<ModalPoralRef, PropsType>(
       }
     }, [modals]);
 
-    if (modals.length > 0) {
-      const currentModal = modals.reverse()[0];
-
-      if (currentModal === id) {
-        return ReactDOM.createPortal(
-          <S.Background onClick={() => closeCurrentModal()}>
-            <S.Container
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-              }}
-              ref={modalRef}
-            >
-              {children}
-            </S.Container>
-          </S.Background>,
-          el
-        );
-      }
+    if (currentModal === id) {
+      return ReactDOM.createPortal(
+        <S.Background onClick={() => closeCurrentModal()}>
+          <S.Container
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            ref={modalRef}
+          >
+            {children}
+          </S.Container>
+        </S.Background>,
+        el
+      );
     }
 
-    return <></>;
+    return <Fragment />;
   }
 );
 
