@@ -27,6 +27,10 @@ const PendingReport = () => {
     return Number(data.pageParams[data.pageParams.length - 1]);
   }, [data]);
 
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   const [page, setPage] = useState<number>(prevPage);
   const navigate = useNavigate();
   const list = useMemo(() => {
@@ -37,7 +41,7 @@ const PendingReport = () => {
     const l: PendingReportType[] = [];
 
     data.pages.forEach((value) => {
-      l.concat([...value.data.projects]);
+      l.push(...value.data.projects);
     });
 
     return [...l];

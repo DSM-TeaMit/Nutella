@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import Img from "../../Img";
 
 export const Container = styled(Link)`
   user-select: none;
@@ -20,7 +21,7 @@ export const Container = styled(Link)`
   }
 `;
 
-export const Img = styled.div`
+export const Image = styled(Img)`
   grid-column: 1 / 2;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.grayscale.gray1};

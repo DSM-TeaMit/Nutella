@@ -60,7 +60,7 @@ const PendingReportCard: FC<PropsType> = ({ data }) => {
     <S.Container
       to={`/project/${uuid}/${reportType === "PLAN" ? "plan" : "result"}`}
     >
-      <S.Img />
+      <S.Image src={data.thumbnailUrl} emoji={data.emoji} />
       <S.ContentContainer>
         <S.TopContainer>
           <div>
