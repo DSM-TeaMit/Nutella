@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const AsideContainer = styled.div`
   width: 302px;
-  height: 662px;
+  height: 100%;
   background: ${({ theme }) => theme.colors.grayscale.white};
   border-radius: 10px;
   padding: 20px 16px 16px;

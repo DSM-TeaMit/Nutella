@@ -22,6 +22,8 @@ export const DetailContent = styled.div`
 
 export const SideContent = styled.div`
   width: 305px;
-  height: 664px;
+  height: 669px;
   margin-left: 20px;
+  position: sticky;
+  top: 0;
 `;
