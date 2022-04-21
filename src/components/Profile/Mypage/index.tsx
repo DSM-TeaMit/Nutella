@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { NavigationType } from "../../../interface";
 import SideBar from "../../SideBar";
 import * as S from "../styles";
@@ -43,9 +43,13 @@ const navs: NavigationType[] = [
 
 const MyPage = () => {
   const myPageQuery = useMyProfile();
-
   const { isError, error } = myPageQuery;
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   useEffect(() => {
     if (

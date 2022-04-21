@@ -3,7 +3,7 @@ import Aside from "./Aside";
 import Top from "./Top";
 import SubmitContent from "./SubmitContent";
 import CommentContainer from "../CommentContainer";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
 import { useProjectDetails } from "../../queries/ProjectDetails";
 import { useEffect } from "react";
@@ -12,6 +12,11 @@ import toast from "react-hot-toast";
 const ProjectDetail = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const { data, isError, isLoading } = useProjectDetails(uuid);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   useTitle(isError ? "오류 발생" : `${data?.data.projectName}`);
 
