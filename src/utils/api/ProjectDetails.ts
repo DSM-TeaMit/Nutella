@@ -29,3 +29,7 @@ export interface Project {
 export const getProject = async (projectUuid: string) => {
   return await request.get<Project>(Uri.project.get({ projectUuid }));
 };
+
+export const uploadImg = async (image: string) => {
+  return await request.post(Uri.uploadingThumbnails.get(), image);
+};
