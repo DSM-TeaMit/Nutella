@@ -13,8 +13,15 @@ import * as S from "./styles";
 
 const PendingReport = () => {
   const initPage = 1;
-  const { data, isLoading, isError, isFetching, error, fetchNextPage } =
-    usePendingReport(initPage);
+  const {
+    data,
+    isLoading,
+    isError,
+    isFetching,
+    error,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = usePendingReport(initPage);
 
   const prevPage: number = useMemo(() => {
     if (
@@ -26,10 +33,6 @@ const PendingReport = () => {
     }
 
     return Number(data.pageParams[data.pageParams.length - 1]);
-  }, [data]);
-
-  useEffect(() => {
-    console.log(data);
   }, [data]);
 
   const [page, setPage] = useState<number>(prevPage);
@@ -95,16 +98,6 @@ const PendingReport = () => {
     []
   );
 
-  if (isLoading) {
-    return (
-      <S.Container>
-        <S.Title>승인 요청 보고서&nbsp;</S.Title>
-        <S.Message>승인 요청 보고서 가져오는 중...</S.Message>
-        <S.Gap />
-      </S.Container>
-    );
-  }
-
   if (isError) {
     return (
       <S.Container>
@@ -122,10 +115,11 @@ const PendingReport = () => {
         <S.Count>{count}</S.Count>
       </div>
       <S.List>
+        {isLoading && skeleton}
         {list?.map((value) => {
           return <PendingReportCard data={value} key={value.uuid} />;
         })}
-        {skeleton}
+        {isFetchingNextPage && skeleton}
       </S.List>
       <div ref={ref} />
       {count === 0 && (

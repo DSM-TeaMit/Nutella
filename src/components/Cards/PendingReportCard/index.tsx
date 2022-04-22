@@ -64,10 +64,7 @@ const PendingReportCard: FC<PropsType> = ({ data }) => {
       <S.ContentContainer>
         <S.TopContainer>
           <S.TitleContainer>
-            <S.Title>
-              {projectName}
-              1231231381902380928419048109234801928430192384091234809128340913094810239480129348012389082014
-            </S.Title>
+            <S.Title>{projectName}</S.Title>
             <S.Type>
               {" "}
               · {reportType === "PLAN" ? "계획서" : "결과 보고서"}
