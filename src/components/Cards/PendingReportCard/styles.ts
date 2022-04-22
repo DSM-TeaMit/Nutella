@@ -23,9 +23,12 @@ export const Container = styled(Link)`
 
 export const Image = styled(Img)`
   grid-column: 1 / 2;
-  height: 100%;
+  width: 100%;
+  aspect-ratio: 4 / 3;
   background-color: ${({ theme }) => theme.colors.grayscale.gray1};
   border-radius: 10px;
+  object-fit: cover;
+  object-position: center;
 `;
 
 export const ContentContainer = styled.div`

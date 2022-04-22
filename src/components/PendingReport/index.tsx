@@ -8,6 +8,7 @@ import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import { usePendingReport } from "../../queries/PendingReport";
 import { PendingReport as PendingReportType } from "../../utils/api/PendingReport";
 import PendingReportCard from "../Cards/PendingReportCard";
+import PendingReportSkeleton from "../Cards/PendingReportSkeleton";
 import * as S from "./styles";
 
 const PendingReport = () => {
@@ -86,6 +87,14 @@ const PendingReport = () => {
     }
   }, [error, isError, navigate]);
 
+  const skeleton = useMemo(
+    () =>
+      Array(4)
+        .fill(0)
+        .map((_, index) => <PendingReportSkeleton key={index} />),
+    []
+  );
+
   if (isLoading) {
     return (
       <S.Container>
@@ -116,6 +125,7 @@ const PendingReport = () => {
         {list?.map((value) => {
           return <PendingReportCard data={value} key={value.uuid} />;
         })}
+        {skeleton}
       </S.List>
       <div ref={ref} />
       {count === 0 && (
