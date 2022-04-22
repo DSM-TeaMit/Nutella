@@ -41,14 +41,26 @@ export const ContentContainer = styled.div`
   justify-content: space-between;
 `;
 
+export const TitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
+  margin-right: 16px;
+`;
+
 export const Title = styled.span`
   font: ${({ theme }) => theme.fonts.subtitle1};
   color: ${({ theme }) => theme.colors.grayscale.black};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Type = styled.span`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
+  white-space: nowrap;
   margin-left: 8px;
 `;
 
