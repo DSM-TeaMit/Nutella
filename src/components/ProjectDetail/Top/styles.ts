@@ -13,14 +13,20 @@ export const TopContent = styled.div`
   display: flex;
 `;
 
-export const ProjectImg = styled(Img)`
+export const ProjectImgBox = styled.label`
   width: 200px;
   height: 200px;
+  background-color: ${({ theme }) => theme.colors.grayscale.gray1};
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  margin-right: 24px;
+`;
+
+export const ProjectImg = styled(Img)`
   object-fit: cover;
   object-position: center;
   border-radius: 10px;
-  margin-right: 24px;
-  background-color: ${({ theme }) => theme.colors.grayscale.gray1};
 `;
 
 export const ProjectInfo = styled.div`
