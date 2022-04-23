@@ -4,6 +4,7 @@ import { Project } from "../../../utils/api/ProjectDetails";
 import { FC, useEffect } from "react";
 import { useCreatePlanMutation } from "../../../queries/Plan";
 import toast from "react-hot-toast";
+import ProjectCard from "../../Cards/ProjectCard";
 
 interface PropsType {
   data: Project | undefined;
@@ -20,17 +21,24 @@ const SubmitContent: FC<PropsType> = ({ data }) => {
         <S.ProjectFile>
           <S.SubTitle>{data?.projectName} 계획서</S.SubTitle>
           <S.SubmitBox>
-            <S.SubmitLinkBox
-              to={`/project/${data?.uuid}/plan`}
-              onClick={() => {
-                planMutation.mutate();
-              }}
-            >
-              <S.PlusBox>
-                <img src={PlusIcons} alt="plus" />
-              </S.PlusBox>
-              <S.Font>{data?.projectName} 계획서 작성하기</S.Font>
-            </S.SubmitLinkBox>
+            {data?.projectStatus === "REPORTING" ? (
+              <div>계획서 카드 보여주는 곳</div>
+            ) : (
+              // <ProjectCard data={data}></ProjectCard>
+              <>
+                <S.SubmitLinkBox
+                  to={`/project/${data?.uuid}/plan`}
+                  onClick={() => {
+                    planMutation.mutate();
+                  }}
+                >
+                  <S.PlusBox>
+                    <img src={PlusIcons} alt="plus" />
+                  </S.PlusBox>
+                  <S.Font>{data?.projectName} 계획서 작성하기</S.Font>
+                </S.SubmitLinkBox>
+              </>
+            )}
           </S.SubmitBox>
         </S.ProjectFile>
         <S.ProjectFile>
