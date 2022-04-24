@@ -1,5 +1,5 @@
-import { FC, useState } from "react";
-import { State } from "../../../interface";
+import { FC, useEffect, useState } from "react";
+import { useSearchType } from "../../../queries/Search";
 import * as S from "./styles";
 
 interface PropsType {
@@ -13,7 +13,9 @@ const Pagination: FC<PropsType> = ({ total, type, keyword }) => {
   const [page, setPage] = useState<number>(0);
   const contentCount = 5;
 
-  console.log(pageIndex);
+  useEffect(() => {
+    console.log(total, page, pageIndex);
+  }, [page]);
 
   const clickPrev = () => {
     if (page !== 0) {
@@ -23,8 +25,7 @@ const Pagination: FC<PropsType> = ({ total, type, keyword }) => {
   };
 
   const clickNext = () => {
-    alert("ekdma");
-    if (page !== total) {
+    if (page <= total - contentCount - 1) {
       setPage(page + 1);
       setPageIndex(page);
     }
@@ -39,11 +40,11 @@ const Pagination: FC<PropsType> = ({ total, type, keyword }) => {
         if (pageIndex === total) {
           return (
             <S.ClcikContent key={index} onClick={() => setPageIndex(pageIndex)}>
-              {pageIndex + 1}
+              <S.Number> {pageIndex + 1}</S.Number>
             </S.ClcikContent>
           );
         } else return <S.ClcikContent>{pageIndex + 1}</S.ClcikContent>;
-      } else return <S.ClcikContent>.</S.ClcikContent>;
+      } else null;
     });
 
   return (
