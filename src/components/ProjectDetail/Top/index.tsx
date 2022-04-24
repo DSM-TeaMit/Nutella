@@ -11,6 +11,7 @@ import ModalPortal from "../../ModalPortal";
 import useModalRef from "../../../hooks/useModalRef";
 import { Project } from "../../../utils/api/ProjectDetails";
 import { ProjectTypes, ProjectLabel, ProjectStatus } from "../../../interface";
+import { useRef } from "react";
 
 interface PropsType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,16 +59,29 @@ const Top: FC<PropsType> = ({ data }) => {
     });
 
   const projectStatusData = projectStatus.get(data?.projectStatus);
+  const ref = useRef<HTMLInputElement>(null);
+  const upProfile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e);
+  };
 
   return (
     <Fragment>
       <S.TopContainer>
         <S.TopContent>
-          <S.ProjectImg
-            alt="프로젝트 이미지"
-            src={data?.thumbnailUrl}
-            emoji={data?.emoji}
-          />
+          {/* <div
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              ref.current?.click();
+            }}
+          > */}
+          <S.ProjectImgBox onClick={() => alert("이미지 수정할 수 있는 곳")}>
+            <S.ProjectImg
+              alt="프로젝트 이미지"
+              src={data?.thumbnailUrl}
+              emoji={data?.emoji}
+            />
+          </S.ProjectImgBox>
           <div>
             <S.ProjectTop>
               <S.ProjectName>{data?.projectName}</S.ProjectName>
@@ -111,6 +125,8 @@ const Top: FC<PropsType> = ({ data }) => {
       <ModalPortal ref={modalRef}>
         <ProjectModifyModal />
       </ModalPortal>
+      {/* <input type="file" ref={ref} accept="image/*" onChange={upProfile} />
+       */}
     </Fragment>
   );
 };

@@ -4,6 +4,8 @@ import { Project } from "../../../utils/api/ProjectDetails";
 import { FC, useEffect } from "react";
 import { useCreatePlanMutation } from "../../../queries/Plan";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import ReportCard from "../../Cards/ReportCard";
 
 interface PropsType {
   data: Project | undefined;
@@ -13,6 +15,37 @@ const SubmitContent: FC<PropsType> = ({ data }) => {
   useEffect(() => {}, []);
   const planMutation = useCreatePlanMutation(data?.uuid || "");
   const resultMutation = useCreatePlanMutation(data?.uuid || "");
+  const navigate = useNavigate();
+
+  const onPlanSuccess = () => {
+    navigate(`/project/${data?.uuid}/plan`);
+  };
+
+  const onPlanError = () => {
+    toast.error("계획서 이동하려는 도중 오류가 났습니다. 다시 시도해 주세요.");
+  };
+
+  const onClickPlan = () => {
+    planMutation.mutate(undefined, {
+      onSuccess: onPlanSuccess,
+      onError: onPlanError,
+    });
+  };
+
+  const onResultSuccess = () => {
+    navigate(`/project/${data?.uuid}/result`);
+  };
+
+  const onResultError = () => {
+    toast.error("보고서 이동하는 도중 오류가 났습니다. 다시 시도해 주세요.");
+  };
+
+  const onClickResult = () => {
+    resultMutation.mutate(undefined, {
+      onSuccess: onResultSuccess,
+      onError: onResultError,
+    });
+  };
 
   return (
     <S.SubmitContentContainer>
@@ -20,17 +53,19 @@ const SubmitContent: FC<PropsType> = ({ data }) => {
         <S.ProjectFile>
           <S.SubTitle>{data?.projectName} 계획서</S.SubTitle>
           <S.SubmitBox>
-            <S.SubmitLinkBox
-              to={`/project/${data?.uuid}/plan`}
-              onClick={() => {
-                planMutation.mutate();
-              }}
-            >
-              <S.PlusBox>
-                <img src={PlusIcons} alt="plus" />
-              </S.PlusBox>
-              <S.Font>{data?.projectName} 계획서 작성하기</S.Font>
-            </S.SubmitLinkBox>
+            {data?.projectStatus === "REPORTING" ? (
+              //<ReportCard />
+              <div>계획서 카드 보여주는 곳</div>
+            ) : (
+              <>
+                <S.SubmitLinkBox onClick={() => onClickPlan()}>
+                  <S.PlusBox>
+                    <img src={PlusIcons} alt="plus" />
+                  </S.PlusBox>
+                  <S.Font>{data?.projectName} 계획서 작성하기</S.Font>
+                </S.SubmitLinkBox>
+              </>
+            )}
           </S.SubmitBox>
         </S.ProjectFile>
         <S.ProjectFile>
@@ -42,7 +77,7 @@ const SubmitContent: FC<PropsType> = ({ data }) => {
                   onClick={() => {
                     resultMutation.mutate();
                   }}
-                  to={`/project/${data?.uuid}/result`}
+                  // to=
                   check={false}
                 />
                 <div>
@@ -56,10 +91,9 @@ const SubmitContent: FC<PropsType> = ({ data }) => {
               <>
                 <S.GrayBox
                   onClick={() => toast.error("계획서부터!")}
-                  to=""
                   check={true}
                 >
-                  <S.Font>계획서를 먼저 작성해 주세요.</S.Font>
+                  <S.Font>계획서부터 먼저 작성해 주세요.</S.Font>
                 </S.GrayBox>
               </>
             )}
