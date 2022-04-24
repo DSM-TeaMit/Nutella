@@ -68,20 +68,22 @@ const Top: FC<PropsType> = ({ data }) => {
     <Fragment>
       <S.TopContainer>
         <S.TopContent>
-          {/* <div
+          <div
             onClick={(e) => {
               e.stopPropagation();
               e.preventDefault();
               ref.current?.click();
             }}
-          > */}
-          <S.ProjectImgBox onClick={() => alert("이미지 수정할 수 있는 곳")}>
-            <S.ProjectImg
-              alt="프로젝트 이미지"
-              src={data?.thumbnailUrl}
-              emoji={data?.emoji}
-            />
-          </S.ProjectImgBox>
+          >
+            <S.ProjectImgBox onClick={() => alert("이미지 수정할 수 있는 곳")}>
+              <S.ProjectImg
+                alt="프로젝트 이미지"
+                src={data?.thumbnailUrl}
+                emoji={data?.emoji}
+              />
+            </S.ProjectImgBox>
+          </div>
+
           <div>
             <S.ProjectTop>
               <S.ProjectName>{data?.projectName}</S.ProjectName>
@@ -125,8 +127,13 @@ const Top: FC<PropsType> = ({ data }) => {
       <ModalPortal ref={modalRef}>
         <ProjectModifyModal />
       </ModalPortal>
-      {/* <input type="file" ref={ref} accept="image/*" onChange={upProfile} />
-       */}
+      <input
+        onClick={(e) => e.stopPropagation()}
+        type="file"
+        ref={ref}
+        accept="image/*"
+        onChange={upProfile}
+      />
     </Fragment>
   );
 };
