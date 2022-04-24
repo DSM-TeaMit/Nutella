@@ -7,6 +7,7 @@ import {
   ConfirmType,
   ConfirmValue,
   createProject,
+  deleteProject,
   Member,
   modifyProjectInfo,
   modifyProjectMember,
@@ -86,4 +87,8 @@ export const useModifyProjectMember = (
     onSuccess,
     onError,
   });
+};
+
+export const useDeleteProject = (projectUuid: string) => {
+  return useMutation(() => deleteProject(projectUuid || ""));
 };
