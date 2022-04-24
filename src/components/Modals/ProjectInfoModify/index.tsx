@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useRef } from "react";
+import { FC, Fragment, useCallback, useEffect, useRef } from "react";
 import useModalContext from "../../../hooks/useModalContext";
 import useModalRef from "../../../hooks/useModalRef";
 import Input from "../../Input";
@@ -10,7 +10,11 @@ import ProjectDeleteModal from "../ProjectDelete";
 import * as S from "./styles";
 import TextareaAutosize from "react-textarea-autosize";
 
-const ProjectModifyModal = () => {
+interface PropsType {
+  onDeleteProject: () => void;
+}
+
+const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
   const { closeCurrentModal } = useModalContext();
   const ref = useRef<HTMLTextAreaElement>(null);
   const modalRef = useModalRef();
@@ -48,7 +52,8 @@ const ProjectModifyModal = () => {
           <RedButton
             onClick={(e) => {
               e.stopPropagation();
-              modalRef.current?.show();
+              e.preventDefault();
+              onDeleteProject();
             }}
           >
             삭제
