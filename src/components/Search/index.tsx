@@ -4,7 +4,7 @@ import useTitle from "../../hooks/useTitle";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useSearch, useSearchType } from "../../queries/Search";
-import { project } from "../../utils/api/Feed";
+import { Project } from "../../utils/api/Feed";
 import toast from "react-hot-toast";
 import MainProjectSkeleton from "../Cards/MainProjectSkeleton";
 import Pagination from "./Pagination";
@@ -72,7 +72,7 @@ const Search = () => {
               <S.ProjectBox>
                 {isLoading
                   ? skeletons
-                  : data?.data.projectName.projects.map((item: project) => {
+                  : data?.data.projectName.projects.map((item: Project) => {
                       return <MainProjectCard key={item.uuid} data={item} />;
                     })}
                 {data?.data.projectName.count === 0 && (
@@ -95,7 +95,7 @@ const Search = () => {
               <S.ProjectBox>
                 {isLoading
                   ? skeletons
-                  : data?.data.memberName.projects.map((item: project) => {
+                  : data?.data.memberName.projects.map((item: Project) => {
                       return <MainProjectCard key={item.uuid} data={item} />;
                     })}
 

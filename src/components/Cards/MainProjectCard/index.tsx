@@ -1,10 +1,10 @@
 import * as S from "./styles";
 import { ViewIcons, PersonalIcons } from "../../../assets/icons";
-import { project } from "../../../utils/api/Feed";
+import { Project } from "../../../utils/api/Feed";
 import { FC } from "react";
 
 interface PropsType {
-  data: project;
+  data: Project;
 }
 
 const MainProjectCard: FC<PropsType> = ({ data }) => {

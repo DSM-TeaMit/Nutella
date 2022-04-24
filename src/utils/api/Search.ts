@@ -1,15 +1,15 @@
 import Uri from "../../constant/Uri";
 import request from "../axios";
-import { project } from "./Feed";
+import { Project } from "./Feed";
 
 export interface ProjectList {
   count: number;
-  projects: project[];
+  projects: Project[];
 }
 
 export interface MemberList {
   count: number;
-  projects: project[];
+  projects: Project[];
 }
 
 export interface SearchList {

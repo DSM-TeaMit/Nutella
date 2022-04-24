@@ -1,7 +1,7 @@
 import Uri from "../../constant/Uri";
 import { ProjectTypes } from "../../interface";
 import request from "../axios";
-export interface project {
+export interface Project {
   thumbnailUrl: string;
   emoji?: string;
   projectName: string;
@@ -13,7 +13,7 @@ export interface project {
 
 export interface Feed {
   count: number;
-  projects: project[];
+  projects: Project[];
 }
 
 export const getFeed = async (order: string, page: number) => {
