@@ -76,7 +76,7 @@ export const useFileMutation = (projectUuid: string) => {
   const upload = useMutation((file: File) =>
     toast.promise(uploadFile(projectUuid, file), {
       loading: "파일 업로드중...",
-      error: "파일 업로드 실패. 파일 크를 확인해주세요.",
+      error: "파일 업로드 실패. 파일 크기를 확인해주세요.",
       success: "파일 업로드 성공",
     })
   );
