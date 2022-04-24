@@ -7,6 +7,7 @@ export const AsideContainer = styled.div`
   background: ${({ theme }) => theme.colors.grayscale.white};
   border-radius: 10px;
   padding: 20px 16px 16px;
+  border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
 `;
 
 export const AsideTop = styled.div`
