@@ -15,7 +15,7 @@ interface PropsType {
 
 const Comment: FC<PropsType> = ({ type, data }) => {
   const themeContext = useThemeContext();
-  const { content, writerName, writerSno, writerType, uuid, writerId } = data;
+  const { content, writerName, writerSno, writerType, uuid, isMine } = data;
   const [isMore, setIsMore] = useState<boolean>(false);
   const deleteCommentMutation = useDeleteComment();
   const ref = useOuterClick<HTMLButtonElement>(() => setIsMore(false));
@@ -51,30 +51,25 @@ const Comment: FC<PropsType> = ({ type, data }) => {
 
   return (
     <S.Container>
-      <S.Image
-        src={data.thumbnailUrl}
-        emoji={data.emoji}
-        onClick={() => onProfileClick()}
-      />
-      <S.ContentContainer
-        color={bgColorMap.get(type)}
-        border={type === "project" ? 0 : 1}
-      >
+      <S.Image src={data.thumbnailUrl} emoji={data.emoji} onClick={() => onProfileClick()} />
+      <S.ContentContainer color={bgColorMap.get(type)} border={type === "project" ? 0 : 1}>
         <S.NameContainer>
           <S.Name>
             {writerSno} {writerName} {writerType === "admin"}
           </S.Name>
           {/* 밑에 있던 Id는 필요없을 것 같아서 지웠습니다! */}
-          <S.MoreContainer>
-            <S.More onClick={onMoreClick} className="more-icon">
-              <S.Icon src={MoreIcons} alt="more" />
-            </S.More>
-            {isMore && (
-              <S.DeletePopup onClick={onCommentDelete} ref={ref}>
-                댓글 삭제
-              </S.DeletePopup>
-            )}
-          </S.MoreContainer>
+          {isMine && (
+            <S.MoreContainer>
+              <S.More onClick={onMoreClick} className="more-icon">
+                <S.Icon src={MoreIcons} alt="more" />
+              </S.More>
+              {isMore && (
+                <S.DeletePopup onClick={onCommentDelete} ref={ref}>
+                  댓글 삭제
+                </S.DeletePopup>
+              )}
+            </S.MoreContainer>
+          )}
         </S.NameContainer>
         <S.Content>
           {content.split("\n").map((value, index) => (

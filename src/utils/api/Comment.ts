@@ -11,6 +11,7 @@ export interface CommentType {
   content: string;
   thumbnailUrl: string;
   emoji: string;
+  isMine: boolean;
 }
 
 interface CommentList {
