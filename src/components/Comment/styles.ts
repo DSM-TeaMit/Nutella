@@ -23,6 +23,7 @@ export const Image = styled(Img)`
   border-radius: 50%;
   object-fit: cover;
   object-position: center;
+  cursor: pointer;
 `;
 
 export const ContentContainer = styled.div<{ border: number }>`
