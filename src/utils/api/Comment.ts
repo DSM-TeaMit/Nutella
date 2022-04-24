@@ -9,6 +9,8 @@ export interface CommentType {
   writerName: string;
   writerSno: number;
   content: string;
+  thumbnailUrl: string;
+  emoji: string;
 }
 
 interface CommentList {
