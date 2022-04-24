@@ -1,4 +1,4 @@
-import { FC, Fragment, useRef } from "react";
+import { FC, Fragment, useRef, useState } from "react";
 import useModalContext from "../../../hooks/useModalContext";
 import useModalRef from "../../../hooks/useModalRef";
 import Input from "../../Input";
@@ -23,6 +23,9 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
   const [inputProps] = useTagInput("", [], true);
   const { uuid } = useParams<{ uuid: string }>();
   const { data } = useProjectDetails(uuid);
+  const [projectName, setProjectName] = useState(data?.data.projectName);
+  const [projectInfo, setProjectInfo] = useState(data?.data.projectResult);
+  //const modifyProjectInfoMutation = useModifyProjectInfo();
 
   return (
     <Fragment>
@@ -31,7 +34,11 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
         <S.ContentBox>
           <S.Content>
             <S.SubTitle>프로젝트 이름</S.SubTitle>
-            <Input defaultValue={data?.data.projectName} />
+            <Input
+              defaultValue={data?.data.projectName}
+              placeholder="프로젝트 이름을 입력해 주세요..."
+              onChange={(e) => setProjectName(e.target.value)}
+            />
           </S.Content>
           <S.Content>
             <S.SubTitle>프로젝트 설명</S.SubTitle>
@@ -44,6 +51,7 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
                   : undefined
               }
               defaultValue={data?.data.projectResult}
+              onChange={(e) => setProjectInfo(e.target.value)}
             />
           </S.Content>
           <S.Content>
