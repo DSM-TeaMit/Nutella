@@ -4,20 +4,19 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import {
   createResultReport,
+  downloadFile,
   getResultReport,
   modifyResultReport,
   ParsedFullResultReport,
   ParsedResultReport,
   submitResultReport,
+  uploadFile,
 } from "../utils/api/Result";
 
 export const useCreateResultMutation = (projectUuid: string) =>
   useMutation(() => createResultReport(projectUuid));
 
-export const useResult = (
-  projectUuid: string,
-  setData: (data: ParsedFullResultReport) => void
-) =>
+export const useResult = (projectUuid: string, setData: (data: ParsedFullResultReport) => void) =>
   useQuery(
     [queryKeys.result, projectUuid],
     async () => {
@@ -71,4 +70,18 @@ export const useSubmitResultMutation = (projectUuid: string) => {
       onSuccess,
     }
   );
+};
+
+export const useFileMutation = (projectUuid: string) => {
+  const upload = useMutation((file: File) =>
+    toast.promise(uploadFile(projectUuid, file), {
+      loading: "파일 업로드중...",
+      error: "파일 업로드 실패. 파일 크를 확인해주세요.",
+      success: "파일 업로드 성공",
+    })
+  );
+
+  const download = useMutation(() => downloadFile(projectUuid));
+
+  return { upload, download };
 };
