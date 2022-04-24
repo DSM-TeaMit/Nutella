@@ -43,7 +43,7 @@ const Comment: FC<PropsType> = ({ type, data }) => {
   }, []);
 
   const onProfileClick = () => {
-    if (writerType === "admin" && "선생님") {
+    if (writerType === "admin") {
       return;
     }
     navigate(`/user/${data.writerId}`);
@@ -62,7 +62,7 @@ const Comment: FC<PropsType> = ({ type, data }) => {
       >
         <S.NameContainer>
           <S.Name>
-            {writerSno} {writerName} {writerType === "admin" && "선생님"}
+            {writerSno} {writerName} {writerType === "admin"}
           </S.Name>
           {/* 밑에 있던 Id는 필요없을 것 같아서 지웠습니다! */}
           <S.MoreContainer>

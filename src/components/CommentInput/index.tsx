@@ -37,7 +37,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
 
   const onSubmitEnter = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.key === "Enter") {
+      if (!e.shiftKey && e.key === "Enter") {
         setInput("");
         commentMutation.mutate({ content: input, type: source });
       }
