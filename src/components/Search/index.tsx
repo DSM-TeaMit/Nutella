@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import Project from "../Cards/MainProjectCard";
+import MainProjectCard from "../Cards/MainProjectCard";
 import useTitle from "../../hooks/useTitle";
 import { useSearchParams } from "react-router-dom";
 import { useMemo } from "react";

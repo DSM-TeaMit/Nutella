@@ -7,7 +7,7 @@ interface PropsType {
   data: FeedList;
 }
 
-const Project: FC<PropsType> = ({ data }) => {
+const MainProjectCard: FC<PropsType> = ({ data }) => {
   return (
     <>
       <S.Content to={`/project/${data?.uuid}`}>
@@ -34,4 +34,4 @@ const Project: FC<PropsType> = ({ data }) => {
   );
 };
 
-export default Project;
+export default MainProjectCard;

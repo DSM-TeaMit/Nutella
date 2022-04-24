@@ -1,29 +1,66 @@
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import isMore from "../../constant/IsMore";
 import LIMIT from "../../constant/Limit";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import { usePendingReport } from "../../queries/PendingReport";
+import { PendingReport as PendingReportType } from "../../utils/api/PendingReport";
 import PendingReportCard from "../Cards/PendingReportCard";
 import * as S from "./styles";
 
 const PendingReport = () => {
-  const [page, setPage] = useState<number>(1);
-  const { data, isLoading, isError, isFetching, error } =
-    usePendingReport(page);
+  const initPage = 1;
+  const { data, isLoading, isError, isFetching, error, fetchNextPage } =
+    usePendingReport(initPage);
+
+  const prevPage: number = useMemo(() => {
+    if (
+      !data ||
+      data.pageParams.length <= 0 ||
+      data.pageParams[data.pageParams.length - 1] === undefined
+    ) {
+      return initPage;
+    }
+
+    return Number(data.pageParams[data.pageParams.length - 1]);
+  }, [data]);
+
+  const [page, setPage] = useState<number>(prevPage);
   const navigate = useNavigate();
+  const list = useMemo(() => {
+    if (!data) {
+      return undefined;
+    }
+
+    const l: PendingReportType[] = [];
+
+    data.pages.forEach((value) => {
+      l.concat([...value.data.projects]);
+    });
+
+    return [...l];
+  }, [data]);
+
+  const count = useMemo(() => {
+    if (!data || data.pages.length <= 0) {
+      return undefined;
+    }
+
+    return data.pages[0].data.count;
+  }, [data]);
 
   const onNextPage = useCallback(() => {
-    if (!data) {
+    if (!count) {
       return;
     }
 
-    if (isMore(LIMIT, page, data.data.count)) {
+    if (isMore(LIMIT, page, count)) {
       setPage((prev) => prev + 1);
+      fetchNextPage();
     }
-  }, [page, data]);
+  }, [count, page, fetchNextPage]);
 
   const ref = useInfiniteScroll<HTMLDivElement>(
     onNextPage,
@@ -69,15 +106,15 @@ const PendingReport = () => {
     <S.Container>
       <div>
         <S.Title>승인 요청 보고서&nbsp;</S.Title>
-        <S.Count>{data?.data.count}</S.Count>
+        <S.Count>{count}</S.Count>
       </div>
       <S.List>
-        {data?.data.projects.map((value) => {
+        {list?.map((value) => {
           return <PendingReportCard data={value} key={value.uuid} />;
         })}
       </S.List>
       <div ref={ref} />
-      {data?.data.count === 0 && (
+      {count === 0 && (
         <>
           <S.Message>승인 요청 보고서가 없습니다.</S.Message>
           <S.Gap />

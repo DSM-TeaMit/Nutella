@@ -100,7 +100,7 @@ const ProjectAddModal = () => {
       role: roleTags.map((value) => value.value).join(","),
       members: members.map((value) => ({
         uuid: value.uuid,
-        role: value.tags.join(","),
+        role: value.tags.map((value) => value.value).join(","),
       })),
     });
 

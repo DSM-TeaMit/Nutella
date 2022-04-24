@@ -2,15 +2,52 @@ import * as I from "../../styles";
 import ProjectCard from "../../../Cards/ProjectCard";
 import { useParams } from "react-router-dom";
 import { useUserProjects } from "../../../../queries/User";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import Loading from "../../Loading";
 import Error from "../../Error";
+import { ProjectType } from "../../../../utils/api/User";
+import isMore from "../../../../constant/IsMore";
+import LIMIT from "../../../../constant/Limit";
 
 const Project = () => {
   const { uuid } = useParams<{ uuid: string }>();
-  const [page] = useState<number>(1);
-  const { data, isError, isLoading } = useUserProjects(uuid || "", page);
+  const initPage = 1;
+  const [page, setPage] = useState<number>(initPage);
+  const { data, isError, isLoading, isFetching, fetchNextPage } =
+    useUserProjects(uuid || "", initPage);
+  const list = useMemo(() => {
+    if (!data) {
+      return undefined;
+    }
+
+    const l: ProjectType[] = [];
+
+    data.pages.forEach((value) => {
+      l.push(...value.data.projects);
+    });
+
+    return l;
+  }, [data]);
+
+  const count = useMemo(() => {
+    if (!data || data.pages.length <= 0) {
+      return undefined;
+    }
+
+    return data.pages[0].data.count;
+  }, [data]);
+
+  const onNextPage = useCallback(() => {
+    if (!count) {
+      return;
+    }
+
+    if (isMore(LIMIT, page, count)) {
+      setPage((prev) => prev + 1);
+      fetchNextPage();
+    }
+  }, [count, fetchNextPage, page]);
 
   useEffect(() => {
     if (isError) {
@@ -28,8 +65,6 @@ const Project = () => {
     );
   }
 
-  const { count, projects } = data!.data;
-
   return (
     <I.ContentInner>
       <I.FlexContainer>
@@ -41,10 +76,14 @@ const Project = () => {
             </div>
           </I.ProjectTitle>
           <I.Grid>
-            {projects.map((value) => (
+            {list?.map((value) => (
               <ProjectCard key={value.uuid} data={value} />
             ))}
           </I.Grid>
+          {!isFetching && count !== undefined && isMore(LIMIT, page, count) && (
+            <I.More onClick={onNextPage}>더 가져오기...</I.More>
+          )}
+          {count === 0 && <I.Message>프로젝트가 존재하지 않습니다.</I.Message>}
         </div>
       </I.FlexContainer>
     </I.ContentInner>
