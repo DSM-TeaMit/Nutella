@@ -1,4 +1,4 @@
-import {
+import React, {
   ChangeEvent,
   FC,
   useCallback,
@@ -35,6 +35,16 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
     []
   );
 
+  const onSubmitEnter = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (!e.shiftKey && e.key === "Enter") {
+        setInput("");
+        commentMutation.mutate({ content: input, type: source });
+      }
+    },
+    [commentMutation, input, source]
+  );
+
   const onSubmitClick = useCallback(() => {
     setInput("");
     commentMutation.mutate({ content: input, type: source });
@@ -64,13 +74,14 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
 
   return (
     <S.Container>
-      <S.Image />
+      <S.Image src={data?.data.thumbnailUrl} emoji={data?.data.emoji} />
       <S.Input
         color={bgColorMap.get(type)}
         border={type === "project" ? 0 : 1}
         placeholder={placeholder}
         onChange={onChange}
         value={input}
+        onKeyPress={(e) => onSubmitEnter(e)}
       />
       <BlueButton disabled={input.length === 0} onClick={onSubmitClick}>
         댓글 달기

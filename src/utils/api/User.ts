@@ -41,6 +41,7 @@ export interface MyProfileType {
   projectCount: number;
   projects: ProjectType[];
   thumbnailUrl?: string;
+  emoji: string;
 }
 
 export interface UserProfileType {

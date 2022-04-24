@@ -6,6 +6,7 @@ import * as S from "./styles";
 import { MoreIcons } from "../../assets/icons";
 import { useDeleteComment } from "../../queries/Comment";
 import useOuterClick from "../../hooks/useOuterClick";
+import { useNavigate } from "react-router-dom";
 
 interface PropsType {
   type: CommentStyleType;
@@ -14,10 +15,11 @@ interface PropsType {
 
 const Comment: FC<PropsType> = ({ type, data }) => {
   const themeContext = useThemeContext();
-  const { content, writerName, writerSno, writerType, uuid, writerId } = data;
+  const { content, writerName, writerSno, writerType, uuid, isMine } = data;
   const [isMore, setIsMore] = useState<boolean>(false);
   const deleteCommentMutation = useDeleteComment();
   const ref = useOuterClick<HTMLButtonElement>(() => setIsMore(false));
+  const navigate = useNavigate();
 
   const bgColorMap = new Map<CommentStyleType, string>()
     .set("project", themeContext.colors.grayscale.lightGray1)
@@ -40,18 +42,23 @@ const Comment: FC<PropsType> = ({ type, data }) => {
     setIsMore((prev) => !prev);
   }, []);
 
+  const onProfileClick = () => {
+    if (writerType === "admin") {
+      return;
+    }
+    navigate(`/user/${data.writerId}`);
+  };
+
   return (
     <S.Container>
-      <S.Image />
-      <S.ContentContainer
-        color={bgColorMap.get(type)}
-        border={type === "project" ? 0 : 1}
-      >
+      <S.Image src={data.thumbnailUrl} emoji={data.emoji} onClick={() => onProfileClick()} />
+      <S.ContentContainer color={bgColorMap.get(type)} border={type === "project" ? 0 : 1}>
         <S.NameContainer>
           <S.Name>
             {writerSno} {writerName} {writerType === "admin" && "선생님"}
           </S.Name>
-          {writerId === "e973c27b-3e0e-4863-86be-b2e0dfd24908" && (
+          {/* 밑에 있던 Id는 필요없을 것 같아서 지웠습니다! */}
+          {isMine && (
             <S.MoreContainer>
               <S.More onClick={onMoreClick} className="more-icon">
                 <S.Icon src={MoreIcons} alt="more" />
