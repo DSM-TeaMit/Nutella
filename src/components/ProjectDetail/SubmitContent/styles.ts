@@ -53,17 +53,17 @@ export const Font = styled.div`
   margin: 38px auto;
 `;
 
-export const SubmitLinkBox = styled(Link)`
+export const SubmitLinkBox = styled.div`
   width: 100%;
   border-radius: 10px;
   z-index: 100;
   display: flex;
-  text-decoration: none;
+  cursor: pointer;
 `;
 
 export const GrayBox = styled(SubmitLinkBox)<{ check: boolean }>`
   background-color: ${({ theme, check }) =>
-    check ? theme.colors.grayscale.lightGray2 : null};
+    check ? theme.colors.grayscale.lightGray1 : null};
 `;
 
 export const SubTitle = styled.div`
