@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 
 const ProjectDetail = () => {
   const { uuid } = useParams<{ uuid: string }>();
-  const { data, isError, isLoading } = useProjectDetails(uuid);
+  const { data, isError, isLoading } = useProjectDetails(uuid || "");
   const { pathname } = useLocation();
 
   useEffect(() => {

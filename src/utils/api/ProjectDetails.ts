@@ -18,7 +18,7 @@ export interface Project {
   projectView: string;
   projectType: ProjectTypes;
   projectField: string;
-  projectStatus: string; // 한번 type 만들어 보기
+  projectStatus: string;
   projectResult: string;
   thumbnailUrl: string;
   emoji?: string;
@@ -30,6 +30,11 @@ export const getProject = async (projectUuid: string) => {
   return await request.get<Project>(Uri.project.get({ projectUuid }));
 };
 
-export const uploadImg = async (image: string) => {
-  return await request.post(Uri.uploadingThumbnails.get(), image);
+export const uploadImg = async (projectUuid: string, image: File) => {
+  const formData = new FormData();
+  formData.append("image", image);
+  return await request.post(
+    Uri.uploadingThumbnails.get({ projectUuid }),
+    formData
+  );
 };
