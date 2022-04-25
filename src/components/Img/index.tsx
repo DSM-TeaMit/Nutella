@@ -32,15 +32,10 @@ emojiUnicode.raw = function (input: string) {
         input.charCodeAt(i) >= 0xd800 &&
         input.charCodeAt(i) <= 0xdbff
       ) {
-        if (
-          input.charCodeAt(i + 1) >= 0xdc00 &&
-          input.charCodeAt(i + 1) <= 0xdfff
-        ) {
+        if (input.charCodeAt(i + 1) >= 0xdc00 && input.charCodeAt(i + 1) <= 0xdfff) {
           // low surrogate
           pairs.push(
-            (input.charCodeAt(i) - 0xd800) * 0x400 +
-              (input.charCodeAt(i + 1) - 0xdc00) +
-              0x10000
+            (input.charCodeAt(i) - 0xd800) * 0x400 + (input.charCodeAt(i + 1) - 0xdc00) + 0x10000
           );
         }
       } else if (input.charCodeAt(i) < 0xd800 || input.charCodeAt(i) > 0xdfff) {
@@ -78,21 +73,21 @@ const Img: FC<PropsType> = (props) => {
     return <img {...rest} alt={undefined} />;
   }
 
-  if (isError) {
-    return <img {...rest} alt={undefined} />;
+  if (!src && isError) {
+    if (emoji) {
+      return (
+        <img
+          {...rest}
+          alt={undefined}
+          src={`https://twitter.github.io/twemoji/v/13.1.0/svg/${unicode}.svg`}
+        />
+      );
+    }
+
+    return <img {...rest} />;
   }
 
-  if (data) {
-    return <img {...rest} src={data} />;
-  }
-
-  return (
-    <img
-      {...rest}
-      alt={undefined}
-      src={`https://twitter.github.io/twemoji/v/13.1.0/svg/${unicode}.svg`}
-    />
-  );
+  return <img {...rest} src={data} />;
 };
 
 export default Img;
