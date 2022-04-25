@@ -49,11 +49,7 @@ export const createResultReport = async (projectUuid: string) => {
 
   const content: Page[] = [];
 
-  return await request.post<
-    unknown,
-    AxiosResponse<unknown, unknown>,
-    ResultReport
-  >(uri, {
+  return await request.post<unknown, AxiosResponse<unknown, unknown>, ResultReport>(uri, {
     subject: "",
     content: JSON.stringify(content),
   });
@@ -71,10 +67,7 @@ export const getResultReport = async (projectUuid: string) => {
     content: JSON.parse(data.content) as Page[],
   };
 
-  const responseWithoutData: Omit<
-    AxiosResponse<ResultReport, unknown>,
-    "data"
-  > = {
+  const responseWithoutData: Omit<AxiosResponse<ResultReport, unknown>, "data"> = {
     ...response,
   };
 
@@ -86,10 +79,7 @@ export const getResultReport = async (projectUuid: string) => {
   return parsedResponse;
 };
 
-export const modifyResultReport = async (
-  projectUuid: string,
-  data: ParsedResultReport
-) => {
+export const modifyResultReport = async (projectUuid: string, data: ParsedResultReport) => {
   const uri = Uri.result.get({ projectUuid });
 
   const requestData: ResultReport = {
@@ -97,15 +87,29 @@ export const modifyResultReport = async (
     content: JSON.stringify(data.content),
   };
 
-  return await request.post<
-    unknown,
-    AxiosResponse<unknown, unknown>,
-    ResultReport
-  >(uri, requestData);
+  return await request.post<unknown, AxiosResponse<unknown, unknown>, ResultReport>(
+    uri,
+    requestData
+  );
 };
 
 export const submitResultReport = async (projectUuid: string) => {
   const uri = Uri.submitResult.get({ projectUuid });
 
   return await request.patch(uri);
+};
+
+export const uploadFile = async (projectUuid: string, file: File) => {
+  const uri = Uri.file.get({ projectUuid });
+
+  const formData = new FormData();
+  formData.append("archive", file);
+
+  return await request.post(uri, formData);
+};
+
+export const downloadFile = async (projectUuid: string) => {
+  const uri = Uri.file.get({ projectUuid });
+
+  return await request.get(uri);
 };

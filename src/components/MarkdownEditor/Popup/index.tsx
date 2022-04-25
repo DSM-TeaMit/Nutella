@@ -1,4 +1,4 @@
-import { FC, useCallback, useContext, useMemo, useRef } from "react";
+import React, { FC, useCallback, useContext, useMemo, useRef } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { MarkdownContext } from "../../../context/MarkdownContext";
@@ -137,6 +137,7 @@ const Popup: FC<PropsType> = ({ id }) => {
           type="file"
           accept="image/png, image/gif, image/jpeg"
           onChange={onImageChange}
+          onClick={(e) => e.stopPropagation()}
         />
       </S.PopupRowOuter>
     </S.PopUp>
