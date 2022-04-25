@@ -17,6 +17,7 @@ export const postImage = async (file: File, projectUuid: string) => {
 export const getImage = async (src: string) => {
   const response = await request.get(src, {
     responseType: "arraybuffer",
+    baseURL: "",
   });
 
   const data = `data:${
