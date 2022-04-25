@@ -25,6 +25,9 @@ export const ProjectImgBox = styled.label`
 `;
 
 export const ProjectImg = styled(Img)`
+  width: 200px;
+  border-radius: 15px;
+  height: 200px;
   object-fit: cover;
   object-position: center;
 `;
