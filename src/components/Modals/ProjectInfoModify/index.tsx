@@ -11,6 +11,10 @@ import * as S from "./styles";
 import TextareaAutosize from "react-textarea-autosize";
 import { useProjectDetails } from "../../../queries/ProjectDetails";
 import { useParams } from "react-router-dom";
+import { useModifyProjectInfo } from "../../../queries/Project";
+import toast from "react-hot-toast";
+import { useQueryClient } from "react-query";
+import queryKeys from "../../../constant/QueryKeys";
 
 interface PropsType {
   onDeleteProject: () => void;
@@ -18,14 +22,34 @@ interface PropsType {
 
 const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
   const { closeCurrentModal } = useModalContext();
-  const ref = useRef<HTMLTextAreaElement>(null);
   const modalRef = useModalRef();
   const [inputProps] = useTagInput("", [], true);
   const { uuid } = useParams<{ uuid: string }>();
   const { data } = useProjectDetails(uuid || "");
-  const [projectName, setProjectName] = useState(data?.data.projectName);
-  const [projectInfo, setProjectInfo] = useState(data?.data.projectResult);
+  const [projectName, setProjectName] = useState(data?.data.projectName || "");
+  const [projectInfo, setProjectInfo] = useState(
+    data?.data.projectResult || ""
+  );
+  const [field, setField] = useState("");
   //const modifyProjectInfoMutation = useModifyProjectInfo();
+  const projectInfoMutation = useModifyProjectInfo(uuid || "");
+  const queryClient = useQueryClient();
+
+  const onClickInfoModify = async () => {
+    await toast.promise(
+      projectInfoMutation.mutateAsync({
+        name: projectName,
+        description: projectInfo,
+        field: field,
+      }),
+      {
+        loading: "프로젝트 정보 수정 중",
+        error: "프로젝트 정보 수정이 실패되었습니다.",
+        success: "프로젝트 정보 수정이 완료되었습니다.",
+      }
+    );
+    queryClient.invalidateQueries([queryKeys.projects, uuid || ""]);
+  };
 
   return (
     <Fragment>
@@ -78,7 +102,7 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
           </RedButton>
           <div>
             <BorderButton onClick={closeCurrentModal}>취소</BorderButton>
-            <BlueButton>수정</BlueButton>
+            <BlueButton onClick={onClickInfoModify}>수정</BlueButton>
           </div>
         </S.BtnBox>
       </S.ProjectModifyModalContainer>
