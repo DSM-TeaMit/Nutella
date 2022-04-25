@@ -36,8 +36,9 @@ const Uri = {
   newProject: new URI(`project`),
   project: new URI<ProjectUuid>(`project/{${projectUuid}}`),
   projectConfirm: new URI<ProjectUuid>(`project/{${projectUuid}}/confirm`),
-  projectSearch: new URI(`project/feed/search`),
   projectList: new URI(`project/feed`),
+  projectSearch: new URI(`project/feed/search`),
+  projectSearchType: new URI(`project/feed/search/each`),
   projectComment: new URI<ProjectUuid>(`comment/{${projectUuid}}`),
   removeComment: new URI<CommentUuid>(`comment/{${commentUuid}}`),
   uploadImage: new URI<ProjectUuid>(`file/{${projectUuid}}/image`),
@@ -51,7 +52,7 @@ const Uri = {
   admin: new URI<AdminUuid>(`admin/{${adminUuid}}`),
   searchUser: new URI(`user/search`),
   modifyProjectMember: new URI<ProjectUuid>(`project/{${projectUuid}}/member`),
-  uploadingThumbnails: new URI(`file/thumbnail`),
+  uploadingThumbnails: new URI<ProjectUuid>(`file/{${projectUuid}}/thumbnail`),
 } as const;
 
 export default Uri;

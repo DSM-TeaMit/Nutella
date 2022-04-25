@@ -51,13 +51,17 @@ const Comment: FC<PropsType> = ({ type, data }) => {
 
   return (
     <S.Container>
-      <S.Image src={data.thumbnailUrl} emoji={data.emoji} onClick={() => onProfileClick()} />
+      <S.Image
+        isProfile
+        src={data.thumbnailUrl}
+        emoji={data.emoji}
+        onClick={() => onProfileClick()}
+      />
       <S.ContentContainer color={bgColorMap.get(type)} border={type === "project" ? 0 : 1}>
         <S.NameContainer>
           <S.Name>
             {writerSno} {writerName} {writerType === "admin" && "선생님"}
           </S.Name>
-          {/* 밑에 있던 Id는 필요없을 것 같아서 지웠습니다! */}
           {isMine && (
             <S.MoreContainer>
               <S.More onClick={onMoreClick} className="more-icon">

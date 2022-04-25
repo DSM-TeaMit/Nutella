@@ -11,7 +11,7 @@ import { useDeleteProject } from "../../../queries/Project";
 const ProjectDeleteModal = () => {
   const { closeCurrentModal } = useModalContext();
   const { uuid } = useParams<{ uuid: string }>();
-  const { data } = useProjectDetails(uuid);
+  const { data } = useProjectDetails(uuid || "");
   const [inputProps, [value]] = useInput();
   const deleteProjectMutation = useDeleteProject(uuid || "");
   const navigate = useNavigate();

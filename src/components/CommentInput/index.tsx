@@ -1,15 +1,8 @@
-import React, {
-  ChangeEvent,
-  FC,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from "react";
 import useThemeContext from "../../hooks/useThemeContext";
 import { CommentSource, CommentStyleType } from "../../interface";
 import { useCommentMutation } from "../../queries/Comment";
-import { useMyProfile } from "../../queries/User";
+import { useHeader } from "../../queries/User";
 import { BlueButton } from "../Buttons";
 import * as S from "./styles";
 import toast from "react-hot-toast";
@@ -24,7 +17,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
   const themeContext = useThemeContext();
   const commentMutation = useCommentMutation(uuid);
   const [input, setInput] = useState<string>("");
-  const { data, isLoading, isError } = useMyProfile();
+  const { data, isLoading, isError } = useHeader();
 
   const bgColorMap = new Map<CommentStyleType, string>()
     .set("project", themeContext.colors.grayscale.lightGray1)
@@ -59,6 +52,10 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
       return "정보 오류 발생";
     }
 
+    if(data?.data.type === "admin"){
+      return `${data?.data.name} 선생님(으)로 댓글 달기`;
+    }
+
     return `${data?.data.studentNo} ${data?.data.name}(으)로 댓글 달기`;
   }, [data, isError, isLoading]);
 
@@ -70,7 +67,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
 
   return (
     <S.Container>
-      <S.Image src={data?.data.thumbnailUrl} emoji={data?.data.emoji} />
+      <S.Image isProfile src={data?.data.thumbnailUrl} emoji={data?.data.emoji} />
       <S.Input
         color={bgColorMap.get(type)}
         border={type === "project" ? 0 : 1}

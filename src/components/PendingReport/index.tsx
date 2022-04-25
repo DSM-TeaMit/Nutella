@@ -8,12 +8,20 @@ import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import { usePendingReport } from "../../queries/PendingReport";
 import { PendingReport as PendingReportType } from "../../utils/api/PendingReport";
 import PendingReportCard from "../Cards/PendingReportCard";
+import PendingReportSkeleton from "../Cards/PendingReportSkeleton";
 import * as S from "./styles";
 
 const PendingReport = () => {
   const initPage = 1;
-  const { data, isLoading, isError, isFetching, error, fetchNextPage } =
-    usePendingReport(initPage);
+  const {
+    data,
+    isLoading,
+    isError,
+    isFetching,
+    error,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = usePendingReport(initPage);
 
   const prevPage: number = useMemo(() => {
     if (
@@ -37,7 +45,7 @@ const PendingReport = () => {
     const l: PendingReportType[] = [];
 
     data.pages.forEach((value) => {
-      l.concat([...value.data.projects]);
+      l.push(...value.data.projects);
     });
 
     return [...l];
@@ -82,15 +90,13 @@ const PendingReport = () => {
     }
   }, [error, isError, navigate]);
 
-  if (isLoading) {
-    return (
-      <S.Container>
-        <S.Title>승인 요청 보고서&nbsp;</S.Title>
-        <S.Message>승인 요청 보고서 가져오는 중...</S.Message>
-        <S.Gap />
-      </S.Container>
-    );
-  }
+  const skeleton = useMemo(
+    () =>
+      Array(4)
+        .fill(0)
+        .map((_, index) => <PendingReportSkeleton key={index} />),
+    []
+  );
 
   if (isError) {
     return (
@@ -109,9 +115,11 @@ const PendingReport = () => {
         <S.Count>{count}</S.Count>
       </div>
       <S.List>
+        {isLoading && skeleton}
         {list?.map((value) => {
           return <PendingReportCard data={value} key={value.uuid} />;
         })}
+        {isFetchingNextPage && skeleton}
       </S.List>
       <div ref={ref} />
       {count === 0 && (

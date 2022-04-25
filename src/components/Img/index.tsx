@@ -66,16 +66,6 @@ const Img: FC<PropsType> = (props) => {
     [emoji]
   );
 
-  if (emoji) {
-    return (
-      <img
-        {...rest}
-        alt={undefined}
-        src={`https://twitter.github.io/twemoji/v/13.1.0/svg/${unicode}.svg`}
-      />
-    );
-  }
-
   if (isProfile) {
     return <img {...rest} src={src} crossOrigin="anonymous" alt={undefined} />;
   }
@@ -92,7 +82,17 @@ const Img: FC<PropsType> = (props) => {
     return <img {...rest} alt={undefined} />;
   }
 
-  return <img {...rest} src={data} />;
+  if (data) {
+    return <img {...rest} src={data} />;
+  }
+
+  return (
+    <img
+      {...rest}
+      alt={undefined}
+      src={`https://twitter.github.io/twemoji/v/13.1.0/svg/${unicode}.svg`}
+    />
+  );
 };
 
 export default Img;

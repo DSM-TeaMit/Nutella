@@ -21,12 +21,12 @@ export const ProjectImgBox = styled.label`
   color: white;
   cursor: pointer;
   margin-right: 24px;
+  border-radius: 15px;
 `;
 
 export const ProjectImg = styled(Img)`
   object-fit: cover;
   object-position: center;
-  border-radius: 10px;
 `;
 
 export const ProjectInfo = styled.div`

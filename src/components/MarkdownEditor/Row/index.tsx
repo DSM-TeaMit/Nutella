@@ -1,15 +1,5 @@
-import React, {
-  FC,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import {
-  MarkdownContext,
-  Row as RowType,
-} from "../../../context/MarkdownContext";
+import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { MarkdownContext, Row as RowType } from "../../../context/MarkdownContext";
 import * as S from "./styles";
 import HandleSVG from "../../../assets/icons/handle.svg";
 import { Tag } from "../../../interface";
@@ -42,10 +32,7 @@ const placeholderMap = new Map<Tag, string>()
   .set("ul", "비어있는 목록")
   .set("ol", "비어있는 목록");
 
-const ulTypeMap = new Map<number, string>()
-  .set(0, "disc")
-  .set(1, "circle")
-  .set(2, "square");
+const ulTypeMap = new Map<number, string>().set(0, "disc").set(1, "circle").set(2, "square");
 
 const isList = (type: Tag) => ["ul", "ol"].includes(type);
 
@@ -97,10 +84,7 @@ const Row: FC<PropsType> = ({ data }) => {
         }
       }
 
-      const step = new Map<string, number>()
-        .set("ArrowUp", -1)
-        .set("ArrowDown", 1)
-        .get(e.key);
+      const step = new Map<string, number>().set("ArrowUp", -1).set("ArrowDown", 1).get(e.key);
 
       if (step) {
         e.stopPropagation();
@@ -139,9 +123,7 @@ const Row: FC<PropsType> = ({ data }) => {
   const onInput = useCallback(
     (e: React.FormEvent<HTMLElement>) => {
       let text =
-        (e.target as HTMLElement).innerHTML
-          .replace(/&nbsp;/g, " ")
-          .replace(/&gt;/g, ">") || "";
+        (e.target as HTMLElement).innerHTML.replace(/&nbsp;/g, " ").replace(/&gt;/g, ">") || "";
 
       const key = keyArray.find((value) => new RegExp(`^${value} `).test(text));
 
@@ -194,23 +176,17 @@ const Row: FC<PropsType> = ({ data }) => {
     return start;
   }, [currentIndex, rows]);
 
-  const onDragEnter = useCallback(
-    (e: React.DragEvent<HTMLDivElement>): void => {
-      e.preventDefault();
-      e.stopPropagation();
-    },
-    []
-  );
+  const onDragEnter = useCallback((e: React.DragEvent<HTMLDivElement>): void => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
 
-  const onDragLeave = useCallback(
-    (e: React.DragEvent<HTMLDivElement>): void => {
-      e.preventDefault();
-      e.stopPropagation();
+  const onDragLeave = useCallback((e: React.DragEvent<HTMLDivElement>): void => {
+    e.preventDefault();
+    e.stopPropagation();
 
-      setIsDragging(false);
-    },
-    []
-  );
+    setIsDragging(false);
+  }, []);
 
   const onDragOver = useCallback((e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault();
@@ -233,10 +209,7 @@ const Row: FC<PropsType> = ({ data }) => {
     [addImages, id, uuid]
   );
 
-  const isDisabled = useMemo(
-    () => (disabled === undefined ? false : disabled),
-    [disabled]
-  );
+  const isDisabled = useMemo(() => (disabled === undefined ? false : disabled), [disabled]);
 
   const inputProps = useMemo(
     () => (isDisabled ? undefined : { onKeyDown, onInput }),
@@ -281,8 +254,7 @@ const Row: FC<PropsType> = ({ data }) => {
   }, [id, refs, type]);
 
   const dragProps = useMemo(
-    () =>
-      isDisabled ? undefined : { onDragEnter, onDragLeave, onDragOver, onDrop },
+    () => (isDisabled ? undefined : { onDragEnter, onDragLeave, onDragOver, onDrop }),
     [isDisabled, onDragEnter, onDragLeave, onDragOver, onDrop]
   );
 

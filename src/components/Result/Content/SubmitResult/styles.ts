@@ -57,6 +57,7 @@ export const AddFile = styled.button`
   background-color: transparent;
   padding: 0px;
   cursor: pointer;
+  margin-right: 16px;
 
   &:hover {
     color: ${({ theme }) => theme.colors.grayscale.gray1};

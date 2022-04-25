@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
-import Img from "../../Img";
 
-export const Container = styled(Link)`
+export const Container = styled.div`
   user-select: none;
   column-gap: 20px;
   display: grid;
@@ -11,24 +9,14 @@ export const Container = styled(Link)`
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors.grayscale.white};
   border: solid 1px ${({ theme }) => theme.colors.grayscale.lightGray1};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.grayscale.lightGray1};
-  }
-
-  &:active {
-    background-color: ${({ theme }) => theme.colors.grayscale.white};
-  }
 `;
 
-export const Image = styled(Img)`
+export const Image = styled.div`
   grid-column: 1 / 2;
-  width: 100%;
   aspect-ratio: 4 / 3;
-  background-color: ${({ theme }) => theme.colors.grayscale.gray1};
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
   border-radius: 10px;
-  object-fit: cover;
-  object-position: center;
 `;
 
 export const ContentContainer = styled.div`
@@ -41,26 +29,18 @@ export const ContentContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const TitleContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex: 1;
-  overflow: hidden;
-  margin-right: 16px;
-`;
-
 export const Title = styled.span`
   font: ${({ theme }) => theme.fonts.subtitle1};
-  color: ${({ theme }) => theme.colors.grayscale.black};
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
+  border-radius: 5px;
+  color: transparent;
 `;
 
 export const Type = styled.span`
   font: ${({ theme }) => theme.fonts.body3};
-  color: ${({ theme }) => theme.colors.grayscale.gray2};
-  white-space: nowrap;
+  color: transparent;
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
+  border-radius: 5px;
   margin-left: 8px;
 `;
 
@@ -79,20 +59,25 @@ export const Scale = styled.div`
   display: flex;
   column-gap: 8px;
   align-items: center;
-  filter: ${({ theme }) => theme.filters.grayscale.black};
 `;
 
-export const ScaleIcon = styled.img`
+export const ScaleIcon = styled.div`
   width: 20px;
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
   height: 20px;
+  border-radius: 5px;
 `;
 
 export const ScaleLabel = styled.div`
   font: ${({ theme }) => theme.fonts.body3};
-  color: black;
+  color: transparent;
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
+  border-radius: 5px;
 `;
 
 export const Gray = styled.div`
   font: ${({ theme }) => theme.fonts.body3};
-  color: ${({ theme }) => theme.colors.grayscale.gray2};
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
+  color: transparent;
+  border-radius: 5px;
 `;
