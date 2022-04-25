@@ -6,12 +6,15 @@ import {
   ViewIcons,
 } from "../../../assets/icons";
 import ProjectModifyModal from "../../Modals/ProjectInfoModify";
-import { FC, Fragment, Key } from "react";
+import { FC, Fragment, Key, useEffect } from "react";
 import ModalPortal from "../../ModalPortal";
 import useModalRef from "../../../hooks/useModalRef";
 import { Project } from "../../../utils/api/ProjectDetails";
 import { ProjectTypes, ProjectLabel, ProjectStatus } from "../../../interface";
-import { useRef } from "react";
+import { useUploadThumbnail } from "../../../queries/ProjectDetails";
+import toast from "react-hot-toast";
+import { useQueryClient } from "react-query";
+import queryKeys from "../../../constant/QueryKeys";
 
 interface PropsType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -59,30 +62,46 @@ const Top: FC<PropsType> = ({ data }) => {
     });
 
   const projectStatusData = projectStatus.get(data?.projectStatus);
-  const ref = useRef<HTMLInputElement>(null);
+  const queryClient = useQueryClient();
+
+  const upload = useUploadThumbnail(data?.uuid || "");
+
   const upProfile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
+    const file = e.currentTarget.files;
+    if (!file) return;
+    await toast.promise(upload.mutateAsync(file[0]), {
+      loading: "사진 업로드 중...",
+      error: "사진 업로드 실패",
+      success: "사진 업로드 성공",
+    });
+
+    queryClient.invalidateQueries([queryKeys.projects, data.uuid || ""]);
   };
+
+  useEffect(() => {}, [data?.thumbnailUrl]);
 
   return (
     <Fragment>
       <S.TopContainer>
         <S.TopContent>
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              ref.current?.click();
-            }}
+          <S.ProjectImgBox
+            htmlFor="projectImg"
+            onClick={(e) => e.stopPropagation()}
           >
-            <S.ProjectImgBox onClick={() => alert("이미지 수정할 수 있는 곳")}>
-              <S.ProjectImg
-                alt="프로젝트 이미지"
-                src={data?.thumbnailUrl}
-                emoji={data?.emoji}
-              />
-            </S.ProjectImgBox>
-          </div>
+            <S.ProjectImg
+              alt="프로젝트 이미지"
+              src={data?.thumbnailUrl}
+              emoji={data?.emoji}
+            />
+          </S.ProjectImgBox>
+          <input
+            onClick={(e) => e.stopPropagation()}
+            type="file"
+            id="projectImg"
+            accept="image/*"
+            onChange={upProfile}
+            style={{ display: "none" }}
+          />
 
           <div>
             <S.ProjectTop>
@@ -127,13 +146,6 @@ const Top: FC<PropsType> = ({ data }) => {
       <ModalPortal ref={modalRef}>
         <ProjectModifyModal />
       </ModalPortal>
-      <input
-        onClick={(e) => e.stopPropagation()}
-        type="file"
-        ref={ref}
-        accept="image/*"
-        onChange={upProfile}
-      />
     </Fragment>
   );
 };
