@@ -14,7 +14,7 @@ export const Title = styled.div`
 export const ContentBox = styled.div`
   margin-top: 28px;
   width: 350px;
-  height: 364px;
+  height: fit-content;
 `;
 
 export const MemberBox = styled.div`
