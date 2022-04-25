@@ -60,13 +60,16 @@ const PendingReportCard: FC<PropsType> = ({ data }) => {
     <S.Container
       to={`/project/${uuid}/${reportType === "PLAN" ? "plan" : "result"}`}
     >
-      <S.Img />
+      <S.Image src={data.thumbnailUrl} emoji={data.emoji} />
       <S.ContentContainer>
         <S.TopContainer>
-          <div>
+          <S.TitleContainer>
             <S.Title>{projectName}</S.Title>
-            <S.Type>·{reportType === "PLAN" ? "계획서" : "결과 보고서"}</S.Type>
-          </div>
+            <S.Type>
+              {" "}
+              · {reportType === "PLAN" ? "계획서" : "결과 보고서"}
+            </S.Type>
+          </S.TitleContainer>
           <S.Gray>{getBefore(new Date(submittedAt))}</S.Gray>
         </S.TopContainer>
         <S.BottomContainer>

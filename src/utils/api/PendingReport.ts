@@ -14,6 +14,8 @@ export interface PendingReport {
     studentNo: number;
     name: string;
   };
+  emoji: string;
+  thumbnailUrl: string;
 }
 
 export interface PendingReportList {

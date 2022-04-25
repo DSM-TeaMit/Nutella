@@ -5,6 +5,7 @@ export const Container = styled.div`
   width: 1280px;
   padding-top: 120px;
   padding-bottom: 200px;
+  min-height: 95vh;
 `;
 
 export const Title = styled.span`
