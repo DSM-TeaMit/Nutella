@@ -22,7 +22,7 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
   const modalRef = useModalRef();
   const [inputProps] = useTagInput("", [], true);
   const { uuid } = useParams<{ uuid: string }>();
-  const { data } = useProjectDetails(uuid);
+  const { data } = useProjectDetails(uuid || "");
   const [projectName, setProjectName] = useState(data?.data.projectName);
   const [projectInfo, setProjectInfo] = useState(data?.data.projectResult);
   //const modifyProjectInfoMutation = useModifyProjectInfo();

@@ -6,8 +6,7 @@ import {
   ViewIcons,
 } from "../../../assets/icons";
 import ProjectModifyModal from "../../Modals/ProjectInfoModify";
-import { FC, Fragment, Key, useEffect } from "react";
-import { FC, Fragment, Key, useCallback } from "react";
+import { FC, Fragment, Key, useEffect, useCallback } from "react";
 import ModalPortal from "../../ModalPortal";
 import useModalRef from "../../../hooks/useModalRef";
 import { Project } from "../../../utils/api/ProjectDetails";
