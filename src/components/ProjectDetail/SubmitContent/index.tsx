@@ -72,13 +72,22 @@ const SubmitContent: FC<PropsType> = ({ data }) => {
         <S.ProjectFile>
           <S.SubTitle>{data?.projectName} 결과 보고서</S.SubTitle>
           <S.SubmitBox>
-            {data?.projectStatus === "REPORTING" ? (
+            {data?.projectStatus === "PLANNING" ? (
+              <>
+                <S.GrayBox
+                  onClick={() => toast.error("계획서부터!")}
+                  check={true}
+                >
+                  <S.Font>계획서부터 먼저 작성해 주세요.</S.Font>
+                </S.GrayBox>
+              </>
+            ) : data?.projectStatus === "REPORTING" &&
+              data?.projectStatus !== "PENDING" ? (
               <>
                 <S.GrayBox
                   onClick={() => {
                     resultMutation.mutate();
                   }}
-                  // to=
                   check={false}
                 />
                 <div>
@@ -89,15 +98,9 @@ const SubmitContent: FC<PropsType> = ({ data }) => {
                 </div>
               </>
             ) : (
-              <>
-                <S.GrayBox
-                  onClick={() => toast.error("계획서부터!")}
-                  check={true}
-                >
-                  <S.Font>계획서부터 먼저 작성해 주세요.</S.Font>
-                </S.GrayBox>
-              </>
+              <ReportCard data={data?.report} />
             )}
+            {}
           </S.SubmitBox>
         </S.ProjectFile>
       </S.SubmitContent>
