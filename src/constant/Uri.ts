@@ -42,10 +42,10 @@ const Uri = {
   projectComment: new URI<ProjectUuid>(`comment/{${projectUuid}}`),
   removeComment: new URI<CommentUuid>(`comment/{${commentUuid}}`),
   uploadImage: new URI<ProjectUuid>(`file/{${projectUuid}}/image`),
-  downloadImage: new URI<ProjectUuid | ImageUuid>(
-    `file/{${projectUuid}}/image/{${imageUuid}}`
-  ),
+  downloadImage: new URI<ProjectUuid | ImageUuid>(`file/{${projectUuid}}/image/{${imageUuid}}`),
   file: new URI<ProjectUuid>(`file/{${projectUuid}}/archive`),
+  fileDownload: new URI<ProjectUuid>(`file/{${projectUuid}}/archive/download`),
+  fileCheck: new URI<ProjectUuid>(`file/{${projectUuid}}/archive/check`),
   pendingReport: new URI(`project/feed/pending`),
   createdAccount: new URI(`admin/createdByRequestor`),
   header: new URI(`user/header`),

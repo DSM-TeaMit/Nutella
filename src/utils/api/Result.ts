@@ -109,7 +109,13 @@ export const uploadFile = async (projectUuid: string, file: File) => {
 };
 
 export const downloadFile = async (projectUuid: string) => {
-  const uri = Uri.file.get({ projectUuid });
+  const uri = Uri.fileDownload.get({ projectUuid });
+
+  return await request.get(uri);
+};
+
+export const getFileExists = async (projectUuid: string) => {
+  const uri = Uri.fileCheck.get({ projectUuid });
 
   return await request.get(uri);
 };
