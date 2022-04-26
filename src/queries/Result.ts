@@ -5,6 +5,7 @@ import queryKeys from "../constant/QueryKeys";
 import {
   createResultReport,
   downloadFile,
+  getFileExists,
   getResultReport,
   modifyResultReport,
   ParsedFullResultReport,
@@ -85,3 +86,6 @@ export const useFileMutation = (projectUuid: string) => {
 
   return { upload, download };
 };
+
+export const useFileExists = (projectUuid: string) =>
+  useQuery([queryKeys.file, projectUuid], () => getFileExists(projectUuid));
