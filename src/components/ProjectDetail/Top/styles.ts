@@ -32,10 +32,6 @@ export const ProjectImg = styled(Img)`
   object-position: center;
 `;
 
-export const ProjectInfo = styled.div`
-  display: flex;
-`;
-
 export const ProjectTop = styled.div`
   width: 632px;
   height: 53px;
