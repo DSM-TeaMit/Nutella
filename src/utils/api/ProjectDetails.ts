@@ -25,8 +25,8 @@ export interface Project {
   emoji?: string;
   requestorType: RequestorType;
   members: Members[];
-  plan: ReportType;
-  report: ReportType;
+  plan?: ReportType;
+  report?: ReportType;
 }
 
 export const getProject = async (projectUuid: string) => {
