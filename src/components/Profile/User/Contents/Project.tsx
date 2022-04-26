@@ -4,18 +4,31 @@ import { useParams } from "react-router-dom";
 import { useUserProjects } from "../../../../queries/User";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import Loading from "../../Loading";
 import Error from "../../Error";
 import { ProjectType } from "../../../../utils/api/User";
 import isMore from "../../../../constant/IsMore";
 import LIMIT from "../../../../constant/Limit";
+import ProjectSkeleton from "../../../Cards/ProjectSkeleton";
 
 const Project = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const initPage = 1;
-  const [page, setPage] = useState<number>(initPage);
-  const { data, isError, isLoading, isFetching, fetchNextPage } =
+  const { data, isError, isLoading, isFetching, fetchNextPage, isFetchingNextPage } =
     useUserProjects(uuid || "", initPage);
+
+  const prevPage: number = useMemo(() => {
+    if (
+      !data ||
+      data.pageParams.length <= 0 ||
+      data.pageParams[data.pageParams.length - 1] === undefined
+    ) {
+      return initPage;
+    }
+
+    return Number(data.pageParams[data.pageParams.length - 1]);
+  }, [data]);
+  const [page, setPage] = useState<number>(prevPage);
+
   const list = useMemo(() => {
     if (!data) {
       return undefined;
@@ -55,14 +68,16 @@ const Project = () => {
     }
   }, [isError]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  const skeleton = useMemo(
+    () =>
+      Array(3)
+        .fill(0)
+        .map((_, index) => <ProjectSkeleton key={index} />),
+    []
+  );
 
   if (isError) {
-    return (
-      <Error message="오류 발생. 유저 프로젝트를 가져올 수 없습니다. 다시 시도해주세요." />
-    );
+    return <Error message="오류 발생. 유저 프로젝트를 가져올 수 없습니다. 다시 시도해주세요." />;
   }
 
   return (
@@ -76,9 +91,11 @@ const Project = () => {
             </div>
           </I.ProjectTitle>
           <I.Grid>
+            {isLoading && skeleton}
             {list?.map((value) => (
               <ProjectCard key={value.uuid} data={value} />
             ))}
+            {isFetchingNextPage && skeleton}
           </I.Grid>
           {!isFetching && count !== undefined && isMore(LIMIT, page, count) && (
             <I.More onClick={onNextPage}>더 가져오기...</I.More>
