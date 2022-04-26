@@ -203,7 +203,7 @@ const Result = () => {
         ))}
         <S.AddButton onClick={onAddPageClick}>+</S.AddButton>
         <div>
-          <SubmitResult projectUuid={projectUuid} />
+          <SubmitResult projectUuid={projectUuid} projectName={result?.projectName || ""} />
           <S.Buttons>
             {result && (
               <S.Status status={result.status}>{reportStatusMessage.get(result.status)}</S.Status>
