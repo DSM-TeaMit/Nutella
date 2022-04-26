@@ -84,18 +84,12 @@ const SubmitContent: FC<PropsType> = ({ data }) => {
             ) : data?.projectStatus === "REPORTING" &&
               data?.projectStatus !== "PENDING" ? (
               <>
-                <S.GrayBox
-                  onClick={() => {
-                    resultMutation.mutate();
-                  }}
-                  check={false}
-                />
-                <div>
+                <S.SubmitLinkBox onClick={() => onClickResult()}>
                   <S.PlusBox>
                     <img src={PlusIcons} alt="plus" />
                   </S.PlusBox>
                   <S.Font>{data?.projectName} 결과 보고서 작성하기</S.Font>
-                </div>
+                </S.SubmitLinkBox>
               </>
             ) : (
               <ReportCard data={data?.report} />
