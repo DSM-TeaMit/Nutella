@@ -15,7 +15,7 @@ const queryKeys = {
   header: "header",
   feed: "feed",
   search: "search",
-  searchType: "search_type",
+  searchEach: "search_each",
   file: "file",
 } as const;
 

@@ -1,21 +1,41 @@
-import { useQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
-import { getSearch, getSearchType } from "../utils/api/Search";
+import Page from "../interface/Page";
+import { getSearch, getSearchEach, SearchBy, SearchList } from "../utils/api/Search";
 
-export const useSearch = (keyword: string) => {
-  return useQuery([queryKeys.search, keyword], () => getSearch(keyword), {
-    enabled: !!keyword,
-    cacheTime: Infinity,
-    staleTime: Infinity,
-  });
+export const useSearch = (keyword: string, initPage: number) => {
+  return useInfiniteQuery(
+    [queryKeys.search, keyword],
+    async ({ pageParam = initPage }) => {
+      const { data } = await getSearch(keyword, pageParam);
+
+      const p: Page<SearchList> = {
+        page: pageParam,
+        data: data,
+      };
+
+      return p;
+    },
+    {
+      enabled: !!keyword,
+      getNextPageParam: (lastPage) => lastPage.page + 1,
+    }
+  );
 };
 
-export const useSearchType = (
-  page: number,
-  keyword: string,
-  searchType: string
-) => {
-  return useQuery([queryKeys.searchType], () =>
-    getSearchType(page, keyword, searchType)
+export const useSearchEach = (keyword: string, by: SearchBy) => {
+  return useInfiniteQuery(
+    [queryKeys.searchEach, keyword, by],
+    async ({ pageParam = 1 }) => {
+      const { data } = await getSearchEach(keyword, pageParam, by);
+
+      const p: Page<SearchList> = {
+        data: data,
+        page: pageParam,
+      };
+
+      return p;
+    },
+    { getNextPageParam: (last) => last.page + 1, enabled: false }
   );
 };

@@ -38,7 +38,7 @@ const Uri = {
   projectConfirm: new URI<ProjectUuid>(`project/{${projectUuid}}/confirm`),
   projectList: new URI(`project/feed`),
   projectSearch: new URI(`project/feed/search`),
-  projectSearchType: new URI(`project/feed/search/each`),
+  projectSearchEach: new URI(`project/feed/search/each`),
   projectComment: new URI<ProjectUuid>(`comment/{${projectUuid}}`),
   removeComment: new URI<CommentUuid>(`comment/{${commentUuid}}`),
   uploadImage: new URI<ProjectUuid>(`file/{${projectUuid}}/image`),
