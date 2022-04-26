@@ -10,15 +10,17 @@ export const Container = styled.div`
 
 export const ImgContainer = styled.div`
   border-radius: 10px;
-  width: 100%;
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  max-height: 800px;
 `;
 
 export const Image = styled(Img)`
-  width: 100%;
+  position: relative;
+  height: 100%;
   display: block;
+  max-height: 800px;
 `;
 
 export const Overlay = styled.div`
