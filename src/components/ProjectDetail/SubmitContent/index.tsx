@@ -8,11 +8,10 @@ import { useNavigate } from "react-router-dom";
 import ReportCard from "../../Cards/ReportCard";
 
 interface PropsType {
-  data: Project | undefined;
+  data: Project | any;
 }
 
 const SubmitContent: FC<PropsType> = ({ data }) => {
-  useEffect(() => {}, []);
   const planMutation = useCreatePlanMutation(data?.uuid || "");
   const resultMutation = useCreatePlanMutation(data?.uuid || "");
   const navigate = useNavigate();
@@ -47,16 +46,16 @@ const SubmitContent: FC<PropsType> = ({ data }) => {
     });
   };
 
+  console.log(data?.plan);
+
   return (
     <S.SubmitContentContainer>
       <S.SubmitContent>
         <S.ProjectFile>
           <S.SubTitle>{data?.projectName} 계획서</S.SubTitle>
           <S.SubmitBox>
-            {data?.projectStatus === "REPORTING" ? (
-              //<ReportCard />
-              <div>계획서 카드 보여주는 곳</div>
-            ) : (
+            {data?.projectStatus === "PLANNING" &&
+            data?.projectStatus !== "REPORTING" ? (
               <>
                 <S.SubmitLinkBox onClick={() => onClickPlan()}>
                   <S.PlusBox>
@@ -65,6 +64,8 @@ const SubmitContent: FC<PropsType> = ({ data }) => {
                   <S.Font>{data?.projectName} 계획서 작성하기</S.Font>
                 </S.SubmitLinkBox>
               </>
+            ) : (
+              <ReportCard data={data?.plan} />
             )}
           </S.SubmitBox>
         </S.ProjectFile>
