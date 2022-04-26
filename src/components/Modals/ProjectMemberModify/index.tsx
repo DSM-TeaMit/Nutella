@@ -1,11 +1,13 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
+import useTagInput from "../../../hooks/useTagInput";
 import { useModifyProjectMember } from "../../../queries/Project";
 import { useProjectDetails } from "../../../queries/ProjectDetails";
 import { SearchedUser } from "../../../utils/api/User";
 import Input from "../../Input";
 import MemberInput from "../../MemberInput";
+import TagInput from "../../TagInput";
 import { UserWithRole } from "../ProejctAdd";
 import * as S from "./styles";
 
@@ -14,6 +16,7 @@ const ProjectMemberModifyModal = () => {
   const { data } = useProjectDetails(uuid || "");
   const [members, setMembers] = useState<(SearchedUser & UserWithRole)[]>([]);
   const projectMemberMutation = useModifyProjectMember(uuid || "");
+  const [inputProps, [tags]] = useTagInput("", []);
 
   /* const onChangeMember = async () => {
     await toast.promise(
@@ -28,7 +31,6 @@ const ProjectMemberModifyModal = () => {
       }
     );
   }; */
-
   console.log(data?.data.members);
 
   return (
@@ -36,8 +38,7 @@ const ProjectMemberModifyModal = () => {
       <S.Title>멤버</S.Title>
       <S.ContentBox>
         <S.MemberBox>
-          {data?.data.members.map((item, index) => {
-            console.log(item);
+          {data?.data.members.slice(0, 1).map((item, index) => {
             return (
               <>
                 <S.MemberProfile>
@@ -56,7 +57,10 @@ const ProjectMemberModifyModal = () => {
                       return <S.Tag key={index}>{data}</S.Tag>;
                     })}
                   </S.TagBox>
-                  <Input placeholder="역할 입력..." />
+                  <TagInput
+                    placeholder="공백으로 분야를 구분할 수 있습니다..."
+                    {...inputProps}
+                  />
                 </S.RollBox>
               </>
             );
