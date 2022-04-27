@@ -67,8 +67,6 @@ const Img: FC<PropsType> = (props) => {
 
   if (!src) {
     if (emoji) {
-      console.log("emoji!");
-
       return (
         <img
           {...rest}
@@ -89,7 +87,6 @@ const Img: FC<PropsType> = (props) => {
     return <img {...rest} alt={undefined} />;
   }
 
-  console.log("common");
   return <img {...rest} src={data} />;
 };
 
