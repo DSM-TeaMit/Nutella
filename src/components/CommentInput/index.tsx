@@ -37,13 +37,15 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
 
   const onSubmitEnter = useCallback(
     (e: React.KeyboardEvent) => {
-      if (input === "") {
-        toast.error("댓글을 작성해 주세요.");
-        e.preventDefault();
-      } else if (!e.shiftKey && e.key === "Enter") {
-        setInput("");
-        e.preventDefault();
-        commentMutation.mutate({ content: input, type: source });
+      if (e.key === "Enter") {
+        if (input === "") {
+          toast.error("댓글을 작성해 주세요.");
+          e.preventDefault();
+        } else if (!e.shiftKey) {
+          setInput("");
+          e.preventDefault();
+          commentMutation.mutate({ content: input, type: source });
+        }
       }
     },
     [commentMutation, input, source]
@@ -89,7 +91,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
         placeholder={placeholder}
         onChange={onChange}
         value={input}
-        onKeyPress={(e) => onSubmitEnter(e)}
+        onKeyPress={onSubmitEnter}
       />
       <BlueButton disabled={input.length === 0} onClick={onSubmitClick}>
         댓글 달기
