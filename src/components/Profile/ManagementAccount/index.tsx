@@ -4,7 +4,7 @@ import * as S from "./styles";
 import { SettingIcons } from "../../../assets/icons";
 import AdminSideBar from "../../SideBar/Admin";
 import Account from "./Account";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import ModalPortal from "../../ModalPortal";
 import AddAdminAccountModal from "../../Modals/AddAdminAccount";
 import useModalRef from "../../../hooks/useModalRef";
@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import usePagination from "../../../hooks/usePagination";
 import isMore from "../../../constant/IsMore";
 import LIMIT from "../../../constant/Limit";
+import AccountSkeleton from "./AccountSkeleton";
 
 const navs: NavigationType[] = [
   {
@@ -27,7 +28,7 @@ const navs: NavigationType[] = [
 const ManagementAccount = () => {
   const modalRef = useModalRef();
   const initPage = 1;
-  const { data, isLoading, isError, error, fetchNextPage, isFetching } =
+  const { data, isLoading, isError, error, fetchNextPage, isFetching, isFetchingNextPage } =
     useCreatedAccount(initPage);
   const { count, list, prevPage } = usePagination(data, initPage);
   const [page, setPage] = useState(prevPage);
@@ -47,20 +48,20 @@ const ManagementAccount = () => {
     fetchNextPage();
   }, [fetchNextPage]);
 
+  const skeleton = useMemo(
+    () =>
+      Array(3)
+        .fill(0)
+        .map((_, index) => <AccountSkeleton key={index} />),
+    []
+  );
+
   useEffect(() => {
     if (isError && axios.isAxiosError(error) && error.response?.status === 403) {
       navigate("/mypage");
       toast.error("접근 권한이 없습니다.");
     }
   }, [isError, error, navigate]);
-
-  if (isLoading) {
-    return (
-      <I.Error>
-        <I.Message>로딩중...</I.Message>
-      </I.Error>
-    );
-  }
 
   if (isError) {
     return (
@@ -92,9 +93,11 @@ const ManagementAccount = () => {
                     <S.AddAccount onClick={onAddClick}>+ 선생님 계정 추가</S.AddAccount>
                   </S.TitleContainer>
                   <S.Container>
+                    {isLoading && skeleton}
                     {list?.map((value) => (
                       <Account data={value} key={value.uuid} />
                     ))}
+                    {isFetchingNextPage && skeleton}
                     {count === 0 && <I.Message>생성한 계정이 없습니다.</I.Message>}
                   </S.Container>
                   {!isFetching && count && isMore(LIMIT, page, count) && (
