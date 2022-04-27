@@ -19,13 +19,12 @@ const Setting = () => {
   const deleteUserModalRef = useModalRef();
 
   const openModal = useCallback(
-    (ref: React.RefObject<ModalPoralRef>) =>
-      (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
-        e.preventDefault();
+    (ref: React.RefObject<ModalPoralRef>) => (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      e.preventDefault();
 
-        ref.current?.show();
-      },
+      ref.current?.show();
+    },
     []
   );
 
@@ -40,9 +39,7 @@ const Setting = () => {
   }
 
   if (isError) {
-    return (
-      <Error message="오류 발생. 설정을 가져올 수 없습니다. 다시 시도해주세요." />
-    );
+    return <Error message="오류 발생. 설정을 가져올 수 없습니다. 다시 시도해주세요." />;
   }
 
   const { githubId } = data!.data;
@@ -61,18 +58,6 @@ const Setting = () => {
                   <img alt="github arrow" src={ArrowBlackIcons} />
                 </S.Button>
               </S.GrayButton>
-            </S.ContentContainer>
-          </div>
-          <div>
-            <S.Subtitle>위험</S.Subtitle>
-            <S.ContentContainer>
-              <S.SettingTitleRed>계정 삭제</S.SettingTitleRed>
-              <S.RedButton onClick={openModal(deleteUserModalRef)}>
-                <S.Button>
-                  <span>삭제</span>
-                  <img alt="github arrow" src={ArrowBlackIcons} />
-                </S.Button>
-              </S.RedButton>
             </S.ContentContainer>
           </div>
         </S.SettingContaienr>
