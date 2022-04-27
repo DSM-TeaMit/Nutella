@@ -1,4 +1,11 @@
-import React, { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import useThemeContext from "../../hooks/useThemeContext";
 import { CommentSource, CommentStyleType } from "../../interface";
 import { useCommentMutation } from "../../queries/Comment";
@@ -30,8 +37,12 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
 
   const onSubmitEnter = useCallback(
     (e: React.KeyboardEvent) => {
-      if (!e.shiftKey && e.key === "Enter") {
+      if (input === "") {
+        toast.error("댓글을 작성해 주세요.");
+        e.preventDefault();
+      } else if (!e.shiftKey && e.key === "Enter") {
         setInput("");
+        e.preventDefault();
         commentMutation.mutate({ content: input, type: source });
       }
     },
@@ -52,7 +63,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
       return "정보 오류 발생";
     }
 
-    if(data?.data.type === "admin"){
+    if (data?.data.type === "admin") {
       return `${data?.data.name} 선생님(으)로 댓글 달기`;
     }
 
@@ -67,7 +78,11 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
 
   return (
     <S.Container>
-      <S.Image isProfile src={data?.data.thumbnailUrl} emoji={data?.data.emoji} />
+      <S.Image
+        isProfile
+        src={data?.data.thumbnailUrl}
+        emoji={data?.data.emoji}
+      />
       <S.Input
         color={bgColorMap.get(type)}
         border={type === "project" ? 0 : 1}
