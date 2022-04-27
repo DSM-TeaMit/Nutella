@@ -49,3 +49,21 @@ export const Message = styled.div`
   font: ${({ theme }) => theme.fonts.subtitle2};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
 `;
+
+export const More = styled.button`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
+  text-align: center;
+  border: none;
+  padding: none;
+  background: transparent;
+  display: block;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 16px;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.grayscale.black};
+  }
+`;

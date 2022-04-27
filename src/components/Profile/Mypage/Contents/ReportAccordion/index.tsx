@@ -25,13 +25,7 @@ const pathMap = new Map<ReportStatus, ReportPathType>()
   .set("DECLINED", "rejected")
   .set("WRITING", "writing");
 
-const ReportAccordion: FC<PropsType> = ({
-  title,
-  data,
-  status,
-  userUuid,
-  value,
-}) => {
+const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid, value }) => {
   const [isActive, setIsActive] = useState<boolean>(value || false);
   const container = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
@@ -48,15 +42,11 @@ const ReportAccordion: FC<PropsType> = ({
   } = useEachReports(pathType, initPage, userUuid);
 
   const prevPage: number = useMemo(() => {
-    if (
-      !eachData ||
-      eachData.pageParams.length <= 0 ||
-      eachData.pageParams[eachData.pageParams.length - 1] === undefined
-    ) {
+    if (!eachData || eachData.pages.length <= 0) {
       return initPage;
     }
 
-    return Number(eachData.pageParams[eachData.pageParams.length - 1]);
+    return Number(eachData.pages[eachData.pages.length - 1].page);
   }, [eachData]);
 
   const [page, setPage] = useState<number>(prevPage);
@@ -65,15 +55,10 @@ const ReportAccordion: FC<PropsType> = ({
     if (container.current && header.current && content.current) {
       if (isActive) {
         container.current.style.height = `${
-          header.current.offsetHeight +
-          content.current.offsetHeight +
-          gap +
-          padding * 2
+          header.current.offsetHeight + content.current.offsetHeight + gap + padding * 2
         }px `;
       } else {
-        container.current.style.height = `${
-          header.current.offsetHeight + padding * 2
-        }px`;
+        container.current.style.height = `${header.current.offsetHeight + padding * 2}px`;
       }
     }
   }, [isActive]);
@@ -126,22 +111,14 @@ const ReportAccordion: FC<PropsType> = ({
       <S.ContentContainer isActive={isActive} ref={content}>
         <S.Grid>
           {reports.map((value) => (
-            <ReportCard
-              key={`${value.uuid}_${value.type}`}
-              data={{ ...value, status }}
-            />
+            <ReportCard key={`${value.uuid}_${value.type}`} data={{ ...value, status }} />
           ))}
           {list &&
             list[pathType].projects.map((value) => (
-              <ReportCard
-                key={`${value.uuid}_${value.type}`}
-                data={{ ...value, status }}
-              />
+              <ReportCard key={`${value.uuid}_${value.type}`} data={{ ...value, status }} />
             ))}
         </S.Grid>
-        {!isFetching && isMore(LIMIT, page, count) && (
-          <S.More onClick={onMore}>더 가져오기</S.More>
-        )}
+        {!isFetching && isMore(LIMIT, page, count) && <S.More onClick={onMore}>더 가져오기</S.More>}
       </S.ContentContainer>
     </S.Container>
   );

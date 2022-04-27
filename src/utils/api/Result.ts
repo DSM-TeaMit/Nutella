@@ -111,5 +111,11 @@ export const uploadFile = async (projectUuid: string, file: File) => {
 export const downloadFile = async (projectUuid: string) => {
   const uri = Uri.file.get({ projectUuid });
 
-  return await request.get(uri);
+  return await request.get(uri, { responseType: "blob" });
+};
+
+export const getFileExists = async (projectUuid: string) => {
+  const uri = Uri.file.get({ projectUuid });
+
+  return await request.get(uri, { params: { dry: true } });
 };
