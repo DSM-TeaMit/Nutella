@@ -7,12 +7,10 @@ const SubmitContentSkeleton = () => {
         {Array(2)
           .fill(0)
           .map((_, index) => (
-            <>
-              <S.ProjectFile>
-                <S.SubTitle />
-                <S.SubmitBox />
-              </S.ProjectFile>
-            </>
+            <S.ProjectFile key={index}>
+              <S.SubTitle />
+              <S.SubmitBox />
+            </S.ProjectFile>
           ))}
       </S.SubmitContent>
       <S.ResultContent>

@@ -17,7 +17,7 @@ export const SubmitContent = styled.div`
 export const ProjectFile = styled.div`
   width: 419.5px;
   height: 154px;
-  :first-child {
+  :first-of-type {
     margin-right: 20px;
   }
 `;
@@ -28,7 +28,7 @@ export const SubmitBox = styled.div`
   margin-top: 17px;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray2};
-  div:nth-child(2) {
+  div:nth-of-type(2) {
     display: flex;
   }
 `;
@@ -63,8 +63,7 @@ export const SubmitLinkBox = styled.div`
 `;
 
 export const GrayBox = styled(SubmitLinkBox)<{ check: boolean }>`
-  background-color: ${({ theme, check }) =>
-    check ? theme.colors.grayscale.lightGray1 : null};
+  background-color: ${({ theme, check }) => (check ? theme.colors.grayscale.lightGray1 : null)};
 `;
 
 export const SubTitle = styled.div`

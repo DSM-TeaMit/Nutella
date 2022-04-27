@@ -17,7 +17,7 @@ export const SubmitContent = styled.div`
 export const ProjectFile = styled.div`
   width: 419.5px;
   height: 154px;
-  :first-child {
+  :first-of-type {
     margin-right: 20px;
   }
 `;
