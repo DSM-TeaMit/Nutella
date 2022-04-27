@@ -18,6 +18,7 @@ import {
   searchUser,
   UserReports,
   ProjectType,
+  ReportList,
 } from "../utils/api/User";
 
 export const useMyProfile = () => useQuery([queryKeys.profile, queryKeys.my], () => getMyProfile());
@@ -107,9 +108,9 @@ export const useEachReports = (type: ReportPathType, initPage: number, userUuid?
     async ({ pageParam = initPage + 1 }) => {
       const data = await getEachReports(type, pageParam, userUuid);
 
-      const d: Page<UserReports> = {
+      const d: Page<List<ReportList>> = {
         page: pageParam,
-        data: data.data,
+        data: { list: data.data[type].projects, count: data.data[type].count },
       };
 
       return d;
