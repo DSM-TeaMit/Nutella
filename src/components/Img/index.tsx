@@ -65,16 +65,10 @@ const Img: FC<PropsType> = (props) => {
     return <img {...rest} src={src} crossOrigin="anonymous" alt={undefined} />;
   }
 
-  if (isLoading) {
-    if (displayLoading) {
-      return <S.Loading />;
-    }
-
-    return <img {...rest} alt={undefined} />;
-  }
-
   if (!src) {
     if (emoji) {
+      console.log("emoji!");
+
       return (
         <img
           {...rest}
@@ -87,6 +81,15 @@ const Img: FC<PropsType> = (props) => {
     return <img {...rest} />;
   }
 
+  if (isLoading) {
+    if (displayLoading) {
+      return <S.Loading />;
+    }
+
+    return <img {...rest} alt={undefined} />;
+  }
+
+  console.log("common");
   return <img {...rest} src={data} />;
 };
 
