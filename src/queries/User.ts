@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useMutation, useQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
-import { ReportPathType } from "../interface";
+import { List } from "../hooks/usePagination";
+import { ReportStatus } from "../interface";
 import Page from "../interface/Page";
 import {
   getProfile,
@@ -15,8 +16,9 @@ import {
   getEachReports,
   getHeader,
   searchUser,
-  UserProjects,
   UserReports,
+  ProjectType,
+  ReportList,
 } from "../utils/api/User";
 
 export const useMyProfile = () => useQuery([queryKeys.profile, queryKeys.my], () => getMyProfile());
@@ -30,7 +32,10 @@ export const useUserProjects = (userUuid: string, initPage: number) =>
     async ({ pageParam = initPage }) => {
       const data = await getUserProjects(userUuid, pageParam);
 
-      const d: Page<UserProjects> = { page: pageParam, data: data.data };
+      const d: Page<List<ProjectType>> = {
+        page: pageParam,
+        data: { list: data.data.projects, count: data.data.count },
+      };
 
       return d;
     },
@@ -46,9 +51,9 @@ export const useMyProjects = (initPage: number) =>
     async ({ pageParam = initPage }) => {
       const data = await getMyProjects(pageParam);
 
-      const d: Page<UserProjects> = {
+      const d: Page<List<ProjectType>> = {
         page: pageParam,
-        data: data.data,
+        data: { list: data.data.projects, count: data.data.count },
       };
 
       return d;
@@ -97,15 +102,15 @@ export const useMyReports = (initPage: number) =>
     }
   );
 
-export const useEachReports = (type: ReportPathType, initPage: number, userUuid?: string) => {
+export const useEachReports = (type: ReportStatus, initPage: number, userUuid?: string) => {
   return useInfiniteQuery(
     [queryKeys.reports, userUuid, type],
     async ({ pageParam = initPage + 1 }) => {
       const data = await getEachReports(type, pageParam, userUuid);
 
-      const d: Page<UserReports> = {
+      const d: Page<List<ReportList>> = {
         page: pageParam,
-        data: data.data,
+        data: { list: data.data[type].reports, count: data.data[type].count },
       };
 
       return d;

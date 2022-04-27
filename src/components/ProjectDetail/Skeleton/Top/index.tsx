@@ -22,9 +22,7 @@ const TopSkeleton = () => {
                 {Array(4)
                   .fill(0)
                   .map((_, index) => (
-                    <>
-                      <S.Field />
-                    </>
+                    <S.Field key={index} />
                   ))}
               </div>
               <S.Step />

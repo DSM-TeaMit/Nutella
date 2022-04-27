@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { PlanStatus } from "../../interface";
+import { ReportStatus } from "../../interface";
 
 export const Container = styled.div`
   display: flex;
@@ -164,7 +164,7 @@ export const Margin = styled.div`
   padding-top: 120px;
 `;
 
-export const Status = styled.div<{ status: PlanStatus }>`
+export const Status = styled.div<{ status: ReportStatus }>`
   font: ${({ theme }) => theme.fonts.body2};
   align-self: center;
   color: ${({ status, theme }) => {

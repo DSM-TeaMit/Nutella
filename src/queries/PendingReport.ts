@@ -1,10 +1,8 @@
 import { useInfiniteQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
+import { List } from "../hooks/usePagination";
 import Page from "../interface/Page";
-import {
-  getPendingReports,
-  PendingReportList,
-} from "../utils/api/PendingReport";
+import { getPendingReports, PendingReport } from "../utils/api/PendingReport";
 
 export const usePendingReport = (initPage: number) =>
   useInfiniteQuery(
@@ -12,9 +10,9 @@ export const usePendingReport = (initPage: number) =>
     async ({ pageParam = initPage }) => {
       const data = await getPendingReports(pageParam);
 
-      const p: Page<PendingReportList> = {
+      const p: Page<List<PendingReport>> = {
         page: pageParam,
-        data: data.data,
+        data: { list: data.data.reports, count: data.data.count },
       };
 
       return p;

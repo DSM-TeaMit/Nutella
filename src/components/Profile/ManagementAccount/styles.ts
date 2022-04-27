@@ -8,6 +8,12 @@ export const Container = styled.div`
   margin-bottom: 28px;
 `;
 
+export const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+`;
+
 export const Title = styled.div`
   font: ${({ theme }) => theme.fonts.h3};
   color: ${({ theme }) => theme.colors.grayscale.black};
@@ -28,4 +34,13 @@ export const AddAccount = styled.button`
   &:active {
     color: ${({ theme }) => theme.colors.grayscale.gray2};
   }
+`;
+
+export const More = styled(AddAccount)`
+  text-align: center;
+`;
+
+export const MoreContainer = styled.div`
+  display: flex;
+  justify-content: center;
 `;

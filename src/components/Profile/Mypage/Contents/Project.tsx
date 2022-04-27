@@ -10,56 +10,16 @@ import isMore from "../../../../constant/IsMore";
 import toast from "react-hot-toast";
 import Error from "../../Error";
 import LIMIT from "../../../../constant/Limit";
-import { ProjectType } from "../../../../utils/api/User";
 import ProjectSkeleton from "../../../Cards/ProjectSkeleton";
+import usePagination from "../../../../hooks/usePagination";
 
 const Project = () => {
   const modalRef = useModalRef();
   const initPage = 1;
-  const {
-    data,
-    isError,
-    isLoading,
-    isFetching,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = useMyProjects(initPage);
-
-  const prevPage: number = useMemo(() => {
-    if (
-      !data ||
-      data.pageParams.length <= 0 ||
-      data.pageParams[data.pageParams.length - 1] === undefined
-    ) {
-      return initPage;
-    }
-
-    return Number(data.pageParams[data.pageParams.length - 1]);
-  }, [data]);
-
+  const { data, isError, isLoading, isFetching, fetchNextPage, isFetchingNextPage } =
+    useMyProjects(initPage);
+  const { prevPage, count, list } = usePagination(data, initPage);
   const [page, setPage] = useState<number>(prevPage);
-
-  const list = useMemo(() => {
-    if (!data) {
-      return undefined;
-    }
-
-    const l: ProjectType[] = [];
-
-    data.pages.forEach((value) => {
-      l.push(...value.data.projects);
-    });
-
-    return l;
-  }, [data]);
-
-  const count = useMemo(() => {
-    if (!data || data.pages.length <= 0) {
-      return undefined;
-    }
-
-    return data.pages[0].data.count;
-  }, [data]);
 
   const onNextPage = useCallback(() => {
     if (!count) {
@@ -96,9 +56,7 @@ const Project = () => {
   }, [isError]);
 
   if (isError) {
-    return (
-      <Error message="오류 발생. 프로젝트를 가져올 수 없습니다. 다시 시도해주세요." />
-    );
+    return <Error message="오류 발생. 프로젝트를 가져올 수 없습니다. 다시 시도해주세요." />;
   }
 
   return (
@@ -111,9 +69,7 @@ const Project = () => {
                 <I.H3>프로젝트&nbsp;</I.H3>
                 <I.BlueH3>{count}</I.BlueH3>
               </div>
-              <S.AddProject onClick={onProjectAddClick}>
-                + 프로젝트 생성
-              </S.AddProject>
+              <S.AddProject onClick={onProjectAddClick}>+ 프로젝트 생성</S.AddProject>
             </I.ProjectTitle>
             <I.Grid>
               {isLoading && skeleton}
@@ -130,11 +86,9 @@ const Project = () => {
                 </I.Margin>
               </Fragment>
             )}
-            {!isFetching &&
-              count !== undefined &&
-              isMore(LIMIT, page, count) && (
-                <I.More onClick={onNextPage}>더 가져오기...</I.More>
-              )}
+            {!isFetching && count !== undefined && isMore(LIMIT, page, count) && (
+              <I.More onClick={onNextPage}>더 가져오기...</I.More>
+            )}
           </div>
         </I.FlexContainer>
       </I.ContentInner>

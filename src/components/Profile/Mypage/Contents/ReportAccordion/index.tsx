@@ -2,11 +2,13 @@ import * as S from "./styles";
 import { UpArrowIcons } from "../../../../../assets/icons";
 import ReportCard from "../../../../Cards/ReportCard";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Reports, UserReports } from "../../../../../utils/api/User";
-import { ReportStatus, ReportPathType } from "../../../../../interface";
+import { Reports } from "../../../../../utils/api/User";
+import { ReportStatus } from "../../../../../interface";
 import isMore from "../../../../../constant/IsMore";
 import { useEachReports } from "../../../../../queries/User";
 import LIMIT from "../../../../../constant/Limit";
+import usePagination from "../../../../../hooks/usePagination";
+import ReportSkeleton from "../../../../Cards/ReportSkeleton";
 
 interface PropsType {
   title: string;
@@ -19,37 +21,30 @@ interface PropsType {
 const padding = 12 as const;
 const gap = 16 as const;
 
-const pathMap = new Map<ReportStatus, ReportPathType>()
-  .set("PENDING", "pending")
-  .set("ACCEPTED", "accepted")
-  .set("DECLINED", "rejected")
-  .set("WRITING", "writing");
-
 const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid, value }) => {
   const [isActive, setIsActive] = useState<boolean>(value || false);
   const container = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const initPage = 1;
-  const pathType = useMemo(() => pathMap.get(status)!, [status]);
-
-  const { count, projects: reports } = data;
+  const { count, reports: reports } = data;
 
   const {
     data: eachData,
     isFetching,
     fetchNextPage,
-  } = useEachReports(pathType, initPage, userUuid);
-
-  const prevPage: number = useMemo(() => {
-    if (!eachData || eachData.pages.length <= 0) {
-      return initPage;
-    }
-
-    return Number(eachData.pages[eachData.pages.length - 1].page);
-  }, [eachData]);
+    isFetchingNextPage,
+  } = useEachReports(status, initPage, userUuid);
+  const { list, prevPage } = usePagination(eachData, initPage);
 
   const [page, setPage] = useState<number>(prevPage);
+
+  const onMore = useCallback(() => {
+    setPage((prev) => prev + 1);
+    fetchNextPage();
+  }, [fetchNextPage]);
+
+  const more = useMemo(() => isMore(LIMIT, page, count), [count, page]);
 
   useEffect(() => {
     if (container.current && header.current && content.current) {
@@ -61,35 +56,15 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid, value }
         container.current.style.height = `${header.current.offsetHeight + padding * 2}px`;
       }
     }
-  }, [isActive]);
+  }, [isActive, more, isFetchingNextPage]);
 
-  const onMore = useCallback(() => {
-    setPage((prev) => prev + 1);
-    fetchNextPage();
-  }, [fetchNextPage]);
-
-  const list = useMemo(() => {
-    if (!eachData) {
-      return undefined;
-    }
-
-    const l: UserReports = {
-      writing: { projects: [], count: 0 },
-      accepted: { projects: [], count: 0 },
-      pending: { projects: [], count: 0 },
-      rejected: { projects: [], count: 0 },
-    };
-
-    eachData.pages.forEach((value) => {
-      for (const key in value.data) {
-        const k = key as keyof UserReports;
-        l[k].projects.push(...value.data[k].projects);
-        l[k].count = value.data[k].count;
-      }
-    });
-
-    return l;
-  }, [eachData]);
+  const skeleton = useMemo(
+    () =>
+      Array(3)
+        .fill(0)
+        .map((_, index) => <ReportSkeleton key={index} />),
+    []
+  );
 
   return (
     <S.Container ref={container}>
@@ -114,11 +89,12 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid, value }
             <ReportCard key={`${value.uuid}_${value.type}`} data={{ ...value, status }} />
           ))}
           {list &&
-            list[pathType].projects.map((value) => (
+            list.map((value) => (
               <ReportCard key={`${value.uuid}_${value.type}`} data={{ ...value, status }} />
             ))}
+          {isFetchingNextPage && skeleton}
         </S.Grid>
-        {!isFetching && isMore(LIMIT, page, count) && <S.More onClick={onMore}>더 가져오기</S.More>}
+        {!isFetching && more && <S.More onClick={onMore}>더 가져오기</S.More>}
       </S.ContentContainer>
     </S.Container>
   );

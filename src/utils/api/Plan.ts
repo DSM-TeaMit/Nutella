@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { getInitRows } from "../../components/MarkdownEditor";
 import Uri from "../../constant/Uri";
 import { Row } from "../../context/MarkdownContext";
-import { ProjectTypes, PlanStatus, RequestorType } from "../../interface";
+import { ProjectTypes, ReportStatus, RequestorType } from "../../interface";
 import request from "../axios";
 
 export interface Includes {
@@ -32,7 +32,7 @@ interface PlanType {
   goal: string;
   content: string;
   includes: Includes;
-  status: PlanStatus;
+  status: ReportStatus;
 }
 
 interface Uuid {
@@ -50,7 +50,7 @@ export interface ParsedPlanType {
   goal: Row[];
   content: Row[];
   includes: Includes;
-  status: PlanStatus;
+  status: ReportStatus;
 }
 
 export interface ModifyPlan {
@@ -70,9 +70,10 @@ export interface ParsedModifyPlan {
 }
 
 const dateToString = (date: Date) =>
-  `${date.getFullYear()}-${(date.getMonth() + 1)
+  `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date
+    .getDate()
     .toString()
-    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+    .padStart(2, "0")}`;
 
 export const createPlanReport = async (projectUuid: string) => {
   const uri = Uri.plan.get({ projectUuid });
@@ -105,8 +106,7 @@ export const getPlanReport = async (projectUuid: string) => {
     content: JSON.parse(data.content) as Row[],
   };
 
-  result.includes.others =
-    result.includes.others === null ? undefined : result.includes.others;
+  result.includes.others = result.includes.others === null ? undefined : result.includes.others;
 
   const responseWithoutData: Omit<AxiosResponse<PlanType, unknown>, "data"> = {
     ...response,
@@ -120,10 +120,7 @@ export const getPlanReport = async (projectUuid: string) => {
   return resultResponse;
 };
 
-export const modifyPlanReport = async (
-  projectUuid: string,
-  data: ParsedModifyPlan
-) => {
+export const modifyPlanReport = async (projectUuid: string, data: ParsedModifyPlan) => {
   const uri = Uri.plan.get({ projectUuid });
 
   const requestData: ModifyPlan = {
@@ -138,11 +135,7 @@ export const modifyPlanReport = async (
     requestData.includes.others = undefined;
   }
 
-  return await request.post<
-    unknown,
-    AxiosResponse<unknown, unknown>,
-    ModifyPlan
-  >(uri, requestData);
+  return await request.post<unknown, AxiosResponse<unknown, unknown>, ModifyPlan>(uri, requestData);
 };
 
 export const submitPlanReport = async (projectUuid: string) => {

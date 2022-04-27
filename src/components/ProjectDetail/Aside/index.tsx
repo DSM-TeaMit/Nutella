@@ -31,17 +31,15 @@ const Aside: FC<PropsType> = ({ data }) => {
         <S.AsideContent>
           {data?.map((item) => {
             return (
-              <>
-                <S.RoleBox>
-                  <S.RoleTitle>{item.role}</S.RoleTitle>
-                  <S.User to={`/user/${item.uuid}`}>
-                    <img src={item.thumbnailUrl}></img>
-                    <span>
-                      {item.studentNo} {item.name}
-                    </span>
-                  </S.User>
-                </S.RoleBox>
-              </>
+              <S.RoleBox key={item.uuid}>
+                <S.RoleTitle>{item.role}</S.RoleTitle>
+                <S.User to={`/user/${item.uuid}`}>
+                  <img src={item.thumbnailUrl}></img>
+                  <span>
+                    {item.studentNo} {item.name}
+                  </span>
+                </S.User>
+              </S.RoleBox>
             );
           })}
         </S.AsideContent>

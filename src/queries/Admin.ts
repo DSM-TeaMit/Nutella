@@ -1,7 +1,10 @@
 import { useCallback } from "react";
 import toast from "react-hot-toast";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
+import LIMIT from "../constant/Limit";
 import queryKeys from "../constant/QueryKeys";
+import { List } from "../hooks/usePagination";
+import Page from "../interface/Page";
 import {
   AccountData,
   getCreatedAccount,
@@ -9,13 +12,26 @@ import {
   LoginType,
   postAdminLogin,
   deleteAdminAccount,
+  AccountType,
 } from "../utils/api/Admin";
 
-export const useAdminLogin = () =>
-  useMutation((data: LoginType) => postAdminLogin(data), {});
+export const useAdminLogin = () => useMutation((data: LoginType) => postAdminLogin(data), {});
 
-export const useCreatedAccount = () =>
-  useQuery([queryKeys.accounts], () => getCreatedAccount());
+export const useCreatedAccount = (initPage: number) =>
+  useInfiniteQuery(
+    [queryKeys.accounts],
+    async ({ pageParam = initPage }) => {
+      const data = await getCreatedAccount(LIMIT, pageParam);
+
+      const p: Page<List<AccountType>> = {
+        data: { list: data.data.accounts, count: data.data.count },
+        page: pageParam,
+      };
+
+      return p;
+    },
+    { getNextPageParam: (lastPage) => lastPage.page + 1 }
+  );
 
 export const useAccountMutation = () => {
   const queryClient = useQueryClient();

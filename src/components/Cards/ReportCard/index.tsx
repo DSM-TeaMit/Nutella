@@ -15,14 +15,14 @@ const ReportCard: FC<PropsType> = ({ data }) => {
   const colorMap = new Map<ReportStatus, string>()
     .set("ACCEPTED", theme.colors.green.default)
     .set("PENDING", theme.colors.grayscale.gray2)
-    .set("DECLINED", theme.colors.red.default)
-    .set("WRITING", theme.colors.grayscale.gray2);
+    .set("REJECTED", theme.colors.red.default)
+    .set("NOT_SUBMITTED", theme.colors.grayscale.gray2);
 
   const messageMap = new Map<ReportStatus, string>()
     .set("ACCEPTED", "승인 됨")
     .set("PENDING", "승인 대기중")
-    .set("DECLINED", "승인 거부됨")
-    .set("WRITING", "작성 중");
+    .set("REJECTED", "승인 거부됨")
+    .set("NOT_SUBMITTED", "작성 중");
 
   return (
     <S.Container to={`/project/${uuid}/${type === "PLAN" ? "plan" : "result"}`}>
@@ -30,13 +30,9 @@ const ReportCard: FC<PropsType> = ({ data }) => {
       <S.InfoContainer>
         <S.TitleContaienr>
           <S.Title>{projectName}</S.Title>
-          <S.Description>
-            · {type === "PLAN" ? "계획서" : "결과 보고서"}
-          </S.Description>
+          <S.Description>· {type === "PLAN" ? "계획서" : "결과 보고서"}</S.Description>
         </S.TitleContaienr>
-        <S.Description color={colorMap.get(status)}>
-          {messageMap.get(status)}
-        </S.Description>
+        <S.Description color={colorMap.get(status)}>{messageMap.get(status)}</S.Description>
       </S.InfoContainer>
     </S.Container>
   );

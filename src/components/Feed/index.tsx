@@ -8,55 +8,18 @@ import isMore from "../../constant/IsMore";
 import { Project } from "../../utils/api/Feed";
 import LIMIT from "../../constant/Limit";
 import MainProjectSkeleton from "../Cards/MainProjectSkeleton";
+import usePagination from "../../hooks/usePagination";
 
 const Feed = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const initPage = 1;
   const [orderName, setOrderName] = useState<string>("popularity");
-  const {
-    data,
-    isError,
-    isLoading,
-    isFetching,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = useFeed(orderName, initPage);
-
-  const prevPage: number = useMemo(() => {
-    if (
-      !data ||
-      data.pageParams.length <= 0 ||
-      data.pageParams[data.pageParams.length - 1] === undefined
-    ) {
-      return initPage;
-    }
-
-    return Number(data.pageParams[data.pageParams.length - 1]);
-  }, [data]);
-
+  const { data, isError, isLoading, isFetching, fetchNextPage, isFetchingNextPage } = useFeed(
+    orderName,
+    initPage
+  );
+  const { prevPage, count, list } = usePagination(data, initPage);
   const [page, setPage] = useState<number>(prevPage);
-
-  const list = useMemo(() => {
-    if (!data) {
-      return undefined;
-    }
-
-    const d: Project[] = [];
-
-    data.pages.forEach((value) => {
-      d.push(...value.data.projects);
-    });
-
-    return d;
-  }, [data]);
-
-  const count = useMemo(() => {
-    if (!data || data.pages.length <= 0) {
-      return undefined;
-    }
-
-    return data.pages[0].data.count;
-  }, [data]);
 
   const menuHandler = (index: React.SetStateAction<number>, name: string) => {
     setCurrentTab(index);
@@ -85,14 +48,11 @@ const Feed = () => {
     }
   };
 
-  const ref = useInfiniteScroll<HTMLDivElement>(
-    onNextPage,
-    !(isLoading || isError || isFetching)
-  );
+  const ref = useInfiniteScroll<HTMLDivElement>(onNextPage, !(isLoading || isError || isFetching));
 
   useEffect(() => {
     if (isError) {
-      toast.error("가져온 프로젝트가 없습니다.");
+      toast.error("피드를 가져오는 중 오류가 발생했습니다.");
     }
   }, [isError, orderName]);
 
@@ -111,9 +71,7 @@ const Feed = () => {
           {menuArr.map((str, index) => {
             return (
               <S.Title
-                className={`${
-                  index === currentTab ? "submenu focused" : "submenu"
-                }`}
+                className={`${index === currentTab ? "submenu focused" : "submenu"}`}
                 key={index}
                 onClick={() => menuHandler(index, str.key)}
               >
@@ -126,9 +84,7 @@ const Feed = () => {
           <S.ProjectBox>
             {isLoading
               ? skeletons
-              : list?.map((item: Project) => (
-                  <MainProjectCard key={item.uuid} data={item} />
-                ))}
+              : list?.map((item: Project) => <MainProjectCard key={item.uuid} data={item} />)}
             {!isLoading && isFetchingNextPage && skeletons}
           </S.ProjectBox>
           <div ref={ref} />
