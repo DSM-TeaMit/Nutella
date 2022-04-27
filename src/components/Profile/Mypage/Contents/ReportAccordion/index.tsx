@@ -42,18 +42,16 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid, value }
   } = useEachReports(pathType, initPage, userUuid);
 
   const prevPage: number = useMemo(() => {
-    if (!eachData || eachData.pageParams.length <= 0) {
+    console.log(eachData);
+
+    if (!eachData || eachData.pages.length <= 0) {
       return initPage;
     }
 
-    return Number(eachData.pageParams[eachData.pageParams.length - 1]);
+    return Number(eachData.pages[eachData.pages.length - 1].page);
   }, [eachData]);
 
   const [page, setPage] = useState<number>(prevPage);
-
-  useEffect(() => {
-    console.log(`${status} ${page}`);
-  }, [page, status]);
 
   useEffect(() => {
     if (container.current && header.current && content.current) {
