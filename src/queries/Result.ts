@@ -57,7 +57,7 @@ export const useSubmitResultMutation = (projectUuid: string) => {
   const queryClient = useQueryClient();
 
   const onSuccess = useCallback(() => {
-    queryClient.invalidateQueries(queryKeys.result);
+    queryClient.invalidateQueries([queryKeys.result]);
   }, [queryClient]);
 
   return useMutation(

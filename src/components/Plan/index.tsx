@@ -48,7 +48,12 @@ const Plan = () => {
 
   const [plan, setPlan] = useState<ParsedPlanType | undefined>(undefined);
   const planMutation = usePlanMutation(uuid!);
-  const { isLoading, isError, isFetched, error } = usePlan(uuid!, setPlan, onFetching);
+  const { isLoading, isError, isFetched, error, isFetching } = usePlan(uuid!, setPlan, onFetching);
+  const fetching = useMemo(
+    () =>
+      isFetching || planMutation.isLoading || confirmMutation.isLoading || submitMutation.isLoading,
+    [confirmMutation.isLoading, isFetching, planMutation.isLoading, submitMutation.isLoading]
+  );
 
   const planReportRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
@@ -377,8 +382,7 @@ const Plan = () => {
             {plan?.requestorType === "USER_EDITABLE" && (
               <BlueButton
                 disabled={
-                  submitMutation.isLoading ||
-                  (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(plan.status)
+                  fetching || (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(plan.status)
                 }
                 onClick={confirmOnClick("제출하시겠습니까?", () => submitMutation.mutate())}
               >
@@ -388,7 +392,7 @@ const Plan = () => {
             {plan?.requestorType === "ADMIN" && plan.status === "PENDING" && (
               <Fragment>
                 <RedButton
-                  disabled={confirmMutation.isLoading}
+                  disabled={fetching}
                   onClick={confirmOnClick("거절하시겠습니까?", () =>
                     confirmMutation.mutate("return")
                   )}
@@ -396,7 +400,7 @@ const Plan = () => {
                   거절
                 </RedButton>
                 <BlueButton
-                  disabled={confirmMutation.isLoading}
+                  disabled={fetching}
                   onClick={confirmOnClick("승인하시겠습니까?", () =>
                     confirmMutation.mutate("approval")
                   )}

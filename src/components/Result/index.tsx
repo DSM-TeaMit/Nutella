@@ -24,11 +24,19 @@ const Result = () => {
   const autoSaveTimer = useRef<NodeJS.Timeout | null>(null);
   const canSave = useRef<boolean>(false);
   const [result, setResult] = useState<ParsedFullResultReport | undefined>(undefined);
-  const { isLoading, isError, isFetched, error } = useResult(projectUuid, setResult);
+  const { isLoading, isError, isFetched, error, isFetching } = useResult(projectUuid, setResult);
   const resultMutation = useResultMutation(projectUuid);
   const submitMutation = useSubmitResultMutation(projectUuid);
   const confirmMutation = useConfirmReport(projectUuid, "report");
   const [key, setKey] = useState<string>(uniqueId());
+  const fetching = useMemo(
+    () =>
+      isFetching ||
+      resultMutation.isLoading ||
+      confirmMutation.isLoading ||
+      submitMutation.isLoading,
+    [confirmMutation.isLoading, isFetching, resultMutation.isLoading, submitMutation.isLoading]
+  );
 
   const resultReportRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
@@ -212,8 +220,7 @@ const Result = () => {
             {result?.requestorType === "USER_EDITABLE" && (
               <BlueButton
                 disabled={
-                  submitMutation.isLoading ||
-                  (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(result.status)
+                  fetching || (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(result.status)
                 }
                 onClick={confirmOnClick("제출하시겠습니까?", () => submitMutation.mutate())}
               >
@@ -223,7 +230,7 @@ const Result = () => {
             {result?.requestorType === "ADMIN" && result.status === "PENDING" && (
               <Fragment>
                 <RedButton
-                  disabled={confirmMutation.isLoading}
+                  disabled={fetching}
                   onClick={confirmOnClick("거절하시겠습니까?", () =>
                     confirmMutation.mutate("return")
                   )}
@@ -231,7 +238,7 @@ const Result = () => {
                   거절
                 </RedButton>
                 <BlueButton
-                  disabled={confirmMutation.isLoading}
+                  disabled={fetching}
                   onClick={confirmOnClick("승인하시겠습니까?", () =>
                     confirmMutation.mutate("approval")
                   )}
