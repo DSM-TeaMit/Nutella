@@ -6,7 +6,7 @@ import {
   ViewIcons,
 } from "../../../assets/icons";
 import ProjectModifyModal from "../../Modals/ProjectInfoModify";
-import { FC, Fragment, Key, useEffect } from "react";
+import { FC, Fragment, Key, useEffect, useCallback } from "react";
 import ModalPortal from "../../ModalPortal";
 import useModalRef from "../../../hooks/useModalRef";
 import { Project } from "../../../utils/api/ProjectDetails";
@@ -15,9 +15,10 @@ import { useUploadThumbnail } from "../../../queries/ProjectDetails";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import queryKeys from "../../../constant/QueryKeys";
+import { useRef } from "react";
+import ProjectDeleteModal from "../../Modals/ProjectDelete";
 
 interface PropsType {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Project | any;
 }
 
@@ -27,6 +28,11 @@ interface ProjectStatusText {
 
 const Top: FC<PropsType> = ({ data }) => {
   const modalRef = useModalRef();
+  const deleteModalRef = useModalRef();
+
+  const onDeleteProject = useCallback(() => {
+    deleteModalRef.current?.show();
+  }, [deleteModalRef]);
 
   const projectType = new Map<ProjectTypes, ProjectLabel>()
     .set("PERS", {
@@ -144,7 +150,10 @@ const Top: FC<PropsType> = ({ data }) => {
         </S.TopContent>
       </S.TopContainer>
       <ModalPortal ref={modalRef}>
-        <ProjectModifyModal />
+        <ProjectModifyModal onDeleteProject={onDeleteProject} />
+      </ModalPortal>
+      <ModalPortal ref={deleteModalRef}>
+        <ProjectDeleteModal />
       </ModalPortal>
     </Fragment>
   );

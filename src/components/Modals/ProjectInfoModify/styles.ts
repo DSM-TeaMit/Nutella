@@ -19,18 +19,16 @@ export const Content = styled.div`
   :nth-child(2) {
     min-height: 115px;
   }
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   width: 483px;
   height: fit-content;
   textarea {
     outline: none;
     resize: none;
     width: 480px;
-    height: auto;
     margin-top: 9px;
     border: none;
     min-height: 30px;
-    max-height: 80px;
     border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
     font: ${({ theme }) => theme.fonts.body3};
     color: ${({ theme }) => theme.colors.grayscale.black};
@@ -70,5 +68,8 @@ export const BtnBox = styled.div`
   justify-content: space-between;
   div {
     display: flex;
+    :nth-child(1) {
+      margin-right: 16px;
+    }
   }
 `;

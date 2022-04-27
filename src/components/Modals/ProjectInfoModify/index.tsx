@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useRef } from "react";
+import { FC, Fragment, useRef, useState } from "react";
 import useModalContext from "../../../hooks/useModalContext";
 import useModalRef from "../../../hooks/useModalRef";
 import Input from "../../Input";
@@ -9,12 +9,47 @@ import TagInput from "../../TagInput";
 import ProjectDeleteModal from "../ProjectDelete";
 import * as S from "./styles";
 import TextareaAutosize from "react-textarea-autosize";
+import { useProjectDetails } from "../../../queries/ProjectDetails";
+import { useParams } from "react-router-dom";
+import { useModifyProjectInfo } from "../../../queries/Project";
+import toast from "react-hot-toast";
+import { useQueryClient } from "react-query";
+import queryKeys from "../../../constant/QueryKeys";
 
-const ProjectModifyModal = () => {
+interface PropsType {
+  onDeleteProject: () => void;
+}
+
+const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
   const { closeCurrentModal } = useModalContext();
-  const ref = useRef<HTMLTextAreaElement>(null);
   const modalRef = useModalRef();
   const [inputProps] = useTagInput("", [], true);
+  const { uuid } = useParams<{ uuid: string }>();
+  const { data } = useProjectDetails(uuid || "");
+  const [projectName, setProjectName] = useState(data?.data.projectName || "");
+  const [projectInfo, setProjectInfo] = useState(
+    data?.data.projectResult || ""
+  );
+  const [field, setField] = useState("");
+  //const modifyProjectInfoMutation = useModifyProjectInfo();
+  const projectInfoMutation = useModifyProjectInfo(uuid || "");
+  const queryClient = useQueryClient();
+
+  const onClickInfoModify = async () => {
+    await toast.promise(
+      projectInfoMutation.mutateAsync({
+        name: projectName,
+        description: projectInfo,
+        field: field,
+      }),
+      {
+        loading: "프로젝트 정보 수정 중",
+        error: "프로젝트 정보 수정이 실패되었습니다.",
+        success: "프로젝트 정보 수정이 완료되었습니다.",
+      }
+    );
+    queryClient.invalidateQueries([queryKeys.projects, uuid || ""]);
+  };
 
   return (
     <Fragment>
@@ -23,22 +58,33 @@ const ProjectModifyModal = () => {
         <S.ContentBox>
           <S.Content>
             <S.SubTitle>프로젝트 이름</S.SubTitle>
-            <Input defaultValue="Teamit" />
+            <Input
+              defaultValue={data?.data.projectName}
+              placeholder="프로젝트 이름을 입력해 주세요..."
+              onChange={(e) => setProjectName(e.target.value)}
+            />
           </S.Content>
           <S.Content>
             <S.SubTitle>프로젝트 설명</S.SubTitle>
             <TextareaAutosize
               minRows={1}
-              maxRows={3}
-              defaultValue="사면·감형 및 복권에 관한 사항은 법률로 정한다. 모든 국민은 주거의 자유를 침해받지 아니한다. 주거에 대한 압수나 수색을 할 때에는 검사의 신청에 의하여 법관이 발부한 영장을 제시하여야 한다."
+              maxRows={4}
+              placeholder={
+                data?.data.projectResult === null
+                  ? "프로젝트 소개를 작성해 주세요."
+                  : undefined
+              }
+              defaultValue={data?.data.projectResult}
+              onChange={(e) => setProjectInfo(e.target.value)}
             />
           </S.Content>
           <S.Content>
             <S.SubTitle>프로젝트 분야</S.SubTitle>
             <S.FiedBox>
               <S.TagBox>
-                <S.Tag>웹</S.Tag>
-                <S.Tag>보안</S.Tag>
+                {data?.data.projectField.split(",").map((item, index) => {
+                  return <S.Tag>{item}</S.Tag>;
+                })}
               </S.TagBox>
               <TagInput {...inputProps} placeholder="분야를 입력해 주세요." />
             </S.FiedBox>
@@ -48,14 +94,15 @@ const ProjectModifyModal = () => {
           <RedButton
             onClick={(e) => {
               e.stopPropagation();
-              modalRef.current?.show();
+              e.preventDefault();
+              onDeleteProject();
             }}
           >
             삭제
           </RedButton>
           <div>
             <BorderButton onClick={closeCurrentModal}>취소</BorderButton>
-            <BlueButton>수정</BlueButton>
+            <BlueButton onClick={onClickInfoModify}>수정</BlueButton>
           </div>
         </S.BtnBox>
       </S.ProjectModifyModalContainer>

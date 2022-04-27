@@ -7,6 +7,7 @@ import {
   ConfirmType,
   ConfirmValue,
   createProject,
+  deleteProject,
   Member,
   modifyProjectInfo,
   modifyProjectMember,
@@ -52,38 +53,20 @@ export const useCreateProject = () =>
     )
   );
 
-export const useModifyProjectInfo = (
-  projectUuid: string,
-  data: ProjectInfo
-) => {
-  const onSuccess = () => {
-    toast.success("프로젝트 정보 수정이 완료되었습니다.");
-  };
-
-  const onError = () => {
-    toast.error("프로젝트 정보 수정이 실패되었습니다.");
-  };
-
-  return useMutation(() => modifyProjectInfo(projectUuid, data), {
-    onSuccess,
-    onError,
-  });
+export const useModifyProjectInfo = (projectUuid: string) => {
+  return useMutation(
+    (data: ProjectInfo) => modifyProjectInfo(projectUuid, data),
+    {}
+  );
 };
 
-export const useModifyProjectMember = (
-  projectUuid: string,
-  data: ProjectMember
-) => {
-  const onSuccess = () => {
-    toast.success("프로젝트 멤버 수정이 완료되었습니다.");
-  };
+export const useModifyProjectMember = (projectUuid: string) => {
+  return useMutation(
+    (data: ProjectMember) => modifyProjectMember(projectUuid, data),
+    {}
+  );
+};
 
-  const onError = () => {
-    toast.error("프로젝트 멤버 수정이 실패되었습니다.");
-  };
-
-  return useMutation(() => modifyProjectMember(projectUuid, data), {
-    onSuccess,
-    onError,
-  });
+export const useDeleteProject = (projectUuid: string) => {
+  return useMutation(() => deleteProject(projectUuid || ""));
 };
