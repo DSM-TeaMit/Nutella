@@ -45,3 +45,12 @@ export const deleteAdminAccount = async (adminUuid: string) => {
 
   return await request.delete(uri);
 };
+
+export const migrationUser = async (file: File) => {
+  const uri = Uri.migrateUser.get();
+
+  const formData = new FormData();
+  formData.append("excel", file);
+
+  return await request.post(uri, formData);
+};
