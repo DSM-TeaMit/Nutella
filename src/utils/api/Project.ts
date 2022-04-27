@@ -65,6 +65,7 @@ export interface Member {
   role: string;
 }
 export interface ProjectMember {
+  role: string;
   member: Member[];
 }
 
