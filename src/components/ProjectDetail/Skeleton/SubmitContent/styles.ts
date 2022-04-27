@@ -2,8 +2,9 @@ import styled from "@emotion/styled";
 
 export const SubmitContentContainer = styled.div`
   width: 859px;
-  height: 371px;
-  margin: 80px 0;
+  height: 447px;
+  margin: 80px 0 28px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray2}; ;
 `;
 
 export const SubmitContent = styled.div`
@@ -38,6 +39,7 @@ export const SubmitBox = styled.div`
 export const ResultContent = styled.div`
   width: 859px;
   height: 138px;
+  margin-bottom: 80px;
 `;
 
 export const Box = styled(SubmitBox)`
