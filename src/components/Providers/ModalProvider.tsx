@@ -50,14 +50,16 @@ const ModalProvider: FC = ({ children }) => {
     return modals[modals.length - 1];
   }, [modals]);
 
+  const closeAll = useCallback(() => {
+    setModals([]);
+  }, []);
+
   const value = useMemo<ModalContextType>(
-    () => ({ modals, closeCurrentModal, openModal, closeByStep, currentModal }),
-    [closeByStep, closeCurrentModal, currentModal, modals, openModal]
+    () => ({ modals, closeCurrentModal, openModal, closeByStep, currentModal, closeAll }),
+    [closeAll, closeByStep, closeCurrentModal, currentModal, modals, openModal]
   );
 
-  return (
-    <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
-  );
+  return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
 };
 
 export default ModalProvider;
