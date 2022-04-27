@@ -1,3 +1,3 @@
-const LIMIT = 20 as const;
+const LIMIT = 30 as const;
 
 export default LIMIT;

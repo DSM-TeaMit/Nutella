@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import MainProjectSkeleton from "../Cards/MainProjectSkeleton";
 import isMore from "../../constant/IsMore";
 import LIMIT from "../../constant/Limit";
+import usePagination from "../../hooks/usePagination";
 
 const Search = () => {
   const initPage = 1;
@@ -28,33 +29,22 @@ const Search = () => {
     fetchNextPage: memberFetchNextPage,
     isFetching: memberIsFetching,
   } = useSearchEach(searchWord, "memberName", initPage);
+  const { list: pList, prevPage: pPrev } = usePagination(projectData, initPage);
+  const { list: mList, prevPage: mPrev } = usePagination(memberData, initPage);
 
-  const projectPrevPage: number = useMemo(() => {
-    if (
-      !projectData ||
-      projectData.pageParams.length <= 0 ||
-      projectData.pageParams[projectData.pageParams.length - 1] === undefined
-    ) {
-      return initPage;
+  const counts = useMemo(() => {
+    if (!data || data.pages.length <= 0) {
+      return undefined;
     }
 
-    return Number(projectData.pageParams[projectData.pageParams.length - 1]);
-  }, [projectData]);
+    const pCount = data.pages[data.pages.length - 1].data.projectName.count;
+    const mCount = data.pages[data.pages.length - 1].data.memberName.count;
 
-  const memberPrevPage: number = useMemo(() => {
-    if (
-      !memberData ||
-      memberData.pageParams.length <= 0 ||
-      memberData.pageParams[memberData.pageParams.length - 1] === undefined
-    ) {
-      return initPage;
-    }
+    return { pCount, mCount };
+  }, [data]);
 
-    return Number(memberData.pageParams[memberData.pageParams.length - 1]);
-  }, [memberData]);
-
-  const [projectPage, setProjectPage] = useState<number>(projectPrevPage);
-  const [memberPage, setMemberPage] = useState<number>(memberPrevPage);
+  const [projectPage, setProjectPage] = useState<number>(pPrev);
+  const [memberPage, setMemberPage] = useState<number>(mPrev);
 
   useTitle(`${searchWord}의 검색결과`);
 
@@ -69,15 +59,11 @@ const Search = () => {
       return {
         projectName: undefined,
         memberName: undefined,
-        projectNameCount: undefined,
-        memberNameCount: undefined,
       };
     }
 
     const plist: Project[] = [];
     const mlist: Project[] = [];
-    let pCount = 0;
-    let mCount = 0;
 
     data.pages
       .map((value) => value.data.projectName.projects)
@@ -87,46 +73,11 @@ const Search = () => {
       .map((value) => value.data.memberName.projects)
       .forEach((value) => mlist.push(...value));
 
-    if (data && data.pages.length > 0) {
-      pCount = data.pages[0].data.projectName.count;
-      mCount = data.pages[0].data.memberName.count;
-    }
-
     return {
       projectName: plist,
       memberName: mlist,
-      projectNameCount: pCount,
-      memberNameCount: mCount,
     };
   }, [data]);
-
-  const projectNameList = useMemo(() => {
-    if (!projectData) {
-      return undefined;
-    }
-
-    const pList: Project[] = [];
-
-    projectData.pages
-      .map((value) => value.data.projectName.projects)
-      .forEach((value) => pList.push(...value));
-
-    return pList;
-  }, [projectData]);
-
-  const memberNameList = useMemo(() => {
-    if (!memberData) {
-      return undefined;
-    }
-
-    const mList: Project[] = [];
-
-    memberData.pages
-      .map((value) => value.data.memberName.projects)
-      .forEach((value) => mList.push(...value));
-
-    return mList;
-  }, [memberData]);
 
   const skeletons = Array<number>(5)
     .fill(0)
@@ -148,61 +99,53 @@ const Search = () => {
     <S.Container>
       <S.SearchContent>
         <S.SearchTitle>{searchWord}(으)로 검색한 결과</S.SearchTitle>
-        {firstSearchList.projectNameCount === 0 && firstSearchList.memberNameCount === 0 && (
+        {counts?.pCount === 0 && counts?.mCount === 0 && (
           <>
             <S.BigMessage>:(</S.BigMessage>
             <S.BigMessage>{searchWord}(으)로 검색한 결과가 존재하지 않습니다.</S.BigMessage>
             <S.BigMessage>다른 키워드로 검색해 주세요.</S.BigMessage>
           </>
         )}
-        {firstSearchList.projectNameCount !== 0 && (
+        {counts?.pCount !== 0 && (
           <S.ElementBox>
             <S.Title>
               프로젝트&nbsp;
-              {firstSearchList.projectNameCount && (
-                <span>{firstSearchList.projectNameCount}개</span>
-              )}
+              {counts && <span>{counts.pCount}개</span>}
             </S.Title>
             <S.ProjectBox>
               {isLoading && skeletons}
               {firstSearchList.projectName?.map((item: Project) => {
                 return <MainProjectCard key={item.uuid} data={item} />;
               })}
-              {projectNameList?.map((value) => (
+              {pList?.map((value) => (
                 <MainProjectCard key={value.uuid} data={value} />
               ))}
               {projectIsFetchingNextPage && skeletons}
             </S.ProjectBox>
-            {firstSearchList.projectNameCount &&
-              !projectIsFetching &&
-              isMore(LIMIT, projectPage, firstSearchList.projectNameCount) && (
-                <S.More onClick={onProjectNext}>더 가져오기</S.More>
-              )}
+            {counts && !projectIsFetching && isMore(LIMIT, projectPage, counts.pCount) && (
+              <S.More onClick={onProjectNext}>더 가져오기</S.More>
+            )}
           </S.ElementBox>
         )}
-        {firstSearchList.memberNameCount !== 0 && (
+        {counts?.mCount !== 0 && (
           <S.ElementBox>
             <S.Title>
               이름에 {searchWord}(을)를 포함한 유저가 참여한 프로젝트{" "}
-              {!!firstSearchList.memberNameCount && (
-                <span>{firstSearchList.memberNameCount}개</span>
-              )}
+              {!!counts && <span>{counts.mCount}개</span>}
             </S.Title>
             <S.ProjectBox>
               {isLoading && skeletons}
               {firstSearchList.memberName?.map((item: Project) => {
                 return <MainProjectCard key={item.uuid} data={item} />;
               })}
-              {memberNameList?.map((value) => (
+              {mList?.map((value) => (
                 <MainProjectCard key={value.uuid} data={value} />
               ))}
               {memberIsFetchingNextPage && skeletons}
             </S.ProjectBox>
-            {firstSearchList.memberNameCount &&
-              !memberIsFetching &&
-              isMore(LIMIT, memberPage, firstSearchList.memberNameCount) && (
-                <S.More onClick={onMemberNext}>더 가져오기</S.More>
-              )}
+            {counts && !memberIsFetching && isMore(LIMIT, memberPage, counts?.mCount) && (
+              <S.More onClick={onMemberNext}>더 가져오기</S.More>
+            )}
           </S.ElementBox>
         )}
       </S.SearchContent>

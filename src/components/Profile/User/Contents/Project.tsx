@@ -5,51 +5,18 @@ import { useUserProjects } from "../../../../queries/User";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import Error from "../../Error";
-import { ProjectType } from "../../../../utils/api/User";
 import isMore from "../../../../constant/IsMore";
 import LIMIT from "../../../../constant/Limit";
 import ProjectSkeleton from "../../../Cards/ProjectSkeleton";
+import usePagination from "../../../../hooks/usePagination";
 
 const Project = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const initPage = 1;
   const { data, isError, isLoading, isFetching, fetchNextPage, isFetchingNextPage } =
     useUserProjects(uuid || "", initPage);
-
-  const prevPage: number = useMemo(() => {
-    if (
-      !data ||
-      data.pageParams.length <= 0 ||
-      data.pageParams[data.pageParams.length - 1] === undefined
-    ) {
-      return initPage;
-    }
-
-    return Number(data.pageParams[data.pageParams.length - 1]);
-  }, [data]);
+  const { prevPage, count, list } = usePagination(data, initPage);
   const [page, setPage] = useState<number>(prevPage);
-
-  const list = useMemo(() => {
-    if (!data) {
-      return undefined;
-    }
-
-    const l: ProjectType[] = [];
-
-    data.pages.forEach((value) => {
-      l.push(...value.data.projects);
-    });
-
-    return l;
-  }, [data]);
-
-  const count = useMemo(() => {
-    if (!data || data.pages.length <= 0) {
-      return undefined;
-    }
-
-    return data.pages[0].data.count;
-  }, [data]);
 
   const onNextPage = useCallback(() => {
     if (!count) {

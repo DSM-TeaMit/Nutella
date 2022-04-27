@@ -1,6 +1,8 @@
 import { useInfiniteQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
+import { List } from "../hooks/usePagination";
 import Page from "../interface/Page";
+import { Project } from "../utils/api/Feed";
 import { getSearch, getSearchEach, SearchBy, SearchList } from "../utils/api/Search";
 
 export const useSearch = (keyword: string, initPage: number) => {
@@ -29,8 +31,8 @@ export const useSearchEach = (keyword: string, by: SearchBy, initPage: number) =
     async ({ pageParam = initPage + 1 }) => {
       const { data } = await getSearchEach(keyword, pageParam, by);
 
-      const p: Page<SearchList> = {
-        data: data,
+      const p: Page<List<Project>> = {
+        data: { list: data[by].projects, count: data[by].count },
         page: pageParam,
       };
 

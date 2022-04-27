@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from "react-query";
-import { getFeed } from "../utils/api/Feed";
+import { getFeed, Project } from "../utils/api/Feed";
 import queryKeys from "../constant/QueryKeys";
 import Page from "../interface/Page";
-import { Feed as FeedType } from "../utils/api/Feed";
+import { List } from "../hooks/usePagination";
 
 export const useFeed = (order: string, initPage: number) => {
   return useInfiniteQuery(
@@ -10,7 +10,10 @@ export const useFeed = (order: string, initPage: number) => {
     async ({ pageParam = initPage }) => {
       const data = await getFeed(order, pageParam);
 
-      const d: Page<FeedType> = { page: pageParam, data: data.data };
+      const d: Page<List<Project>> = {
+        page: pageParam,
+        data: { list: data.data.projects, count: data.data.count },
+      };
 
       return d;
     },

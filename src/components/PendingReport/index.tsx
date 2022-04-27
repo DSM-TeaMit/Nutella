@@ -5,59 +5,20 @@ import { useNavigate } from "react-router-dom";
 import isMore from "../../constant/IsMore";
 import LIMIT from "../../constant/Limit";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
+import usePagination from "../../hooks/usePagination";
 import { usePendingReport } from "../../queries/PendingReport";
-import { PendingReport as PendingReportType } from "../../utils/api/PendingReport";
 import PendingReportCard from "../Cards/PendingReportCard";
 import PendingReportSkeleton from "../Cards/PendingReportSkeleton";
 import * as S from "./styles";
 
 const PendingReport = () => {
   const initPage = 1;
-  const {
-    data,
-    isLoading,
-    isError,
-    isFetching,
-    error,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = usePendingReport(initPage);
-
-  const prevPage: number = useMemo(() => {
-    if (
-      !data ||
-      data.pageParams.length <= 0 ||
-      data.pageParams[data.pageParams.length - 1] === undefined
-    ) {
-      return initPage;
-    }
-
-    return Number(data.pageParams[data.pageParams.length - 1]);
-  }, [data]);
+  const { data, isLoading, isError, isFetching, error, fetchNextPage, isFetchingNextPage } =
+    usePendingReport(initPage);
+  const { count, list, prevPage } = usePagination(data, initPage);
 
   const [page, setPage] = useState<number>(prevPage);
   const navigate = useNavigate();
-  const list = useMemo(() => {
-    if (!data) {
-      return undefined;
-    }
-
-    const l: PendingReportType[] = [];
-
-    data.pages.forEach((value) => {
-      l.push(...value.data.projects);
-    });
-
-    return [...l];
-  }, [data]);
-
-  const count = useMemo(() => {
-    if (!data || data.pages.length <= 0) {
-      return undefined;
-    }
-
-    return data.pages[0].data.count;
-  }, [data]);
 
   const onNextPage = useCallback(() => {
     if (!count) {
@@ -70,16 +31,10 @@ const PendingReport = () => {
     }
   }, [count, page, fetchNextPage]);
 
-  const ref = useInfiniteScroll<HTMLDivElement>(
-    onNextPage,
-    !(isLoading || isError || isFetching)
-  );
+  const ref = useInfiniteScroll<HTMLDivElement>(onNextPage, !(isLoading || isError || isFetching));
 
   useEffect(() => {
-    if (
-      isError &&
-      (!axios.isAxiosError(error) || error.response?.status !== 403)
-    ) {
+    if (isError && (!axios.isAxiosError(error) || error.response?.status !== 403)) {
       toast.error("오류 발생. 다시 시도해주세요.");
       return;
     }
