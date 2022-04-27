@@ -3,7 +3,7 @@ import { UpArrowIcons } from "../../../../../assets/icons";
 import ReportCard from "../../../../Cards/ReportCard";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Reports } from "../../../../../utils/api/User";
-import { ReportStatus, ReportPathType } from "../../../../../interface";
+import { ReportStatus } from "../../../../../interface";
 import isMore from "../../../../../constant/IsMore";
 import { useEachReports } from "../../../../../queries/User";
 import LIMIT from "../../../../../constant/Limit";
@@ -21,19 +21,12 @@ interface PropsType {
 const padding = 12 as const;
 const gap = 16 as const;
 
-const pathMap = new Map<ReportStatus, ReportPathType>()
-  .set("PENDING", "pending")
-  .set("ACCEPTED", "accepted")
-  .set("DECLINED", "rejected")
-  .set("WRITING", "writing");
-
 const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid, value }) => {
   const [isActive, setIsActive] = useState<boolean>(value || false);
   const container = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const initPage = 1;
-  const pathType = useMemo(() => pathMap.get(status)!, [status]);
   const { count, projects: reports } = data;
 
   const {
@@ -41,7 +34,7 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid, value }
     isFetching,
     fetchNextPage,
     isFetchingNextPage,
-  } = useEachReports(pathType, initPage, userUuid);
+  } = useEachReports(status, initPage, userUuid);
   const { list, prevPage } = usePagination(eachData, initPage);
 
   const [page, setPage] = useState<number>(prevPage);

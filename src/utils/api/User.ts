@@ -1,8 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import LIMIT from "../../constant/Limit";
 import Uri from "../../constant/Uri";
-import { Pagination, ProjectTypes, ReportPathType } from "../../interface";
-import { ReportStatus, ReportTypes } from "../../interface";
+import { ReportStatus, ReportTypes, Pagination, ProjectTypes } from "../../interface";
 import request from "../axios";
 
 export interface ReportType {
@@ -105,15 +104,17 @@ export interface Reports {
   projects: ReportList[];
 }
 
-export interface UserReports {
-  writing: Reports;
-  accepted: Reports;
-  rejected: Reports;
-  pending: Reports;
-}
+// export interface UserReports extends Record<ReportStatus, Reports> {
+//   writing: Reports;
+//   accepted: Reports;
+//   rejected: Reports;
+//   pending: Reports;
+// }
+
+export type UserReports = Record<ReportStatus, Reports>;
 
 interface EachReportPagination extends Pagination {
-  type: ReportPathType;
+  type: ReportStatus;
 }
 
 export const getUserReports = async (userUuid: string, page: number) => {
@@ -127,11 +128,7 @@ export const getUserReports = async (userUuid: string, page: number) => {
   return await request.get<UserReports>(uri, { params });
 };
 
-export const getEachReports = async (
-  type: ReportPathType,
-  page: number,
-  userUuid?: string
-) => {
+export const getEachReports = async (type: ReportStatus, page: number, userUuid?: string) => {
   let uri = "";
 
   if (userUuid) {
@@ -181,11 +178,7 @@ export const modifyGithubId = async (githubId: string, code: string) => {
 
   await authGithubCode(code);
 
-  return await request.put<
-    unknown,
-    AxiosResponse<unknown, unknown>,
-    ModifyGithubId
-  >(changeUri, {
+  return await request.put<unknown, AxiosResponse<unknown, unknown>, ModifyGithubId>(changeUri, {
     githubId,
   });
 };

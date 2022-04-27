@@ -16,10 +16,10 @@ const Report = () => {
     }
 
     const l: UserReports = {
-      writing: { projects: [], count: 0 },
-      accepted: { projects: [], count: 0 },
-      pending: { projects: [], count: 0 },
-      rejected: { projects: [], count: 0 },
+      NOT_SUBMITTED: { projects: [], count: 0 },
+      ACCEPTED: { projects: [], count: 0 },
+      PENDING: { projects: [], count: 0 },
+      REJECTED: { projects: [], count: 0 },
     };
 
     data.pages.forEach((value) => {
@@ -44,49 +44,39 @@ const Report = () => {
   }
 
   if (isError) {
-    return (
-      <Error message="오류 발생. 보고서를 가져올 수 없습니다. 다시 시도해주세요." />
-    );
+    return <Error message="오류 발생. 보고서를 가져올 수 없습니다. 다시 시도해주세요." />;
   }
 
   return (
     <I.ContentInner>
       <I.FlexContainer>
-        {list && list.writing.count > 0 && (
+        {list && list.NOT_SUBMITTED.count > 0 && (
           <ReportAccordion
             value={true}
             title="작성 중인"
-            data={list?.writing}
-            status="WRITING"
+            data={list?.NOT_SUBMITTED}
+            status="NOT_SUBMITTED"
           />
         )}
-        {list && list.pending.count > 0 && (
+        {list && list.PENDING.count > 0 && (
           <ReportAccordion
             value={true}
             title="승인 대기중인"
-            data={list.pending}
+            data={list.PENDING}
             status="PENDING"
           />
         )}
-        {list && list.rejected.count > 0 && (
-          <ReportAccordion
-            title="승인 거절된"
-            data={list.rejected}
-            status="DECLINED"
-          />
+        {list && list.REJECTED.count > 0 && (
+          <ReportAccordion title="승인 거절된" data={list.REJECTED} status="REJECTED" />
         )}
-        {list && list.accepted.count > 0 && (
-          <ReportAccordion
-            title="승인 된"
-            data={list.accepted}
-            status="ACCEPTED"
-          />
+        {list && list.ACCEPTED.count > 0 && (
+          <ReportAccordion title="승인 된" data={list.ACCEPTED} status="ACCEPTED" />
         )}
         {list &&
-          list.accepted.count +
-            list.rejected.count +
-            list.pending.count +
-            list.writing.count ===
+          list.ACCEPTED.count +
+            list.REJECTED.count +
+            list.PENDING.count +
+            list.NOT_SUBMITTED.count ===
             0 && <I.Message>보고서가 존재하지 않습니다.</I.Message>}
       </I.FlexContainer>
     </I.ContentInner>
