@@ -23,7 +23,7 @@ const AddAdminAccountModal = () => {
     passwordCheck: "",
   });
 
-  const { name, password, passwordCheck, uid } = inputs;
+  const { name, password, passwordCheck } = inputs;
 
   const onAddClick = useCallback(() => {
     if (window.confirm("추가하시겠습니까?")) {
