@@ -13,6 +13,7 @@ import {
   postAdminLogin,
   deleteAdminAccount,
   AccountType,
+  migrationUser,
 } from "../utils/api/Admin";
 
 export const useAdminLogin = () => useMutation((data: LoginType) => postAdminLogin(data), {});
@@ -72,3 +73,5 @@ export const useDeleteAdminMutation = () => {
     }
   );
 };
+
+export const useMigrationUser = () => useMutation((file: File) => migrationUser(file));

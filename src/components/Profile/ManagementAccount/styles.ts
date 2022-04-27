@@ -19,6 +19,11 @@ export const Title = styled.div`
   color: ${({ theme }) => theme.colors.grayscale.black};
 `;
 
+export const Buttons = styled.div`
+  display: flex;
+  column-gap: 16px;
+`;
+
 export const AddAccount = styled.button`
   color: ${({ theme }) => theme.colors.grayscale.gray2};
   font: ${({ theme }) => theme.fonts.body3};
