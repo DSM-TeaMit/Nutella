@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useInfiniteQuery, useMutation, useQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import { ReportPathType } from "../interface";

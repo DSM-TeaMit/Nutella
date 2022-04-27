@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useInfiniteQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import Page from "../interface/Page";
