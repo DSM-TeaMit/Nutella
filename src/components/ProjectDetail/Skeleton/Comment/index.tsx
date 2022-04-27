@@ -12,12 +12,10 @@ const CommentSkeleton = () => {
       {Array(4)
         .fill(0)
         .map((_, index) => (
-          <>
-            <S.CommentViewContainer>
-              <S.Image />
-              <S.ContentContainer />
-            </S.CommentViewContainer>
-          </>
+          <S.CommentViewContainer key={index}>
+            <S.Image />
+            <S.ContentContainer />
+          </S.CommentViewContainer>
         ))}
     </S.CommentContainer>
   );

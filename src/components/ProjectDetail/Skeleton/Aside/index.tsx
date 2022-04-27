@@ -13,15 +13,13 @@ const AsideSkeleton = () => {
           {Array(4)
             .fill(0)
             .map((_, index) => (
-              <>
-                <S.RoleBox>
-                  <S.RoleTitle />
-                  <S.User>
-                    <div />
-                    <div></div>
-                  </S.User>
-                </S.RoleBox>
-              </>
+              <S.RoleBox key={index}>
+                <S.RoleTitle />
+                <S.User>
+                  <div />
+                  <div></div>
+                </S.User>
+              </S.RoleBox>
             ))}
         </S.AsideContent>
       </S.AsideContainer>

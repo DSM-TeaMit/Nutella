@@ -52,7 +52,7 @@ export const User = styled.div`
   padding: 4px;
   text-decoration: none;
   user-select: none;
-  div:nth-child(1) {
+  div:nth-of-type(1) {
     width: 32px;
     height: 32px;
     border-radius: 25px;

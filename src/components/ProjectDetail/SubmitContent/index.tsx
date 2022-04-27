@@ -25,11 +25,13 @@ const SubmitContent: FC<PropsType> = ({ data }) => {
     toast.error("계획서 이동하려는 도중 오류가 났습니다. 다시 시도해 주세요.");
   };
 
-  const onClickPlan = () => {
-    planMutation.mutate(undefined, {
-      onSuccess: onPlanSuccess,
-      onError: onPlanError,
-    });
+  const onClickPlan = async () => {
+    try {
+      await planMutation.mutateAsync();
+      onPlanSuccess();
+    } catch (error) {
+      onPlanError();
+    }
   };
 
   const onResultSuccess = () => {

@@ -38,7 +38,7 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
     projectCount,
     githubId,
     pendingCount,
-    pendingProjects: pendingReports,
+    pendingReports: pendingReports,
     projects,
     thumbnailUrl,
   } = data!.data;

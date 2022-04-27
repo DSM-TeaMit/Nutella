@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import useInputs, { NameTypes } from "../../../hooks/useInputs";
 import useModalContext from "../../../hooks/useModalContext";
 import { useAccountMutation } from "../../../queries/Admin";
@@ -8,7 +8,6 @@ import * as S from "./styles";
 
 interface Inputs extends NameTypes {
   name: string;
-  uid: string;
   password: string;
   passwordCheck: string;
 }
@@ -16,62 +15,42 @@ interface Inputs extends NameTypes {
 const AddAdminAccountModal = () => {
   const { closeCurrentModal } = useModalContext();
   const accoutMutation = useAccountMutation();
+  const [id, setId] = useState<string>("");
 
   const [inputProps, [inputs]] = useInputs<Inputs>({
     name: "",
     password: "",
-    uid: "",
     passwordCheck: "",
   });
 
-  const { name, password, passwordCheck, uid } = inputs;
+  const { name, password, passwordCheck } = inputs;
 
   const onAddClick = useCallback(() => {
     if (window.confirm("추가하시겠습니까?")) {
-      accoutMutation.mutate(
-        { id: uid, name, password },
-        { onSuccess: closeCurrentModal }
-      );
+      accoutMutation.mutate({ id, name, password }, { onSuccess: closeCurrentModal });
     }
-  }, [accoutMutation, closeCurrentModal, name, password, uid]);
+  }, [accoutMutation, closeCurrentModal, id, name, password]);
 
   //숫자, 특문 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력
   const regex = useMemo(
-    () =>
-      /(?=.*\d{1,50})(?=.*[~`!@#$%\\^&*()-+=]{1,50})(?=.*[a-zA-Z]{1,50}).{8,50}$/,
+    () => /(?=.*\d{1,50})(?=.*[~`!@#$%\\^&*()-+=]{1,50})(?=.*[a-zA-Z]{1,50}).{8,50}$/,
     []
   );
 
   const disabled = useMemo(
     () =>
-      [name, password, passwordCheck, uid].some(
-        (value) => value.length === 0
-      ) ||
+      [name, password, passwordCheck, id].some((value) => value.length === 0) ||
       password !== passwordCheck ||
       !regex.test(password) ||
       accoutMutation.isLoading,
-    [accoutMutation.isLoading, name, password, passwordCheck, regex, uid]
+    [accoutMutation.isLoading, id, name, password, passwordCheck, regex]
   );
 
-  const passwordErrorMessage = useMemo(() => {
-    if (password.length === 0) {
-      return <S.Error>빈칸을 채워주세요.</S.Error>;
+  const onIdChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (/^[A-Za-z0-9+]*$/.test(e.target.value)) {
+      setId(e.target.value);
     }
-
-    if (!regex.test(password)) {
-      return <S.Error>8자 이상, 하나 이상의 문자, 숫자 및 특수 문자</S.Error>;
-    }
-  }, [password, regex]);
-
-  const passwordCheckErrorMessage = useMemo(() => {
-    if (passwordCheck.length === 0) {
-      return <S.Error>빈칸을 채워주세요.</S.Error>;
-    }
-
-    if (password !== passwordCheck) {
-      return <S.Error>다시 확인해주세요.</S.Error>;
-    }
-  }, [password, passwordCheck]);
+  }, []);
 
   return (
     <S.Container>
@@ -80,24 +59,21 @@ const AddAdminAccountModal = () => {
         <S.ContentContainer>
           <S.SubtitleContainer>
             <S.Subtitle>이름</S.Subtitle>
-            {name.length === 0 && <S.Error>빈칸을 채워주세요.</S.Error>}
           </S.SubtitleContainer>
           <Input placeholder="이름을 입력해주세요..." {...inputProps["name"]} />
         </S.ContentContainer>
         <S.ContentContainer>
           <S.SubtitleContainer>
             <S.Subtitle>아이디</S.Subtitle>
-            {uid.length === 0 && <S.Error>빈칸을 채워주세요.</S.Error>}
           </S.SubtitleContainer>
-          <Input
-            placeholder="아이디를 입력해주세요..."
-            {...inputProps["uid"]}
-          />
+          <Input placeholder="아이디를 입력해주세요..." value={id} onChange={onIdChange} />
         </S.ContentContainer>
         <S.ContentContainer>
           <S.SubtitleContainer>
             <S.Subtitle>비밀번호</S.Subtitle>
-            {passwordErrorMessage}
+            {password.length > 0 && !regex.test(password) && (
+              <S.Error>8자 이상, 하나 이상의 문자, 숫자 및 특수 문자</S.Error>
+            )}
           </S.SubtitleContainer>
           <Input
             placeholder="비밀번호를 입력해주세요..."
@@ -108,7 +84,7 @@ const AddAdminAccountModal = () => {
         <S.ContentContainer>
           <S.SubtitleContainer>
             <S.Subtitle>비밀번호 확인</S.Subtitle>
-            {passwordCheckErrorMessage}
+            {password !== passwordCheck && <S.Error>다시 확인해주세요.</S.Error>}
           </S.SubtitleContainer>
           <Input
             placeholder="비밀번호를 입력해주세요..."

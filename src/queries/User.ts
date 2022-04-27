@@ -1,7 +1,7 @@
 import { useInfiniteQuery, useMutation, useQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import { List } from "../hooks/usePagination";
-import { ReportPathType } from "../interface";
+import { ReportStatus } from "../interface";
 import Page from "../interface/Page";
 import {
   getProfile,
@@ -102,7 +102,7 @@ export const useMyReports = (initPage: number) =>
     }
   );
 
-export const useEachReports = (type: ReportPathType, initPage: number, userUuid?: string) => {
+export const useEachReports = (type: ReportStatus, initPage: number, userUuid?: string) => {
   return useInfiniteQuery(
     [queryKeys.reports, userUuid, type],
     async ({ pageParam = initPage + 1 }) => {
@@ -110,7 +110,7 @@ export const useEachReports = (type: ReportPathType, initPage: number, userUuid?
 
       const d: Page<List<ReportList>> = {
         page: pageParam,
-        data: { list: data.data[type].projects, count: data.data[type].count },
+        data: { list: data.data[type].reports, count: data.data[type].count },
       };
 
       return d;

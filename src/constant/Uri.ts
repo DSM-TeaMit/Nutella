@@ -45,7 +45,7 @@ const Uri = {
   downloadImage: new URI<ProjectUuid | ImageUuid>(`file/{${projectUuid}}/image/{${imageUuid}}`),
   file: new URI<ProjectUuid>(`file/{${projectUuid}}/archive`),
   pendingReport: new URI(`project/feed/pending`),
-  createdAccount: new URI(`admin/createdByRequestor`),
+  createdAccount: new URI(`admin/list`),
   header: new URI(`user/header`),
   admin: new URI<AdminUuid>(`admin/{${adminUuid}}`),
   searchUser: new URI(`user/search`),

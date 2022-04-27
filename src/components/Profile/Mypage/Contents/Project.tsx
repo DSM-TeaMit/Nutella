@@ -10,7 +10,6 @@ import isMore from "../../../../constant/IsMore";
 import toast from "react-hot-toast";
 import Error from "../../Error";
 import LIMIT from "../../../../constant/Limit";
-// import { ProjectType } from "../../../../utils/api/User";
 import ProjectSkeleton from "../../../Cards/ProjectSkeleton";
 import usePagination from "../../../../hooks/usePagination";
 

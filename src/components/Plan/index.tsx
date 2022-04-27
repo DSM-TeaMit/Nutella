@@ -14,7 +14,7 @@ import * as S from "./styles";
 import { useConfirmReport } from "../../queries/Project";
 import useTitle from "../../hooks/useTitle";
 import reportStatusMessage from "../../constant/ReportStatusMessage";
-import { PlanStatus } from "../../interface";
+import { ReportStatus } from "../../interface";
 import Input from "../Input";
 import { useReactToPrint } from "react-to-print";
 import axios from "axios";
@@ -146,7 +146,7 @@ const Plan = () => {
   const cantEdit = useMemo(
     () =>
       plan?.requestorType !== "USER_EDITABLE" ||
-      (["ACCEPTED", "PENDING"] as PlanStatus[]).includes(plan.status),
+      (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(plan.status),
     [plan]
   );
 
@@ -378,7 +378,7 @@ const Plan = () => {
               <BlueButton
                 disabled={
                   submitMutation.isLoading ||
-                  (["ACCEPTED", "PENDING"] as PlanStatus[]).includes(plan.status)
+                  (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(plan.status)
                 }
                 onClick={confirmOnClick("제출하시겠습니까?", () => submitMutation.mutate())}
               >
