@@ -1,24 +1,24 @@
 import * as S from "./styles";
 import { PlusIcons } from "../../../assets/icons";
 import { Project } from "../../../utils/api/ProjectDetails";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useCreatePlanMutation } from "../../../queries/Plan";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import ReportCard from "../../Cards/ReportCard";
+import { useCreateResultMutation } from "../../../queries/Result";
 
 interface PropsType {
-  data: Project | undefined;
+  data: Project;
 }
 
 const SubmitContent: FC<PropsType> = ({ data }) => {
-  useEffect(() => {}, []);
-  const planMutation = useCreatePlanMutation(data?.uuid || "");
-  const resultMutation = useCreatePlanMutation(data?.uuid || "");
+  const planMutation = useCreatePlanMutation(data.uuid || "");
+  const resultMutation = useCreateResultMutation(data.uuid || "");
   const navigate = useNavigate();
 
   const onPlanSuccess = () => {
-    navigate(`/project/${data?.uuid}/plan`);
+    navigate(`/project/${data.uuid}/plan`);
   };
 
   const onPlanError = () => {
@@ -33,68 +33,61 @@ const SubmitContent: FC<PropsType> = ({ data }) => {
   };
 
   const onResultSuccess = () => {
-    navigate(`/project/${data?.uuid}/result`);
+    navigate(`/project/${data.uuid}/result`);
   };
 
   const onResultError = () => {
     toast.error("보고서 이동하는 도중 오류가 났습니다. 다시 시도해 주세요.");
   };
 
-  const onClickResult = () => {
-    resultMutation.mutate(undefined, {
-      onSuccess: onResultSuccess,
-      onError: onResultError,
-    });
+  const onClickResult = async () => {
+    try {
+      await resultMutation.mutateAsync();
+      onResultSuccess();
+    } catch (error) {
+      onResultError();
+    }
   };
 
   return (
     <S.SubmitContentContainer>
       <S.SubmitContent>
         <S.ProjectFile>
-          <S.SubTitle>{data?.projectName} 계획서</S.SubTitle>
+          <S.SubTitle>{data.projectName} 계획서</S.SubTitle>
           <S.SubmitBox>
-            {data?.projectStatus === "REPORTING" ? (
-              //<ReportCard />
-              <div>계획서 카드 보여주는 곳</div>
+            {data.plan ? (
+              <ReportCard data={{ ...data.plan, type: "PLAN" }} />
             ) : (
               <>
                 <S.SubmitLinkBox onClick={() => onClickPlan()}>
                   <S.PlusBox>
                     <img src={PlusIcons} alt="plus" />
                   </S.PlusBox>
-                  <S.Font>{data?.projectName} 계획서 작성하기</S.Font>
+                  <S.Font>{data.projectName} 계획서 작성하기</S.Font>
                 </S.SubmitLinkBox>
               </>
             )}
           </S.SubmitBox>
         </S.ProjectFile>
         <S.ProjectFile>
-          <S.SubTitle>{data?.projectName} 결과 보고서</S.SubTitle>
+          <S.SubTitle>{data.projectName} 결과 보고서</S.SubTitle>
           <S.SubmitBox>
-            {data?.projectStatus === "REPORTING" ? (
+            {data.projectStatus === "PLANNING" ? (
               <>
-                <S.GrayBox
-                  onClick={() => {
-                    resultMutation.mutate();
-                  }}
-                  // to=
-                  check={false}
-                />
-                <div>
+                <S.GrayBox check={true}>
+                  <S.Font>계획서부터 먼저 작성해 주세요.</S.Font>
+                </S.GrayBox>
+              </>
+            ) : data.report ? (
+              <ReportCard data={{ ...data.report, type: "REPORT" }} />
+            ) : (
+              <>
+                <S.SubmitLinkBox onClick={() => onClickResult()}>
                   <S.PlusBox>
                     <img src={PlusIcons} alt="plus" />
                   </S.PlusBox>
-                  <S.Font>{data?.projectName} 결과 보고서 작성하기</S.Font>
-                </div>
-              </>
-            ) : (
-              <>
-                <S.GrayBox
-                  onClick={() => toast.error("계획서부터!")}
-                  check={true}
-                >
-                  <S.Font>계획서부터 먼저 작성해 주세요.</S.Font>
-                </S.GrayBox>
+                  <S.Font>{data.projectName} 결과 보고서 작성하기</S.Font>
+                </S.SubmitLinkBox>
               </>
             )}
           </S.SubmitBox>

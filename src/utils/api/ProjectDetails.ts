@@ -2,6 +2,7 @@ import Uri from "../../constant/Uri";
 import ProjectTypes from "../../interface/ProjectTypes";
 import RequestorType from "../../interface/RequestorType";
 import request from "../axios";
+import { ReportType } from "./User";
 
 export interface Members {
   thumbnailUrl: string;
@@ -24,6 +25,8 @@ export interface Project {
   emoji?: string;
   requestorType: RequestorType;
   members: Members[];
+  plan?: ReportType;
+  report?: ReportType;
 }
 
 export const getProject = async (projectUuid: string) => {
