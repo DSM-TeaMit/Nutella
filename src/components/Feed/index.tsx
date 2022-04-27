@@ -1,32 +1,27 @@
 import * as S from "./styles";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useFeed } from "../../queries/Feed";
-import MainProjectCard from "../Cards/MainProjectCard";
-import toast from "react-hot-toast";
-import useInfiniteScroll from "../../hooks/useInfiniteScroll";
-import isMore from "../../constant/IsMore";
-import { Project } from "../../utils/api/Feed";
-import LIMIT from "../../constant/Limit";
-import MainProjectSkeleton from "../Cards/MainProjectSkeleton";
-import usePagination from "../../hooks/usePagination";
+import FeedList from "../FeedList";
+import { Order } from "../../utils/api/Feed";
+
+interface Meue {
+  name: string;
+  key: Order;
+}
 
 const Feed = () => {
-  const [currentTab, setCurrentTab] = useState(0);
   const initPage = 1;
-  const [orderName, setOrderName] = useState<string>("popularity");
-  const { data, isError, isLoading, isFetching, fetchNextPage, isFetchingNextPage } = useFeed(
-    orderName,
-    initPage
-  );
-  const { prevPage, count, list } = usePagination(data, initPage);
-  const [page, setPage] = useState<number>(prevPage);
+  const [currentTab, setCurrentTab] = useState(0);
+  const [orderName, setOrderName] = useState<Order>("popularity");
+  const popularityQuery = useFeed("popularity", initPage);
+  const recentlyQuery = useFeed("recently", initPage);
 
-  const menuHandler = (index: React.SetStateAction<number>, name: string) => {
+  const menuHandler = (index: React.SetStateAction<number>, name: Order) => {
     setCurrentTab(index);
     setOrderName(name);
   };
 
-  const menuArr = [
+  const menuArr: Meue[] = [
     {
       name: "인기있는 프로젝트",
       key: "popularity",
@@ -36,33 +31,6 @@ const Feed = () => {
       key: "recently",
     },
   ];
-
-  const onNextPage = () => {
-    if (!data || !count) {
-      return;
-    }
-
-    if (isMore(LIMIT, page, count)) {
-      setPage((prev) => prev + 1);
-      fetchNextPage();
-    }
-  };
-
-  const ref = useInfiniteScroll<HTMLDivElement>(onNextPage, !(isLoading || isError || isFetching));
-
-  useEffect(() => {
-    if (isError) {
-      toast.error("피드를 가져오는 중 오류가 발생했습니다.");
-    }
-  }, [isError, orderName]);
-
-  const skeletons = useMemo(
-    () =>
-      Array(5)
-        .fill(0)
-        .map((_, index) => <MainProjectSkeleton key={index} />),
-    []
-  );
 
   return (
     <S.Container>
@@ -81,18 +49,10 @@ const Feed = () => {
           })}
         </S.TitleBox>
         <S.ElementBox>
-          <S.ProjectBox>
-            {isLoading
-              ? skeletons
-              : list?.map((item: Project) => <MainProjectCard key={item.uuid} data={item} />)}
-            {!isLoading && isFetchingNextPage && skeletons}
-          </S.ProjectBox>
-          <div ref={ref} />
-          {count === 0 && (
-            <>
-              <S.Message>프로젝트가 없습니다.</S.Message>
-              <S.Gap />
-            </>
+          {orderName === "popularity" ? (
+            <FeedList key="popularity" queryData={popularityQuery} initPage={initPage} />
+          ) : (
+            <FeedList key="recently" queryData={recentlyQuery} initPage={initPage} />
           )}
         </S.ElementBox>
       </S.FeedContent>
