@@ -38,13 +38,11 @@ const Uri = {
   projectConfirm: new URI<ProjectUuid>(`project/{${projectUuid}}/confirm`),
   projectList: new URI(`project/feed`),
   projectSearch: new URI(`project/feed/search`),
-  projectSearchType: new URI(`project/feed/search/each`),
+  projectSearchEach: new URI(`project/feed/search/each`),
   projectComment: new URI<ProjectUuid>(`comment/{${projectUuid}}`),
   removeComment: new URI<CommentUuid>(`comment/{${commentUuid}}`),
   uploadImage: new URI<ProjectUuid>(`file/{${projectUuid}}/image`),
-  downloadImage: new URI<ProjectUuid | ImageUuid>(
-    `file/{${projectUuid}}/image/{${imageUuid}}`
-  ),
+  downloadImage: new URI<ProjectUuid | ImageUuid>(`file/{${projectUuid}}/image/{${imageUuid}}`),
   file: new URI<ProjectUuid>(`file/{${projectUuid}}/archive`),
   pendingReport: new URI(`project/feed/pending`),
   createdAccount: new URI(`admin/createdByRequestor`),

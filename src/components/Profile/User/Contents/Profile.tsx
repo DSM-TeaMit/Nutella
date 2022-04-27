@@ -6,9 +6,9 @@ import { FC, useEffect } from "react";
 import { UserProfileType } from "../../../../utils/api/User";
 import { UseQueryResult } from "react-query";
 import { AxiosResponse } from "axios";
-import Loading from "../../Loading";
 import Error from "../../Error";
 import toast from "react-hot-toast";
+import ProfileSkleton from "../../Skeletons/ProfileSkleton";
 
 interface PropsType {
   data: UseQueryResult<AxiosResponse<UserProfileType, unknown>, unknown>;
@@ -24,42 +24,29 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
   }, [isError]);
 
   if (isLoading) {
-    return <Loading />;
+    return <ProfileSkleton />;
   }
 
   if (isError) {
-    return (
-      <Error message="오류 발생. 유저 프로필을 가져올 수 없습니다. 다시 시도해주세요." />
-    );
+    return <Error message="오류 발생. 유저 프로필을 가져올 수 없습니다. 다시 시도해주세요." />;
   }
 
-  const { name, studentNo, projects, projectCount, githubId, thumbnailUrl } =
-    data!.data;
+  const { name, studentNo, projects, projectCount, githubId, thumbnailUrl } = data!.data;
 
   return (
     <I.ContentInner>
       <I.FlexContainer>
         <I.ProfileContainerOuter>
           <I.ProfileContainer>
-            <I.ProfileImage
-              alt="user profile image"
-              src={thumbnailUrl}
-              isProfile
-            />
+            <I.ProfileImage alt="user profile image" src={thumbnailUrl} isProfile />
             <I.ProfileInfoContainer>
               <I.Name>
                 {studentNo} {name}
               </I.Name>
               <I.ProfileDescriptionContainer>
-                <I.ProfileDescription>
-                  프로젝트 {projectCount}
-                </I.ProfileDescription>
+                <I.ProfileDescription>프로젝트 {projectCount}</I.ProfileDescription>
                 {githubId && (
-                  <I.Github
-                    onClick={() =>
-                      window.open(`https://github.com/${githubId}`, "_blank")
-                    }
-                  >
+                  <I.Github onClick={() => window.open(`https://github.com/${githubId}`, "_blank")}>
                     <img alt="github" src={GithubBlackIcons} />
                     <div>{githubId}</div>
                     <img alt="arrow" src={ArrowBlackIcons} />
@@ -81,9 +68,7 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
               <ProjectCard key={value.uuid} data={value} />
             ))}
           </I.Grid>
-          {projectCount === 0 && (
-            <I.Message>프로젝트가 존재하지 않습니다.</I.Message>
-          )}
+          {projectCount === 0 && <I.Message>프로젝트가 존재하지 않습니다.</I.Message>}
         </div>
       </I.FlexContainer>
     </I.ContentInner>

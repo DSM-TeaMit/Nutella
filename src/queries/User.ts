@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useInfiniteQuery, useMutation, useQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import { ReportPathType } from "../interface";
@@ -20,8 +19,7 @@ import {
   UserReports,
 } from "../utils/api/User";
 
-export const useMyProfile = () =>
-  useQuery([queryKeys.profile, queryKeys.my], () => getMyProfile());
+export const useMyProfile = () => useQuery([queryKeys.profile, queryKeys.my], () => getMyProfile());
 
 export const useUserProfile = (userUuid: string) =>
   useQuery([queryKeys.profile, userUuid], () => getProfile(userUuid));
@@ -99,18 +97,11 @@ export const useMyReports = (initPage: number) =>
     }
   );
 
-export const useEachReports = (
-  type: ReportPathType,
-  initPage: number,
-  userUuid?: string
-) => {
-  const [enabled, setEnabled] = useState(false);
-
+export const useEachReports = (type: ReportPathType, initPage: number, userUuid?: string) => {
   return useInfiniteQuery(
     [queryKeys.reports, userUuid, type],
-    async ({ pageParam = initPage }) => {
+    async ({ pageParam = initPage + 1 }) => {
       const data = await getEachReports(type, pageParam, userUuid);
-      setEnabled(pageParam > 1);
 
       const d: Page<UserReports> = {
         page: pageParam,
@@ -121,21 +112,17 @@ export const useEachReports = (
     },
     {
       keepPreviousData: true,
-      enabled,
+      enabled: false,
       getNextPageParam: (lastPage) => lastPage.page + 1,
     }
   );
 };
 
 export const useGithubReadme = (githubId: string) =>
-  useQuery(
-    [queryKeys.profile, queryKeys.readme, githubId],
-    () => getGithubReadme(githubId),
-    {
-      retry: false,
-      refetchOnWindowFocus: false,
-    }
-  );
+  useQuery([queryKeys.profile, queryKeys.readme, githubId], () => getGithubReadme(githubId), {
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
 
 export const useDeleteAccount = () => useMutation(() => deleteUser());
 
@@ -146,5 +133,4 @@ export const useModifyGithubId = () =>
 
 export const useHeader = () => useQuery([queryKeys.header], () => getHeader());
 
-export const useSeachUser = () =>
-  useMutation((name: string) => searchUser(name));
+export const useSeachUser = () => useMutation((name: string) => searchUser(name));
