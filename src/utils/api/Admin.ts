@@ -22,10 +22,10 @@ export interface AccountType {
   emoji: string;
 }
 
-export const getCreatedAccount = async () => {
+export const getCreatedAccount = async (limit: number, page: number) => {
   const uri = Uri.createdAccount.get();
 
-  return await request.get<Accounts>(uri);
+  return await request.get<Accounts>(uri, { params: { limit, page } });
 };
 
 export interface AccountData {

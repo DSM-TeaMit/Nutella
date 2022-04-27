@@ -4,7 +4,7 @@ import * as S from "./styles";
 import { SettingIcons } from "../../../assets/icons";
 import AdminSideBar from "../../SideBar/Admin";
 import Account from "./Account";
-import { Fragment, useCallback, useEffect } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import ModalPortal from "../../ModalPortal";
 import AddAdminAccountModal from "../../Modals/AddAdminAccount";
 import useModalRef from "../../../hooks/useModalRef";
@@ -12,6 +12,9 @@ import { useCreatedAccount } from "../../../queries/Admin";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import usePagination from "../../../hooks/usePagination";
+import isMore from "../../../constant/IsMore";
+import LIMIT from "../../../constant/Limit";
 
 const navs: NavigationType[] = [
   {
@@ -23,7 +26,11 @@ const navs: NavigationType[] = [
 
 const ManagementAccount = () => {
   const modalRef = useModalRef();
-  const { data, isLoading, isError, error } = useCreatedAccount();
+  const initPage = 1;
+  const { data, isLoading, isError, error, fetchNextPage, isFetching } =
+    useCreatedAccount(initPage);
+  const { count, list, prevPage } = usePagination(data, initPage);
+  const [page, setPage] = useState(prevPage);
   const navigate = useNavigate();
 
   const onAddClick = useCallback(
@@ -35,12 +42,13 @@ const ManagementAccount = () => {
     [modalRef]
   );
 
+  const onMore = useCallback(() => {
+    setPage((prev) => prev + 1);
+    fetchNextPage();
+  }, [fetchNextPage]);
+
   useEffect(() => {
-    if (
-      isError &&
-      axios.isAxiosError(error) &&
-      error.response?.status === 403
-    ) {
+    if (isError && axios.isAxiosError(error) && error.response?.status === 403) {
       navigate("/mypage");
       toast.error("접근 권한이 없습니다.");
     }
@@ -79,18 +87,21 @@ const ManagementAccount = () => {
             <I.ContentInner>
               <I.FlexContainer>
                 <div>
-                  <S.Title>계정 관리</S.Title>
+                  <S.TitleContainer>
+                    <S.Title>계정 관리</S.Title>
+                    <S.AddAccount onClick={onAddClick}>+ 선생님 계정 추가</S.AddAccount>
+                  </S.TitleContainer>
                   <S.Container>
-                    {data?.data.accounts.map((value) => (
+                    {list?.map((value) => (
                       <Account data={value} key={value.uuid} />
                     ))}
-                    {data?.data.count === 0 && (
-                      <I.Message>생성한 계정이 없습니다.</I.Message>
-                    )}
+                    {count === 0 && <I.Message>생성한 계정이 없습니다.</I.Message>}
                   </S.Container>
-                  <S.AddAccount onClick={onAddClick}>
-                    + 선생님 계정 추가
-                  </S.AddAccount>
+                  {!isFetching && count && isMore(LIMIT, page, count) && (
+                    <S.MoreContainer>
+                      <S.More onClick={onMore}>더 가져오기</S.More>
+                    </S.MoreContainer>
+                  )}
                 </div>
               </I.FlexContainer>
             </I.ContentInner>
