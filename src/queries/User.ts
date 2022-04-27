@@ -1,5 +1,6 @@
 import { useInfiniteQuery, useMutation, useQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
+import { List } from "../hooks/usePagination";
 import { ReportPathType } from "../interface";
 import Page from "../interface/Page";
 import {
@@ -17,6 +18,7 @@ import {
   searchUser,
   UserProjects,
   UserReports,
+  ProjectType,
 } from "../utils/api/User";
 
 export const useMyProfile = () => useQuery([queryKeys.profile, queryKeys.my], () => getMyProfile());
@@ -46,9 +48,9 @@ export const useMyProjects = (initPage: number) =>
     async ({ pageParam = initPage }) => {
       const data = await getMyProjects(pageParam);
 
-      const d: Page<UserProjects> = {
+      const d: Page<List<ProjectType>> = {
         page: pageParam,
-        data: data.data,
+        data: { list: data.data.projects, count: data.data.count },
       };
 
       return d;
