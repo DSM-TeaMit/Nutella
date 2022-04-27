@@ -42,8 +42,6 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid, value }
   } = useEachReports(pathType, initPage, userUuid);
 
   const prevPage: number = useMemo(() => {
-    console.log(eachData);
-
     if (!eachData || eachData.pages.length <= 0) {
       return initPage;
     }
