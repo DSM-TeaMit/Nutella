@@ -18,11 +18,17 @@ export const ContentBox = styled.div`
 `;
 
 export const MemberBox = styled.div`
-  height: 88px;
-  margin-bottom: 24px;
+  height: fit-content;
 `;
 
-export const MemberProfile = styled.div`
+export const MemberContent = styled.div`
+  margin-top: 30px;
+  div:nth-child(1) {
+    margin-bottom: none;
+  }
+`;
+
+export const MyProfile = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
@@ -31,6 +37,8 @@ export const MemberProfile = styled.div`
     color: ${({ theme }) => theme.colors.red.default};
   }
 `;
+
+export const MemberProfile = styled(MyProfile)``;
 
 export const User = styled.div`
   display: fixed;
@@ -47,16 +55,16 @@ export const User = styled.div`
     font: ${({ theme }) => theme.fonts.body3};
     color: ${({ theme }) => theme.colors.grayscale.gray2};
   }
-  :nth-child(2) {
-    margin-top: 10px;
-  }
 `;
 
 export const RollBox = styled.div`
-  height: 42px;
   display: flex;
-  padding: 8px 16px;
-  border-radius: 10px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  flex-direction: column;
+  row-gap: 12px;
+  width: 100%;
+  margin-bottom: 19px;
   background: ${({ theme }) => theme.colors.grayscale.lightGray1};
 `;
 
