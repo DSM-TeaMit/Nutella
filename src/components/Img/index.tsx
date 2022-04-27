@@ -52,7 +52,7 @@ emojiUnicode.raw = function (input: string) {
 const Img: FC<PropsType> = (props) => {
   const { src, emoji, displayLoading, isProfile, ...rest } = props;
 
-  const { data, isError, isLoading } = useImage(src || "");
+  const { data, isLoading } = useImage(src || "");
   const unicode = useMemo(
     () =>
       emojiUnicode(emoji || "")
@@ -73,7 +73,7 @@ const Img: FC<PropsType> = (props) => {
     return <img {...rest} alt={undefined} />;
   }
 
-  if (!src && isError) {
+  if (!src) {
     if (emoji) {
       return (
         <img
