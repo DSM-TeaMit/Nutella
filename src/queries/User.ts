@@ -110,7 +110,7 @@ export const useEachReports = (type: ReportStatus, initPage: number, userUuid?: 
 
       const d: Page<List<ReportList>> = {
         page: pageParam,
-        data: { list: data.data[type].projects, count: data.data[type].count },
+        data: { list: data.data[type].reports, count: data.data[type].count },
       };
 
       return d;

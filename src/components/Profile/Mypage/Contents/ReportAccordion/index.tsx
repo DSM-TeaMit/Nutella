@@ -27,7 +27,7 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid, value }
   const header = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const initPage = 1;
-  const { count, projects: reports } = data;
+  const { count, reports: reports } = data;
 
   const {
     data: eachData,

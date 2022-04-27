@@ -12,7 +12,7 @@ export const usePendingReport = (initPage: number) =>
 
       const p: Page<List<PendingReport>> = {
         page: pageParam,
-        data: { list: data.data.projects, count: data.data.count },
+        data: { list: data.data.reports, count: data.data.count },
       };
 
       return p;

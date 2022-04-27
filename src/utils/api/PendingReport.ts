@@ -20,7 +20,7 @@ export interface PendingReport {
 
 export interface PendingReportList {
   count: number;
-  projects: PendingReport[];
+  reports: PendingReport[];
 }
 
 export const getPendingReports = async (page: number) => {

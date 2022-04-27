@@ -16,16 +16,16 @@ const Report = () => {
     }
 
     const l: UserReports = {
-      NOT_SUBMITTED: { projects: [], count: 0 },
-      ACCEPTED: { projects: [], count: 0 },
-      PENDING: { projects: [], count: 0 },
-      REJECTED: { projects: [], count: 0 },
+      NOT_SUBMITTED: { reports: [], count: 0 },
+      ACCEPTED: { reports: [], count: 0 },
+      PENDING: { reports: [], count: 0 },
+      REJECTED: { reports: [], count: 0 },
     };
 
     data.pages.forEach((value) => {
       for (const key in value.data) {
         const k = key as keyof UserReports;
-        l[k].projects.push(...value.data[k].projects);
+        l[k].reports.push(...value.data[k].reports);
         l[k].count = value.data[k].count;
       }
     });

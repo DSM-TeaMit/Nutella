@@ -36,7 +36,7 @@ export interface MyProfileType {
   email: string;
   githubId?: string;
   pendingCount: number;
-  pendingProjects: ReportType[];
+  pendingReports: ReportType[];
   projectCount: number;
   projects: ProjectType[];
   thumbnailUrl?: string;
@@ -101,15 +101,8 @@ export interface ReportList {
 
 export interface Reports {
   count: number;
-  projects: ReportList[];
+  reports: ReportList[];
 }
-
-// export interface UserReports extends Record<ReportStatus, Reports> {
-//   writing: Reports;
-//   accepted: Reports;
-//   rejected: Reports;
-//   pending: Reports;
-// }
 
 export type UserReports = Record<ReportStatus, Reports>;
 
