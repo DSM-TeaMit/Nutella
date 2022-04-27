@@ -16,7 +16,6 @@ import {
   getEachReports,
   getHeader,
   searchUser,
-  UserProjects,
   UserReports,
   ProjectType,
 } from "../utils/api/User";
@@ -32,7 +31,10 @@ export const useUserProjects = (userUuid: string, initPage: number) =>
     async ({ pageParam = initPage }) => {
       const data = await getUserProjects(userUuid, pageParam);
 
-      const d: Page<UserProjects> = { page: pageParam, data: data.data };
+      const d: Page<List<ProjectType>> = {
+        page: pageParam,
+        data: { list: data.data.projects, count: data.data.count },
+      };
 
       return d;
     },

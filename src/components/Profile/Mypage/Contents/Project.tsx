@@ -19,44 +19,8 @@ const Project = () => {
   const initPage = 1;
   const { data, isError, isLoading, isFetching, fetchNextPage, isFetchingNextPage } =
     useMyProjects(initPage);
-
   const { prevPage, count, list } = usePagination(data, initPage);
-
-  // const prevPage: number = useMemo(() => {
-  //   if (
-  //     !data ||
-  //     data.pageParams.length <= 0 ||
-  //     data.pageParams[data.pageParams.length - 1] === undefined
-  //   ) {
-  //     return initPage;
-  //   }
-
-  //   return Number(data.pageParams[data.pageParams.length - 1]);
-  // }, [data]);
-
   const [page, setPage] = useState<number>(prevPage);
-
-  // const list = useMemo(() => {
-  //   if (!data) {
-  //     return undefined;
-  //   }
-
-  //   const l: ProjectType[] = [];
-
-  //   data.pages.forEach((value) => {
-  //     l.push(...value.data.projects);
-  //   });
-
-  //   return l;
-  // }, [data]);
-
-  // const count = useMemo(() => {
-  //   if (!data || data.pages.length <= 0) {
-  //     return undefined;
-  //   }
-
-  //   return data.pages[0].data.count;
-  // }, [data]);
 
   const onNextPage = useCallback(() => {
     if (!count) {
