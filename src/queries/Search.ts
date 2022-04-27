@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useInfiniteQuery } from "react-query";
 import queryKeys from "../constant/QueryKeys";
 import Page from "../interface/Page";
@@ -23,10 +24,10 @@ export const useSearch = (keyword: string, initPage: number) => {
   );
 };
 
-export const useSearchEach = (keyword: string, by: SearchBy) => {
+export const useSearchEach = (keyword: string, by: SearchBy, initPage: number) => {
   return useInfiniteQuery(
     [queryKeys.searchEach, keyword, by],
-    async ({ pageParam = 1 }) => {
+    async ({ pageParam = initPage + 1 }) => {
       const { data } = await getSearchEach(keyword, pageParam, by);
 
       const p: Page<SearchList> = {
@@ -36,6 +37,6 @@ export const useSearchEach = (keyword: string, by: SearchBy) => {
 
       return p;
     },
-    { getNextPageParam: (last) => last.page + 1, enabled: false }
+    { getNextPageParam: (last) => last.page + 1, keepPreviousData: true, enabled: false }
   );
 };

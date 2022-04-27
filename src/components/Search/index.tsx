@@ -20,14 +20,14 @@ const Search = () => {
     isFetchingNextPage: projectIsFetchingNextPage,
     fetchNextPage: projectFetchNextPage,
     isFetching: projectIsFetching,
-  } = useSearchEach(searchWord, "projectName");
+  } = useSearchEach(searchWord, "projectName", initPage);
 
   const {
     data: memberData,
     isFetchingNextPage: memberIsFetchingNextPage,
     fetchNextPage: memberFetchNextPage,
     isFetching: memberIsFetching,
-  } = useSearchEach(searchWord, "memberName");
+  } = useSearchEach(searchWord, "memberName", initPage);
 
   const projectPrevPage: number = useMemo(() => {
     if (
