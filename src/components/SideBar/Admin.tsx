@@ -14,7 +14,7 @@ const AdminSideBar: FC<PropsType> = ({ navs }) => {
   return (
     <S.Container>
       <S.InfoContainer>
-        <S.ProfileImage isProfile src={data?.data.emoji} />
+        <S.ProfileImage isProfile emoji={data?.data.emoji} />
         <S.TextContainer>
           {isLoading && <S.Name>로딩 중...</S.Name>}
           {isError && <S.Name>오류 발생</S.Name>}
