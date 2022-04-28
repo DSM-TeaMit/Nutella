@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const SubmitContentContainer = styled.div`
   width: 859px;
-  height: 447px;
+  height: fit-content;
   margin: 80px 0 28px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray2}; ;
 `;
@@ -63,7 +63,8 @@ export const SubmitLinkBox = styled.div`
 `;
 
 export const GrayBox = styled(SubmitLinkBox)<{ check: boolean }>`
-  background-color: ${({ theme, check }) => (check ? theme.colors.grayscale.lightGray1 : null)};
+  background-color: ${({ theme, check }) =>
+    check ? theme.colors.grayscale.lightGray1 : null};
 `;
 
 export const SubTitle = styled.div`
