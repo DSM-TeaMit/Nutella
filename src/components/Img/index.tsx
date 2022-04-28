@@ -61,11 +61,7 @@ const Img: FC<PropsType> = (props) => {
     [emoji]
   );
 
-  if (isProfile) {
-    return <img {...rest} src={src} crossOrigin="anonymous" alt={undefined} />;
-  }
-
-  if (!src) {
+  if (!src || src === "") {
     if (emoji) {
       return (
         <img
@@ -77,6 +73,10 @@ const Img: FC<PropsType> = (props) => {
     }
 
     return <img {...rest} />;
+  }
+
+  if (isProfile) {
+    return <img {...rest} src={src} crossOrigin="anonymous" alt={undefined} />;
   }
 
   if (isLoading) {
