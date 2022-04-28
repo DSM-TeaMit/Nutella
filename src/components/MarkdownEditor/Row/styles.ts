@@ -2,7 +2,6 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const RowContainer = styled.div<{ margin: string }>`
-  margin: 8px 0px 0px;
   margin-left: ${({ margin }) => margin};
   position: relative;
 
