@@ -31,8 +31,14 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
   const onSubmitEnter = useCallback(
     (e: React.KeyboardEvent) => {
       if (!e.shiftKey && e.key === "Enter") {
+        e.preventDefault();
+        e.stopPropagation();
         setInput("");
-        commentMutation.mutate({ content: input, type: source });
+        toast.promise(commentMutation.mutateAsync({ content: input, type: source }), {
+          loading: "댓글 작성중...",
+          error: "댓굴 작성 실패",
+          success: "댓글 작성 완료",
+        });
       }
     },
     [commentMutation, input, source]
@@ -52,7 +58,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
       return "정보 오류 발생";
     }
 
-    if(data?.data.type === "admin"){
+    if (data?.data.type === "admin") {
       return `${data?.data.name} 선생님(으)로 댓글 달기`;
     }
 
@@ -75,6 +81,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
         onChange={onChange}
         value={input}
         onKeyPress={(e) => onSubmitEnter(e)}
+        maxLength={200}
       />
       <BlueButton disabled={input.length === 0} onClick={onSubmitClick}>
         댓글 달기
