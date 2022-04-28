@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 export const ProjectModifyModalContainer = styled.div`
   border-radius: 10px;
   padding: 24px 32px;
+  max-width: 550px;
   background-color: ${({ theme }) => theme.colors.grayscale.white};
 `;
 
@@ -20,8 +21,10 @@ export const Content = styled.div`
     min-height: 115px;
   }
   margin-bottom: 20px;
-  width: 483px;
-  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  width: 100%;
   textarea {
     outline: none;
     resize: none;
@@ -38,29 +41,6 @@ export const Content = styled.div`
 export const SubTitle = styled.div`
   font: ${({ theme }) => theme.fonts.description};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
-`;
-
-export const FiedBox = styled.div`
-  display: flex;
-  margin-bottom: 2px;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
-`;
-
-export const TagBox = styled.div`
-  height: 32px;
-  display: flex;
-`;
-
-export const Tag = styled.div`
-  padding: 2px 4px;
-  width: fit-content;
-  border-radius: 5px;
-  margin-right: 4px;
-  margin-top: 2px;
-  height: 30px;
-  font: ${({ theme }) => theme.fonts.body3};
-  background: ${({ theme }) => theme.colors.primary.default};
-  color: ${({ theme }) => theme.colors.grayscale.white};
 `;
 
 export const BtnBox = styled.div`

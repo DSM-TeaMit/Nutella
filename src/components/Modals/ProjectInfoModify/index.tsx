@@ -5,7 +5,7 @@ import Input from "../../Input";
 import useTagInput from "../../../hooks/useTagInput";
 import { BlueButton, RedButton, BorderButton } from "../../Buttons";
 import ModalPortal from "../../ModalPortal";
-import TagInput from "../../TagInput";
+import TagInput, { Tag } from "../../TagInput";
 import ProjectDeleteModal from "../ProjectDelete";
 import * as S from "./styles";
 import TextareaAutosize from "react-textarea-autosize";
@@ -15,6 +15,7 @@ import { useModifyProjectInfo } from "../../../queries/Project";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import queryKeys from "../../../constant/QueryKeys";
+import uniqueId from "../../../constant/UniqueId";
 
 interface PropsType {
   onDeleteProject: () => void;
@@ -23,15 +24,20 @@ interface PropsType {
 const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
   const { closeCurrentModal } = useModalContext();
   const modalRef = useModalRef();
-  const [inputProps] = useTagInput("", [], true);
   const { uuid } = useParams<{ uuid: string }>();
   const { data } = useProjectDetails(uuid || "");
+  const field = data?.data.projectField.split(",").map((item: string) => {
+    const t: Tag = {
+      id: uniqueId(),
+      value: item,
+    };
+    return t;
+  });
+  const [fieldProps, [fieldTags]] = useTagInput("", [...(field || [])], true);
   const [projectName, setProjectName] = useState(data?.data.projectName || "");
   const [projectInfo, setProjectInfo] = useState(
     data?.data.projectResult || ""
   );
-  const [field, setField] = useState("");
-  //const modifyProjectInfoMutation = useModifyProjectInfo();
   const projectInfoMutation = useModifyProjectInfo(uuid || "");
   const queryClient = useQueryClient();
 
@@ -40,7 +46,7 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
       projectInfoMutation.mutateAsync({
         name: projectName,
         description: projectInfo,
-        field: field,
+        field: fieldTags.map((data) => data.value).join(","),
       }),
       {
         loading: "프로젝트 정보 수정 중",
@@ -49,6 +55,7 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
       }
     );
     queryClient.invalidateQueries([queryKeys.projects, uuid || ""]);
+    closeCurrentModal();
   };
 
   return (
@@ -80,14 +87,7 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
           </S.Content>
           <S.Content>
             <S.SubTitle>프로젝트 분야</S.SubTitle>
-            <S.FiedBox>
-              <S.TagBox>
-                {data?.data.projectField.split(",").map((item, index) => {
-                  return <S.Tag>{item}</S.Tag>;
-                })}
-              </S.TagBox>
-              <TagInput {...inputProps} placeholder="분야를 입력해 주세요." />
-            </S.FiedBox>
+            <TagInput {...fieldProps} placeholder="분야를 입력해 주세요." />
           </S.Content>
         </S.ContentBox>
         <S.BtnBox>

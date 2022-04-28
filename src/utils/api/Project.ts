@@ -65,7 +65,8 @@ export interface Member {
   role: string;
 }
 export interface ProjectMember {
-  member: Member[];
+  role: string;
+  members: Member[];
 }
 
 export const modifyProjectMember = async (

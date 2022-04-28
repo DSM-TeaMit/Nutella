@@ -1,95 +1,46 @@
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import useTagInput from "../../../hooks/useTagInput";
+import uniqueId from "../../../constant/UniqueId";
 import { useModifyProjectMember } from "../../../queries/Project";
 import { useProjectDetails } from "../../../queries/ProjectDetails";
 import { SearchedUser } from "../../../utils/api/User";
-import Input from "../../Input";
 import MemberInput from "../../MemberInput";
-import TagInput from "../../TagInput";
 import { UserWithRole } from "../ProejctAdd";
+import MemberWithRole from "./Member";
 import * as S from "./styles";
 
 const ProjectMemberModifyModal = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const { data } = useProjectDetails(uuid || "");
-  const [members, setMembers] = useState<(SearchedUser & UserWithRole)[]>([]);
+  const m = useMemo<(SearchedUser & UserWithRole)[]>(
+    () =>
+      data?.data.members.map((value) => ({
+        ...value,
+        tags: value.role.split(",").map((value) => ({ id: uniqueId(), value })),
+      })) || [],
+    [data]
+  );
+  const [members, setMembers] = useState<(SearchedUser & UserWithRole)[]>(m);
   const projectMemberMutation = useModifyProjectMember(uuid || "");
-  const [inputProps, [tags]] = useTagInput("", []);
-
-  /* const onChangeMember = async () => {
-    await toast.promise(
-      projectMemberMutation.mutateAsync({
-        uuid: string,
-        role: string,
-      }),
-      {
-        loading: "멤버 수정 중...",
-        error: "멤버 수정 실패",
-        success: "멤버 수정 성공",
-      }
-    );
-  }; */
-  console.log(data?.data.members);
+  const [my, ...others] = members;
 
   return (
     <S.ProjectMemberModifyModalContainer>
       <S.Title>멤버</S.Title>
       <S.ContentBox>
         <S.MemberBox>
-          {data?.data.members.slice(0, 1).map((item, index) => {
-            return (
-              <>
-                <S.MemberProfile>
-                  <S.User>
-                    <img src={item.thumbnailUrl} />
-                    <span key={index}>{item.studentNo} </span>
-                    <span key={index}>{item.name}</span>
-                  </S.User>
-                  {Number(data?.data.members.length) < 2 ? null : (
-                    <span>삭제</span>
-                  )}
-                </S.MemberProfile>
-                <S.RollBox>
-                  <S.TagBox>
-                    {item.role.split(",").map((data, index) => {
-                      return <S.Tag key={index}>{data}</S.Tag>;
-                    })}
-                  </S.TagBox>
-                  <TagInput
-                    placeholder="공백으로 분야를 구분할 수 있습니다..."
-                    {...inputProps}
-                  />
-                </S.RollBox>
-              </>
-            );
-          })}
+          <MemberWithRole data={my} />
         </S.MemberBox>
-        {Number(data?.data.members.length) < 2 ? null : (
-          <>
-            <MemberInput
-              onUserClick={(user) =>
-                setMembers((prev) => [...prev, { ...user, tags: [] }])
-              }
-            />
-            <S.MemberBox>
-              <S.MemberProfile>
-                <S.User>
-                  <img src=""></img>
-                  <span>2107 김해교</span>
-                </S.User>
-                <span>삭제</span>
-              </S.MemberProfile>
-              <S.RollBox>
-                <S.TagBox>
-                  <S.Tag>프론트 엔드</S.Tag>
-                </S.TagBox>
-                <Input placeholder="역할 입력..." />
-              </S.RollBox>
-            </S.MemberBox>
-          </>
+        {data?.data.projectType !== "PERS" && (
+          <MemberInput
+            onUserClick={(user) => setMembers((prev) => [...prev, { ...user, tags: [] }])}
+          />
         )}
+        <S.MemberContent>
+          {others.map((value) => (
+            <MemberWithRole data={value} key={value.uuid} />
+          ))}
+        </S.MemberContent>
       </S.ContentBox>
     </S.ProjectMemberModifyModalContainer>
   );
