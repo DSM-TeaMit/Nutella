@@ -64,11 +64,7 @@ const Img: FC<PropsType> = (props) => {
   if (!src || src === "") {
     if (emoji) {
       return (
-        <img
-          {...rest}
-          alt={undefined}
-          src={`https://twitter.github.io/twemoji/v/13.1.0/svg/${unicode}.svg`}
-        />
+        <img {...rest} alt={undefined} src={`https://twemoji.maxcdn.com/svg/${unicode}.svg`} />
       );
     }
 
