@@ -1,4 +1,5 @@
 import Uri from "../../constant/Uri";
+import { ProjectStatus } from "../../interface";
 import ProjectTypes from "../../interface/ProjectTypes";
 import RequestorType from "../../interface/RequestorType";
 import request from "../axios";
@@ -19,7 +20,7 @@ export interface Project {
   projectView: string;
   projectType: ProjectTypes;
   projectField: string;
-  projectStatus: string;
+  projectStatus: ProjectStatus;
   projectResult: string;
   thumbnailUrl: string;
   emoji?: string;
@@ -36,8 +37,5 @@ export const getProject = async (projectUuid: string) => {
 export const uploadImg = async (projectUuid: string, image: File) => {
   const formData = new FormData();
   formData.append("image", image);
-  return await request.post(
-    Uri.uploadingThumbnails.get({ projectUuid }),
-    formData
-  );
+  return await request.post(Uri.uploadingThumbnails.get({ projectUuid }), formData);
 };

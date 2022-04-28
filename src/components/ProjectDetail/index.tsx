@@ -33,23 +33,21 @@ const ProjectDetail = () => {
 
   return (
     <>
-      {data && (
+      {data ? (
         <S.Container>
           <S.ProjectDetailContent>
             <S.DetailContent>
               <Top data={data.data} />
               <SubmitContent data={data.data} />
-              <CommentContainer
-                styleType="project"
-                source="project"
-                uuid={uuid || ""}
-              />
+              <CommentContainer styleType="project" source="project" uuid={uuid || ""} />
             </S.DetailContent>
             <S.SideContent>
               <Aside data={data.data.members} />
             </S.SideContent>
           </S.ProjectDetailContent>
         </S.Container>
+      ) : (
+        <ProjectDetailSkeleton />
       )}
     </>
   );

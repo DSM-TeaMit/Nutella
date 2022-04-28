@@ -57,9 +57,13 @@ export const ProjectRincian = styled.div`
   }
 `;
 
+export const Icon = styled.img`
+  filter: ${({ theme }) => theme.filters.grayscale.gray2};
+`;
+
 export const Font = styled.span`
   font: ${({ theme }) => theme.fonts.body3};
-  color: ${({ theme }) => theme.colors.grayscale.gray1};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
   margin-right: 16px;
 `;
 
@@ -92,7 +96,7 @@ export const Field = styled.div`
   border-radius: 100px;
   width: fit-content;
   height: 26px;
-  padding: 1px 16px;
+  padding: 1px 12px;
   text-align: center;
   align-items: center;
   margin-right: 12px;
