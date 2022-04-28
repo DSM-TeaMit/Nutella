@@ -95,14 +95,14 @@ const SubmitContent: FC<PropsType> = ({ data }) => {
           </S.SubmitBox>
         </S.ProjectFile>
       </S.SubmitContent>
-      <S.ResultContent>
+      {/* <S.ResultContent>
         <div>
           <S.SubTitle>프로젝트 결과</S.SubTitle>
           <S.Box>
             <S.ResFont>프로젝트를 완료하고 작성할 수 있습니다.</S.ResFont>
           </S.Box>
         </div>
-      </S.ResultContent>
+      </S.ResultContent> */}
     </S.SubmitContentContainer>
   );
 };
