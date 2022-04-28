@@ -203,15 +203,27 @@ const Result = () => {
         {!cantEdit && <ContentExample />}
         {result?.content.map((value) => (
           <S.ContentContainer key={`page_${value.id}`}>
-            <S.Delete className="delete" onClick={onDeletePage(value.id)}>
-              삭제
-            </S.Delete>
+            {cantEdit && (
+              <S.Delete className="delete" onClick={onDeletePage(value.id)}>
+                삭제
+              </S.Delete>
+            )}
             <MarkdownEditor disabled={cantEdit} rows={value.value} setRows={setRows(value.id)} />
           </S.ContentContainer>
         ))}
-        <S.AddButton onClick={onAddPageClick}>+</S.AddButton>
+        {result &&
+          result.requestorType === "USER_EDITABLE" &&
+          (["NOT_SUBMITTED", "REJECTED"] as ReportStatus[]).includes(result.status) && (
+            <S.AddButton onClick={onAddPageClick}>+</S.AddButton>
+          )}
         <div>
-          <SubmitResult projectUuid={projectUuid} projectName={result?.projectName || ""} />
+          {result && (
+            <SubmitResult
+              requestorType={result.requestorType}
+              projectUuid={projectUuid}
+              projectName={result.projectName}
+            />
+          )}
           <S.Buttons>
             {result && (
               <S.Status status={result.status}>{reportStatusMessage.get(result.status)}</S.Status>

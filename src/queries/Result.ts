@@ -88,4 +88,6 @@ export const useFileMutation = (projectUuid: string) => {
 };
 
 export const useFileExists = (projectUuid: string) =>
-  useQuery([queryKeys.file, projectUuid], () => getFileExists(projectUuid));
+  useQuery([queryKeys.file, projectUuid], () => getFileExists(projectUuid), {
+    keepPreviousData: true,
+  });
