@@ -1,10 +1,10 @@
 import { useInfiniteQuery } from "react-query";
-import { getFeed, Project } from "../utils/api/Feed";
+import { getFeed, Order, Project } from "../utils/api/Feed";
 import queryKeys from "../constant/QueryKeys";
 import Page from "../interface/Page";
 import { List } from "../hooks/usePagination";
 
-export const useFeed = (order: string, initPage: number) => {
+export const useFeed = (order: Order, initPage: number) => {
   return useInfiniteQuery(
     [queryKeys.feed, order],
     async ({ pageParam = initPage }) => {

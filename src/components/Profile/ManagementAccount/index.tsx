@@ -124,12 +124,14 @@ const ManagementAccount = () => {
                       <Account data={value} key={value.uuid} />
                     ))}
                     {isFetchingNextPage && skeleton}
-                    {count === 0 && <I.Message>생성한 계정이 없습니다.</I.Message>}
+                    {count === 0 && <I.Message>생성된 계정이 없습니다.</I.Message>}
                   </S.Container>
-                  {!isFetching && count && isMore(LIMIT, page, count) && (
+                  {!isFetching && count && isMore(LIMIT, page, count) ? (
                     <S.MoreContainer>
                       <S.More onClick={onMore}>더 가져오기</S.More>
                     </S.MoreContainer>
+                  ) : (
+                    <></>
                   )}
                 </div>
               </I.FlexContainer>

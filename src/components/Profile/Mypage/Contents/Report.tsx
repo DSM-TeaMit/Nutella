@@ -3,9 +3,9 @@ import * as I from "../..//styles";
 import { useMyReports } from "../../../../queries/User";
 import { useEffect, useMemo } from "react";
 import Error from "../../Error";
-import Loading from "../../Loading";
 import toast from "react-hot-toast";
 import { UserReports } from "../../../../utils/api/User";
+import ReportListSkleton from "../../Skeletons/ReportSkeleton";
 
 const Report = () => {
   const initPage = 1;
@@ -40,7 +40,7 @@ const Report = () => {
   }, [isError]);
 
   if (isLoading) {
-    return <Loading />;
+    return <ReportListSkleton />;
   }
 
   if (isError) {

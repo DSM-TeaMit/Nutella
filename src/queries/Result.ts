@@ -57,7 +57,7 @@ export const useSubmitResultMutation = (projectUuid: string) => {
   const queryClient = useQueryClient();
 
   const onSuccess = useCallback(() => {
-    queryClient.invalidateQueries(queryKeys.result);
+    queryClient.invalidateQueries([queryKeys.result]);
   }, [queryClient]);
 
   return useMutation(
@@ -88,4 +88,6 @@ export const useFileMutation = (projectUuid: string) => {
 };
 
 export const useFileExists = (projectUuid: string) =>
-  useQuery([queryKeys.file, projectUuid], () => getFileExists(projectUuid));
+  useQuery([queryKeys.file, projectUuid], () => getFileExists(projectUuid), {
+    keepPreviousData: true,
+  });

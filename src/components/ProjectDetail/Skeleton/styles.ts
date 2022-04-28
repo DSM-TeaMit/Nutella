@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const Container = styled.div`
   min-height: 600px;
-  margin-top: 130px;
+  margin-top: 120px;
   margin-bottom: 200px;
 `;
 
@@ -26,5 +26,5 @@ export const SideContent = styled.div`
   height: 669px;
   margin-left: 20px;
   position: sticky;
-  top: 0;
+  top: 120px;
 `;

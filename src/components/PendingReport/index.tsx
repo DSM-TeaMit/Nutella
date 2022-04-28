@@ -25,11 +25,11 @@ const PendingReport = () => {
       return;
     }
 
-    if (isMore(LIMIT, page, count)) {
+    if (isMore(LIMIT, page, count) && !(isLoading || isError || isFetching)) {
       setPage((prev) => prev + 1);
       fetchNextPage();
     }
-  }, [count, page, fetchNextPage]);
+  }, [count, page, isLoading, isError, isFetching, fetchNextPage]);
 
   const ref = useInfiniteScroll<HTMLDivElement>(onNextPage, !(isLoading || isError || isFetching));
 
