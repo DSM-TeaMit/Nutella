@@ -25,7 +25,7 @@ const FeedList: FC<PropsType> = ({ queryData, initPage }) => {
       return;
     }
 
-    if (isMore(LIMIT, page, count)) {
+    if (isMore(LIMIT, page, count) && !(isLoading || isError || isFetching)) {
       setPage((prev) => prev + 1);
       fetchNextPage();
     }
