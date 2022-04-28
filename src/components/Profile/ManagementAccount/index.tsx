@@ -4,11 +4,11 @@ import * as S from "./styles";
 import { SettingIcons } from "../../../assets/icons";
 import AdminSideBar from "../../SideBar/Admin";
 import Account from "./Account";
-import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ModalPortal from "../../ModalPortal";
 import AddAdminAccountModal from "../../Modals/AddAdminAccount";
 import useModalRef from "../../../hooks/useModalRef";
-import { useCreatedAccount } from "../../../queries/Admin";
+import { useCreatedAccount, useMigrationUser } from "../../../queries/Admin";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -33,6 +33,8 @@ const ManagementAccount = () => {
   const { count, list, prevPage } = usePagination(data, initPage);
   const [page, setPage] = useState(prevPage);
   const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const migrate = useMigrationUser();
 
   const onAddClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -63,6 +65,25 @@ const ManagementAccount = () => {
     }
   }, [isError, error, navigate]);
 
+  const onStudentFileChange = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { files } = e.target;
+
+      if (!files || !files[0]) {
+        return;
+      }
+
+      const file = files[0];
+
+      await toast.promise(migrate.mutateAsync(file), {
+        error: "학생 계정 파일 업로드 실패",
+        loading: "학생 계정 파일 업로드 중...",
+        success: "학생 계정 파일 업로드 성공",
+      });
+    },
+    [migrate]
+  );
+
   if (isError) {
     return (
       <I.Error>
@@ -90,7 +111,12 @@ const ManagementAccount = () => {
                 <div>
                   <S.TitleContainer>
                     <S.Title>계정 관리</S.Title>
-                    <S.AddAccount onClick={onAddClick}>+ 선생님 계정 추가</S.AddAccount>
+                    <S.Buttons>
+                      <S.AddAccount onClick={() => inputRef.current?.click()}>
+                        학생 계정 파일 업로드
+                      </S.AddAccount>
+                      <S.AddAccount onClick={onAddClick}>+ 선생님 계정 추가</S.AddAccount>
+                    </S.Buttons>
                   </S.TitleContainer>
                   <S.Container>
                     {isLoading && skeleton}
@@ -98,12 +124,14 @@ const ManagementAccount = () => {
                       <Account data={value} key={value.uuid} />
                     ))}
                     {isFetchingNextPage && skeleton}
-                    {count === 0 && <I.Message>생성한 계정이 없습니다.</I.Message>}
+                    {count === 0 && <I.Message>생성된 계정이 없습니다.</I.Message>}
                   </S.Container>
-                  {!isFetching && count && isMore(LIMIT, page, count) && (
+                  {!isFetching && count && isMore(LIMIT, page, count) ? (
                     <S.MoreContainer>
                       <S.More onClick={onMore}>더 가져오기</S.More>
                     </S.MoreContainer>
+                  ) : (
+                    <></>
                   )}
                 </div>
               </I.FlexContainer>
@@ -111,6 +139,14 @@ const ManagementAccount = () => {
           </I.ContentContainer>
         </I.Inner>
       </I.Container>
+      <input
+        style={{ display: "none" }}
+        type="file"
+        onClick={(e) => e.stopPropagation()}
+        onChange={onStudentFileChange}
+        ref={inputRef}
+        accept=".xlsx"
+      />
       <ModalPortal ref={modalRef}>
         <AddAdminAccountModal />
       </ModalPortal>

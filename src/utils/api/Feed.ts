@@ -1,3 +1,4 @@
+import LIMIT from "../../constant/Limit";
 import Uri from "../../constant/Uri";
 import { ProjectTypes } from "../../interface";
 import request from "../axios";
@@ -16,11 +17,13 @@ export interface Feed {
   projects: Project[];
 }
 
-export const getFeed = async (order: string, page: number) => {
+export type Order = "popularity" | "recently";
+
+export const getFeed = async (order: Order, page: number) => {
   const params = {
     order: order,
     page: page,
-    limit: 12,
+    limit: LIMIT,
   };
 
   return await request.get<Feed>(Uri.projectList.get(), { params });

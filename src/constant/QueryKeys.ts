@@ -14,6 +14,8 @@ const queryKeys = {
   accounts: "accounts",
   header: "header",
   feed: "feed",
+  popularity: "popularity",
+  recently: "recently",
   search: "search",
   searchEach: "search_each",
   file: "file",

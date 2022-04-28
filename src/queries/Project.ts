@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
+import queryKeys from "../constant/QueryKeys";
 import { ProjectTypes } from "../interface";
 import {
   confirmProjectReport,
@@ -19,15 +20,16 @@ export const useConfirmReport = (projectUuid: string, type: ConfirmType) => {
   const queryClient = useQueryClient();
 
   const onSuccess = useCallback(() => {
-    queryClient.invalidateQueries(projectUuid);
-  }, [projectUuid, queryClient]);
+    queryClient.invalidateQueries([queryKeys.planDetail]);
+    queryClient.invalidateQueries([queryKeys.result]);
+  }, [queryClient]);
 
   return useMutation(
     (value: ConfirmValue) =>
       toast.promise(confirmProjectReport(projectUuid, type, value), {
-        success: "승인 성공",
-        error: "승인 중 오류 발생",
-        loading: "승인 중...",
+        success: `${value === "approval" ? "승인" : "거절"} 성공`,
+        error: `${value === "approval" ? "승인" : "거절"} 실패`,
+        loading: `${value === "approval" ? "승인" : "거절"} 중...`,
       }),
     { onSuccess }
   );
@@ -43,28 +45,19 @@ interface CreateProject {
 
 export const useCreateProject = () =>
   useMutation((data: CreateProject) =>
-    toast.promise(
-      createProject(data.name, data.field, data.type, data.members, data.role),
-      {
-        error: "프로젝트 생성 중 오류 발생",
-        loading: "프로젝트 생성 중",
-        success: "프로젝트 생성 성공",
-      }
-    )
+    toast.promise(createProject(data.name, data.field, data.type, data.members, data.role), {
+      error: "프로젝트 생성 중 오류 발생",
+      loading: "프로젝트 생성 중",
+      success: "프로젝트 생성 성공",
+    })
   );
 
 export const useModifyProjectInfo = (projectUuid: string) => {
-  return useMutation(
-    (data: ProjectInfo) => modifyProjectInfo(projectUuid, data),
-    {}
-  );
+  return useMutation((data: ProjectInfo) => modifyProjectInfo(projectUuid, data), {});
 };
 
 export const useModifyProjectMember = (projectUuid: string) => {
-  return useMutation(
-    (data: ProjectMember) => modifyProjectMember(projectUuid, data),
-    {}
-  );
+  return useMutation((data: ProjectMember) => modifyProjectMember(projectUuid, data), {});
 };
 
 export const useDeleteProject = (projectUuid: string) => {

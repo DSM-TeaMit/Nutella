@@ -67,3 +67,9 @@ export const AddFile = styled.button`
     color: ${({ theme }) => theme.colors.grayscale.gray2};
   }
 `;
+
+export const Message = styled.div`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.gray2};
+  margin-top: 12px;
+`;

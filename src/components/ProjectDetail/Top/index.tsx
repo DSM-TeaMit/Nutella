@@ -1,12 +1,7 @@
 import * as S from "./styles";
-import {
-  ClubIcons,
-  PersonalIcons,
-  TeamIcons,
-  ViewIcons,
-} from "../../../assets/icons";
+import { ClubIcons, PersonalIcons, TeamIcons, ViewIcons } from "../../../assets/icons";
 import ProjectModifyModal from "../../Modals/ProjectInfoModify";
-import { FC, Fragment, Key, useEffect, useCallback } from "react";
+import { FC, Fragment, useEffect, useCallback } from "react";
 import ModalPortal from "../../ModalPortal";
 import useModalRef from "../../../hooks/useModalRef";
 import { Project } from "../../../utils/api/ProjectDetails";
@@ -15,11 +10,10 @@ import { useUploadThumbnail } from "../../../queries/ProjectDetails";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import queryKeys from "../../../constant/QueryKeys";
-import { useRef } from "react";
 import ProjectDeleteModal from "../../Modals/ProjectDelete";
 
 interface PropsType {
-  data: Project | any;
+  data: Project;
 }
 
 interface ProjectStatusText {
@@ -48,7 +42,7 @@ const Top: FC<PropsType> = ({ data }) => {
       text: "팀 프로젝트",
     });
 
-  const projectTypeData = projectType.get(data?.projectType);
+  const projectTypeData = projectType.get(data.projectType);
 
   const projectStatus = new Map<ProjectStatus, ProjectStatusText>()
     .set("PLANNING", {
@@ -67,7 +61,7 @@ const Top: FC<PropsType> = ({ data }) => {
       text: "완성된 프로젝트입니다.",
     });
 
-  const projectStatusData = projectStatus.get(data?.projectStatus);
+  const projectStatusData = projectStatus.get(data.projectStatus);
   const queryClient = useQueryClient();
 
   const upload = useUploadThumbnail(data?.uuid || "");
@@ -90,15 +84,8 @@ const Top: FC<PropsType> = ({ data }) => {
     <Fragment>
       <S.TopContainer>
         <S.TopContent>
-          <S.ProjectImgBox
-            htmlFor="projectImg"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <S.ProjectImg
-              alt="프로젝트 이미지"
-              src={data?.thumbnailUrl}
-              emoji={data?.emoji}
-            />
+          <S.ProjectImgBox htmlFor="projectImg" onClick={(e) => e.stopPropagation()}>
+            <S.ProjectImg alt="프로젝트 이미지" src={data?.thumbnailUrl} emoji={data?.emoji} />
           </S.ProjectImgBox>
           <input
             onClick={(e) => e.stopPropagation()}
@@ -114,9 +101,9 @@ const Top: FC<PropsType> = ({ data }) => {
               <S.ProjectName>{data?.projectName}</S.ProjectName>
               <S.ProjectRincian>
                 <div>
-                  <img src={ViewIcons} />
-                  <S.Font>{data?.projectView}</S.Font>
-                  <img alt="프로젝트 아이콘" src={projectTypeData?.icon} />
+                  <S.Icon src={ViewIcons} />
+                  <S.Font>{data.projectView}</S.Font>
+                  <S.Icon alt="프로젝트 아이콘" src={projectTypeData?.icon} />
                   <S.Font>{projectTypeData?.text}</S.Font>
                 </div>
                 <S.Modify
@@ -130,19 +117,17 @@ const Top: FC<PropsType> = ({ data }) => {
               </S.ProjectRincian>
             </S.ProjectTop>
             <S.ProjectContent>
-              {data?.projectDescription === null ? (
+              {data.projectDescription === null ? (
                 <div>프로젝트 소개가 없습니다.</div>
               ) : (
-                data?.projectDescription
+                data.projectDescription
               )}
             </S.ProjectContent>
             <S.ProjectBottom>
               <div>
-                {data?.projectField
-                  .split(",")
-                  .map((item: string, index: Key | null | undefined) => {
-                    return <S.Field key={index}>{item}</S.Field>;
-                  })}
+                {data.projectField.split(",").map((item, index) => (
+                  <S.Field key={index}>{item}</S.Field>
+                ))}
               </div>
               <S.Step>{projectStatusData?.text}</S.Step>
             </S.ProjectBottom>

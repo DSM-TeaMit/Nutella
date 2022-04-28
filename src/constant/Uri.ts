@@ -51,6 +51,7 @@ const Uri = {
   searchUser: new URI(`user/search`),
   modifyProjectMember: new URI<ProjectUuid>(`project/{${projectUuid}}/member`),
   uploadingThumbnails: new URI<ProjectUuid>(`file/{${projectUuid}}/thumbnail`),
+  migrateUser: new URI(`user/migrate`),
 } as const;
 
 export default Uri;
