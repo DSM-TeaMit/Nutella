@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, memo, useCallback, useState } from "react";
 import useThemeContext from "../../hooks/useThemeContext";
 import { CommentStyleType } from "../../interface";
 import { CommentType } from "../../utils/api/Comment";
@@ -80,4 +80,4 @@ const Comment: FC<PropsType> = ({ type, data }) => {
   );
 };
 
-export default Comment;
+export default memo(Comment);

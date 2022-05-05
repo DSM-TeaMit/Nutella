@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import useThemeContext from "../../../hooks/useThemeContext";
 import { ReportStatus } from "../../../interface";
 import { ReportType } from "../../../utils/api/User";
@@ -38,4 +38,4 @@ const ReportCard: FC<PropsType> = ({ data }) => {
   );
 };
 
-export default ReportCard;
+export default memo(ReportCard);

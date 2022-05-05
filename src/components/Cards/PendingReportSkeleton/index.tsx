@@ -1,3 +1,4 @@
+import { memo } from "react";
 import * as S from "./styles";
 
 const PendingReportSkeleton = () => {
@@ -24,4 +25,4 @@ const PendingReportSkeleton = () => {
   );
 };
 
-export default PendingReportSkeleton;
+export default memo(PendingReportSkeleton);

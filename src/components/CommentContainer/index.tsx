@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, memo, useEffect } from "react";
 import toast from "react-hot-toast";
 import { CommentSource, CommentStyleType } from "../../interface";
 import { useComment } from "../../queries/Comment";
@@ -37,4 +37,4 @@ const CommentContainer: FC<PropsType> = ({ styleType, uuid, source }) => {
   );
 };
 
-export default CommentContainer;
+export default memo(CommentContainer);

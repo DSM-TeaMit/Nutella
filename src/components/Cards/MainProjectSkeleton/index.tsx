@@ -1,3 +1,4 @@
+import { memo } from "react";
 import * as S from "./styles";
 
 const MainProjectSkeleton = () => {
@@ -23,4 +24,4 @@ const MainProjectSkeleton = () => {
   );
 };
 
-export default MainProjectSkeleton;
+export default memo(MainProjectSkeleton);

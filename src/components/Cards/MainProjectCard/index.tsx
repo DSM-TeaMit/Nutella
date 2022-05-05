@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import { ViewIcons, PersonalIcons } from "../../../assets/icons";
 import { Project } from "../../../utils/api/Feed";
-import { FC } from "react";
+import { FC, memo } from "react";
 
 interface PropsType {
   data: Project;
@@ -30,4 +30,4 @@ const MainProjectCard: FC<PropsType> = ({ data }) => {
   );
 };
 
-export default MainProjectCard;
+export default memo(MainProjectCard);

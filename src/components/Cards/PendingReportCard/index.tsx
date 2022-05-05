@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, memo, useMemo } from "react";
 import { PendingReport } from "../../../utils/api/PendingReport";
 import * as S from "./styles";
 import { PersonalIcons, TeamIcons, ClubIcons } from "../../../assets/icons";
@@ -75,4 +75,4 @@ const PendingReportCard: FC<PropsType> = ({ data }) => {
   );
 };
 
-export default PendingReportCard;
+export default memo(PendingReportCard);

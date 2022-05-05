@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import { TeamIcons, PersonalIcons, ClubIcons } from "../../../assets/icons";
 import { ProjectType } from "../../../utils/api/User";
-import { FC, useCallback, useMemo } from "react";
+import { FC, memo, useCallback, useMemo } from "react";
 import { ProjectTypes } from "../../../interface";
 import { useNavigate } from "react-router-dom";
 
@@ -74,4 +74,4 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
   );
 };
 
-export default ProjectCard;
+export default memo(ProjectCard);
