@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 import useThemeContext from "../../hooks/useThemeContext";
 import { CommentSource, CommentStyleType } from "../../interface";
 import { useCommentMutation } from "../../queries/Comment";
@@ -25,18 +25,21 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
 
   const onChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value), []);
 
-  const onSubmitEnter = useCallback(
+  const onKeyPress = useCallback(
     (e: React.KeyboardEvent) => {
-      if (!e.shiftKey && e.key === "Enter") {
-        e.preventDefault();
-        e.stopPropagation();
-        setInput("");
-        toast.promise(commentMutation.mutateAsync({ content: input, type: source }), {
-          loading: "댓글 작성중...",
-          error: "댓굴 작성 실패",
-          success: "댓글 작성 완료",
-        });
+      if (e.shiftKey || e.key !== "Enter" || input.trim() === "") {
+        return;
       }
+
+      e.preventDefault();
+      e.stopPropagation();
+      setInput("");
+
+      toast.promise(commentMutation.mutateAsync({ content: input.trim(), type: source }), {
+        loading: "댓글 작성중...",
+        error: "댓굴 작성 실패",
+        success: "댓글 작성 완료",
+      });
     },
     [commentMutation, input, source]
   );
@@ -77,7 +80,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
         placeholder={placeholder}
         onChange={onChange}
         value={input}
-        onKeyPress={(e) => onSubmitEnter(e)}
+        onKeyPress={onKeyPress}
         maxLength={200}
       />
       <BlueButton disabled={input.length === 0} onClick={onSubmitClick}>
@@ -87,4 +90,4 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
   );
 };
 
-export default CommentInput;
+export default memo(CommentInput);
