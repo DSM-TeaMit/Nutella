@@ -32,16 +32,7 @@ const Profile: FC<PropsType> = ({ data: queryData }) => {
     return <Error message="오류 발생. 프로필을 가져올 수 없습니다. 다시 시도해주세요." />;
   }
 
-  const {
-    name,
-    studentNo,
-    projectCount,
-    githubId,
-    pendingCount,
-    pendingReports: pendingReports,
-    projects,
-    thumbnailUrl,
-  } = data!.data;
+  const { name, studentNo, projectCount, githubId, pendingCount, pendingReports, projects, thumbnailUrl } = data!.data;
 
   return (
     <I.ContentInner>
