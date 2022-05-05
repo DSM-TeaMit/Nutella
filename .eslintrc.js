@@ -8,6 +8,9 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "react-app",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint",
+    "prettier/react",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
