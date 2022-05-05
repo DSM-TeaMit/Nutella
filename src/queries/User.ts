@@ -133,6 +133,7 @@ export const useDeleteAccount = () => useMutation(() => deleteUser());
 export const useModifyGithubId = () =>
   useMutation(({ githubId, code }: { githubId: string; code: string }) => modifyGithubId(githubId, code));
 
-export const useHeader = () => useQuery([queryKeys.header], () => getHeader());
+export const useHeader = () =>
+  useQuery([queryKeys.header], () => getHeader(), { keepPreviousData: true, refetchOnWindowFocus: false });
 
 export const useSeachUser = () => useMutation((name: string) => searchUser(name));
