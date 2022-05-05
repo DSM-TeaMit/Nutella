@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import useInput from "../../../hooks/useInput";
 import * as S from "./styles";
@@ -33,4 +33,4 @@ const SearchInput = () => {
   );
 };
 
-export default SearchInput;
+export default memo(SearchInput);

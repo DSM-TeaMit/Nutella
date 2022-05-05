@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import * as S from "./styles";
 
 const Input: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
@@ -10,4 +10,4 @@ const Input: FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {
   );
 };
 
-export default Input;
+export default memo(Input);

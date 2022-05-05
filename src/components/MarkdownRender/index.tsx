@@ -1,3 +1,4 @@
+import { memo } from "react";
 import ReactMarkdown from "react-markdown";
 import * as S from "./styles";
 
@@ -15,4 +16,4 @@ const MarkdownRender = ({ children }: PropsType) => {
   );
 };
 
-export default MarkdownRender;
+export default memo(MarkdownRender);

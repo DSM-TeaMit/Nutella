@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { Button } from "./styles";
 
 const BorderButton: FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {
   return <Button {...props} />;
 };
 
-export default BorderButton;
+export default memo(BorderButton);

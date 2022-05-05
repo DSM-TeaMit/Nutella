@@ -1,4 +1,4 @@
-import { FC, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { FC, memo, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { MarkdownContext, Row } from "../../../context/MarkdownContext";
 import * as S from "./styles";
 
@@ -60,4 +60,4 @@ const Image: FC<PropsType> = ({ item }) => {
   );
 };
 
-export default Image;
+export default memo(Image);

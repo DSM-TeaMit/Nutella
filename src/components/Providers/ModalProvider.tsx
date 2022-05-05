@@ -1,8 +1,9 @@
 import { FC, useCallback, useMemo, useState } from "react";
 import { ModalContextType, ModalContext } from "../../context/ModalContext";
 
-const ModalProvider: FC = ({ children }) => {
+const ModalProvider: FC = ({ children: childrenProp }) => {
   const [modals, setModals] = useState<string[]>([]);
+  const children = useMemo(() => childrenProp, [childrenProp]);
 
   const closeCurrentModal = useCallback(() => {
     if (modals.length <= 0) {

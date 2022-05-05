@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useContext, useImperativeHandle } from "react";
+import { forwardRef, memo, useCallback, useContext, useImperativeHandle } from "react";
 import uniqueId from "../../constant/UniqueId";
 import { MarkdownContext, Row as RowType } from "../../context/MarkdownContext";
 import MarkdownProvider from "../Providers/MarkdownProvider";
@@ -65,4 +65,4 @@ const Inner = forwardRef<MarkdownEditorRef>((_, ref) => {
 
 Inner.displayName = "Inner";
 
-export default MarkdownEditor;
+export default memo(MarkdownEditor);

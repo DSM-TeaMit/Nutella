@@ -14,8 +14,9 @@ interface PropsType {
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
 
-const MarkdownProvider: FC<PropsType> = ({ children, rows, setRows, disabled }) => {
+const MarkdownProvider: FC<PropsType> = ({ children: childrenProp, rows, setRows, disabled }) => {
   const refs = useRef<HTMLDivElement[]>([]);
+  const children = useMemo(() => childrenProp, [childrenProp]);
 
   const findIndexById = useCallback((id: string) => rows.findIndex((value) => value.id === id), [rows]);
 

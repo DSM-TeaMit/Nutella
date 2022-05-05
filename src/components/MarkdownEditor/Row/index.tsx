@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { FC, memo, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { MarkdownContext, Row as RowType } from "../../../context/MarkdownContext";
 import * as S from "./styles";
 import HandleSVG from "../../../assets/icons/handle.svg";
@@ -258,4 +258,4 @@ const Row: FC<PropsType> = ({ data }) => {
   );
 };
 
-export default Row;
+export default memo(Row);

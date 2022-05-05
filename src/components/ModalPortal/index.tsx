@@ -1,4 +1,4 @@
-import { forwardRef, Fragment, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from "react";
+import { forwardRef, Fragment, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from "react";
 import ReactDOM from "react-dom";
 import uniqueId from "../../constant/UniqueId";
 import useModalContext from "../../hooks/useModalContext";
@@ -54,4 +54,4 @@ const ModalPortal = forwardRef<ModalPoralRef, PropsType>(({ children }, ref) => 
 
 ModalPortal.displayName = "ModalPortal";
 
-export default ModalPortal;
+export default memo(ModalPortal);

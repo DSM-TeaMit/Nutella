@@ -4,7 +4,7 @@ import { ArrowIcons, DocumentEditIcons } from "../../assets/icons";
 import { Link, useNavigate } from "react-router-dom";
 import SearchInput from "./SearchInput";
 import { useHeader } from "../../queries/User";
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import useOuterClick from "../../hooks/useOuterClick";
 import storageKeys from "../../constant/StorageKeys";
 import toast from "react-hot-toast";
@@ -79,4 +79,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);
