@@ -35,10 +35,7 @@ const Signup = () => {
   }, [navigate, setInputs]);
 
   const onSubmit = useCallback(() => {
-    infoMutation.mutate(
-      { data: { studentNo: Number.parseInt(no), name: name } },
-      { onSuccess: onSubmitSuccess }
-    );
+    infoMutation.mutate({ data: { studentNo: Number.parseInt(no), name: name } }, { onSuccess: onSubmitSuccess });
   }, [infoMutation, name, no, onSubmitSuccess]);
 
   const onClickBtn = useCallback(() => {
@@ -62,27 +59,15 @@ const Signup = () => {
       <S.Title>정보입력</S.Title>
       <S.Box>
         <S.SubTitle>학번</S.SubTitle>
-        <Input
-          type="text"
-          placeholder="학번을 입력해 주세요..."
-          {...inputProps["no"]}
-        />
+        <Input type="text" placeholder="학번을 입력해 주세요..." {...inputProps["no"]} />
       </S.Box>
       <S.Box>
         <S.SubTitle>이름</S.SubTitle>
-        <Input
-          type="text"
-          placeholder="이름을 입력해 주세요..."
-          {...inputProps["name"]}
-        />
+        <Input type="text" placeholder="이름을 입력해 주세요..." {...inputProps["name"]} />
       </S.Box>
       <S.Box>
         <S.SubTitle>Github 아이디(선택)</S.SubTitle>
-        <Input
-          type="text"
-          placeholder="Github 아이디를 입력해 주세요..."
-          {...inputProps["githubId"]}
-        />
+        <Input type="text" placeholder="Github 아이디를 입력해 주세요..." {...inputProps["githubId"]} />
       </S.Box>
       <S.ClickBox>
         <Link to="/">

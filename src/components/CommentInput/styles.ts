@@ -18,8 +18,7 @@ export const Image = styled(Img)`
 `;
 
 export const Input = styled(TextareaAutosize)<{ border: number }>`
-  border: ${({ border: borderWidth }) => borderWidth}px solid
-    ${({ theme }) => theme.colors.grayscale.lightGray1};
+  border: ${({ border: borderWidth }) => borderWidth}px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
   background-color: ${({ color }) => color};
   border-radius: 10px;
   font: ${({ theme }) => theme.fonts.body3};

@@ -1,9 +1,5 @@
 import { FC, useCallback, useMemo, useRef } from "react";
-import {
-  MarkdownContext,
-  MarkdownContextType,
-  Row,
-} from "../../context/MarkdownContext";
+import { MarkdownContext, MarkdownContextType, Row } from "../../context/MarkdownContext";
 import uniqueId from "../../constant/UniqueId";
 import { Tag } from "../../interface";
 import { postImage } from "../../utils/api/Image";
@@ -18,18 +14,10 @@ interface PropsType {
 
 const isList = (type: string) => ["ul", "ol"].includes(type);
 
-const MarkdownProvider: FC<PropsType> = ({
-  children,
-  rows,
-  setRows,
-  disabled,
-}) => {
+const MarkdownProvider: FC<PropsType> = ({ children, rows, setRows, disabled }) => {
   const refs = useRef<HTMLDivElement[]>([]);
 
-  const findIndexById = useCallback(
-    (id: string) => rows.findIndex((value) => value.id === id),
-    [rows]
-  );
+  const findIndexById = useCallback((id: string) => rows.findIndex((value) => value.id === id), [rows]);
 
   const addRowAfterId = useCallback(
     (id: string) => {
@@ -56,11 +44,7 @@ const MarkdownProvider: FC<PropsType> = ({
     (id: string) => {
       const currentIndex = findIndexById(id);
       const { type: currentType } = rows[currentIndex];
-      if (
-        currentType !== "image" &&
-        (rows.length <= 1 ||
-          rows.filter((value) => value.type !== "image").length <= 1)
-      ) {
+      if (currentType !== "image" && (rows.length <= 1 || rows.filter((value) => value.type !== "image").length <= 1)) {
         return;
       }
 
@@ -228,14 +212,11 @@ const MarkdownProvider: FC<PropsType> = ({
           return;
         }
         try {
-          const { data: url } = await toast.promise(
-            postImage(files[idx], projectUuid),
-            {
-              loading: "이미지 업로드 중",
-              success: "이미지 업로드 성공",
-              error: "이미지 업로드 실패",
-            }
-          );
+          const { data: url } = await toast.promise(postImage(files[idx], projectUuid), {
+            loading: "이미지 업로드 중",
+            success: "이미지 업로드 성공",
+            error: "이미지 업로드 실패",
+          });
 
           urls.push(url);
         } catch (error) {
@@ -297,11 +278,7 @@ const MarkdownProvider: FC<PropsType> = ({
     ]
   );
 
-  return (
-    <MarkdownContext.Provider value={value}>
-      {children}
-    </MarkdownContext.Provider>
-  );
+  return <MarkdownContext.Provider value={value}>{children}</MarkdownContext.Provider>;
 };
 
 export default MarkdownProvider;

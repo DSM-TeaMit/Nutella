@@ -193,6 +193,5 @@ export const OtherLabel = styled.div`
 
 export const OtherLength = styled.div<{ length: number }>`
   font: ${({ theme }) => theme.fonts.body3};
-  color: ${({ theme, length }) =>
-    length >= 15 ? theme.colors.red.default : theme.colors.grayscale.gray2};
+  color: ${({ theme, length }) => (length >= 15 ? theme.colors.red.default : theme.colors.grayscale.gray2)};
 `;

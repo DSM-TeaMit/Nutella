@@ -56,16 +56,10 @@ const AccountDeleteModal: FC<PropsType> = ({ data }) => {
             을 입력해 주세요.
           </div>
         </S.ContentText>
-        <Input
-          {...inputProps}
-          placeholder={`${studentNo} ${name}을(를) 입력해 주세요.`}
-        />
+        <Input {...inputProps} placeholder={`${studentNo} ${name}을(를) 입력해 주세요.`} />
       </S.ContentBox>
       <S.BtnBox>
-        <RedButton
-          onClick={onDeleteClick}
-          disabled={value !== `${studentNo} ${name}`}
-        >
+        <RedButton onClick={onDeleteClick} disabled={value !== `${studentNo} ${name}`}>
           삭제
         </RedButton>
         <BorderButton onClick={closeCurrentModal}>취소</BorderButton>

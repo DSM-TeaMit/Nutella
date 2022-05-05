@@ -63,8 +63,7 @@ export const SubmitLinkBox = styled.div`
 `;
 
 export const GrayBox = styled(SubmitLinkBox)<{ check: boolean }>`
-  background-color: ${({ theme, check }) =>
-    check ? theme.colors.grayscale.lightGray1 : null};
+  background-color: ${({ theme, check }) => (check ? theme.colors.grayscale.lightGray1 : null)};
 `;
 
 export const SubTitle = styled.div`

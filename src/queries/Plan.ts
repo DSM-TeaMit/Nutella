@@ -2,16 +2,9 @@ import { useCallback } from "react";
 import toast from "react-hot-toast";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import queryKeys from "../constant/QueryKeys";
-import {
-  createPlanReport,
-  getPlanReport,
-  modifyPlanReport,
-  ParsedPlanType,
-  submitPlanReport,
-} from "../utils/api/Plan";
+import { createPlanReport, getPlanReport, modifyPlanReport, ParsedPlanType, submitPlanReport } from "../utils/api/Plan";
 
-export const useCreatePlanMutation = (projectUuid: string) =>
-  useMutation(() => createPlanReport(projectUuid));
+export const useCreatePlanMutation = (projectUuid: string) => useMutation(() => createPlanReport(projectUuid));
 
 export const usePlanMutation = (projectUuid: string) => {
   const queryClient = useQueryClient();

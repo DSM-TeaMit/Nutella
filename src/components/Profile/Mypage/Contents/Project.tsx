@@ -16,8 +16,7 @@ import usePagination from "../../../../hooks/usePagination";
 const Project = () => {
   const modalRef = useModalRef();
   const initPage = 1;
-  const { data, isError, isLoading, isFetching, fetchNextPage, isFetchingNextPage } =
-    useMyProjects(initPage);
+  const { data, isError, isLoading, isFetching, fetchNextPage, isFetchingNextPage } = useMyProjects(initPage);
   const { prevPage, count, list } = usePagination(data, initPage);
   const [page, setPage] = useState<number>(prevPage);
 

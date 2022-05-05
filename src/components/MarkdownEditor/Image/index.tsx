@@ -1,11 +1,4 @@
-import {
-  FC,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FC, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { MarkdownContext, Row } from "../../../context/MarkdownContext";
 import * as S from "./styles";
 
@@ -17,13 +10,10 @@ const Image: FC<PropsType> = ({ item }) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
   const { id } = item;
-  const { removeRowById, addRowAfterId, disabled } =
-    useContext(MarkdownContext);
+  const { removeRowById, addRowAfterId, disabled } = useContext(MarkdownContext);
 
   const onClick = useCallback((e: MouseEvent) => {
-    setIsSelected(
-      (ref.current && ref.current.contains(e.target as Node)) || false
-    );
+    setIsSelected((ref.current && ref.current.contains(e.target as Node)) || false);
   }, []);
 
   const onKeyDown = useCallback(

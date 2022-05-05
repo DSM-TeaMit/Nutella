@@ -2,13 +2,7 @@ import { StyledComponent } from "@emotion/styled";
 import React, { FC, useCallback } from "react";
 import * as S from "./styles";
 
-export type DateCellType =
-  | "middle"
-  | "selected"
-  | "disabled"
-  | "default"
-  | "start"
-  | "end";
+export type DateCellType = "middle" | "selected" | "disabled" | "default" | "start" | "end";
 
 interface PropsType {
   type: DateCellType;
@@ -20,8 +14,7 @@ const DateCell: FC<PropsType> = ({ type, children, onClick }) => {
     const rendererMap = new Map<
       DateCellType,
       StyledComponent<
-        React.ClassAttributes<HTMLButtonElement> &
-          React.HTMLAttributes<HTMLButtonElement>,
+        React.ClassAttributes<HTMLButtonElement> & React.HTMLAttributes<HTMLButtonElement>,
         Record<string, unknown>,
         Record<string, unknown>
       >
@@ -35,11 +28,7 @@ const DateCell: FC<PropsType> = ({ type, children, onClick }) => {
 
     const renderer = rendererMap.get(type)!;
 
-    return React.createElement(
-      renderer,
-      { onClick },
-      <S.DateLabel>{children}</S.DateLabel>
-    );
+    return React.createElement(renderer, { onClick }, <S.DateLabel>{children}</S.DateLabel>);
   }, [children, onClick, type]);
 
   return renderCell();

@@ -35,9 +35,7 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
   });
   const [fieldProps, [fieldTags]] = useTagInput("", [...(field || [])], true);
   const [projectName, setProjectName] = useState(data?.data.projectName || "");
-  const [projectInfo, setProjectInfo] = useState(
-    data?.data.projectResult || ""
-  );
+  const [projectInfo, setProjectInfo] = useState(data?.data.projectResult || "");
   const projectInfoMutation = useModifyProjectInfo(uuid || "");
   const queryClient = useQueryClient();
 
@@ -76,11 +74,7 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
             <TextareaAutosize
               minRows={1}
               maxRows={4}
-              placeholder={
-                data?.data.projectResult === null
-                  ? "프로젝트 소개를 작성해 주세요."
-                  : undefined
-              }
+              placeholder={data?.data.projectResult === null ? "프로젝트 소개를 작성해 주세요." : undefined}
               defaultValue={data?.data.projectResult}
               onChange={(e) => setProjectInfo(e.target.value)}
             />

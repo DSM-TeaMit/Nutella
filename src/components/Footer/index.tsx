@@ -7,11 +7,7 @@ const Footer = () => {
       <S.ContentContainer>
         <div>
           <S.Flex>
-            <S.NoDecoLink
-              href="https://github.com/DSM-TeaMit/Nutella"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <S.NoDecoLink href="https://github.com/DSM-TeaMit/Nutella" target="_blank" rel="noreferrer">
               <S.Github alt="github" src={GithubIcons} />
               Github
               <S.Arrow alt="arrow" src={ArrowBlackIcons} />
@@ -20,19 +16,13 @@ const Footer = () => {
         </div>
         <div>
           <S.Flex>
-            <S.NoDecoLink
-              href="https://github.com/DSM-TeaMit/Nutella"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <S.NoDecoLink href="https://github.com/DSM-TeaMit/Nutella" target="_blank" rel="noreferrer">
               이용약관
               <S.Arrow alt="arrow" src={ArrowBlackIcons} />
             </S.NoDecoLink>
           </S.Flex>
         </div>
-        <S.CopyRight>
-          2021 Team Teamit | Copyright ⓒ Teamit Corp. All Rights Reserved.
-        </S.CopyRight>
+        <S.CopyRight>2021 Team Teamit | Copyright ⓒ Teamit Corp. All Rights Reserved.</S.CopyRight>
       </S.ContentContainer>
     </S.Container>
   );

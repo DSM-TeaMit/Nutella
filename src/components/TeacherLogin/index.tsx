@@ -37,10 +37,7 @@ const TeacherLogin = () => {
     const { accessToken, refreshToken } = data.data;
     localStorage.setItem(storageKeys.accessToken, accessToken);
     localStorage.setItem(storageKeys.refreshToken, refreshToken);
-    localStorage.setItem(
-      storageKeys.expireAt,
-      getDateWithAddHour(24).toString()
-    );
+    localStorage.setItem(storageKeys.expireAt, getDateWithAddHour(24).toString());
     navigate("/pending-report");
   };
 
@@ -73,10 +70,7 @@ const TeacherLogin = () => {
             placeholder="비밀번호를 입력해 주세요..."
             {...inputProps["password"]}
           />
-          <img
-            src={passwordView ? EyeOnIcons : EyeOffIcons}
-            onClick={() => setPasswordView(!passwordView)}
-          />
+          <img src={passwordView ? EyeOnIcons : EyeOffIcons} onClick={() => setPasswordView(!passwordView)} />
         </S.InputBox>
       </S.Box>
       <S.ClickBox>
@@ -86,10 +80,7 @@ const TeacherLogin = () => {
             <span>학생 로그인</span>
           </S.LoginText>
         </Link>
-        <BlueButton
-          disabled={inputs.id === "" || inputs.password === ""}
-          onClick={onLogin}
-        >
+        <BlueButton disabled={inputs.id === "" || inputs.password === ""} onClick={onLogin}>
           로그인
         </BlueButton>
       </S.ClickBox>

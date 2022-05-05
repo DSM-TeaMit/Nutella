@@ -23,8 +23,7 @@ import {
 
 export const useMyProfile = () => useQuery([queryKeys.profile, queryKeys.my], () => getMyProfile());
 
-export const useUserProfile = (userUuid: string) =>
-  useQuery([queryKeys.profile, userUuid], () => getProfile(userUuid));
+export const useUserProfile = (userUuid: string) => useQuery([queryKeys.profile, userUuid], () => getProfile(userUuid));
 
 export const useUserProjects = (userUuid: string, initPage: number) =>
   useInfiniteQuery(
@@ -132,9 +131,7 @@ export const useGithubReadme = (githubId: string) =>
 export const useDeleteAccount = () => useMutation(() => deleteUser());
 
 export const useModifyGithubId = () =>
-  useMutation(({ githubId, code }: { githubId: string; code: string }) =>
-    modifyGithubId(githubId, code)
-  );
+  useMutation(({ githubId, code }: { githubId: string; code: string }) => modifyGithubId(githubId, code));
 
 export const useHeader = () => useQuery([queryKeys.header], () => getHeader());
 

@@ -12,13 +12,7 @@ interface PropsType {
   disabled?: boolean;
 }
 
-const CheckBox: FC<PropsType> = ({
-  children,
-  name,
-  onClick,
-  isActive,
-  disabled,
-}) => {
+const CheckBox: FC<PropsType> = ({ children, name, onClick, isActive, disabled }) => {
   const onClickHandler = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       if (disabled) {
@@ -33,9 +27,7 @@ const CheckBox: FC<PropsType> = ({
 
   return (
     <S.Contianer onClick={onClickHandler}>
-      <S.Box isActive={isActive}>
-        {isActive && <img alt="check" src={CheckIcons} />}
-      </S.Box>
+      <S.Box isActive={isActive}>{isActive && <img alt="check" src={CheckIcons} />}</S.Box>
       <S.Label>{children}</S.Label>
     </S.Contianer>
   );

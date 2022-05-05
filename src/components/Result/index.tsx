@@ -30,11 +30,7 @@ const Result = () => {
   const confirmMutation = useConfirmReport(projectUuid, "report");
   const [key, setKey] = useState<string>(uniqueId());
   const fetching = useMemo(
-    () =>
-      isFetching ||
-      resultMutation.isLoading ||
-      confirmMutation.isLoading ||
-      submitMutation.isLoading,
+    () => isFetching || resultMutation.isLoading || confirmMutation.isLoading || submitMutation.isLoading,
     [confirmMutation.isLoading, isFetching, resultMutation.isLoading, submitMutation.isLoading]
   );
 
@@ -78,8 +74,7 @@ const Result = () => {
 
   const cantEdit = useMemo(
     () =>
-      result?.requestorType !== "USER_EDITABLE" ||
-      (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(result.status),
+      result?.requestorType !== "USER_EDITABLE" || (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(result.status),
     [result]
   );
 
@@ -225,15 +220,11 @@ const Result = () => {
             />
           )}
           <S.Buttons>
-            {result && (
-              <S.Status status={result.status}>{reportStatusMessage.get(result.status)}</S.Status>
-            )}
+            {result && <S.Status status={result.status}>{reportStatusMessage.get(result.status)}</S.Status>}
             <BorderButton onClick={handlePrint}>PDF로 저장</BorderButton>
             {result?.requestorType === "USER_EDITABLE" && (
               <BlueButton
-                disabled={
-                  fetching || (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(result.status)
-                }
+                disabled={fetching || (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(result.status)}
                 onClick={confirmOnClick("제출하시겠습니까?", () => submitMutation.mutate())}
               >
                 제출
@@ -243,17 +234,13 @@ const Result = () => {
               <Fragment>
                 <RedButton
                   disabled={fetching}
-                  onClick={confirmOnClick("거절하시겠습니까?", () =>
-                    confirmMutation.mutate("return")
-                  )}
+                  onClick={confirmOnClick("거절하시겠습니까?", () => confirmMutation.mutate("return"))}
                 >
                   거절
                 </RedButton>
                 <BlueButton
                   disabled={fetching}
-                  onClick={confirmOnClick("승인하시겠습니까?", () =>
-                    confirmMutation.mutate("approval")
-                  )}
+                  onClick={confirmOnClick("승인하시겠습니까?", () => confirmMutation.mutate("approval"))}
                 >
                   승인
                 </BlueButton>

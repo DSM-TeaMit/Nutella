@@ -38,6 +38,10 @@ export const useSearchEach = (keyword: string, by: SearchBy, initPage: number) =
 
       return p;
     },
-    { getNextPageParam: (last) => last.page + 1, keepPreviousData: true, enabled: false }
+    {
+      getNextPageParam: (last) => last.page + 1,
+      keepPreviousData: true,
+      enabled: false,
+    }
   );
 };

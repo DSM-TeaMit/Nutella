@@ -32,10 +32,7 @@ const AddAdminAccountModal = () => {
   }, [accoutMutation, closeCurrentModal, id, name, password]);
 
   //숫자, 특문 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력
-  const regex = useMemo(
-    () => /(?=.*\d{1,50})(?=.*[~`!@#$%\\^&*()-+=]{1,50})(?=.*[a-zA-Z]{1,50}).{8,50}$/,
-    []
-  );
+  const regex = useMemo(() => /(?=.*\d{1,50})(?=.*[~`!@#$%\\^&*()-+=]{1,50})(?=.*[a-zA-Z]{1,50}).{8,50}$/, []);
 
   const disabled = useMemo(
     () =>
@@ -75,22 +72,14 @@ const AddAdminAccountModal = () => {
               <S.Error>8자 이상, 하나 이상의 문자, 숫자 및 특수 문자</S.Error>
             )}
           </S.SubtitleContainer>
-          <Input
-            placeholder="비밀번호를 입력해주세요..."
-            {...inputProps["password"]}
-            type="password"
-          />
+          <Input placeholder="비밀번호를 입력해주세요..." {...inputProps["password"]} type="password" />
         </S.ContentContainer>
         <S.ContentContainer>
           <S.SubtitleContainer>
             <S.Subtitle>비밀번호 확인</S.Subtitle>
             {password !== passwordCheck && <S.Error>다시 확인해주세요.</S.Error>}
           </S.SubtitleContainer>
-          <Input
-            placeholder="비밀번호를 입력해주세요..."
-            {...inputProps["passwordCheck"]}
-            type="password"
-          />
+          <Input placeholder="비밀번호를 입력해주세요..." {...inputProps["passwordCheck"]} type="password" />
         </S.ContentContainer>
       </S.Inner>
       <S.ButtonContainer>

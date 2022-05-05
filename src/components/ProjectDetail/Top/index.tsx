@@ -117,11 +117,7 @@ const Top: FC<PropsType> = ({ data }) => {
               </S.ProjectRincian>
             </S.ProjectTop>
             <S.ProjectContent>
-              {data.projectDescription === null ? (
-                <div>프로젝트 소개가 없습니다.</div>
-              ) : (
-                data.projectDescription
-              )}
+              {data.projectDescription === null ? <div>프로젝트 소개가 없습니다.</div> : data.projectDescription}
             </S.ProjectContent>
             <S.ProjectBottom>
               <div>

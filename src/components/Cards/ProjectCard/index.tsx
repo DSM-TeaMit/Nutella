@@ -11,16 +11,7 @@ interface PropsType {
 
 const ProjectCard: FC<PropsType> = ({ data }) => {
   const navigate = useNavigate();
-  const {
-    uuid,
-    fields,
-    members,
-    projectDescription,
-    projectName,
-    projectType,
-    thumbnailUrl,
-    emoji,
-  } = data;
+  const { uuid, fields, members, projectDescription, projectName, projectType, thumbnailUrl, emoji } = data;
 
   const iconMap = new Map<ProjectTypes, string>()
     .set("PERS", PersonalIcons)
@@ -37,10 +28,7 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
     [navigate]
   );
 
-  const fieldList = useMemo(
-    () => fields.replace(/\s/g, "").split(","),
-    [fields]
-  );
+  const fieldList = useMemo(() => fields.replace(/\s/g, "").split(","), [fields]);
 
   const maxFieldCount = useMemo(() => 3, []);
   const maxMemberCount = useMemo(() => 3, []);
@@ -65,19 +53,11 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
             <S.UserImageContainer>
               {members.slice(0, maxMemberCount).map((value) => (
                 <S.UserImageOuter key={value.uuid}>
-                  <S.UserImage
-                    src={value.thumbnailUrl}
-                    onClick={onMemberClick(value.uuid)}
-                    isProfile
-                  />
+                  <S.UserImage src={value.thumbnailUrl} onClick={onMemberClick(value.uuid)} isProfile />
                 </S.UserImageOuter>
               ))}
             </S.UserImageContainer>
-            {members.length > maxMemberCount && (
-              <S.UserAdditional>
-                +{members.length - maxMemberCount}
-              </S.UserAdditional>
-            )}
+            {members.length > maxMemberCount && <S.UserAdditional>+{members.length - maxMemberCount}</S.UserAdditional>}
           </S.UserContainer>
           <S.TypeContainer>
             <S.Type>
@@ -85,9 +65,7 @@ const ProjectCard: FC<PropsType> = ({ data }) => {
               &nbsp;
             </S.Type>
             {fieldList.length > maxFieldCount && (
-              <S.TypeAdditional>
-                +{fieldList.length - maxFieldCount}
-              </S.TypeAdditional>
+              <S.TypeAdditional>+{fieldList.length - maxFieldCount}</S.TypeAdditional>
             )}
           </S.TypeContainer>
         </S.BottonContainer>

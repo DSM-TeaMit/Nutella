@@ -13,17 +13,12 @@ export interface PropsType {
   tagState: State<Tag[]> | [Tag[], (tags: Tag[]) => void];
 }
 
-const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement> & PropsType> = (
-  props
-) => {
+const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement> & PropsType> = (props) => {
   const inputProps: React.InputHTMLAttributes<HTMLInputElement> = { ...props };
   const { value, onChange, clearValue, tagState } = props;
   const [tags, setTags] = tagState;
 
-  const renderValue = useMemo(
-    () => value?.toString().split(" ").reverse()[0],
-    [value]
-  );
+  const renderValue = useMemo(() => value?.toString().split(" ").reverse()[0], [value]);
 
   const onChangeHandler = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,9 +26,7 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement> & PropsType> = (
       e.target.value = e.target.value.replace(/^\s*/, ""); //앞 공백 제거
 
       if (e.target.value.split(" ").length > 1) {
-        const newTags: Tag[] = e.target.value
-          .split(" ")
-          .map((value) => ({ id: uniqueId(), value: value }));
+        const newTags: Tag[] = e.target.value.split(" ").map((value) => ({ id: uniqueId(), value: value }));
         newTags.pop();
         setTags([...tags, ...newTags]);
       }
@@ -55,19 +48,13 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement> & PropsType> = (
   );
 
   const onFocusOut = useCallback(() => {
-    const fixedValue =
-      renderValue?.replace(/ +/g, " ")?.replace(/^\s*/, "") || "";
+    const fixedValue = renderValue?.replace(/ +/g, " ")?.replace(/^\s*/, "") || "";
 
     if (fixedValue === "") {
       return;
     }
 
-    setTags([
-      ...tags,
-      ...fixedValue
-        .split(" ")
-        .map((value) => ({ id: uniqueId(), value: value })),
-    ]);
+    setTags([...tags, ...fixedValue.split(" ").map((value) => ({ id: uniqueId(), value: value }))]);
     clearValue();
   }, [clearValue, renderValue, setTags, tags]);
 

@@ -4,12 +4,7 @@ import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import queryKeys from "../constant/QueryKeys";
 import storageKeys from "../constant/StorageKeys";
-import {
-  postUserInfo,
-  InfoType,
-  getOauthGoogle,
-  TokenType,
-} from "../utils/api/Signup";
+import { postUserInfo, InfoType, getOauthGoogle, TokenType } from "../utils/api/Signup";
 import toast from "react-hot-toast";
 
 const getDateWithAddHour = (hour: number) => {
@@ -25,10 +20,7 @@ export const useOauthGoogle = (code: string | null) => {
     const { accessToken, refreshToken } = data.data;
     localStorage.setItem(storageKeys.accessToken, accessToken);
     localStorage.setItem(storageKeys.refreshToken, refreshToken);
-    localStorage.setItem(
-      storageKeys.expireAt,
-      getDateWithAddHour(24).toString()
-    );
+    localStorage.setItem(storageKeys.expireAt, getDateWithAddHour(24).toString());
   }, []);
 
   const onError = useCallback(
@@ -59,6 +51,4 @@ export const useOauthGoogle = (code: string | null) => {
 };
 
 export const useUserInfo = () =>
-  useMutation(({ data, code }: { data: InfoType; code?: string }) =>
-    postUserInfo(data, code)
-  );
+  useMutation(({ data, code }: { data: InfoType; code?: string }) => postUserInfo(data, code));

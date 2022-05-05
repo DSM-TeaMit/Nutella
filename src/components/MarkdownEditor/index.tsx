@@ -1,9 +1,4 @@
-import {
-  forwardRef,
-  useCallback,
-  useContext,
-  useImperativeHandle,
-} from "react";
+import { forwardRef, useCallback, useContext, useImperativeHandle } from "react";
 import uniqueId from "../../constant/UniqueId";
 import { MarkdownContext, Row as RowType } from "../../context/MarkdownContext";
 import MarkdownProvider from "../Providers/MarkdownProvider";
@@ -30,15 +25,13 @@ export const getInitRows = (): RowType[] => [
   },
 ];
 
-const MarkdownEditor = forwardRef<MarkdownEditorRef, PropsType>(
-  ({ setRows, rows, disabled }, ref) => {
-    return (
-      <MarkdownProvider rows={rows} setRows={setRows} disabled={disabled}>
-        <Inner ref={ref} />
-      </MarkdownProvider>
-    );
-  }
-);
+const MarkdownEditor = forwardRef<MarkdownEditorRef, PropsType>(({ setRows, rows, disabled }, ref) => {
+  return (
+    <MarkdownProvider rows={rows} setRows={setRows} disabled={disabled}>
+      <Inner ref={ref} />
+    </MarkdownProvider>
+  );
+});
 
 MarkdownEditor.displayName = "MarkdownEditor";
 

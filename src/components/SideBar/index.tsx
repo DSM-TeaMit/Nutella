@@ -8,10 +8,7 @@ import { AxiosResponse } from "axios";
 
 interface PropsType {
   navs: NavigationType[];
-  data: UseQueryResult<
-    AxiosResponse<MyProfileType | UserProfileType, unknown>,
-    unknown
-  >;
+  data: UseQueryResult<AxiosResponse<MyProfileType | UserProfileType, unknown>, unknown>;
 }
 
 const SideBar: FC<PropsType> = ({ navs, data: queryData }) => {

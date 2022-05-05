@@ -46,10 +46,7 @@ const ChangeGithubIdLoadingContainer = () => {
       return;
     }
 
-    mutation.mutate(
-      { githubId, code: searchParams.get("code") || "" },
-      { onSuccess, onError }
-    );
+    mutation.mutate({ githubId, code: searchParams.get("code") || "" }, { onSuccess, onError });
   }, [githubId, mutation, navigate, onError, onSuccess, searchParams]);
 
   useEffect(() => {

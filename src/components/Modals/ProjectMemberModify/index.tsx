@@ -32,9 +32,7 @@ const ProjectMemberModifyModal = () => {
           <MemberWithRole data={my} />
         </S.MemberBox>
         {data?.data.projectType !== "PERS" && (
-          <MemberInput
-            onUserClick={(user) => setMembers((prev) => [...prev, { ...user, tags: [] }])}
-          />
+          <MemberInput onUserClick={(user) => setMembers((prev) => [...prev, { ...user, tags: [] }])} />
         )}
         <S.MemberContent>
           {others.map((value) => (

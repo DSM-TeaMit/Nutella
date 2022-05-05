@@ -1,11 +1,4 @@
-import React, {
-  ChangeEvent,
-  FC,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from "react";
 import useThemeContext from "../../hooks/useThemeContext";
 import { CommentSource, CommentStyleType } from "../../interface";
 import { useCommentMutation } from "../../queries/Comment";
@@ -30,10 +23,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
     .set("project", themeContext.colors.grayscale.lightGray1)
     .set("report", themeContext.colors.grayscale.white);
 
-  const onChange = useCallback(
-    (e: ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value),
-    []
-  );
+  const onChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value), []);
 
   const onSubmitEnter = useCallback(
     (e: React.KeyboardEvent) => {
@@ -80,11 +70,7 @@ const CommentInput: FC<PropsType> = ({ type, uuid, source }) => {
 
   return (
     <S.Container>
-      <S.Image
-        isProfile
-        src={data?.data.thumbnailUrl}
-        emoji={data?.data.emoji}
-      />
+      <S.Image isProfile src={data?.data.thumbnailUrl} emoji={data?.data.emoji} />
       <S.Input
         color={bgColorMap.get(type)}
         border={type === "project" ? 0 : 1}

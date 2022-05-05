@@ -17,10 +17,7 @@ type DispatchInputProps<T> = {
   [key in keyof T]: InputProps;
 };
 
-const useInputs = <T extends NameTypes>(
-  initValue: T,
-  debug?: boolean
-): [DispatchInputProps<T>, State<T>] => {
+const useInputs = <T extends NameTypes>(initValue: T, debug?: boolean): [DispatchInputProps<T>, State<T>] => {
   const [value, setValue] = useState<T>(initValue);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

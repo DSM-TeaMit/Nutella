@@ -50,8 +50,7 @@ const Plan = () => {
   const planMutation = usePlanMutation(uuid!);
   const { isLoading, isError, isFetched, error, isFetching } = usePlan(uuid!, setPlan, onFetching);
   const fetching = useMemo(
-    () =>
-      isFetching || planMutation.isLoading || confirmMutation.isLoading || submitMutation.isLoading,
+    () => isFetching || planMutation.isLoading || confirmMutation.isLoading || submitMutation.isLoading,
     [confirmMutation.isLoading, isFetching, planMutation.isLoading, submitMutation.isLoading]
   );
 
@@ -149,9 +148,7 @@ const Plan = () => {
   }, [plan]);
 
   const cantEdit = useMemo(
-    () =>
-      plan?.requestorType !== "USER_EDITABLE" ||
-      (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(plan.status),
+    () => plan?.requestorType !== "USER_EDITABLE" || (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(plan.status),
     [plan]
   );
 
@@ -238,9 +235,7 @@ const Plan = () => {
         <div>
           <S.ContentContainer ref={planReportRef}>
             <S.ContentInner>
-              <S.Title>
-                {plan?.projectType === "PERS" ? "개인" : "팀 / 동아리"} 프로젝트 계획서
-              </S.Title>
+              <S.Title>{plan?.projectType === "PERS" ? "개인" : "팀 / 동아리"} 프로젝트 계획서</S.Title>
               <S.RowContainer>
                 <S.RowTitle>프로젝트 명</S.RowTitle>
                 <S.RowLineContent>{plan?.projectName}</S.RowLineContent>
@@ -278,12 +273,7 @@ const Plan = () => {
               <S.RowContainer>
                 <S.RowTitle>프로젝트 목표</S.RowTitle>
                 <S.RowMutiLineContent>
-                  <MarkdownEditor
-                    disabled={cantEdit}
-                    rows={goalRows}
-                    setRows={setRows("goal")}
-                    ref={goalRef}
-                  />
+                  <MarkdownEditor disabled={cantEdit} rows={goalRows} setRows={setRows("goal")} ref={goalRef} />
                 </S.RowMutiLineContent>
               </S.RowContainer>
               <S.RowContainer>
@@ -342,11 +332,7 @@ const Plan = () => {
                     {plan?.includes.others !== undefined && (
                       <S.OtherContainer>
                         <S.OtherLabel>기타 :&nbsp;</S.OtherLabel>
-                        <Input
-                          value={plan?.includes.others}
-                          onChange={onOthersChange}
-                          disabled={cantEdit}
-                        />
+                        <Input value={plan?.includes.others} onChange={onOthersChange} disabled={cantEdit} />
                         {!cantEdit && (
                           <S.OtherLength length={plan.includes.others.length}>
                             {plan.includes.others.length} / 15
@@ -375,15 +361,11 @@ const Plan = () => {
             </S.ContentInner>
           </S.ContentContainer>
           <S.Buttons>
-            {plan && (
-              <S.Status status={plan.status}>{reportStatusMessage.get(plan.status)}</S.Status>
-            )}
+            {plan && <S.Status status={plan.status}>{reportStatusMessage.get(plan.status)}</S.Status>}
             <BorderButton onClick={handlePrint}>PDF로 저장</BorderButton>
             {plan?.requestorType === "USER_EDITABLE" && (
               <BlueButton
-                disabled={
-                  fetching || (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(plan.status)
-                }
+                disabled={fetching || (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(plan.status)}
                 onClick={confirmOnClick("제출하시겠습니까?", () => submitMutation.mutate())}
               >
                 제출
@@ -393,17 +375,13 @@ const Plan = () => {
               <Fragment>
                 <RedButton
                   disabled={fetching}
-                  onClick={confirmOnClick("거절하시겠습니까?", () =>
-                    confirmMutation.mutate("return")
-                  )}
+                  onClick={confirmOnClick("거절하시겠습니까?", () => confirmMutation.mutate("return"))}
                 >
                   거절
                 </RedButton>
                 <BlueButton
                   disabled={fetching}
-                  onClick={confirmOnClick("승인하시겠습니까?", () =>
-                    confirmMutation.mutate("approval")
-                  )}
+                  onClick={confirmOnClick("승인하시겠습니까?", () => confirmMutation.mutate("approval"))}
                 >
                   승인
                 </BlueButton>

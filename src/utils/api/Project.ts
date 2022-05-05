@@ -5,11 +5,7 @@ import request from "../axios";
 export type ConfirmType = "plan" | "report";
 export type ConfirmValue = "approval" | "return";
 
-export const confirmProjectReport = async (
-  projectUuid: string,
-  reportType: ConfirmType,
-  value: ConfirmValue
-) => {
+export const confirmProjectReport = async (projectUuid: string, reportType: ConfirmType, value: ConfirmValue) => {
   const uri = Uri.projectConfirm.get({ projectUuid });
 
   const params = {
@@ -53,10 +49,7 @@ export interface ProjectInfo {
   field: string;
 }
 
-export const modifyProjectInfo = async (
-  projectUuid: string,
-  data: ProjectInfo
-) => {
+export const modifyProjectInfo = async (projectUuid: string, data: ProjectInfo) => {
   return await request.patch(Uri.project.get({ projectUuid }), data);
 };
 
@@ -69,14 +62,8 @@ export interface ProjectMember {
   members: Member[];
 }
 
-export const modifyProjectMember = async (
-  projectUuid: string,
-  data: ProjectMember
-) => {
-  return await request.patch(
-    Uri.modifyProjectMember.get({ projectUuid }),
-    data
-  );
+export const modifyProjectMember = async (projectUuid: string, data: ProjectMember) => {
+  return await request.patch(Uri.modifyProjectMember.get({ projectUuid }), data);
 };
 
 export const deleteProject = async (projectUuid: string) => {

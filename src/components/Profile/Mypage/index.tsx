@@ -2,12 +2,7 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { NavigationType } from "../../../interface";
 import SideBar from "../../SideBar";
 import * as S from "../styles";
-import {
-  DocumentEditIcons,
-  DocumentIcons,
-  PersonalIcons,
-  SettingIcons,
-} from "../../../assets/icons";
+import { DocumentEditIcons, DocumentIcons, PersonalIcons, SettingIcons } from "../../../assets/icons";
 import Profile from "./Contents/Profile";
 import Project from "./Contents/Project";
 import Report from "./Contents/Report";
@@ -52,11 +47,7 @@ const MyPage = () => {
   }, [pathname]);
 
   useEffect(() => {
-    if (
-      isError &&
-      axios.isAxiosError(error) &&
-      error.response?.status === 403
-    ) {
+    if (isError && axios.isAxiosError(error) && error.response?.status === 403) {
       navigate("/admin-mypage");
       toast.error("접근 권한이 없습니다.");
     }
@@ -74,10 +65,7 @@ const MyPage = () => {
             <Route path="/project" element={<Project />} />
             <Route path="/report" element={<Report />} />
             <Route path="/setting" element={<Setting />} />
-            <Route
-              path="*"
-              element={<NotFound message="프로필로 돌아가기" to="/mypage" />}
-            />
+            <Route path="*" element={<NotFound message="프로필로 돌아가기" to="/mypage" />} />
           </Routes>
         </S.ContentContainer>
       </S.Inner>

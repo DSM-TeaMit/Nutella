@@ -56,16 +56,7 @@ const GithubLoadingContainer = () => {
       },
       { onSuccess, onError }
     );
-  }, [
-    githubId,
-    infoMutation,
-    name,
-    navigate,
-    no,
-    onError,
-    onSuccess,
-    searchParams,
-  ]);
+  }, [githubId, infoMutation, name, navigate, no, onError, onSuccess, searchParams]);
 
   useEffect(() => {
     onLand();

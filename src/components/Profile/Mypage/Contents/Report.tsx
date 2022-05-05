@@ -51,33 +51,18 @@ const Report = () => {
     <I.ContentInner>
       <I.FlexContainer>
         {list && list.NOT_SUBMITTED.count > 0 && (
-          <ReportAccordion
-            value={true}
-            title="작성 중인"
-            data={list?.NOT_SUBMITTED}
-            status="NOT_SUBMITTED"
-          />
+          <ReportAccordion value={true} title="작성 중인" data={list?.NOT_SUBMITTED} status="NOT_SUBMITTED" />
         )}
         {list && list.PENDING.count > 0 && (
-          <ReportAccordion
-            value={true}
-            title="승인 대기중인"
-            data={list.PENDING}
-            status="PENDING"
-          />
+          <ReportAccordion value={true} title="승인 대기중인" data={list.PENDING} status="PENDING" />
         )}
         {list && list.REJECTED.count > 0 && (
           <ReportAccordion title="승인 거절된" data={list.REJECTED} status="REJECTED" />
         )}
-        {list && list.ACCEPTED.count > 0 && (
-          <ReportAccordion title="승인 된" data={list.ACCEPTED} status="ACCEPTED" />
+        {list && list.ACCEPTED.count > 0 && <ReportAccordion title="승인 된" data={list.ACCEPTED} status="ACCEPTED" />}
+        {list && list.ACCEPTED.count + list.REJECTED.count + list.PENDING.count + list.NOT_SUBMITTED.count === 0 && (
+          <I.Message>보고서가 존재하지 않습니다.</I.Message>
         )}
-        {list &&
-          list.ACCEPTED.count +
-            list.REJECTED.count +
-            list.PENDING.count +
-            list.NOT_SUBMITTED.count ===
-            0 && <I.Message>보고서가 존재하지 않습니다.</I.Message>}
       </I.FlexContainer>
     </I.ContentInner>
   );

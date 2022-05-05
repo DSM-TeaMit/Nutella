@@ -107,23 +107,12 @@ const Row: FC<PropsType> = ({ data }) => {
         e.stopPropagation();
       }
     },
-    [
-      addRowAfterId,
-      changeRowType,
-      changeTab,
-      changeVerticalFocus,
-      id,
-      removeRowById,
-      tab,
-      text,
-      type,
-    ]
+    [addRowAfterId, changeRowType, changeTab, changeVerticalFocus, id, removeRowById, tab, text, type]
   );
 
   const onInput = useCallback(
     (e: React.FormEvent<HTMLElement>) => {
-      let text =
-        (e.target as HTMLElement).innerHTML.replace(/&nbsp;/g, " ").replace(/&gt;/g, ">") || "";
+      let text = (e.target as HTMLElement).innerHTML.replace(/&nbsp;/g, " ").replace(/&gt;/g, ">") || "";
 
       const key = keyArray.find((value) => new RegExp(`^${value} `).test(text));
 
@@ -211,10 +200,7 @@ const Row: FC<PropsType> = ({ data }) => {
 
   const isDisabled = useMemo(() => (disabled === undefined ? false : disabled), [disabled]);
 
-  const inputProps = useMemo(
-    () => (isDisabled ? undefined : { onKeyDown, onInput }),
-    [isDisabled, onInput, onKeyDown]
-  );
+  const inputProps = useMemo(() => (isDisabled ? undefined : { onKeyDown, onInput }), [isDisabled, onInput, onKeyDown]);
 
   const renderRow = useMemo(
     () =>

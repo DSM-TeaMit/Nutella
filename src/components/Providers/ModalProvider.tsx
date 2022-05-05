@@ -18,9 +18,7 @@ const ModalProvider: FC = ({ children }) => {
   const closeByStep = useCallback(
     (step: number) => {
       if (step <= 0 || !Number.isInteger(step)) {
-        throw new Error(
-          "ModalContext의 closeByStep의 매개변수로 오는 step은 양의 정수이여야 합니다."
-        );
+        throw new Error("ModalContext의 closeByStep의 매개변수로 오는 step은 양의 정수이여야 합니다.");
       }
 
       const fixedStep = step > modals.length ? modals.length : step;
@@ -55,7 +53,14 @@ const ModalProvider: FC = ({ children }) => {
   }, []);
 
   const value = useMemo<ModalContextType>(
-    () => ({ modals, closeCurrentModal, openModal, closeByStep, currentModal, closeAll }),
+    () => ({
+      modals,
+      closeCurrentModal,
+      openModal,
+      closeByStep,
+      currentModal,
+      closeAll,
+    }),
     [closeAll, closeByStep, closeCurrentModal, currentModal, modals, openModal]
   );
 

@@ -65,13 +65,9 @@ const Search = () => {
     const plist: Project[] = [];
     const mlist: Project[] = [];
 
-    data.pages
-      .map((value) => value.data.projectName.projects)
-      .forEach((value) => plist.push(...value));
+    data.pages.map((value) => value.data.projectName.projects).forEach((value) => plist.push(...value));
 
-    data.pages
-      .map((value) => value.data.memberName.projects)
-      .forEach((value) => mlist.push(...value));
+    data.pages.map((value) => value.data.memberName.projects).forEach((value) => mlist.push(...value));
 
     return {
       projectName: plist,
@@ -130,8 +126,7 @@ const Search = () => {
         {counts?.mCount !== 0 && (
           <S.ElementBox>
             <S.Title>
-              이름에 {searchWord}(을)를 포함한 유저가 참여한 프로젝트{" "}
-              {!!counts && <span>{counts.mCount}개</span>}
+              이름에 {searchWord}(을)를 포함한 유저가 참여한 프로젝트 {!!counts && <span>{counts.mCount}개</span>}
             </S.Title>
             <S.ProjectBox>
               {isLoading && skeletons}

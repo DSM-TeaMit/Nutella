@@ -14,8 +14,7 @@ import {
   uploadFile,
 } from "../utils/api/Result";
 
-export const useCreateResultMutation = (projectUuid: string) =>
-  useMutation(() => createResultReport(projectUuid));
+export const useCreateResultMutation = (projectUuid: string) => useMutation(() => createResultReport(projectUuid));
 
 export const useResult = (projectUuid: string, setData: (data: ParsedFullResultReport) => void) =>
   useQuery(

@@ -50,8 +50,7 @@ export const Type = styled.button<{ isActive: boolean }>`
   color: #000000;
   font: ${({ theme }) => theme.fonts.body3};
   align-items: center;
-  filter: ${({ theme, isActive }) =>
-    isActive ? theme.filters.primary.default : theme.filters.grayscale.gray1};
+  filter: ${({ theme, isActive }) => (isActive ? theme.filters.primary.default : theme.filters.grayscale.gray1)};
 `;
 
 export const ButtonContainer = styled.div`

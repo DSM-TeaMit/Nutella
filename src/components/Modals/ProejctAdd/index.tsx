@@ -105,16 +105,7 @@ const ProjectAddModal = () => {
     });
 
     queryClient.invalidateQueries([queryKeys.projects]);
-  }, [
-    closeCurrentModal,
-    members,
-    mutation,
-    name,
-    queryClient,
-    roleTags,
-    tags,
-    type,
-  ]);
+  }, [closeCurrentModal, members, mutation, name, queryClient, roleTags, tags, type]);
 
   return (
     <S.Container>
@@ -125,34 +116,22 @@ const ProjectAddModal = () => {
           <Input
             placeholder="프로젝트 이름을 입력해주세요..."
             value={name}
-            onChange={(e) =>
-              setName(e.target.value.trim().replaceAll(/\s/g, ""))
-            }
+            onChange={(e) => setName(e.target.value.trim().replaceAll(/\s/g, ""))}
           />
         </S.ContentContainer>
         <S.ContentContainer>
           <S.Subtitle>프로젝트 분야</S.Subtitle>
-          <TagInput
-            placeholder="공백으로 분야를 구분할 수 있습니다..."
-            {...inputProps}
-          />
+          <TagInput placeholder="공백으로 분야를 구분할 수 있습니다..." {...inputProps} />
         </S.ContentContainer>
         <S.ContentContainer>
           <S.Subtitle>내 역할</S.Subtitle>
-          <TagInput
-            placeholder="공백으로 역할를 구분할 수 있습니다..."
-            {...roleProps}
-          />
+          <TagInput placeholder="공백으로 역할를 구분할 수 있습니다..." {...roleProps} />
         </S.ContentContainer>
         <S.ContentContainer>
           <S.Subtitle>프로젝트 종류</S.Subtitle>
           <S.TypeContainer>
             {types.map((value, index) => (
-              <S.Type
-                key={index}
-                isActive={value.type === type}
-                onClick={() => onTypeClick(value)}
-              >
+              <S.Type key={index} isActive={value.type === type} onClick={() => onTypeClick(value)}>
                 <img src={value.img} alt={value.type} />
                 <span>{value.name}</span>
               </S.Type>
@@ -163,11 +142,7 @@ const ProjectAddModal = () => {
           <S.MemberContainer>
             <S.ContentContainer>
               <S.Subtitle>멤버</S.Subtitle>
-              <MemberInput
-                onUserClick={(user) =>
-                  setMembers((prev) => [...prev, { ...user, tags: [] }])
-                }
-              />
+              <MemberInput onUserClick={(user) => setMembers((prev) => [...prev, { ...user, tags: [] }])} />
             </S.ContentContainer>
             {members.map((value, index) => (
               <MemberWithRole

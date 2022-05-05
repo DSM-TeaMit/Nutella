@@ -43,9 +43,7 @@ const FeedList: FC<PropsType> = ({ queryData, initPage }) => {
   return (
     <>
       <S.ProjectBox>
-        {isLoading
-          ? skeletons
-          : list?.map((item: Project) => <MainProjectCard key={item.uuid} data={item} />)}
+        {isLoading ? skeletons : list?.map((item: Project) => <MainProjectCard key={item.uuid} data={item} />)}
         {!isLoading && isFetchingNextPage && skeletons}
       </S.ProjectBox>
       <div ref={ref} />

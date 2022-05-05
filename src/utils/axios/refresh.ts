@@ -21,9 +21,7 @@ interface Token {
   refreshToken: string;
 }
 
-export const refresh = async (
-  config: AxiosRequestConfig
-): Promise<AxiosRequestConfig> => {
+export const refresh = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
   const expireAt = localStorage.getItem(storageKeys.expireAt);
   let accessToken = localStorage.getItem(storageKeys.accessToken);
   const refreshToken = localStorage.getItem(storageKeys.refreshToken);
@@ -45,10 +43,7 @@ export const refresh = async (
 
       localStorage.setItem(storageKeys.accessToken, newAccessToken);
       localStorage.setItem(storageKeys.refreshToken, newRefreshToken);
-      localStorage.setItem(
-        storageKeys.expireAt,
-        getDateWithAddHour(24).toString()
-      );
+      localStorage.setItem(storageKeys.expireAt, getDateWithAddHour(24).toString());
 
       accessToken = newAccessToken;
     } catch (error) {

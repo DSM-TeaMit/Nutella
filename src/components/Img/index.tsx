@@ -8,10 +8,7 @@ type PropsType = ImageProps & {
   isProfile?: boolean;
 };
 
-type ImageProps = React.DetailedHTMLProps<
-  React.ImgHTMLAttributes<HTMLImageElement>,
-  HTMLImageElement
->;
+type ImageProps = React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>;
 
 function emojiUnicode(input: string) {
   return emojiUnicode
@@ -34,9 +31,7 @@ emojiUnicode.raw = function (input: string) {
       ) {
         if (input.charCodeAt(i + 1) >= 0xdc00 && input.charCodeAt(i + 1) <= 0xdfff) {
           // low surrogate
-          pairs.push(
-            (input.charCodeAt(i) - 0xd800) * 0x400 + (input.charCodeAt(i + 1) - 0xdc00) + 0x10000
-          );
+          pairs.push((input.charCodeAt(i) - 0xd800) * 0x400 + (input.charCodeAt(i + 1) - 0xdc00) + 0x10000);
         }
       } else if (input.charCodeAt(i) < 0xd800 || input.charCodeAt(i) > 0xdfff) {
         // modifiers and joiners
@@ -63,9 +58,7 @@ const Img: FC<PropsType> = (props) => {
 
   if (!src || src === "") {
     if (emoji) {
-      return (
-        <img {...rest} alt={undefined} src={`https://twemoji.maxcdn.com/svg/${unicode}.svg`} />
-      );
+      return <img {...rest} alt={undefined} src={`https://twemoji.maxcdn.com/svg/${unicode}.svg`} />;
     }
 
     return <img {...rest} />;

@@ -15,10 +15,7 @@ const GithubIdModal: FC<PropsType> = ({ githubId }) => {
 
   const [inputProps, [input]] = useInput(githubId);
 
-  const disabled = useMemo<boolean>(
-    () => input === githubId || input.toString().length <= 0,
-    [githubId, input]
-  );
+  const disabled = useMemo<boolean>(() => input === githubId || input.toString().length <= 0, [githubId, input]);
 
   const onClick = useCallback(() => {
     window.location.href = `${githubOauthUrl}?redirectUri=github-id/${input}`;

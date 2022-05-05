@@ -88,12 +88,8 @@ const ManagementAccount = () => {
     return (
       <I.Error>
         <I.Message>오류 발생.</I.Message>
-        {axios.isAxiosError(error) && error.response?.status === 403 && (
-          <I.Message>접근 권한이 없습니다.</I.Message>
-        )}
-        {axios.isAxiosError(error) && error.response?.status !== 403 && (
-          <I.Message>다시 시도해주세요.</I.Message>
-        )}
+        {axios.isAxiosError(error) && error.response?.status === 403 && <I.Message>접근 권한이 없습니다.</I.Message>}
+        {axios.isAxiosError(error) && error.response?.status !== 403 && <I.Message>다시 시도해주세요.</I.Message>}
       </I.Error>
     );
   }
@@ -112,9 +108,7 @@ const ManagementAccount = () => {
                   <S.TitleContainer>
                     <S.Title>계정 관리</S.Title>
                     <S.Buttons>
-                      <S.AddAccount onClick={() => inputRef.current?.click()}>
-                        학생 계정 파일 업로드
-                      </S.AddAccount>
+                      <S.AddAccount onClick={() => inputRef.current?.click()}>학생 계정 파일 업로드</S.AddAccount>
                       <S.AddAccount onClick={onAddClick}>+ 선생님 계정 추가</S.AddAccount>
                     </S.Buttons>
                   </S.TitleContainer>

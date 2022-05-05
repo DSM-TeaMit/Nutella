@@ -27,9 +27,7 @@ const SearchInput = () => {
         placeholder="검색어를 입력해주세요... (ex 유저 이름, 프로젝트 이름"
       />
       {value.toString().trim().replace(/ +/g, " ").length > 0 && (
-        <S.Hint>
-          {value.toString().trim().replace(/ +/g, " ")} (으)로 검색
-        </S.Hint>
+        <S.Hint>{value.toString().trim().replace(/ +/g, " ")} (으)로 검색</S.Hint>
       )}
     </S.Container>
   );

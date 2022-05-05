@@ -1,9 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 
-const useInfiniteScroll = <T extends HTMLElement>(
-  onNextPage: () => void,
-  enabled: boolean
-) => {
+const useInfiniteScroll = <T extends HTMLElement>(onNextPage: () => void, enabled: boolean) => {
   const ref = useRef<T>(null);
   const canLoadMore = useRef<boolean>(true);
 

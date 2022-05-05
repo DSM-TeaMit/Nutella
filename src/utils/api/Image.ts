@@ -21,10 +21,9 @@ export const getImage = async (src: string) => {
     baseURL: "",
   });
 
-  const data = `data:${response.headers["content-type"]};base64,${BufferLib.from(
-    response.data,
-    "binary"
-  ).toString("base64")}`;
+  const data = `data:${response.headers["content-type"]};base64,${BufferLib.from(response.data, "binary").toString(
+    "base64"
+  )}`;
 
   return data;
 };

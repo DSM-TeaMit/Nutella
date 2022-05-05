@@ -87,10 +87,7 @@ export const modifyResultReport = async (projectUuid: string, data: ParsedResult
     content: JSON.stringify(data.content),
   };
 
-  return await request.post<unknown, AxiosResponse<unknown, unknown>, ResultReport>(
-    uri,
-    requestData
-  );
+  return await request.post<unknown, AxiosResponse<unknown, unknown>, ResultReport>(uri, requestData);
 };
 
 export const submitResultReport = async (projectUuid: string) => {

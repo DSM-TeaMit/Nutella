@@ -29,9 +29,9 @@ const User = () => {
   useTitle(
     profileQuery.isError
       ? "오류 발생"
-      : `${profileQuery.data?.data.studentNo || ""} ${
-          profileQuery.data?.data.name || ""
-        }${!profileQuery.isLoading && !profileQuery.isError ? "의" : ""} 프로필`
+      : `${profileQuery.data?.data.studentNo || ""} ${profileQuery.data?.data.name || ""}${
+          !profileQuery.isLoading && !profileQuery.isError ? "의" : ""
+        } 프로필`
   );
 
   return (
@@ -44,12 +44,7 @@ const User = () => {
           <Routes>
             <Route path="/" element={<Profile data={profileQuery} />} />
             <Route path="/project" element={<Project />} />
-            <Route
-              path="*"
-              element={
-                <NotFound message="프로필로 돌아가기" to={`/user/${uuid}`} />
-              }
-            />
+            <Route path="*" element={<NotFound message="프로필로 돌아가기" to={`/user/${uuid}`} />} />
           </Routes>
         </S.ContentContainer>
       </S.Inner>

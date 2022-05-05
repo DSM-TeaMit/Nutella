@@ -13,8 +13,10 @@ import usePagination from "../../../../hooks/usePagination";
 const Project = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const initPage = 1;
-  const { data, isError, isLoading, isFetching, fetchNextPage, isFetchingNextPage } =
-    useUserProjects(uuid || "", initPage);
+  const { data, isError, isLoading, isFetching, fetchNextPage, isFetchingNextPage } = useUserProjects(
+    uuid || "",
+    initPage
+  );
   const { prevPage, count, list } = usePagination(data, initPage);
   const [page, setPage] = useState<number>(prevPage);
 

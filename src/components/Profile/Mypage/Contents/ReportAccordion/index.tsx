@@ -29,12 +29,7 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid, value }
   const initPage = 1;
   const { count, reports } = data;
 
-  const {
-    data: eachData,
-    isFetching,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = useEachReports(status, initPage, userUuid);
+  const { data: eachData, isFetching, fetchNextPage, isFetchingNextPage } = useEachReports(status, initPage, userUuid);
   const { list, prevPage } = usePagination(eachData, initPage);
 
   const [page, setPage] = useState<number>(prevPage);
@@ -88,10 +83,7 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid, value }
           {reports.map((value) => (
             <ReportCard key={`${value.uuid}_${value.type}`} data={{ ...value, status }} />
           ))}
-          {list &&
-            list.map((value) => (
-              <ReportCard key={`${value.uuid}_${value.type}`} data={{ ...value, status }} />
-            ))}
+          {list && list.map((value) => <ReportCard key={`${value.uuid}_${value.type}`} data={{ ...value, status }} />)}
           {isFetchingNextPage && skeleton}
         </S.Grid>
         {!isFetching && more && <S.More onClick={onMore}>더 가져오기</S.More>}

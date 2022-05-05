@@ -25,9 +25,7 @@ const projectMap = new Map<ProjectTypes, ProjectLabel>()
 const getBefore = (date: Date) => {
   const today = new Date();
 
-  const betweenTime = Math.floor(
-    (today.getTime() - date.getTime()) / 1000 / 60
-  );
+  const betweenTime = Math.floor((today.getTime() - date.getTime()) / 1000 / 60);
 
   if (betweenTime < 1) return "방금전";
   if (betweenTime < 60) {
@@ -48,27 +46,18 @@ const getBefore = (date: Date) => {
 };
 
 const PendingReportCard: FC<PropsType> = ({ data }) => {
-  const { projectName, projectType, reportType, submittedAt, writer, uuid } =
-    data;
+  const { projectName, projectType, reportType, submittedAt, writer, uuid } = data;
 
-  const projectLabel = useMemo(
-    () => projectMap.get(projectType)!,
-    [projectType]
-  );
+  const projectLabel = useMemo(() => projectMap.get(projectType)!, [projectType]);
 
   return (
-    <S.Container
-      to={`/project/${uuid}/${reportType === "PLAN" ? "plan" : "result"}`}
-    >
+    <S.Container to={`/project/${uuid}/${reportType === "PLAN" ? "plan" : "result"}`}>
       <S.Image src={data.thumbnailUrl} emoji={data.emoji} />
       <S.ContentContainer>
         <S.TopContainer>
           <S.TitleContainer>
             <S.Title>{projectName}</S.Title>
-            <S.Type>
-              {" "}
-              · {reportType === "PLAN" ? "계획서" : "결과 보고서"}
-            </S.Type>
+            <S.Type> · {reportType === "PLAN" ? "계획서" : "결과 보고서"}</S.Type>
           </S.TitleContainer>
           <S.Gray>{getBefore(new Date(submittedAt))}</S.Gray>
         </S.TopContainer>

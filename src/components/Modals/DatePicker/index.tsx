@@ -27,11 +27,7 @@ const compareDate = (d1: Date, d2: Date) => {
   } else return -1;
 };
 
-const getCellType = (
-  dates: DateState | null,
-  currentDate: Date,
-  calendarDate: Date
-): DateCellType => {
+const getCellType = (dates: DateState | null, currentDate: Date, calendarDate: Date): DateCellType => {
   if (!dates) {
     if (
       currentDate.getFullYear() !== calendarDate.getFullYear() ||
@@ -49,10 +45,7 @@ const getCellType = (
     return "default";
   }
 
-  if (
-    compareDate(startDate, endDate) === 0 &&
-    compareDate(currentDate, startDate) === 0
-  ) {
+  if (compareDate(startDate, endDate) === 0 && compareDate(currentDate, startDate) === 0) {
     return "selected";
   }
 
@@ -66,25 +59,18 @@ const getCellType = (
     return "end";
   }
 
-  if (
-    compareDate(currentDate, startDate) === 1 &&
-    compareDate(currentDate, endDate) === -1
-  ) {
+  if (compareDate(currentDate, startDate) === 1 && compareDate(currentDate, endDate) === -1) {
     return "middle";
   }
 
-  if (
-    currentDate.getFullYear() !== calendarDate.getFullYear() ||
-    currentDate.getMonth() !== calendarDate.getMonth()
-  ) {
+  if (currentDate.getFullYear() !== calendarDate.getFullYear() || currentDate.getMonth() !== calendarDate.getMonth()) {
     return "disabled";
   }
 
   return "default";
 };
 
-const dateToYearMonth = (date: Date) =>
-  `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
+const dateToYearMonth = (date: Date) => `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
 
 export const DatePicker: FC<PropsType> = ({ dates, setDates }) => {
   const initCalendarDate = () => {
@@ -112,9 +98,7 @@ export const DatePicker: FC<PropsType> = ({ dates, setDates }) => {
   );
 
   const dateToString = (placeholder: string, date?: Date): string =>
-    date
-      ? `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`
-      : placeholder;
+    date ? `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일` : placeholder;
 
   const onTypeClick = (type: DateName) => () => setSelectedType(type);
 
@@ -147,15 +131,9 @@ export const DatePicker: FC<PropsType> = ({ dates, setDates }) => {
         return;
       }
 
-      if (
-        selectedType === "start" &&
-        compareDate(date, displayDates.end) === 1
-      ) {
+      if (selectedType === "start" && compareDate(date, displayDates.end) === 1) {
         type = "end";
-      } else if (
-        selectedType === "end" &&
-        compareDate(date, displayDates.start) === -1
-      ) {
+      } else if (selectedType === "end" && compareDate(date, displayDates.start) === -1) {
         type = "start";
       }
 
@@ -189,17 +167,11 @@ export const DatePicker: FC<PropsType> = ({ dates, setDates }) => {
     <S.Container>
       <S.Title>날짜를 선택해주세요</S.Title>
       <S.Date>
-        <S.DateSpan
-          isActive={selectedType === "start"}
-          onClick={onTypeClick("start")}
-        >
+        <S.DateSpan isActive={selectedType === "start"} onClick={onTypeClick("start")}>
           {dateToString("시작", displayDates?.start)}
         </S.DateSpan>
         <span>&nbsp;~&nbsp;</span>
-        <S.DateSpan
-          isActive={selectedType === "end"}
-          onClick={onTypeClick("end")}
-        >
+        <S.DateSpan isActive={selectedType === "end"} onClick={onTypeClick("end")}>
           {dateToString("종료", displayDates?.end)}
         </S.DateSpan>
       </S.Date>

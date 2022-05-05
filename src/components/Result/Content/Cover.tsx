@@ -10,18 +10,13 @@ interface PropsType {
 
 const Cover: FC<PropsType> = ({ data, onSubjectChange }) => {
   const coverName = useMemo(() => {
-    const map = new Map<ProjectTypes, string>()
-      .set("TEAM", "팀")
-      .set("CLUB", "동아리")
-      .set("PERS", "개인");
+    const map = new Map<ProjectTypes, string>().set("TEAM", "팀").set("CLUB", "동아리").set("PERS", "개인");
 
     return map.get(data?.projectType || "PERS")!;
   }, [data]);
 
   const cantEdit = useMemo(
-    () =>
-      data?.requestorType !== "USER_EDITABLE" ||
-      (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(data.status),
+    () => data?.requestorType !== "USER_EDITABLE" || (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(data.status),
     [data]
   );
 

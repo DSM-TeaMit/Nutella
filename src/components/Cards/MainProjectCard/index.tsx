@@ -11,11 +11,7 @@ const MainProjectCard: FC<PropsType> = ({ data }) => {
   return (
     <>
       <S.Content to={`/project/${data?.uuid}`}>
-        <S.ProjectPhoto
-          alt="project image"
-          src={data?.thumbnailUrl}
-          emoji={data?.emoji}
-        />
+        <S.ProjectPhoto alt="project image" src={data?.thumbnailUrl} emoji={data?.emoji} />
         <S.ProjectBottom>
           <S.InfoContainer>
             <S.ProjectTitle>{data?.projectName}</S.ProjectTitle>

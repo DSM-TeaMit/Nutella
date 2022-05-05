@@ -55,9 +55,7 @@ const MemberInput: FC<PropsType> = ({ onUserClick }) => {
               <Fragment>
                 {mutation.isLoading && <S.Message>검색 중...</S.Message>}
                 {mutation.isError && <S.Message>검색 중 오류 발생</S.Message>}
-                {mutation.data && mutation.data?.data.students.length <= 0 && (
-                  <S.Message>검색 결과 없음</S.Message>
-                )}
+                {mutation.data && mutation.data?.data.students.length <= 0 && <S.Message>검색 결과 없음</S.Message>}
                 {mutation.data?.data.students.map((value) => (
                   <S.MemberButton
                     key={value.uuid}

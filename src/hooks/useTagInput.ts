@@ -13,11 +13,7 @@ interface InputProps {
 
 type Dispatch = [InputProps, State<Tag[]>];
 
-const useTagInput = (
-  initValue?: Value,
-  initTagValue?: Tag[],
-  debug?: boolean
-): Dispatch => {
+const useTagInput = (initValue?: Value, initTagValue?: Tag[], debug?: boolean): Dispatch => {
   const [value, setValue] = useState<Value>(initValue || "");
   const [tags, setTags] = useState<Tag[]>(initTagValue || []);
 
@@ -35,10 +31,7 @@ const useTagInput = (
     setValue("");
   }, []);
 
-  return [
-    { onChange, value, clearValue, tagState: [tags, setTags] },
-    [tags, setTags],
-  ];
+  return [{ onChange, value, clearValue, tagState: [tags, setTags] }, [tags, setTags]];
 };
 
 export default useTagInput;

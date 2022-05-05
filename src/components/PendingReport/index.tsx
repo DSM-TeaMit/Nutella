@@ -13,8 +13,7 @@ import * as S from "./styles";
 
 const PendingReport = () => {
   const initPage = 1;
-  const { data, isLoading, isError, isFetching, error, fetchNextPage, isFetchingNextPage } =
-    usePendingReport(initPage);
+  const { data, isLoading, isError, isFetching, error, fetchNextPage, isFetchingNextPage } = usePendingReport(initPage);
   const { count, list, prevPage } = usePagination(data, initPage);
 
   const [page, setPage] = useState<number>(prevPage);

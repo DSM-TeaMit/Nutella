@@ -51,12 +51,7 @@ const Comment: FC<PropsType> = ({ type, data }) => {
 
   return (
     <S.Container>
-      <S.Image
-        isProfile
-        src={data.thumbnailUrl}
-        emoji={data.emoji}
-        onClick={() => onProfileClick()}
-      />
+      <S.Image isProfile src={data.thumbnailUrl} emoji={data.emoji} onClick={() => onProfileClick()} />
       <S.ContentContainer color={bgColorMap.get(type)} border={type === "project" ? 0 : 1}>
         <S.NameContainer>
           <S.Name>
