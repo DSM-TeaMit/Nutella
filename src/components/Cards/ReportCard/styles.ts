@@ -23,6 +23,7 @@ export const Image = styled(Img)`
   width: 180px;
   max-height: 100px;
   object-fit: cover;
+  display: block;
   object-position: center;
   background-color: ${({ theme }) => theme.colors.grayscale.gray1};
 `;
