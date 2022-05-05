@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { NavigationType } from "../../interface";
 import { useHeader } from "../../queries/User";
 import Navigation from "./Navigation";
@@ -34,4 +34,4 @@ const AdminSideBar: FC<PropsType> = ({ navs }) => {
   );
 };
 
-export default AdminSideBar;
+export default memo(AdminSideBar);

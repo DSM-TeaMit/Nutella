@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import { UpArrowIcons } from "../../../../../assets/icons";
 import ReportCard from "../../../../Cards/ReportCard";
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Reports } from "../../../../../utils/api/User";
 import { ReportStatus } from "../../../../../interface";
 import isMore from "../../../../../constant/IsMore";
@@ -92,4 +92,4 @@ const ReportAccordion: FC<PropsType> = ({ title, data, status, userUuid, value }
   );
 };
 
-export default ReportAccordion;
+export default memo(ReportAccordion);
