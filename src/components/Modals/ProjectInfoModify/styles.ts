@@ -1,10 +1,19 @@
 import styled from "@emotion/styled";
+import TextareaAutosize from "react-autosize-textarea";
 
 export const ProjectModifyModalContainer = styled.div`
   border-radius: 10px;
   padding: 24px 32px;
-  max-width: 550px;
+  min-width: 550px;
   background-color: ${({ theme }) => theme.colors.grayscale.white};
+`;
+
+export const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  row-gap: 40px;
+  margin-bottom: 36px;
 `;
 
 export const Title = styled.div`
@@ -17,25 +26,9 @@ export const ContentBox = styled.div`
 `;
 
 export const Content = styled.div`
-  :nth-child(2) {
-    min-height: 115px;
-  }
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  row-gap: 12px;
-  width: 100%;
-  textarea {
-    outline: none;
-    resize: none;
-    width: 480px;
-    margin-top: 9px;
-    border: none;
-    min-height: 30px;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
-    font: ${({ theme }) => theme.fonts.body3};
-    color: ${({ theme }) => theme.colors.grayscale.black};
-  }
+  row-gap: 8px;
 `;
 
 export const SubTitle = styled.div`
@@ -46,10 +39,30 @@ export const SubTitle = styled.div`
 export const BtnBox = styled.div`
   display: flex;
   justify-content: space-between;
-  div {
-    display: flex;
-    :nth-child(1) {
-      margin-right: 16px;
-    }
+`;
+
+export const Buttons = styled.div`
+  display: flex;
+  column-gap: 16px;
+`;
+
+export const ProjectDescriptionInput = styled(TextareaAutosize)`
+  font: ${({ theme }) => theme.fonts.body3};
+  color: ${({ theme }) => theme.colors.grayscale.black};
+  resize: none;
+  outline: none;
+  border: 0px;
+  width: 100%;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.grayscale.gray1};
+    font: ${({ theme }) => theme.fonts.body3};
   }
+`;
+
+export const Line = styled.div`
+  height: 1px;
+  width: 100%;
+  background-color: ${({ theme }) => theme.colors.grayscale.lightGray2};
+  margin-top: 4px;
 `;

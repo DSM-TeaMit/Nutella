@@ -2,17 +2,15 @@ import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 
 export const AsideContainer = styled.div`
-  width: 302px;
-  height: 100%;
+  width: 100%;
+  min-height: 664px;
   background: ${({ theme }) => theme.colors.grayscale.white};
-  border-radius: 10px;
-  padding: 20px 16px 16px;
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
+  border-radius: 10px;
+  padding: 20px 16px;
 `;
 
 export const AsideTop = styled.div`
-  width: 273px;
-  height: 30px;
   text-align: center;
   display: fixed;
   justify-content: space-between;
@@ -40,12 +38,14 @@ export const AsideContent = styled.div`
 
 export const RoleBox = styled.div`
   margin-bottom: 36px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
 `;
 
 export const RoleTitle = styled.div`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.gray2};
-  margin-bottom: 12px;
 `;
 
 export const User = styled(Link)`

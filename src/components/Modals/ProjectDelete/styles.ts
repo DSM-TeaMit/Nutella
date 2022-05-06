@@ -14,26 +14,19 @@ export const Title = styled.div`
 `;
 
 export const ContentBox = styled.div`
-  width: 483px;
-  height: 140px;
   margin-top: 28px;
-`;
-
-export const ContentText = styled.div`
   font: ${({ theme }) => theme.fonts.body3};
   color: ${({ theme }) => theme.colors.grayscale.black};
-  span {
+  margin-bottom: 16px;
+
+  b {
     font: ${({ theme }) => theme.fonts.body1};
-  }
-  :nth-child(3) {
-    margin-top: 23px;
   }
 `;
 
 export const BtnBox = styled.div`
-  width: 140px;
-  height: 40px;
   margin-top: 36px;
   display: flex;
-  float: right;
+  column-gap: 16px;
+  justify-content: right;
 `;

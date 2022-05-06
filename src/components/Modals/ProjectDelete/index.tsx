@@ -40,22 +40,19 @@ const ProjectDeleteModal = () => {
     <S.ProjectDeleteContainer>
       <S.Title>프로젝트 삭제</S.Title>
       <S.ContentBox>
-        <S.ContentText>프로젝트를 삭제하시겠습니까?</S.ContentText>
-        <S.ContentText>
-          삭제한 프로젝트는 <span>복구 할 수 없습니다.</span>
-        </S.ContentText>
-        <S.ContentText>
-          삭제를 진행하시려면 <span>{data?.data.projectName}</span>을 입력해 주세요.
-        </S.ContentText>
-        <Input {...inputProps} placeholder={`${data?.data.projectName} 을 입력해 주세요.`} />
+        <div>프로젝트를 삭제하시겠습니까?</div>
+        <div>
+          삭제한 프로젝트는 <b>복구 할 수 없습니다.</b>
+        </div>
+        <div>
+          삭제를 진행하시려면 <b>{data?.data.projectName}</b>을 입력해 주세요.
+        </div>
       </S.ContentBox>
+      <Input {...inputProps} placeholder={`${data?.data.projectName} 을 입력해 주세요.`} />
       <S.BtnBox>
-        <>
-          <RedButton disabled={data?.data.projectName !== value} onClick={onClickDelete}>
-            삭제
-          </RedButton>
-        </>
-
+        <RedButton disabled={data?.data.projectName !== value} onClick={onClickDelete}>
+          삭제
+        </RedButton>
         <BorderButton onClick={closeCurrentModal}>취소</BorderButton>
       </S.BtnBox>
     </S.ProjectDeleteContainer>

@@ -1,4 +1,4 @@
-import { FC, Fragment, useRef, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import useModalContext from "../../../hooks/useModalContext";
 import useModalRef from "../../../hooks/useModalRef";
 import Input from "../../Input";
@@ -8,7 +8,6 @@ import ModalPortal from "../../ModalPortal";
 import TagInput, { Tag } from "../../TagInput";
 import ProjectDeleteModal from "../ProjectDelete";
 import * as S from "./styles";
-import TextareaAutosize from "react-textarea-autosize";
 import { useProjectDetails } from "../../../queries/ProjectDetails";
 import { useParams } from "react-router-dom";
 import { useModifyProjectInfo } from "../../../queries/Project";
@@ -35,15 +34,15 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
   });
   const [fieldProps, [fieldTags]] = useTagInput("", [...(field || [])], true);
   const [projectName, setProjectName] = useState(data?.data.projectName || "");
-  const [projectInfo, setProjectInfo] = useState(data?.data.projectResult || "");
+  const [projectDescription, setProjectDescription] = useState(data?.data.projectResult || "");
   const projectInfoMutation = useModifyProjectInfo(uuid || "");
   const queryClient = useQueryClient();
 
   const onClickInfoModify = async () => {
     await toast.promise(
       projectInfoMutation.mutateAsync({
-        name: projectName,
-        description: projectInfo,
+        name: projectName.trim(),
+        description: projectDescription.trim(),
         field: fieldTags.map((data) => data.value).join(","),
       }),
       {
@@ -59,8 +58,8 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
   return (
     <Fragment>
       <S.ProjectModifyModalContainer>
-        <S.Title>프로젝트 정보 수정</S.Title>
-        <S.ContentBox>
+        <S.Wrapper>
+          <S.Title>프로젝트 정보 수정</S.Title>
           <S.Content>
             <S.SubTitle>프로젝트 이름</S.SubTitle>
             <Input
@@ -71,19 +70,20 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
           </S.Content>
           <S.Content>
             <S.SubTitle>프로젝트 설명</S.SubTitle>
-            <TextareaAutosize
-              minRows={1}
-              maxRows={4}
-              placeholder={data?.data.projectResult === null ? "프로젝트 소개를 작성해 주세요." : undefined}
-              defaultValue={data?.data.projectResult}
-              onChange={(e) => setProjectInfo(e.target.value)}
-            />
+            <div>
+              <S.ProjectDescriptionInput
+                placeholder="프로젝트 소개를 작성해 주세요."
+                value={projectDescription}
+                onChange={(e) => setProjectDescription(e.currentTarget.value)}
+              />
+              <S.Line />
+            </div>
           </S.Content>
           <S.Content>
             <S.SubTitle>프로젝트 분야</S.SubTitle>
             <TagInput {...fieldProps} placeholder="분야를 입력해 주세요." />
           </S.Content>
-        </S.ContentBox>
+        </S.Wrapper>
         <S.BtnBox>
           <RedButton
             onClick={(e) => {
@@ -94,10 +94,10 @@ const ProjectModifyModal: FC<PropsType> = ({ onDeleteProject }) => {
           >
             삭제
           </RedButton>
-          <div>
+          <S.Buttons>
             <BorderButton onClick={closeCurrentModal}>취소</BorderButton>
             <BlueButton onClick={onClickInfoModify}>수정</BlueButton>
-          </div>
+          </S.Buttons>
         </S.BtnBox>
       </S.ProjectModifyModalContainer>
       <ModalPortal ref={modalRef}>

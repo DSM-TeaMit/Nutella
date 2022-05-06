@@ -9,22 +9,21 @@ export const Container = styled.div`
 export const ProjectDetailContent = styled.div`
   margin: 0px auto;
   width: 1280px;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 20px;
 `;
 
 export const DetailContent = styled.div`
-  width: 955px;
-  height: fit-content;
   background: ${({ theme }) => theme.colors.grayscale.white};
   padding: 40px 48px 60px;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.grayscale.lightGray1};
+  grid-column: span 3;
 `;
 
 export const SideContent = styled.div`
-  width: 305px;
-  height: 669px;
-  margin-left: 20px;
+  grid-column: span 1;
   position: sticky;
   top: 120px;
 `;
