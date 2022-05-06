@@ -26,9 +26,13 @@ const TagInput: FC<React.InputHTMLAttributes<HTMLInputElement> & PropsType> = (p
       e.target.value = e.target.value.replace(/^\s*/, ""); //앞 공백 제거
 
       if (e.target.value.split(" ").length > 1) {
-        const newTags: Tag[] = e.target.value.split(" ").map((value) => ({ id: uniqueId(), value: value }));
+        const newTags: Tag[] = e.target.value
+          .split(" ")
+          .map((value) => ({ id: uniqueId(), value: value }))
+          .filter((value) => tags.every((item) => item.value !== value.value));
         newTags.pop();
-        setTags([...tags, ...newTags]);
+
+        setTags([...new Set([...tags, ...newTags])]);
       }
 
       onChange && onChange(e);
