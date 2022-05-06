@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, useMemo } from "react";
 import useModalRef from "../../../hooks/useModalRef";
 import { Members } from "../../../utils/api/ProjectDetails";
 import ModalPortal from "../../ModalPortal";
@@ -11,6 +11,36 @@ interface PropsType {
 
 const Aside: FC<PropsType> = ({ data }) => {
   const modalRef = useModalRef();
+
+  const renderMember = useMemo(() => {
+    const roleSet = new Set<string>();
+
+    if (!data) {
+      return <></>;
+    }
+
+    data.forEach((value) => {
+      const roles = value.role.split(",");
+
+      roles.forEach((item) => roleSet.add(item));
+    });
+
+    return [...roleSet.values()].map((item) => (
+      <S.RoleBox key={item}>
+        <S.RoleTitle>{item}</S.RoleTitle>
+        {data
+          .filter((elem) => elem.role.split(",").includes(item))
+          .map((elem) => (
+            <S.User key={elem.uuid} to={`/user/${elem.uuid}`}>
+              <img src={elem.thumbnailUrl}></img>
+              <span>
+                {elem.studentNo} {elem.name}
+              </span>
+            </S.User>
+          ))}
+      </S.RoleBox>
+    ));
+  }, [data]);
 
   return (
     <Fragment>
@@ -28,21 +58,7 @@ const Aside: FC<PropsType> = ({ data }) => {
             수정
           </S.SubTitle>
         </S.AsideTop>
-        <S.AsideContent>
-          {data?.map((item) => {
-            return (
-              <S.RoleBox key={item.uuid}>
-                <S.RoleTitle>{item.role}</S.RoleTitle>
-                <S.User to={`/user/${item.uuid}`}>
-                  <img src={item.thumbnailUrl}></img>
-                  <span>
-                    {item.studentNo} {item.name}
-                  </span>
-                </S.User>
-              </S.RoleBox>
-            );
-          })}
-        </S.AsideContent>
+        <S.AsideContent>{renderMember}</S.AsideContent>
       </S.AsideContainer>
       <ModalPortal ref={modalRef}>
         <ProjectMemberModifyModal />
