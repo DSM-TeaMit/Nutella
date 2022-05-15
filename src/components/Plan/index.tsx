@@ -1,8 +1,19 @@
-import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Row } from "../../context/MarkdownContext";
 import useModalRef from "../../hooks/useModalRef";
-import { usePlan, usePlanMutation, useSubmitPlanMutation } from "../../queries/Plan";
+import {
+  usePlan,
+  usePlanMutation,
+  useSubmitPlanMutation,
+} from "../../queries/Plan";
 import { Includes, ParsedPlanType } from "../../utils/api/Plan";
 import { BlueButton, BorderButton, RedButton } from "../Buttons";
 import CheckBox, { CheckBoxMouseEvent } from "../CheckBox";
@@ -48,11 +59,23 @@ const Plan = () => {
 
   const [plan, setPlan] = useState<ParsedPlanType | undefined>(undefined);
   const planMutation = usePlanMutation(uuid!);
-  const { isLoading, isError, isFetched, error, isFetching } = usePlan(uuid!, setPlan, onFetching);
+  const { isLoading, isError, isFetched, error, isFetching } = usePlan(
+    uuid!,
+    setPlan,
+    onFetching
+  );
   const fetching = useMemo(
     () =>
-      isFetching || planMutation.isLoading || confirmMutation.isLoading || submitMutation.isLoading,
-    [confirmMutation.isLoading, isFetching, planMutation.isLoading, submitMutation.isLoading]
+      isFetching ||
+      planMutation.isLoading ||
+      confirmMutation.isLoading ||
+      submitMutation.isLoading,
+    [
+      confirmMutation.isLoading,
+      isFetching,
+      planMutation.isLoading,
+      submitMutation.isLoading,
+    ]
   );
 
   const planReportRef = useRef<HTMLDivElement>(null);
@@ -93,7 +116,10 @@ const Plan = () => {
     autoSaveTimer.current = setTimeout(save, 3000);
   }, [isFetched, plan, planMutation.isLoading, save]);
 
-  const dates = useMemo<DateState>(() => ({ start: plan?.startDate, end: plan?.endDate }), [plan]);
+  const dates = useMemo<DateState>(
+    () => ({ start: plan?.startDate, end: plan?.endDate }),
+    [plan]
+  );
 
   const setDates = useCallback(
     (dates: DateState) => {
@@ -207,7 +233,11 @@ const Plan = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isError && axios.isAxiosError(error) && error.response?.status === 404) {
+    if (
+      isError &&
+      axios.isAxiosError(error) &&
+      error.response?.status === 404
+    ) {
       navigate("/404");
     }
   }, [error, isError, navigate]);
@@ -239,7 +269,8 @@ const Plan = () => {
           <S.ContentContainer ref={planReportRef}>
             <S.ContentInner>
               <S.Title>
-                {plan?.projectType === "PERS" ? "개인" : "팀 / 동아리"} 프로젝트 계획서
+                {plan?.projectType === "PERS" ? "개인" : "팀 / 동아리"} 프로젝트
+                계획서
               </S.Title>
               <S.RowContainer>
                 <S.RowTitle>프로젝트 명</S.RowTitle>
@@ -249,7 +280,10 @@ const Plan = () => {
                 <S.RowTitle>진행 기간</S.RowTitle>
                 {cantEdit ? (
                   <S.RowLineContent>
-                    {dates && `${dateToString(dates.start)} ~ ${dateToString(dates.end)}`}
+                    {dates &&
+                      `${dateToString(dates.start)} ~ ${dateToString(
+                        dates.end
+                      )}`}
                   </S.RowLineContent>
                 ) : (
                   <S.Time
@@ -259,7 +293,10 @@ const Plan = () => {
                       modalRef.current?.show();
                     }}
                   >
-                    {dates && `${dateToString(dates.start)} ~ ${dateToString(dates.end)}`}
+                    {dates &&
+                      `${dateToString(dates.start)} ~ ${dateToString(
+                        dates.end
+                      )}`}
                   </S.Time>
                 )}
               </S.RowContainer>
@@ -331,7 +368,9 @@ const Plan = () => {
                         실행물 (영상 또는 사진)
                       </CheckBox>
                       <CheckBox
-                        isActive={plan?.includes.others !== undefined ? true : false}
+                        isActive={
+                          plan?.includes.others !== undefined ? true : false
+                        }
                         name="others"
                         onClick={onOtherClick}
                         disabled={cantEdit}
@@ -376,15 +415,22 @@ const Plan = () => {
           </S.ContentContainer>
           <S.Buttons>
             {plan && (
-              <S.Status status={plan.status}>{reportStatusMessage.get(plan.status)}</S.Status>
+              <S.Status status={plan.status}>
+                {reportStatusMessage.get(plan.status)}
+              </S.Status>
             )}
             <BorderButton onClick={handlePrint}>PDF로 저장</BorderButton>
             {plan?.requestorType === "USER_EDITABLE" && (
               <BlueButton
                 disabled={
-                  fetching || (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(plan.status)
+                  fetching ||
+                  (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(
+                    plan.status
+                  )
                 }
-                onClick={confirmOnClick("제출하시겠습니까?", () => submitMutation.mutate())}
+                onClick={confirmOnClick("제출하시겠습니까?", () =>
+                  submitMutation.mutate()
+                )}
               >
                 제출
               </BlueButton>
@@ -393,11 +439,11 @@ const Plan = () => {
               <Fragment>
                 <RedButton
                   disabled={fetching}
-                  onClick={confirmOnClick("거절하시겠습니까?", () =>
+                  onClick={confirmOnClick("수정 요청하시겠습니까?", () =>
                     confirmMutation.mutate("return")
                   )}
                 >
-                  거절
+                  수정 요청
                 </RedButton>
                 <BlueButton
                   disabled={fetching}

@@ -44,7 +44,9 @@ const Report = () => {
   }
 
   if (isError) {
-    return <Error message="오류 발생. 보고서를 가져올 수 없습니다. 다시 시도해주세요." />;
+    return (
+      <Error message="오류 발생. 보고서를 가져올 수 없습니다. 다시 시도해주세요." />
+    );
   }
 
   return (
@@ -67,10 +69,18 @@ const Report = () => {
           />
         )}
         {list && list.REJECTED.count > 0 && (
-          <ReportAccordion title="승인 거절된" data={list.REJECTED} status="REJECTED" />
+          <ReportAccordion
+            title="수정 요청된"
+            data={list.REJECTED}
+            status="REJECTED"
+          />
         )}
         {list && list.ACCEPTED.count > 0 && (
-          <ReportAccordion title="승인 된" data={list.ACCEPTED} status="ACCEPTED" />
+          <ReportAccordion
+            title="승인 된"
+            data={list.ACCEPTED}
+            status="ACCEPTED"
+          />
         )}
         {list &&
           list.ACCEPTED.count +
