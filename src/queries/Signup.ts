@@ -4,12 +4,7 @@ import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import queryKeys from "../constant/QueryKeys";
 import storageKeys from "../constant/StorageKeys";
-import {
-  postUserInfo,
-  InfoType,
-  getOauthGoogle,
-  TokenType,
-} from "../utils/api/Signup";
+import { getOauthGoogle, TokenType } from "../utils/api/Signup";
 import toast from "react-hot-toast";
 
 const getDateWithAddHour = (hour: number) => {
@@ -57,8 +52,3 @@ export const useOauthGoogle = (code: string | null) => {
     retry: false,
   });
 };
-
-export const useUserInfo = () =>
-  useMutation(({ data, code }: { data: InfoType; code?: string }) =>
-    postUserInfo(data, code)
-  );
