@@ -2,7 +2,6 @@ import * as S from "./styles";
 import { Logo } from "../../assets/logo";
 import { ArrowIcons, DocumentEditIcons } from "../../assets/icons";
 import { Link, useNavigate } from "react-router-dom";
-import SearchInput from "./SearchInput";
 import { useHeader } from "../../queries/User";
 import { useCallback, useState } from "react";
 import useOuterClick from "../../hooks/useOuterClick";
@@ -39,9 +38,6 @@ const Header = () => {
           <Link to="/feed">
             <S.Logo alt="logo" src={Logo} />
           </Link>
-          <S.SearchInputContainer>
-            <SearchInput />
-          </S.SearchInputContainer>
         </S.FlexContainer>
         <S.RightContainer>
           {data?.data.type === "admin" && (
