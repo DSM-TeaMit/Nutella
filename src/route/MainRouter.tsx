@@ -3,10 +3,8 @@ import { useQueryClient } from "react-query";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import {
   LoginContainer,
-  SignupContainer,
   TeacherLoginContainer,
   SignLoadingContainer,
-  GithubLoadingContainer,
   ChangeGithubIdLoadingContainer,
 } from "../container";
 import { RefreshError } from "../interface";
@@ -48,14 +46,9 @@ const SubRouter = () => {
       <Route path="" element={<LoginContainer />} />
       <Route path="auth/callback-google" element={<SignLoadingContainer />} />
       <Route
-        path="auth/callback-github/signup/:no/:name/:githubId"
-        element={<GithubLoadingContainer />}
-      />
-      <Route
         path="auth/callback-github/github-id/:githubId"
         element={<ChangeGithubIdLoadingContainer />}
       />
-      <Route path="signup" element={<SignupContainer />} />
       <Route path="teacherlogin" element={<TeacherLoginContainer />} />
       <Route path="*" element={<RouterWithDefaultComponent />} />
     </Routes>
