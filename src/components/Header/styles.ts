@@ -25,10 +25,6 @@ export const Logo = styled.img`
   height: 20px;
 `;
 
-export const SearchInputContainer = styled.div`
-  margin-left: 80px;
-`;
-
 export const FlexContainer = styled.div`
   display: flex;
   align-items: center;

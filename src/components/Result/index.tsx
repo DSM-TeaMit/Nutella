@@ -5,8 +5,19 @@ import * as S from "./styles";
 import SubmitResult from "./Content/SubmitResult";
 import CommentContainer from "../CommentContainer";
 import { useNavigate, useParams } from "react-router-dom";
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useResult, useResultMutation, useSubmitResultMutation } from "../../queries/Result";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import {
+  useResult,
+  useResultMutation,
+  useSubmitResultMutation,
+} from "../../queries/Result";
 import { ParsedFullResultReport } from "../../utils/api/Result";
 import MarkdownEditor from "../MarkdownEditor";
 import { Row } from "../../context/MarkdownContext";
@@ -23,8 +34,13 @@ const Result = () => {
   const projectUuid = useMemo(() => uuid || "", [uuid]);
   const autoSaveTimer = useRef<NodeJS.Timeout | null>(null);
   const canSave = useRef<boolean>(false);
-  const [result, setResult] = useState<ParsedFullResultReport | undefined>(undefined);
-  const { isLoading, isError, isFetched, error, isFetching } = useResult(projectUuid, setResult);
+  const [result, setResult] = useState<ParsedFullResultReport | undefined>(
+    undefined
+  );
+  const { isLoading, isError, isFetched, error, isFetching } = useResult(
+    projectUuid,
+    setResult
+  );
   const resultMutation = useResultMutation(projectUuid);
   const submitMutation = useSubmitResultMutation(projectUuid);
   const confirmMutation = useConfirmReport(projectUuid, "report");
@@ -35,7 +51,12 @@ const Result = () => {
       resultMutation.isLoading ||
       confirmMutation.isLoading ||
       submitMutation.isLoading,
-    [confirmMutation.isLoading, isFetching, resultMutation.isLoading, submitMutation.isLoading]
+    [
+      confirmMutation.isLoading,
+      isFetching,
+      resultMutation.isLoading,
+      submitMutation.isLoading,
+    ]
   );
 
   const resultReportRef = useRef<HTMLDivElement>(null);
@@ -171,7 +192,11 @@ const Result = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isError && axios.isAxiosError(error) && error.response?.status === 404) {
+    if (
+      isError &&
+      axios.isAxiosError(error) &&
+      error.response?.status === 404
+    ) {
       navigate("/404");
     }
   }, [error, isError, navigate]);
@@ -208,14 +233,18 @@ const Result = () => {
                 삭제
               </S.Delete>
             )}
-            <MarkdownEditor disabled={cantEdit} rows={value.value} setRows={setRows(value.id)} />
+            <MarkdownEditor
+              disabled={cantEdit}
+              rows={value.value}
+              setRows={setRows(value.id)}
+            />
           </S.ContentContainer>
         ))}
         {result &&
           result.requestorType === "USER_EDITABLE" &&
-          (["NOT_SUBMITTED", "REJECTED"] as ReportStatus[]).includes(result.status) && (
-            <S.AddButton onClick={onAddPageClick}>+</S.AddButton>
-          )}
+          (["NOT_SUBMITTED", "REJECTED"] as ReportStatus[]).includes(
+            result.status
+          ) && <S.AddButton onClick={onAddPageClick}>+</S.AddButton>}
         <div>
           {result && (
             <SubmitResult
@@ -226,15 +255,22 @@ const Result = () => {
           )}
           <S.Buttons>
             {result && (
-              <S.Status status={result.status}>{reportStatusMessage.get(result.status)}</S.Status>
+              <S.Status status={result.status}>
+                {reportStatusMessage.get(result.status)}
+              </S.Status>
             )}
             <BorderButton onClick={handlePrint}>PDF로 저장</BorderButton>
             {result?.requestorType === "USER_EDITABLE" && (
               <BlueButton
                 disabled={
-                  fetching || (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(result.status)
+                  fetching ||
+                  (["ACCEPTED", "PENDING"] as ReportStatus[]).includes(
+                    result.status
+                  )
                 }
-                onClick={confirmOnClick("제출하시겠습니까?", () => submitMutation.mutate())}
+                onClick={confirmOnClick("제출하시겠습니까?", () =>
+                  submitMutation.mutate()
+                )}
               >
                 제출
               </BlueButton>
@@ -243,11 +279,11 @@ const Result = () => {
               <Fragment>
                 <RedButton
                   disabled={fetching}
-                  onClick={confirmOnClick("거절하시겠습니까?", () =>
+                  onClick={confirmOnClick("수정 요청하시겠습니까?", () =>
                     confirmMutation.mutate("return")
                   )}
                 >
-                  거절
+                  수정 요청
                 </RedButton>
                 <BlueButton
                   disabled={fetching}
@@ -262,7 +298,11 @@ const Result = () => {
           </S.Buttons>
         </div>
         <S.Line />
-        <CommentContainer source="report" uuid={projectUuid} styleType="report" />
+        <CommentContainer
+          source="report"
+          uuid={projectUuid}
+          styleType="report"
+        />
       </S.Container>
 
       {/* PDF로 저장할 컴포넌트 */}
@@ -275,7 +315,11 @@ const Result = () => {
                 <S.Delete className="delete" onClick={onDeletePage(value.id)}>
                   삭제
                 </S.Delete>
-                <MarkdownEditor disabled={true} rows={value.value} setRows={setRows(value.id)} />
+                <MarkdownEditor
+                  disabled={true}
+                  rows={value.value}
+                  setRows={setRows(value.id)}
+                />
               </S.ContentContainer>
             ))}
           </S.PDFContainer>
